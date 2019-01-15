@@ -1,4 +1,13 @@
-﻿namespace Groundbreakers
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BattleManager.cs" company="UCSC">
+//   MIT
+// </copyright>
+// <summary>
+//   The battle manager.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace Assets.Scripts
 {
     using UnityEngine;
 
@@ -8,39 +17,24 @@
 
         private const int Rows = 8;
 
-        public Sprite sprite;
-
-        public Sprite[] sprites;
-
-        public GameObject[] tiles;
-
         private Transform boardHolder;
 
-        public enum Tiles
-        {
-            Stone,
-
-            Sand,
-
-            Grass
-        }
-
         /// <summary>
-        ///     Start is called before the first frame update
+        ///     Temporary use this sprite as the tile on the tile map.
         /// </summary>
+        [SerializeField]
+        private Sprite sprite = null;
+
         public void Start()
         {
-            this.Initialize();
+            this.SetupBoard();
         }
 
-        /// <summary>
-        ///     TUpdate is called once per frame
-        /// </summary>
         public void Update()
         {
         }
 
-        private void Initialize()
+        private void SetupBoard()
         {
             this.boardHolder = new GameObject("Map").transform;
 
