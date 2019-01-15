@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class characterAttack : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
     public float range = 15f;
 
-    public string enemyTag = "Enemy"; 
+    public string enemyTag = "Enemy";
 
+    public float fireRate = 1f;
+    private float fireCountdown = 0f;
+
+    public GameObject rangeAttackPrefab;
+    public Transform rangeAttackFirepoint;
+    
+    
     void Start()
     {
         InvokeRepeating("updateTarget", 0f, 0.5f);
@@ -20,6 +27,22 @@ public class characterAttack : MonoBehaviour
         if (target == null)
             return;
 
+        if (fireCountdown <= 0f) {
+            shoot();
+            fireCountdown = 1f / fireRate;
+        }
+
+        fireCountdown -= Time.deltaTime;
+
+    }
+
+    void shoot() {
+       GameObject rangeAttack_object= (GameObject) Instantiate(rangeAttackPrefab, rangeAttackFirepoint.position, rangeAttackFirepoint.rotation);
+        rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
+
+        if (rangeattack != null) {
+            rangeattack.chase(target);
+        }
     }
 
     void updateTarget() {
