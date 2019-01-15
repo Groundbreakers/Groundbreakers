@@ -1,19 +1,14 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BattleManager.cs" company="UCSC">
-//   MIT
-// </copyright>
-// <summary>
-//   Ivan Xu
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts
 {
-    using UnityEngine;
-
     public class BattleManager : MonoBehaviour
     {
         #region Unity Inspector Fields
+
+        [SerializeField]
+        private Tilemap tileMap;
 
         /// <summary>
         /// Define the size of the battlefield map.
@@ -30,7 +25,25 @@ namespace Assets.Scripts
 
         #endregion
 
+        #region Private Fields
+
         private Transform boardHolder;
+
+        private TileType[,] tileData;
+
+        /// <summary>
+        /// The tile types.
+        /// </summary>
+        private enum TileType
+        {
+            Grass,
+
+            Sand,
+
+            Stone
+        }
+
+        #endregion
 
         #region Unity Callbacks
 
@@ -67,6 +80,10 @@ namespace Assets.Scripts
             this.boardHolder.SetPositionAndRotation(
                 new Vector3(-this.dimension / 2f, -this.dimension / 2f),
                 Quaternion.identity);
+        }
+
+        private void ClearBoard()
+        {
         }
 
         #endregion
