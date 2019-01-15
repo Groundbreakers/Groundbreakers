@@ -3,7 +3,7 @@
 //   MIT
 // </copyright>
 // <summary>
-//   The battle manager.
+//   Ivan Xu
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -13,17 +13,26 @@ namespace Assets.Scripts
 
     public class BattleManager : MonoBehaviour
     {
-        private const int Columns = 8;
+        #region Unity Inspector Fields
 
-        private const int Rows = 8;
-
-        private Transform boardHolder;
+        /// <summary>
+        /// Define the size of the battlefield map.
+        /// </summary>
+        [SerializeField]
+        [Range(1f, 8f)]
+        private int dimension = 8;
 
         /// <summary>
         ///     Temporary use this sprite as the tile on the tile map.
-        /// </summary>
+        /// </summary>5
         [SerializeField]
         private Sprite sprite = null;
+
+        #endregion
+
+        private Transform boardHolder;
+
+        #region Unity Callbacks
 
         public void Start()
         {
@@ -34,13 +43,17 @@ namespace Assets.Scripts
         {
         }
 
+        #endregion
+
+        #region Internal Functions
+
         private void SetupBoard()
         {
             this.boardHolder = new GameObject("Map").transform;
 
-            for (var i = 0; i < Columns; i++)
+            for (var i = 0; i < this.dimension; i++)
             {
-                for (var j = 0; j < Rows; j++)
+                for (var j = 0; j < this.dimension; j++)
                 {
                     var instance = new GameObject();
                     var spriteRenderer = instance.AddComponent<SpriteRenderer>();
@@ -51,7 +64,11 @@ namespace Assets.Scripts
                 }
             }
 
-            this.boardHolder.SetPositionAndRotation(new Vector3(-Columns / 2f, -Rows / 2f), Quaternion.identity);
+            this.boardHolder.SetPositionAndRotation(
+                new Vector3(-this.dimension / 2f, -this.dimension / 2f),
+                Quaternion.identity);
         }
+
+        #endregion
     }
 }
