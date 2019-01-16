@@ -40,18 +40,17 @@ public class rangeattack : MonoBehaviour
     }
 
     // Deals damage to the enemies, but sometimes this.enemy.health is not updated ?
-    void OnTrigger2D(Collider2D target)
+    void OnTriggerEnter2D(Collider2D target)
     {
-
         
         if (target.gameObject.tag == "Enemy")
         {
-         
+            enemy = GameObject.FindObjectOfType<Enemy_movement>();
             if (enemy != null && this.enemy.health >= 0)
             {
-                enemy.GetComponent<Enemy_movement>().health -= damage;
-                Debug.Log("minus 1");
-                //Debug.Log(enemy.health);
+                
+                this.enemy.health -= damage;
+                Debug.Log(enemy.health);
             }
             
 
