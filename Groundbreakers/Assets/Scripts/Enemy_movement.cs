@@ -14,6 +14,10 @@ public class Enemy_movement : MonoBehaviour
 
     private int wavepoint_index = 0;
 
+    public int health = 2;  // might move to another script for enemy attribute later
+
+
+
     void GetNextWaypoint() {
         this.ArrayEndIndex = Waypoints.points.Length - 1;
 
@@ -30,6 +34,7 @@ public class Enemy_movement : MonoBehaviour
 
     void Start() {
         this.target = Waypoints.points[this.ArrayStartIndex];
+        
     }
 
     void Update() {
@@ -40,5 +45,16 @@ public class Enemy_movement : MonoBehaviour
         {
             this.GetNextWaypoint();
         }
+
+        // might move to another script for enemy attribute later
+        if (this.health <= 0)
+        {
+            Destroy(this.gameObject);
+            Debug.Log("---------------------------------------------");
+        }
+
     }
+
+
+    
 }

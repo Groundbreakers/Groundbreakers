@@ -12,7 +12,7 @@ public class WaveSpawner : MonoBehaviour
     public float timeBtwWaves = 5f;
 
     private float timeBeforeFirstWave = 2f;
-
+    
     void SpawnEnemy() {
         Instantiate(this.enemyPrefab, this.spawnPoint.position, this.spawnPoint.rotation);
     }
@@ -21,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < this.enemy_per_wave; i++)
         {
             this.SpawnEnemy();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -34,4 +34,7 @@ public class WaveSpawner : MonoBehaviour
 
         this.timeBeforeFirstWave -= Time.deltaTime;
     }
-}
+
+    
+   
+    }

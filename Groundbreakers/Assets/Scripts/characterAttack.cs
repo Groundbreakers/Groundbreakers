@@ -37,10 +37,11 @@ public class characterAttack : MonoBehaviour
     }
 
     void Start() {
-        this.InvokeRepeating("updateTarget", 0f, 0.5f);
+        this.InvokeRepeating("updateTarget", 0f, 0.1f);
     }
 
     void Update() {
+        
         if (this.target == null)
             return;
 
