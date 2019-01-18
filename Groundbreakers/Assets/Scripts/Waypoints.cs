@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BuildManager.cs" company="UCSC">
+//   MIT
+// </copyright>
+// <summary>
+//   Javy Wu
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using UnityEngine;
 
 public class Waypoints : MonoBehaviour
 {

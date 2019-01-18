@@ -1,7 +1,18 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BuildManager.cs" company="UCSC">
+//   MIT
+// </copyright>
+// <summary>
+//   Javy Wu
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using UnityEngine;
 
 public class Enemy_movement : MonoBehaviour
 {
+    public int health = 2; // might move to another script for enemy attribute later
+
     public float speed = 10f;
 
     private int ArrayEndIndex;
@@ -13,10 +24,6 @@ public class Enemy_movement : MonoBehaviour
     private Transform target;
 
     private int wavepoint_index = 0;
-
-    public int health = 2;  // might move to another script for enemy attribute later
-
-
 
     void GetNextWaypoint() {
         this.ArrayEndIndex = Waypoints.points.Length - 1;
@@ -34,7 +41,6 @@ public class Enemy_movement : MonoBehaviour
 
     void Start() {
         this.target = Waypoints.points[this.ArrayStartIndex];
-        
     }
 
     void Update() {
@@ -52,9 +58,5 @@ public class Enemy_movement : MonoBehaviour
             Destroy(this.gameObject);
             Debug.Log("---------------------------------------------");
         }
-
     }
-
-
-    
 }

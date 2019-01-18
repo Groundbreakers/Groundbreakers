@@ -1,4 +1,13 @@
-﻿using System.Collections;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BuildManager.cs" company="UCSC">
+//   MIT
+// </copyright>
+// <summary>
+//   Javy Wu
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System.Collections;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -12,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
     public float timeBtwWaves = 5f;
 
     private float timeBeforeFirstWave = 2f;
-    
+
     void SpawnEnemy() {
         Instantiate(this.enemyPrefab, this.spawnPoint.position, this.spawnPoint.rotation);
     }
@@ -34,7 +43,4 @@ public class WaveSpawner : MonoBehaviour
 
         this.timeBeforeFirstWave -= Time.deltaTime;
     }
-
-    
-   
-    }
+}

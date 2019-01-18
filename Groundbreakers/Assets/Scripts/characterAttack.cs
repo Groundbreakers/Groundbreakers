@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BuildManager.cs" company="UCSC">
+//   MIT
+// </copyright>
+// <summary>
+//   Javy Wu
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using UnityEngine;
 
 public class characterAttack : MonoBehaviour
 {
@@ -41,7 +50,6 @@ public class characterAttack : MonoBehaviour
     }
 
     void Update() {
-        
         if (this.target == null)
             return;
 
