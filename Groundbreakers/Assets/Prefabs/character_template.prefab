@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7762884028046836404}
   - component: {fileID: 6175580704399427361}
   m_Layer: 0
-  m_Name: character_placeholder
+  m_Name: character_template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.34899724, g: 0.08235293, b: 0.8392157, a: 1}
   m_FlipX: 0
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a6a66b55b5f034db39e3e0f1306c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 1.5
   enemyTag: Enemy
   fireRate: 1
-  rangeAttackPrefab: {fileID: 0}
+  range: 1.5
   rangeAttackFirepoint: {fileID: 4764784393859812896}
+  rangeAttackPrefab: {fileID: 0}
