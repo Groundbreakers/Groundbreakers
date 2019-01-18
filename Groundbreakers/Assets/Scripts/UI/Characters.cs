@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Characters : MonoBehaviour
 {
-    public GameObject ui;
-
-    public void Toggle()
+    // Start is called before the first frame update
+    void Start()
     {
-        ui.SetActive(!ui.activeSelf);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
