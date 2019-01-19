@@ -20,6 +20,11 @@
         private Transform target;
 
         /// <summary>
+        /// Animator declaration
+        /// </summary>
+        private Animator animator;
+
+        /// <summary>
         /// Enemy Stats
         /// </summary>
         private float strength = 1;
@@ -28,29 +33,26 @@
         private int damage = 1;
 
         /// <summary>
+        /// Status effects
+        /// </summary>
+        private bool isStunned = false;
+        private float stunTime = 0;
+
+        /// <summary>
         /// Current waypoint based on waypoint array
         /// </summary>
-        private int waypointIndex = 0;
+        private int waypointIndex = -1;
 
         #endregion
 
         void Start()
         {
-            this.target = Waypoints.points[0];
+            this.GetNextWaypoint();
+            this.animator = this.GetComponent<Animator>();
         }
 
         void Update()
         {
-            // Move the enemy towards the target waypoint
-            Vector2 dir = this.target.position - this.transform.position;
-            this.transform.Translate(dir.normalized * this.speed * Time.deltaTime, Space.World);
-
-            // Check if the waypoint has been reached
-            if (Vector2.Distance(this.transform.position, this.target.position) <= 0.01f)
-            {
-                this.GetNextWaypoint();
-            }
-
             // Check health, die if health <= 0. Spawns a 'death effect'.
             if (this.health <= 0)
             {
@@ -58,6 +60,40 @@
                 Destroy(effect, 1);
                 Destroy(this.gameObject);
             }
+
+            if (!this.isStunned)
+            {
+                // Move the enemy towards the target waypoint
+                Vector2 dir = this.target.position - this.transform.position;
+                this.transform.Translate(dir.normalized * this.speed * Time.deltaTime, Space.World);
+
+                // Check if the waypoint has been reached
+                if (Vector2.Distance(this.transform.position, this.target.position) <= 0.01f)
+                {
+                    this.GetNextWaypoint();
+                }
+            }
+        }
+
+        // Stun handlers
+        void StunEnemy(float time)
+        {
+            this.isStunned = true;
+            this.animator.SetBool("Stun",true);
+            this.stunTime = time;
+            this.StartCoroutine(this.StunTick());
+        }
+
+        IEnumerator StunTick()
+        {
+            this.stunTime -= Time.deltaTime;
+            if (this.stunTime <= 0)
+            {
+                this.stunTime = 0;
+                this.isStunned = false;
+                this.animator.SetBool("Stun", false);
+                yield return 0;
+            } 
         }
 
         // Collision detector for projectiles
@@ -79,9 +115,15 @@
                 this.EndPath();
                 return;
             }
-
             this.waypointIndex++;
             this.target = Waypoints.points[this.waypointIndex];
+            /*
+            Vector2 dir = this.target.position - this.transform.position; // Change animation to fit the angle
+            if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0) { this.animator.SetInteger("Direction", 0); } // Up
+            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0) { this.animator.SetInteger("Direction", 1); } // Right
+            else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0) { this.animator.SetInteger("Direction", 2); } // Down
+            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0) { this.animator.SetInteger("Direction", 3); } // Left
+            */
         }
 
         // When the enemy reaches the end of its path
