@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1945644772308959546}
   - component: {fileID: 6857567284421668042}
   - component: {fileID: 4101858626869767788}
-  - component: {fileID: 117185451989389297}
+  - component: {fileID: 722194834823062056}
   m_Layer: 0
   m_Name: bullet_template
   m_TagString: Untagged
@@ -95,7 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  target: {fileID: 0}
   damage: 1
+  armorpen: 2
 --- !u!61 &4101858626869767788
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -122,7 +124,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!50 &117185451989389297
+--- !u!50 &722194834823062056
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -141,5 +143,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
