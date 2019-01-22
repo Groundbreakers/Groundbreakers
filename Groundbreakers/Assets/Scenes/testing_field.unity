@@ -3646,11 +3646,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eee4627acdcfe44193675a3bd6444b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 9177846853504607518, guid: 088399c53c59ca04da788289bf2130ae,
+  enemy_per_wave: 2
+  enemyPrefab: {fileID: 3171230714936546570, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
     type: 3}
   spawnPoint: {fileID: 1691817770}
   timeBtwWaves: 5
-  enemy_per_wave: 2
 --- !u!4 &1663297370
 Transform:
   m_ObjectHideFlags: 0

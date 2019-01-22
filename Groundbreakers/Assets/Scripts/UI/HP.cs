@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HP : MonoBehaviour
 {
     public Text mytext = null;
-    private int healthPoint = 20;
+    public static int healthPoint = 20;
 
     // Start is called before the first frame update
     void Start()
