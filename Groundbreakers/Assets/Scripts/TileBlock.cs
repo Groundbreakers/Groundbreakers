@@ -4,8 +4,16 @@
     using UnityEngine;
 
     [RequireComponent(typeof(Rigidbody2D))]
-    public class TileBlock : MonoBehaviour
+    public class TileBlock : MonoBehaviour, IBattlePhaseHandler
     {
+        #region Inspector Variables
+
+        [SerializeField]
+        [Range(0.1f, 5.0f)]
+        private float enterDuration = 2.5f;
+
+        #endregion
+
         #region Internal Variables
 
         private const float TempOffset = 7.0f;
@@ -18,13 +26,13 @@
 
         #region Unity Callbacks
 
-        private void OnEnable()
+        public void OnEnable()
         {
             this.rb2D = this.GetComponent<Rigidbody2D>();
             this.rb2D.gravityScale = 0f;
         }
 
-        private void Start()
+        public void Start()
         {
             // Saving starting position
             this.originalPosition = this.transform.position;
@@ -33,10 +41,9 @@
                 new Vector3(this.originalPosition.x, this.originalPosition.y - TempOffset),
                 Quaternion.identity);
 
-            this.StartCoroutine(this.StartDropping());
         }
 
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
             var delta = Mathf.Abs(this.gameObject.transform.position.y - this.originalPosition.y);
 
@@ -51,11 +58,30 @@
 
         #endregion
 
+        #region IBattlePhaseHandler
+
+        public void OnTilesEntering()
+        {
+            this.StartCoroutine(this.StartDropping());
+        }
+
+        public void OnBattling()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnTilesExiting()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
+
         #region Internal Functions
 
         private IEnumerator StartDropping()
         {
-            var time = Random.Range(0.0f, 5.0f);
+            var time = Random.Range(0.0f, this.enterDuration);
 
             yield return new WaitForSeconds(time);
 

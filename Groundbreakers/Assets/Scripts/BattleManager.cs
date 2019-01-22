@@ -1,8 +1,9 @@
 ﻿namespace Assets.Scripts
 {
     using UnityEngine;
+    using UnityEngine.EventSystems;
 
-    public class BattleManager : MonoBehaviour
+    public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
         #region Inspector Variables
 
@@ -33,6 +34,34 @@
 
         public void Update()
         {
+            // Debug only
+            if (Input.GetKeyDown("space"))
+            {
+                this.OnTilesEntering();
+            }
+        }
+
+        #endregion
+
+        #region IBattlePhaseHandler
+
+        public void OnTilesEntering()
+        {
+            foreach (Transform child in this.boardHolder)
+            {
+                var tb = child.GetComponent<TileBlock>();
+                tb.OnTilesEntering();
+            }
+        }
+
+        public void OnBattling()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnTilesExiting()
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
@@ -64,6 +93,10 @@
             this.boardHolder.SetPositionAndRotation(
                 new Vector3(newX, newY, 0f),
                 Quaternion.identity);
+        }
+
+        private void CreateWayPoints()
+        {
         }
 
         #endregion
