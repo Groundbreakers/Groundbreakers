@@ -1,8 +1,12 @@
 ﻿namespace Assets.Scripts
 {
+    using System;
     using System.Collections;
     using UnityEngine;
 
+    using Random = UnityEngine.Random;
+
+    [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Rigidbody2D))]
     public class TileBlock : MonoBehaviour, IBattlePhaseHandler
     {
@@ -20,6 +24,8 @@
 
         private Rigidbody2D rb2D;
 
+        private SpriteRenderer sprite;
+
         private Vector3 originalPosition;
 
         #endregion
@@ -30,6 +36,8 @@
         {
             this.rb2D = this.GetComponent<Rigidbody2D>();
             this.rb2D.gravityScale = 0f;
+
+            this.sprite = this.GetComponent<SpriteRenderer>();
         }
 
         public void Start()
@@ -45,15 +53,22 @@
 
         public void FixedUpdate()
         {
-            var delta = Mathf.Abs(this.gameObject.transform.position.y - this.originalPosition.y);
-
-            // TODO: add bouncing effect
-            if (delta < 0.1f)
+            switch (BattleManager.GameState)
             {
-                this.rb2D.gravityScale = 0f;
-                this.rb2D.velocity = Vector3.zero;
-                this.transform.SetPositionAndRotation(this.originalPosition, Quaternion.identity);
+                case BattleManager.Stages.Null:
+                    break;
+                case BattleManager.Stages.Entering:
+                    this.CheckTileReachDestination();
+                    break;
+                case BattleManager.Stages.Combating:
+                    break;
+                case BattleManager.Stages.Exiting:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+
+
         }
 
         #endregion
@@ -72,20 +87,66 @@
 
         public void OnTilesExiting()
         {
-            throw new System.NotImplementedException();
+            // var rate = Random.Range(0.1f, 1.0f);
+            this.StartCoroutine(this.SelfDestroy());
         }
 
         #endregion
 
         #region Internal Functions
 
+        private bool CheckTileReachDestination()
+        {
+            var delta = Mathf.Abs(this.gameObject.transform.position.y - this.originalPosition.y);
+
+            // TODO: add bouncing effect
+            if (delta < 0.1f)
+            {
+                this.rb2D.gravityScale = 0f;
+                this.rb2D.velocity = Vector3.zero;
+                this.transform.SetPositionAndRotation(this.originalPosition, Quaternion.identity);
+
+                return true;
+            }
+
+            return false;
+        }
+
         private IEnumerator StartDropping()
         {
             var time = Random.Range(0.0f, this.enterDuration);
+            var rate = 0.4f;
 
             yield return new WaitForSeconds(time);
 
-            this.rb2D.gravityScale = -0.3f;
+            this.rb2D.gravityScale = -0.4f;
+
+            // Handle fade in
+            for (float i = 0.0f; i < 1.0f; i += Time.deltaTime * rate)
+            {
+                var alpha = Mathf.SmoothStep(0.0f, 1.0f, i);
+
+                this.sprite.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator SelfDestroy(float rate = 0.4f)
+        {
+            this.rb2D.gravityScale = -0.4f;
+
+            // Handle fade out
+            for (float i = 1.0f; i > 0.0f; i -= Time.deltaTime * rate)
+            {
+                var alpha = Mathf.SmoothStep(0.0f, 1.0f, i);
+
+                this.sprite.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+
+                yield return null;
+            }
+
+            Destroy(this.gameObject);
         }
 
         #endregion

@@ -1,5 +1,7 @@
 ﻿namespace Assets.Scripts
 {
+    using System;
+
     using UnityEngine;
     using UnityEngine.EventSystems;
 
@@ -25,6 +27,20 @@
 
         #endregion
 
+        #region Public Properties
+
+        public enum Stages
+        {
+            Null,
+            Entering,
+            Combating,
+            Exiting
+        }
+
+        public static Stages GameState { get; private set; } = Stages.Null;
+
+        #endregion
+
         #region Unity Callbacks
 
         public void Start()
@@ -37,7 +53,26 @@
             // Debug only
             if (Input.GetKeyDown("space"))
             {
-                this.OnTilesEntering();
+                switch (GameState)
+                {
+                    case Stages.Null:
+                        this.OnTilesEntering();
+                        GameState = Stages.Entering;
+                        break;
+                    case Stages.Entering:
+                        GameState = Stages.Combating;
+                        break;
+                    case Stages.Combating:
+                        GameState = Stages.Exiting;
+                        this.OnTilesExiting();
+                        break;
+                    case Stages.Exiting:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                Debug.Log(GameState);
             }
         }
 
@@ -61,7 +96,11 @@
 
         public void OnTilesExiting()
         {
-            throw new System.NotImplementedException();
+            foreach (Transform child in this.boardHolder)
+            {
+                var tb = child.GetComponent<TileBlock>();
+                tb.OnTilesExiting();
+            }
         }
 
         #endregion
