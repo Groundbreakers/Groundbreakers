@@ -13,7 +13,7 @@
         /// <summary>
         /// Enemy Stats
         /// </summary>
-        private float health = 5;
+        private int health = 5;
         private float speed = 1f;
         private int power = 1;
         private string[] attributes = new string[] { "Armored", "Flying" };
@@ -35,6 +35,7 @@
         // Initialization script
         void EnemyInit()
         {
+            this.enemy.maxHealth = this.health;
             this.enemy.health = this.health;
             this.enemy.speed = this.speed;
             this.enemy.power = this.power;
