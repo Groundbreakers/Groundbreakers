@@ -35,18 +35,8 @@ public class ChoicesButton : MonoBehaviour
 
         // Update Current Level
         CurrentLevel currentLevel = canvas.GetComponent<CurrentLevel>();
-        if (currentLevel.level == 8)
-        {
-            currentLevel.region += 1;
-            currentLevel.level = 1;
-        }
-        else
-            currentLevel.level += 1;
         currentLevel.UpdateLevel();
 
-        // Get a new background image if the region is changed
-        Background background = canvas.GetComponent<Background>();
-        background.UpdateBackground();
         Debug.Log(title.text);
     }
 }

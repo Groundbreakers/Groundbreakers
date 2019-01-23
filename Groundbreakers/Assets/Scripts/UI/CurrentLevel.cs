@@ -19,6 +19,26 @@ public class CurrentLevel : MonoBehaviour
 
     public void UpdateLevel()
     {
+        if (this.level == 8)
+        {
+            this.region += 1;
+            this.level = 1;
+
+            // Get a new BGM if the region is changed
+            GameObject bgm = GameObject.Find("BGM Manager");
+            Manager manager = bgm.GetComponent<Manager>();
+            manager.UpdateBGM();
+
+            // Get a new background image if the region is changed
+            GameObject canvas = GameObject.Find("Canvas");
+            Background background = canvas.GetComponent<Background>();
+            background.UpdateBackground();
+        }
+        else
+        {
+            this.level += 1;
+        }
+
         this.ui.text = this.region + "-" + this.level;
     }
 }
