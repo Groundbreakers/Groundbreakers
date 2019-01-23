@@ -55,7 +55,9 @@
         /// <summary>
         /// The parent transform that hold all sub sprite for tiles.
         /// </summary>
-        private Transform boardHolder;
+        private Transform tilesHolder;
+
+        private Transform mapHolder;
 
         private Tiles[,] data;
 
@@ -86,8 +88,20 @@
 
         public void Start()
         {
+            this.mapHolder = new GameObject("Map").transform;
+
+
             this.GenerateTerrain();
             this.CreateGameBoard();
+            this.CreatePath(0, 3);
+
+            // Locating the mother board
+            float newX = -Dimension * CellSize / 2.0f;
+            float newY = -Dimension * CellSize / 2.0f;
+
+            this.mapHolder.SetPositionAndRotation(
+                new Vector3(newX, newY, 0f),
+                Quaternion.identity);
         }
 
         public void Update()
@@ -124,7 +138,7 @@
 
         public void OnTilesEntering()
         {
-            foreach (Transform child in this.boardHolder)
+            foreach (Transform child in this.tilesHolder)
             {
                 var tb = child.GetComponent<TileBlock>();
                 tb.OnTilesEntering();
@@ -138,7 +152,7 @@
 
         public void OnTilesExiting()
         {
-            foreach (Transform child in this.boardHolder)
+            foreach (Transform child in this.tilesHolder)
             {
                 var tb = child.GetComponent<TileBlock>();
                 tb.OnTilesExiting();
@@ -221,7 +235,7 @@
 
         private void CreateGameBoard()
         {
-            this.boardHolder = new GameObject("Map").transform;
+            this.tilesHolder = new GameObject("tilesHolder").transform;
 
             // Spawning each individual tiles
             for (var i = 0; i < Dimension; i++)
@@ -251,29 +265,58 @@
                         Quaternion.identity);
 
                     instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - j;
-                    instance.transform.SetParent(this.boardHolder);
+                    instance.transform.SetParent(this.tilesHolder);
                 }
             }
 
-            // Locating the mother board
-            float newX = -Dimension * CellSize / 2f; 
-            float newY = -Dimension * CellSize / 2f;
+            //// Locating the mother board
+            //float newX = -Dimension * CellSize / 2.0f; 
+            //float newY = -Dimension * CellSize / 2.0f;
 
-            this.boardHolder.SetPositionAndRotation(
-                new Vector3(newX, newY, 0f),
-                Quaternion.identity);
+            //this.mapHolder.SetPositionAndRotation(
+            //    new Vector3(newX, newY, 0f),
+            //    Quaternion.identity);
         }
 
-        private void CreatePath()
+        private void CreatePath(int leftMargin, int rightMargin)
         {
-            var leftMargin = 0;
-            var rightMargin = 4;
             var startIndex = Random.Range(leftMargin, rightMargin);
 
             List<Vector2> path = new List<Vector2>();
 
-            
+            // Naive path algorithm
+            var depth = 0;
+            var current = startIndex;
+            while (depth < Dimension)
+            {
+                var newX = Random.Range(current - 1, current + 2);
+                newX = Mathf.Clamp(newX, leftMargin, rightMargin);
 
+                if (newX != current)
+                {
+                    path.Add(new Vector2(newX, depth));
+                    path.Add(new Vector2(current, depth));
+                }
+
+                current = newX;
+                depth++;
+            }
+
+            foreach (var vec in path)
+            {
+                // Placing a way point at here
+                var instance = Instantiate(
+                    this.wayPoint,
+                    new Vector3(vec.x * CellSize, vec.y * CellSize, 0f),
+                    Quaternion.identity);
+
+                // Also Change the tile to path tile
+
+                instance.transform.SetParent(this.mapHolder);
+            }
+
+            // Locating the mother board
+            this.tilesHolder.SetParent(this.mapHolder);
         }
 
         #endregion
