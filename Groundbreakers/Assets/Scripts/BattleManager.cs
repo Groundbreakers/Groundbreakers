@@ -61,12 +61,15 @@
 
         private Tiles[,] data;
 
+        private Transform[,] tileBlocks;
+
         #endregion
 
         #region Public Properties
 
         public enum Tiles
         {
+            Path,
             Grass,
             Stone,
             Wall,
@@ -88,13 +91,17 @@
 
         public void Start()
         {
+            this.tileBlocks = new Transform[Dimension, Dimension];
             this.mapHolder = new GameObject("Map").transform;
 
+            this.tilesHolder = new GameObject("tilesHolder").transform;
+            this.tilesHolder.SetParent(this.mapHolder);
 
             this.GenerateTerrain();
-            this.CreateGameBoard();
             this.CreatePath(0, 3);
             this.CreatePath(4, 7);
+            this.CreateGameBoard();
+
 
             // Locating the mother board
             float newX = -Dimension * CellSize / 2.0f;
@@ -162,6 +169,15 @@
 
         #endregion
 
+        #region Public functions
+
+        public Transform GetTileAt(int x, int y)
+        {
+            return this.tileBlocks[x, y];
+        }
+
+        #endregion
+
         #region Internal functions
 
         private void GenerateTerrain()
@@ -186,21 +202,6 @@
                 }
             }
 
-            //// Generate Moisture
-            //for (var i = 0; i < Dimension; i++)
-            //{
-            //    for (var j = 0; j < Dimension; j++)
-            //    {
-            //        var nx = (i / (float)Dimension) - 0.5f;
-            //        var ny = (j / (float)Dimension) - 0.5f;
-
-            //        moisture[i, j] = Mathf.PerlinNoise(freq * nx, freq * ny)
-            //                          + (freq / 2 * Mathf.PerlinNoise(freq * 2 * nx, freq * 2 * ny))
-            //                          + (freq / 4 * Mathf.PerlinNoise((freq * 4) + nx, (freq * 4) + ny));
-            //        moisture[i, j] = (moisture[i, j] + 1) / 2;
-            //    }
-            //}
-
             // Generate Tilemap
             for (var i = 0; i < Dimension; i++)
             {
@@ -211,12 +212,23 @@
 
                     this.data[i, j] = this.GetBiomeType(e, m);
 
-                    Debug.Log(this.data[i, j] + "    " + e);
-
+                    // Debug.Log(this.data[i, j] + "    " + e);
                 }
             }
         }
 
+        /// <summary>
+        /// Returns the type of terrain that corresponds to the given parameters.
+        /// </summary>
+        /// <param name="e">
+        /// The 2D array data that represents the elevation.
+        /// </param>
+        /// <param name="m">
+        /// The 2D array data that represents the moisture.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Tiles"/> that corresponds to a specific tile type.
+        /// </returns>
         private Tiles GetBiomeType(float e, float m)
         {
             e -= 1;
@@ -236,8 +248,6 @@
 
         private void CreateGameBoard()
         {
-            this.tilesHolder = new GameObject("tilesHolder").transform;
-
             // Spawning each individual tiles
             for (var i = 0; i < Dimension; i++)
             {
@@ -247,6 +257,9 @@
 
                     switch (this.data[i, j])
                     {
+                        case Tiles.Path:
+                            tile = this.tilePath;
+                            break;
                         case Tiles.Grass:
                             tile = this.tileA;
                             break;
@@ -267,16 +280,12 @@
 
                     instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - j;
                     instance.transform.SetParent(this.tilesHolder);
+
+                    this.tileBlocks[i, j] = instance.transform;
                 }
             }
 
-            //// Locating the mother board
-            //float newX = -Dimension * CellSize / 2.0f; 
-            //float newY = -Dimension * CellSize / 2.0f;
 
-            //this.mapHolder.SetPositionAndRotation(
-            //    new Vector3(newX, newY, 0f),
-            //    Quaternion.identity);
         }
 
         private void CreatePath(int leftMargin, int rightMargin)
@@ -290,32 +299,30 @@
             var current = startIndex;
             while (depth < Dimension)
             {
-                var newX = Random.Range(current - 1, current + 2);
+                int newX;
+                newX = Random.Range(current - 1, current + 2);
                 newX = Mathf.Clamp(newX, leftMargin, rightMargin);
 
-                if (newX != current)
-                {
-                    path.Add(new Vector2(newX, depth));
-                    path.Add(new Vector2(current, depth));
-                }
-
                 current = newX;
+
+                this.data[current, depth] = Tiles.Path;
                 depth++;
             }
 
-            foreach (var vec in path)
-            {
-                // Placing a way point at here
-                var instance = Instantiate(
-                    this.wayPoint,
-                    new Vector3(vec.x * CellSize, vec.y * CellSize, 0f),
-                    Quaternion.identity);
+            //var waypointsInstance = Instantiate(
+            //    this.wayPoint,
+            //    new Vector3(startIndex * CellSize, 0.0f, 0.0f),
+            //    Quaternion.identity);
 
-                instance.transform.SetParent(this.mapHolder);
-            }
+            //foreach (var vec in path)
+            //{
+            //    // Placing a way point at here
+            //    var instance = new GameObject("Waypoint");
 
-            // Locating the mother board
-            this.tilesHolder.SetParent(this.mapHolder);
+            //    instance.transform.SetPositionAndRotation(new Vector3(vec.x * CellSize, vec.y * CellSize, 0.0f), Quaternion.identity);
+
+            //    instance.transform.SetParent(waypointsInstance.transform);
+            //}
         }
 
         #endregion

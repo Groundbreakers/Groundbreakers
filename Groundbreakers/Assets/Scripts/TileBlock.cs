@@ -20,7 +20,7 @@
 
         #region Internal Variables
 
-        private const float TempOffset = 7.0f;
+        private const float TempOffset = 9.0f;
 
         private Rigidbody2D rb2D;
 
@@ -124,7 +124,8 @@
             {
                 var alpha = Mathf.SmoothStep(0.0f, 1.0f, i);
 
-                this.sprite.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+                var originColor = this.sprite.color;
+                this.sprite.color = new Color(originColor.r, originColor.g, originColor.b, alpha);
 
                 yield return null;
             }

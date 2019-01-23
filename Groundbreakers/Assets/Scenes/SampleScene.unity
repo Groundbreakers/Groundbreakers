@@ -257,7 +257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601627349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 0.97, z: -26.7}
+  m_LocalPosition: {x: 0, y: 0, z: -26.7}
   m_LocalScale: {x: 1.2866, y: 1.2866, z: 1.2866}
   m_Children: []
   m_Father: {fileID: 0}
@@ -361,7 +361,8 @@ MonoBehaviour:
   tileA: {fileID: 6053165304404215142, guid: 6a55053f0e651a74da987b3d8457b38a, type: 3}
   tileB: {fileID: 8551013971022768650, guid: 23b3ca1f61ecfe6448292c64a101db6b, type: 3}
   tileC: {fileID: 4482696110323340980, guid: 5d9f9953f99010f42a0705b81a3f63fc, type: 3}
-  tilePath: {fileID: 0}
+  tilePath: {fileID: 1809324964200828645, guid: a602e853128d0da45b66c9bf7da59b5b,
+    type: 3}
   spawner: {fileID: 0}
   wayPoint: {fileID: 2702411653767540467, guid: 29d9dc27501c56949bb47054ccba97ae,
     type: 3}

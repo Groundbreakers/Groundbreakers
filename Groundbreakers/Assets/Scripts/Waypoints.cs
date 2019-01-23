@@ -12,4 +12,14 @@ public class Waypoints : MonoBehaviour
             points[i] = this.transform.GetChild(i);
         }
     }
+
+    private void Start()
+    {
+        points = new Transform[this.transform.childCount];
+
+        for (int i = 0; i < points.Length; i++)
+        {
+            points[i] = this.transform.GetChild(i);
+        }
+    }
 }
