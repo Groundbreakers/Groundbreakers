@@ -59,6 +59,7 @@
                     break;
                 case BattleManager.Stages.Entering:
                     this.CheckTileReachDestination();
+                    //GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) - 1;
                     break;
                 case BattleManager.Stages.Combating:
                     break;

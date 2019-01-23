@@ -8,6 +8,14 @@
 
     public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
+        #region Internal Constants
+
+        private const uint Dimension = 8;
+
+        private const float CellSize = 1.0f;
+
+        #endregion
+
         #region Inspector Variables
 
         [SerializeField]
@@ -48,10 +56,6 @@
 
         #region Internal Variables
 
-        private const uint Dimension = 8;
-
-        private const float CellSize = 1.0f;
-
         /// <summary>
         /// The parent transform that hold all sub sprite for tiles.
         /// </summary>
@@ -75,12 +79,30 @@
             Wall,
         }
 
+        /// <summary>
+        /// The stages of the game phases. 
+        /// </summary>
         public enum Stages
         {
+            /// <summary>
+            /// The Initial State
+            /// </summary>
             Null,
+
+            /// <summary>
+            /// The state when all tiles should enter.
+            /// </summary>
             Entering,
+
+            /// <summary>
+            /// The state when combat should be resolved.
+            /// </summary>
             Combating,
-            Exiting
+
+            /// <summary>
+            /// The state when all tiles should leave the map.
+            /// </summary>
+            Exiting,
         }
 
         public static Stages GameState { get; private set; } = Stages.Null;
@@ -107,9 +129,7 @@
             float newX = -Dimension * CellSize / 2.0f;
             float newY = -Dimension * CellSize / 2.0f;
 
-            this.mapHolder.SetPositionAndRotation(
-                new Vector3(newX, newY, 0f),
-                Quaternion.identity);
+            this.mapHolder.SetPositionAndRotation(new Vector3(newX, newY, 0.0f), Quaternion.identity);
         }
 
         public void Update()
@@ -180,6 +200,9 @@
 
         #region Internal functions
 
+        /// <summary>
+        /// The generate terrain, and store the information into the data field
+        /// </summary>
         private void GenerateTerrain()
         {
             float freq = this.frequency;
@@ -202,7 +225,7 @@
                 }
             }
 
-            // Generate Tilemap
+            // Generate Tile map
             for (var i = 0; i < Dimension; i++)
             {
                 for (var j = 0; j < Dimension; j++)
@@ -211,8 +234,6 @@
                     var m = moisture[i, j];
 
                     this.data[i, j] = this.GetBiomeType(e, m);
-
-                    // Debug.Log(this.data[i, j] + "    " + e);
                 }
             }
         }
@@ -253,39 +274,60 @@
             {
                 for (var j = 0; j < Dimension; j++)
                 {
-                    GameObject tile;
-
-                    switch (this.data[i, j])
-                    {
-                        case Tiles.Path:
-                            tile = this.tilePath;
-                            break;
-                        case Tiles.Grass:
-                            tile = this.tileA;
-                            break;
-                        case Tiles.Stone:
-                            tile = this.tileB;
-                            break;
-                        case Tiles.Wall:
-                            tile = this.tileC;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                    var instance = Instantiate(
-                        tile, 
-                        new Vector3(i * CellSize, j * CellSize, 0f), 
-                        Quaternion.identity);
-
-                    instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - j;
-                    instance.transform.SetParent(this.tilesHolder);
+                    var instance = this.InstantiateTileAt(this.data[i, j], i, j);
 
                     this.tileBlocks[i, j] = instance.transform;
                 }
             }
+        }
 
+        /// <summary>
+        /// Given the tile type, instantiate a GameObject from corresponding prefab at the location (x,y).
+        /// </summary>
+        /// <param name="tileType">
+        /// The tile type <see cref="Tiles"/>
+        /// </param>
+        /// <param name="x">
+        /// The X coordinate of the desired grid to place the tile.
+        /// </param>
+        /// <param name="y">
+        /// The Y coordinate of the desired grid to place the tile.
+        /// </param>
+        /// <returns>
+        /// The <see cref="GameObject"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Should not happen.
+        /// </exception>
+        private GameObject InstantiateTileAt(Tiles tileType, int x, int y)
+        {
+            GameObject tile;
 
+            // Determine Enum -> GameObject
+            switch (tileType)
+            {
+                case Tiles.Path:
+                    tile = this.tilePath;
+                    break;
+                case Tiles.Grass:
+                    tile = this.tileA;
+                    break;
+                case Tiles.Stone:
+                    tile = this.tileB;
+                    break;
+                case Tiles.Wall:
+                    tile = this.tileC;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // Finally Instantiate it.
+            var instance = Instantiate(tile, new Vector3(x * CellSize, y * CellSize, 0f), Quaternion.identity);
+
+            instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - y;
+            instance.transform.SetParent(this.tilesHolder);
+            return instance;
         }
 
         private void CreatePath(int leftMargin, int rightMargin)
@@ -308,21 +350,6 @@
                 this.data[current, depth] = Tiles.Path;
                 depth++;
             }
-
-            //var waypointsInstance = Instantiate(
-            //    this.wayPoint,
-            //    new Vector3(startIndex * CellSize, 0.0f, 0.0f),
-            //    Quaternion.identity);
-
-            //foreach (var vec in path)
-            //{
-            //    // Placing a way point at here
-            //    var instance = new GameObject("Waypoint");
-
-            //    instance.transform.SetPositionAndRotation(new Vector3(vec.x * CellSize, vec.y * CellSize, 0.0f), Quaternion.identity);
-
-            //    instance.transform.SetParent(waypointsInstance.transform);
-            //}
         }
 
         #endregion
