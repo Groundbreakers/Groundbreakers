@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ModuleTemplate : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ModuleTemplate : MonoBehaviour
     public int rarity;
     public int slot;
     public Sprite icon;
+    public String descirption;
 
     // Basic Attributes
     public int POW;

@@ -30,7 +30,7 @@ public class LootButton : MonoBehaviour
         this.script = module.GetComponent<ModuleTemplate>();
         this.icon.sprite = this.script.icon;
         this.title.text = this.script.moduleTitle;
-        this.description.text = "Test";
+        this.description.text = this.script.descirption;
         this.loot = module;
     }
 
