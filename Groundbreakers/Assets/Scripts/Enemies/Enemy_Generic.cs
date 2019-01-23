@@ -57,7 +57,7 @@
             this.startingPosition = this.gameObject.transform.position;
             this.GetNextWaypoint();
             this.animator = this.GetComponent<Animator>();
-            Invoke("InitializeAttributes", 0.001f);
+            InitializeAttributes();
         }
 
         void Update()
@@ -103,8 +103,8 @@
                 if (!this.isEnraged)
                 {
                     this.isEnraged = true;
-                    this.powerMultiplier += 0.5f;
-                    this.speedMultiplier += 0.5f;
+                    this.powerMultiplier += 1f;
+                    this.speedMultiplier += 1f;
                 }
             }
 
@@ -297,8 +297,8 @@
             }
             if (this.attributes.Contains("Aggregation"))
             {
-                Invoke("MakeAggregationClone", 0.5f);
-                Invoke("MakeAggregationClone", 1f);
+                Invoke("MakeAggregationClone", 0.3f);
+                Invoke("MakeAggregationClone", 0.6f);
             }
         }
 
