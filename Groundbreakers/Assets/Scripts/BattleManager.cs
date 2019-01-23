@@ -94,6 +94,7 @@
             this.GenerateTerrain();
             this.CreateGameBoard();
             this.CreatePath(0, 3);
+            this.CreatePath(4, 7);
 
             // Locating the mother board
             float newX = -Dimension * CellSize / 2.0f;
@@ -309,8 +310,6 @@
                     this.wayPoint,
                     new Vector3(vec.x * CellSize, vec.y * CellSize, 0f),
                     Quaternion.identity);
-
-                // Also Change the tile to path tile
 
                 instance.transform.SetParent(this.mapHolder);
             }
