@@ -1,16 +1,48 @@
 ﻿namespace Assets.Scripts
 {
     using System;
-
+    using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.EventSystems;
+
+    using Random = UnityEngine.Random;
 
     public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
         #region Inspector Variables
 
         [SerializeField]
-        private GameObject tilePrefab;
+        private GameObject tileA = null;
+
+        [SerializeField]
+        private GameObject tileB = null;
+
+        [SerializeField]
+        private GameObject tileC = null;
+
+        [SerializeField]
+        private GameObject tilePath = null;
+
+        [SerializeField]
+        private GameObject spawner = null;
+
+        [SerializeField]
+        private GameObject wayPoint = null;
+
+        [SerializeField]
+        [Range(0.0f, 10.0f)]
+        private float frequency = 5.0f;
+
+        [SerializeField]
+        [Range(0.0f, 1.0f)]
+        private float grassMax = 0.65f;
+
+        [SerializeField]
+        [Range(0.0f, 1.0f)]
+        private float sandMax = 0.45f;
+
+        [SerializeField]
+        [Range(0.0f, 1.0f)]
+        private float stoneMax = 1.0f;
 
         #endregion
 
@@ -18,16 +50,25 @@
 
         private const uint Dimension = 8;
 
-        private const float CellSize = 0.5f;
+        private const float CellSize = 1.0f;
 
         /// <summary>
         /// The parent transform that hold all sub sprite for tiles.
         /// </summary>
         private Transform boardHolder;
 
+        private Tiles[,] data;
+
         #endregion
 
         #region Public Properties
+
+        public enum Tiles
+        {
+            Grass,
+            Stone,
+            Wall,
+        }
 
         public enum Stages
         {
@@ -45,6 +86,7 @@
 
         public void Start()
         {
+            this.GenerateTerrain();
             this.CreateGameBoard();
         }
 
@@ -107,6 +149,76 @@
 
         #region Internal functions
 
+        private void GenerateTerrain()
+        {
+            float freq = this.frequency;
+            float[,] heightMap = new float[Dimension, Dimension];
+            float[,] moisture = new float[Dimension, Dimension];
+            this.data = new Tiles[Dimension, Dimension];
+
+            // Generating Noise
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                    var nx = (i / (float)Dimension) - 0.5f;
+                    var ny = (j / (float)Dimension) - 0.5f;
+
+                    heightMap[i, j] = Mathf.PerlinNoise(freq * nx, freq * ny) 
+                                      + (freq / 2 * Mathf.PerlinNoise(freq * 2 * nx, freq * 2 * ny)) 
+                                      + (freq / 4 * Mathf.PerlinNoise((freq * 4) + nx, (freq * 4) + ny));
+                    heightMap[i, j] = (heightMap[i, j] + 1) / 2;
+                }
+            }
+
+            //// Generate Moisture
+            //for (var i = 0; i < Dimension; i++)
+            //{
+            //    for (var j = 0; j < Dimension; j++)
+            //    {
+            //        var nx = (i / (float)Dimension) - 0.5f;
+            //        var ny = (j / (float)Dimension) - 0.5f;
+
+            //        moisture[i, j] = Mathf.PerlinNoise(freq * nx, freq * ny)
+            //                          + (freq / 2 * Mathf.PerlinNoise(freq * 2 * nx, freq * 2 * ny))
+            //                          + (freq / 4 * Mathf.PerlinNoise((freq * 4) + nx, (freq * 4) + ny));
+            //        moisture[i, j] = (moisture[i, j] + 1) / 2;
+            //    }
+            //}
+
+            // Generate Tilemap
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                    var e = heightMap[i, j];
+                    var m = moisture[i, j];
+
+                    this.data[i, j] = this.GetBiomeType(e, m);
+
+                    Debug.Log(this.data[i, j] + "    " + e);
+
+                }
+            }
+        }
+
+        private Tiles GetBiomeType(float e, float m)
+        {
+            e -= 1;
+
+            if (e < this.sandMax)
+            {
+                return Tiles.Grass;
+            }
+
+            if (e < this.grassMax)
+            {
+                return Tiles.Wall;
+            }
+
+            return Tiles.Stone;
+        }
+
         private void CreateGameBoard()
         {
             this.boardHolder = new GameObject("Map").transform;
@@ -116,11 +228,29 @@
             {
                 for (var j = 0; j < Dimension; j++)
                 {
+                    GameObject tile;
+
+                    switch (this.data[i, j])
+                    {
+                        case Tiles.Grass:
+                            tile = this.tileA;
+                            break;
+                        case Tiles.Stone:
+                            tile = this.tileB;
+                            break;
+                        case Tiles.Wall:
+                            tile = this.tileC;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
                     var instance = Instantiate(
-                        this.tilePrefab, 
+                        tile, 
                         new Vector3(i * CellSize, j * CellSize, 0f), 
                         Quaternion.identity);
 
+                    instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - j;
                     instance.transform.SetParent(this.boardHolder);
                 }
             }
@@ -134,8 +264,16 @@
                 Quaternion.identity);
         }
 
-        private void CreateWayPoints()
+        private void CreatePath()
         {
+            var leftMargin = 0;
+            var rightMargin = 4;
+            var startIndex = Random.Range(leftMargin, rightMargin);
+
+            List<Vector2> path = new List<Vector2>();
+
+            
+
         }
 
         #endregion

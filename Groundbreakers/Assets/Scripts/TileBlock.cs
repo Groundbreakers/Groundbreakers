@@ -67,8 +67,6 @@
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-
         }
 
         #endregion
@@ -134,6 +132,10 @@
 
         private IEnumerator SelfDestroy(float rate = 0.4f)
         {
+            var time = Random.Range(0.0f, this.enterDuration);
+
+            yield return new WaitForSeconds(time);
+
             this.rb2D.gravityScale = -0.4f;
 
             // Handle fade out

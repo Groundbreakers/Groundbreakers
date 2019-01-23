@@ -289,8 +289,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e00639b60cb50b46a32253a06ee72fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6053165304404215142, guid: 6a55053f0e651a74da987b3d8457b38a,
+  tileA: {fileID: 6053165304404215142, guid: 6a55053f0e651a74da987b3d8457b38a, type: 3}
+  tileB: {fileID: 8551013971022768650, guid: 23b3ca1f61ecfe6448292c64a101db6b, type: 3}
+  tileC: {fileID: 4482696110323340980, guid: 5d9f9953f99010f42a0705b81a3f63fc, type: 3}
+  tilePath: {fileID: 4896296165398979884, guid: 5f1979e81f73fe54caaa4a60e3bad998,
     type: 3}
+  spawner: {fileID: 0}
+  wayPoint: {fileID: 0}
+  grassMax: 0.65
+  sandMax: 0.45
+  stoneMax: 1
 --- !u!4 &1936963042
 Transform:
   m_ObjectHideFlags: 0
