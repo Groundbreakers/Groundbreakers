@@ -11,6 +11,7 @@ public class WaveSpawner : MonoBehaviour
 
     public float timeBtwWaves = 5f;
 
+
     private float timeBeforeFirstWave = 2f;
     
     void SpawnEnemy() {
@@ -18,11 +19,16 @@ public class WaveSpawner : MonoBehaviour
     }
 
     IEnumerator SpawnWave() {
-        for (int i = 0; i < this.enemy_per_wave; i++)
-        {
-            this.SpawnEnemy();
-            yield return new WaitForSeconds(2f);
-        }
+
+            for (int i = 0; i < this.enemy_per_wave; i++)
+            {
+                this.SpawnEnemy();
+                yield return new WaitForSeconds(2f);
+                
+
+            }
+        
+    
     }
 
     void Update() {

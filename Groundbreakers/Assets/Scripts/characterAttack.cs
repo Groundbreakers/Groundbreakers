@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿
 
 public class characterAttack : MonoBehaviour
 {
@@ -11,6 +11,8 @@ public class characterAttack : MonoBehaviour
     public Transform rangeAttackFirepoint;
 
     public GameObject rangeAttackPrefab;
+
+    public Animator animator;
 
     private float fireCountdown = 0f;
 
@@ -30,6 +32,7 @@ public class characterAttack : MonoBehaviour
             this.rangeAttackFirepoint.rotation);
         rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
 
+        
         if (rangeattack != null)
         {
             rangeattack.chase(this.target);
@@ -47,11 +50,13 @@ public class characterAttack : MonoBehaviour
 
         if (this.fireCountdown <= 0f)
         {
+            animator.SetBool("Firing", true);
             this.shoot();
             this.fireCountdown = 1f / this.fireRate;
         }
 
         this.fireCountdown -= Time.deltaTime;
+        animator.SetBool("Firing", false);
     }
 
     // update the closest target in range
@@ -79,5 +84,21 @@ public class characterAttack : MonoBehaviour
                 this.target = null;
             }
         }
+
+        //update player position
+        if(nearestEnemy != null)
+        {
+            //calculate angle
+            Vector2 direction = nearestEnemy.transform.position - this.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            
+            if(angle < 0)
+            {
+                angle = angle + 360f; 
+            }
+            animator.SetFloat("Angle", angle);
+            //Debug.Log(angle);
+        }
+       
     }
 }

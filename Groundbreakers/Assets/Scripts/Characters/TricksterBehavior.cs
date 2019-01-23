@@ -10,16 +10,6 @@ public class TricksterBehavior : MonoBehaviour
     public int RNG = 2;
     public int MOB = 3;
     public int AMP = 1;
+    public Animator animator;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
