@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 
 public class characterAttack : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class characterAttack : MonoBehaviour
     public GameObject rangeAttackPrefab;
 
     public Animator animator;
+
+    private bool delay = false;
 
     private float fireCountdown = 0f;
 
@@ -46,17 +48,26 @@ public class characterAttack : MonoBehaviour
     void Update() {
         
         if (this.target == null)
+        {
+            animator.SetBool("Firing", false);
             return;
+            
+        }
+            
+
 
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
             this.shoot();
             this.fireCountdown = 1f / this.fireRate;
+            
         }
 
+        
+
         this.fireCountdown -= Time.deltaTime;
-        animator.SetBool("Firing", false);
+        
     }
 
     // update the closest target in range
@@ -96,7 +107,36 @@ public class characterAttack : MonoBehaviour
             {
                 angle = angle + 360f; 
             }
-            animator.SetFloat("Angle", angle);
+
+            //check if it's pointing right
+            if( (angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+            {
+                animator.SetBool("FacingRight", true);
+                animator.SetBool("FacingLeft", false);
+                animator.SetBool("FacingUp", false);
+                animator.SetBool("FacingDown", false);
+            }
+            else if(angle >= 45  && angle < 135) //check if it's pointing up
+            {
+                animator.SetBool("FacingRight", false);
+                animator.SetBool("FacingLeft", false);
+                animator.SetBool("FacingUp", true);
+                animator.SetBool("FacingDown", false);
+            }
+            else if(angle >= 135 && angle < 225) //check if it's pointing left
+            {
+                animator.SetBool("FacingRight", false);
+                animator.SetBool("FacingLeft", true);
+                animator.SetBool("FacingUp", false);
+                animator.SetBool("FacingDown", false);
+            }
+            else if(angle >= 225 && angle < 315) //check if it's pointing down
+            {
+                animator.SetBool("FacingRight", false);
+                animator.SetBool("FacingLeft", false);
+                animator.SetBool("FacingUp", false);
+                animator.SetBool("FacingDown", true);
+            }
             //Debug.Log(angle);
         }
        

@@ -9,10 +9,11 @@ public class WaveSpawner : MonoBehaviour
 
     public Transform spawnPoint;
 
-    public float timeBtwWaves = 5f;
+    public float timeBtwWaves = 2f;
 
 
     private float timeBeforeFirstWave = 2f;
+ 
     
     void SpawnEnemy() {
         Instantiate(this.enemyPrefab, this.spawnPoint.position, this.spawnPoint.rotation);
@@ -32,6 +33,7 @@ public class WaveSpawner : MonoBehaviour
     }
 
     void Update() {
+
         if (this.timeBeforeFirstWave <= 0f)
         {
             this.StartCoroutine(this.SpawnWave());
@@ -39,6 +41,8 @@ public class WaveSpawner : MonoBehaviour
         }
 
         this.timeBeforeFirstWave -= Time.deltaTime;
+
+        
     }
 
     
