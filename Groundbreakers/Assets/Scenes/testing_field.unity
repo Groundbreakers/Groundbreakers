@@ -3596,7 +3596,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663297368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 748a71bdf4580624ab46a9f92ea21425, type: 3}
   m_Name: 
@@ -3612,6 +3612,7 @@ MonoBehaviour:
   Character5: {fileID: 6175580704399427360, guid: 7c6520b826cd815498a32f8ccf0271e7,
     type: 3}
   maximumCharacter: 5
+  hoverColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1681877794
 PrefabInstance:
   m_ObjectHideFlags: 0
