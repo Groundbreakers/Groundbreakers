@@ -44,7 +44,28 @@ public class characterAttack : MonoBehaviour
     }
     
     void Update() {
-        
+        fireCount();
+    }
+
+    // update the target to attack for different modes
+    void updateTarget() {
+        if (this.attackMode == "default") defaultMode();
+
+    }
+
+    void OnMouseOver()
+    {
+        if (Input.GetKeyDown("r")) {
+            this.attackMode = "multi-shot";
+            //Debug.Log(this.attackMode);
+        }
+        else if (Input.GetKeyDown("n")) {
+            this.attackMode = "default";
+            //Debug.Log(this.attackMode);
+        }
+    }
+
+    void fireCount() {
         if (this.target == null)
             return;
 
@@ -57,8 +78,9 @@ public class characterAttack : MonoBehaviour
         this.fireCountdown -= Time.deltaTime;
     }
 
-    // update the closest target in range
-    void updateTarget() {
+
+    void defaultMode() {
+
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
@@ -81,18 +103,6 @@ public class characterAttack : MonoBehaviour
             {
                 this.target = null;
             }
-        }
-    }
-
-    void OnMouseOver()
-    {
-        if (Input.GetKeyDown("r")) {
-            this.attackMode = "multi-shot";
-            Debug.Log(this.attackMode);
-        }
-        else if (Input.GetKeyDown("n")) {
-            this.attackMode = "default";
-            Debug.Log(this.attackMode);
         }
     }
 }

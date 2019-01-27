@@ -40,8 +40,4 @@ public class rangeattack : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    
-
-
 }
