@@ -29,7 +29,7 @@ public class rangeattack : MonoBehaviour
 
         this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
     }
-
+      
     // Deals damage to the enemies
     void OnTriggerEnter2D(Collider2D hitTarget)
     {
@@ -40,6 +40,8 @@ public class rangeattack : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    
 
 
 }

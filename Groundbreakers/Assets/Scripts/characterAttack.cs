@@ -16,6 +16,8 @@ public class characterAttack : MonoBehaviour
 
     private Transform target;
 
+    private string attackMode = "default";
+
     // draw the attack range of the character selected
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
@@ -39,6 +41,7 @@ public class characterAttack : MonoBehaviour
     void Start() {
         this.InvokeRepeating("updateTarget", 0f, 0.1f);
     }
+    void OnMouseEnter() { Debug.Log("I am over something"); }
 
     void Update() {
         

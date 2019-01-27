@@ -26,7 +26,7 @@ public class DeployCharacter : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.tag == "Player")
             {
                 Destroy(hit.collider.gameObject);
             }
@@ -69,7 +69,6 @@ public class DeployCharacter : MonoBehaviour
 
     void Start() {
         this.parent = GameObject.Find("character");
-        Debug.Log(this.parent.name + " has " + this.parent.transform.childCount + " children");
     }
 
     void Update() {
