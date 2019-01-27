@@ -40,9 +40,9 @@ public class characterAttack : MonoBehaviour
 
     void Start() {
         this.InvokeRepeating("updateTarget", 0f, 0.1f);
+        
     }
-    void OnMouseEnter() { Debug.Log("I am over something"); }
-
+    
     void Update() {
         
         if (this.target == null)
@@ -81,6 +81,18 @@ public class characterAttack : MonoBehaviour
             {
                 this.target = null;
             }
+        }
+    }
+
+    void OnMouseOver()
+    {
+        if (Input.GetKeyDown("r")) {
+            this.attackMode = "multi-shot";
+            Debug.Log(this.attackMode);
+        }
+        else if (Input.GetKeyDown("n")) {
+            this.attackMode = "default";
+            Debug.Log(this.attackMode);
         }
     }
 }
