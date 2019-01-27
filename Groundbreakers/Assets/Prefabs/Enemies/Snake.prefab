@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 3171230714936546571}
   - component: {fileID: 3628644994677537622}
   - component: {fileID: 226798854866218715}
-  - component: {fileID: 4499857591035348143}
   - component: {fileID: 4820504546433748512}
   - component: {fileID: 4534209215401832226}
   m_Layer: 0
-  m_Name: Fire_Bat
+  m_Name: Snake
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,12 +72,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 61f1a3045a549e64dab4cb9418fef4cc, type: 3}
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -94,7 +93,7 @@ Animator:
   m_GameObject: {fileID: 3171230714936546568}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 50ce673c21694634ea891e778cc11065, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -115,32 +114,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f8be7e63c6ca44c8f82627b1235771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 400
-  health: 400
-  speed: 1
+  maxHealth: 200
+  health: 200
+  speed: 1.5
   speedMultiplier: 1
   power: 1
   powerMultiplier: 1
   evasion: 0
   regen: 0
   attributes:
-  - Armored
-  - Flying
+  - Resistance
   deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
     type: 3}
   waypointList: []
---- !u!114 &4499857591035348143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3171230714936546568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e26e03d26582854bbc5c002a140f33e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &4820504546433748512
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -158,8 +144,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.53333336, y: 0.53333336}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 0.2, y: 0.2}
+    newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

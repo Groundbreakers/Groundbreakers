@@ -30,6 +30,7 @@
         public GameObject deathEffect;
 
         // Positioning objects and variables
+        public List<Transform> waypointList;
         private Transform target;
         private int waypointIndex = -1;
         private Vector3 startingPosition;
@@ -254,13 +255,13 @@
         // Get the next waypoint and update the index
         void GetNextWaypoint()
         {
-            if (this.waypointIndex >= Waypoints.points.Length - 1)
+            if (this.waypointIndex >= this.waypointList.Count - 1)
             {
                 this.EndPath();
                 return;
             }
             this.waypointIndex++;
-            this.target = Waypoints.points[this.waypointIndex];
+            this.target = this.waypointList[this.waypointIndex];
             /* Direction animations
             Vector2 dir = this.target.position - this.transform.position; // Change animation to fit the angle
             if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0) { this.animator.SetInteger("Direction", 0); } // Up
