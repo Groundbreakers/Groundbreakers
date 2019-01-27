@@ -24,18 +24,15 @@ public class DeployCharacter : MonoBehaviour
 
     private Color startColor;
 
+    //private string type;
+
 
     // remove character with right mouse click on it
     void removeCharacter()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && this.character != null)
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-            if (hit.collider != null && hit.collider.tag == "Player")
-            {
-                Destroy(hit.collider.gameObject);
-            }
+           Destroy(this.character);
         }
     }
 
@@ -81,13 +78,14 @@ public class DeployCharacter : MonoBehaviour
 
     void Update()
     {
-        removeCharacter();
+        
     }
 
     void OnMouseOver()
     {
         if(this.character == null) rend.color = hoverColor;
         spawnCharacter();
+        removeCharacter();
     }
 
     void OnMouseExit()
