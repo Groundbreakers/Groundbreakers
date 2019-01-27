@@ -45,7 +45,7 @@ public class Choices : MonoBehaviour
     public void Toggle()
     {
         // Generate choices before opening the panel
-        // else, Destory previous choices before closing the panel
+        // else, hide previous choices before closing the panel
         if (!ui.activeSelf)
         {
             GenerateChoices();
@@ -68,128 +68,51 @@ public class Choices : MonoBehaviour
         int choicesNumber = rnd.Next(1, 4);
         for (int i = 0; i < choicesNumber; i++)
         {
+            // Active the choice button
+            GameObject newButton = this.ui.transform.GetChild(i).gameObject;
+            newButton.SetActive(true);
+
+            // Setup the component of the button
+            ChoicesButton button = newButton.GetComponent<ChoicesButton>();
             int battleModifier = rnd.Next(100);
 
             // Generate options randomly
             if (battleModifier < 50)
             {
-                this.Battle(i);
+                button.Setup(this.battleIcon, "Battle", "Are you ready for the challenge?");
             }
             else if (battleModifier >= 50 && battleModifier < 55)
             {
-                this.LowLight(i);
+                button.Setup(this.lowLightIcon, "Low Light Battle", "All characters have lower RNG.");
             }
             else if (battleModifier >= 55 && battleModifier < 60)
             {
-                this.LowOxygen(i);
+                button.Setup(this.lowOxygenIcon, "Low Oxygen Battle", "All characters have lower ROF.");
             }
             else if (battleModifier >= 60 && battleModifier < 65)
             {
-                this.Aftershock(i);
+                button.Setup(this.aftershockIcon, "Aftershock Battle", "The battlefield is constantly collapsing.");
             }
             else if (battleModifier >= 65 && battleModifier < 70)
             {
-                this.Radiative(i);
+                button.Setup(this.radiativeIcon, "Radiative Battle", "Enemies regenerate HP.");
             }
             else if (battleModifier >= 70 && battleModifier < 75)
             {
-                this.Swarm(i);
+                button.Setup(this.swarmIcon, "Swarm Battle", "All enemies are flying.");
             }
             else if (battleModifier >= 75 && battleModifier < 80)
             {
-                this.Elite(i);
+                button.Setup(this.eliteIcon, "Elite Battle", "Enemies are significantly stronger.");
             }
             else if (battleModifier >= 80 && battleModifier < 85)
             {
-                this.RepairStation(i);
+                button.Setup(this.repairStationIcon, "Repair Station", "No enemies./nThe Groundbreaker acquires 3 Durability.");
             }
             else if (battleModifier >= 85 && battleModifier < 100)
             {
-                this.FreeLoot(i);
+                button.Setup(this.freeLootIcon, "Free Loot", "No enemies.");
             }
         }
-    }
-
-    public void Battle(int i)
-    {
-        // Active the choice button
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        // Setup the component of the button
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.battleIcon, "Battle", "Are you ready for the challenge?");
-    }
-
-    public void LowLight(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.lowLightIcon, "Low Light Battle", "All characters have lower RNG.");
-    }
-
-    public void LowOxygen(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.lowOxygenIcon, "Low Oxygen Battle", "All characters have lower ROF.");
-    }
-
-    public void Aftershock(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.aftershockIcon, "Aftershock Battle", "The battlefield is constantly collapsing.");
-    }
-
-    public void Radiative(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.radiativeIcon, "Radiative Battle", "Enemies regenerate HP.");
-    }
-
-    public void Swarm(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.swarmIcon, "Swarm Battle", "All enemies are flying.");
-    }
-
-    public void Elite(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.eliteIcon, "Elite Battle", "Enemies are significantly stronger.");
-    }
-
-    public void RepairStation(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.repairStationIcon, "Repair Station", "No enemies./nThe Groundbreaker acquires 3 Durability.");
-    }
-
-    public void FreeLoot(int i)
-    {
-        GameObject newButton = this.ui.transform.GetChild(i).gameObject;
-        newButton.SetActive(true);
-
-        ChoicesButton button = newButton.GetComponent<ChoicesButton>();
-        button.Setup(this.freeLootIcon, "Free Loot", "No enemies.");
     }
 }
