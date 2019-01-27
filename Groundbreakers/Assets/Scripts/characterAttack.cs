@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class characterAttack : MonoBehaviour
 {
@@ -14,13 +15,17 @@ public class characterAttack : MonoBehaviour
 
     public Animator animator;
 
-    private bool delay = false;
-
     private float fireCountdown = 0f;
 
     private Transform target;
 
+    private List<GameObject> targetedEnemies;
+
     // draw the attack range of the character selected
+
+    void Awake() { targetedEnemies = new List<GameObject>(); }
+
+
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, this.range);
@@ -38,11 +43,12 @@ public class characterAttack : MonoBehaviour
         if (rangeattack != null)
         {
             rangeattack.chase(this.target);
+            //rangeattack.transform.position = Vector3.MoveTowards(transform.position, this.target.position, 100f);
         }
     }
 
     void Start() {
-        this.InvokeRepeating("updateTarget", 0f, 0.1f);
+        //this.InvokeRepeating("updateTarget", 0f, 0.1f);
     }
 
     void Update() {
@@ -67,70 +73,40 @@ public class characterAttack : MonoBehaviour
         
 
         this.fireCountdown -= Time.deltaTime;
-        
-    }
-
-    // update the closest target in range
-    void updateTarget() {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float distanceToEnemy = Vector2.Distance(this.transform.position, enemy.transform.position);
-
-            if (distanceToEnemy < shortestDistance)
-            {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
-            }
-
-            if (nearestEnemy != null && shortestDistance <= this.range)
-            {
-                this.target = nearestEnemy.transform;
-            }
-            else
-            {
-                this.target = null;
-            }
-        }
-
-        //update player position
-        if(nearestEnemy != null)
+        if (target != null)
         {
             //calculate angle
-            Vector2 direction = nearestEnemy.transform.position - this.transform.position;
+            Vector2 direction = target.transform.position - this.transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            
-            if(angle < 0)
+
+            if (angle < 0)
             {
-                angle = angle + 360f; 
+                angle = angle + 360f;
             }
 
             //check if it's pointing right
-            if( (angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+            if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
             {
                 animator.SetBool("FacingRight", true);
                 animator.SetBool("FacingLeft", false);
                 animator.SetBool("FacingUp", false);
                 animator.SetBool("FacingDown", false);
             }
-            else if(angle >= 45  && angle < 135) //check if it's pointing up
+            else if (angle >= 45 && angle < 135) //check if it's pointing up
             {
                 animator.SetBool("FacingRight", false);
                 animator.SetBool("FacingLeft", false);
                 animator.SetBool("FacingUp", true);
                 animator.SetBool("FacingDown", false);
             }
-            else if(angle >= 135 && angle < 225) //check if it's pointing left
+            else if (angle >= 135 && angle < 225) //check if it's pointing left
             {
                 animator.SetBool("FacingRight", false);
                 animator.SetBool("FacingLeft", true);
                 animator.SetBool("FacingUp", false);
                 animator.SetBool("FacingDown", false);
             }
-            else if(angle >= 225 && angle < 315) //check if it's pointing down
+            else if (angle >= 225 && angle < 315) //check if it's pointing down
             {
                 animator.SetBool("FacingRight", false);
                 animator.SetBool("FacingLeft", false);
@@ -139,6 +115,48 @@ public class characterAttack : MonoBehaviour
             }
             //Debug.Log(angle);
         }
+    }
+
+
+
+   //if an enemy enters in range
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Enemy")
+        {
+            targetedEnemies.Add(other.gameObject);
+            updateTarget();
+        }
+        
        
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Enemy")
+        {
+            targetedEnemies.Remove(other.gameObject);
+            updateTarget();
+        }
+    }
+
+
+    // update the closest target in range
+    void updateTarget() {
+          
+          if(targetedEnemies.Count != 0)
+          {
+            target = targetedEnemies[0].transform;
+          }
+          else
+          {
+            target = null;
+          }
+    }
+        
+        
+
+       
+
+    
 }

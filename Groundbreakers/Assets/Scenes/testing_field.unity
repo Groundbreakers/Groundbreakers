@@ -3071,7 +3071,7 @@ PrefabInstance:
     - target: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.261
+      value: 3.205
       objectReference: {fileID: 0}
     - target: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
@@ -5060,6 +5060,22 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 1141448327}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &2101997560
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101997558}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!4 &2101997561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
@@ -5080,28 +5096,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTag: Enemy
   fireRate: 1
-  range: 4
+  range: 3
   rangeAttackFirepoint: {fileID: 582342189}
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
-  animator: {fileID: 2101997559}
---- !u!114 &2101997563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101997558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2bc9a0807ce61b44983791c831c3048, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  POW: 1
-  ROF: 1
-  RNG: 2
-  MOB: 3
-  AMP: 1
   animator: {fileID: 2101997559}
 --- !u!1001 &2105541262
 PrefabInstance:

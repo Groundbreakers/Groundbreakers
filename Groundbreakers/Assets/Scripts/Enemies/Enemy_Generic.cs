@@ -32,6 +32,7 @@
 
         #endregion
 
+        public int time = 0;
         void Start()
         {
             this.GetNextWaypoint();
@@ -64,6 +65,8 @@
             {
                 this.StunTick();
             }
+
+            time++;
         }
 
         // Damage handler
