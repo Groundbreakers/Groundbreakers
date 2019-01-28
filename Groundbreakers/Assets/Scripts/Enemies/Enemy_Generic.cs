@@ -53,6 +53,7 @@
 
         #endregion
 
+        public int time = 0;
         void Start()
         {
             this.startingPosition = this.gameObject.transform.position;
@@ -133,6 +134,8 @@
             {
                 this.StunTick();
             }
+
+            time++;
         }
 
         // Damage handler
