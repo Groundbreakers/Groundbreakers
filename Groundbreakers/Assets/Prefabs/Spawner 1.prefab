@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4468312392129855947}
   - component: {fileID: 4388172865430627302}
   - component: {fileID: 1002423794600617361}
+  - component: {fileID: 9019184801822416787}
   m_Layer: 0
   m_Name: Spawner 1
   m_TagString: Untagged
@@ -44,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782c68d6bb5c8e94ebb364748650d073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minion: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a, type: 3}
   totalWaves: 5
   waveDuration: 30
   timeBeforeFirstWave: 2
@@ -96,3 +96,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9019184801822416787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5050378152402868157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e00e931e92b8b944810f9cdbbf28bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+      type: 3}
+    amount: 5
+  - prefab: {fileID: 3171230714936546568, guid: 9e68422ad8f6c934d84c696a1cfa0f13,
+      type: 3}
+    amount: 3

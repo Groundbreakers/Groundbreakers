@@ -45,7 +45,7 @@
 
             this.sprite.color = this.originalColor;
 
-            BattleManager.Instance.SetCurrentSelectedTile(this.transform);
+            BattleManager.Instance.SetCurrentSelectedTile(null);
         }
     }
 }

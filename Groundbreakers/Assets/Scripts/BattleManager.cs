@@ -193,6 +193,8 @@
             {
                 var newPos = this.currentSelectedTile.position;
 
+                Debug.Log(newPos);
+
                 // Todo: encapsulate in methods
                 if (this.characterPoll.Count < 5 && this.CanDeployAt(newPos)) 
                 {

@@ -6,12 +6,10 @@
 
     using UnityEngine;
 
+    [RequireComponent(typeof(EnemyGroup))]
     public class MobSpawner : MonoBehaviour
     {
         #region Inspector Variables
-
-        [SerializeField]
-        private GameObject minion = null;
 
         [SerializeField]
         private int totalWaves = 5;
@@ -28,9 +26,11 @@
 
         private List<Vector3> associatedPath;
 
-        private bool active = false;
+        private bool active;
 
-        private int currentWave = 0;
+        private int currentWave;
+
+        private EnemyGroup group;
 
         #endregion
 
@@ -40,6 +40,11 @@
         }
 
         #region Unity callbacks
+
+        private void Start()
+        {
+            this.group = this.GetComponent<EnemyGroup>();
+        }
 
         private void OnEnable()
         {
@@ -82,14 +87,13 @@
 
             while (this.currentWave < this.totalWaves)
             {
-                // This for loop is *TEMP*
-                for (int i = 10 - 1; i >= 0; i--)
+                while (!this.group.Done())
                 {
-                    // Spawn
-                    this.InstantiateEnemyAtSpawnPoint();
+                    this.InstantiateEnemyAtSpawnPoint(this.group.GetNext());
 
                     yield return new WaitForSeconds(1.0f);
                 }
+
 
                 this.currentWave++;
                 BattleManager.Instance.OnWaveUpdate(this.currentWave);
@@ -101,15 +105,11 @@
             // Now we have finished this level
         }
 
-        /// <summary>
-        /// The spawn enemy.
-        /// </summary>
-        private void InstantiateEnemyAtSpawnPoint()
+        private void InstantiateEnemyAtSpawnPoint(GameObject minion)
         {
             var startingPoint = this.transform.position;
 
-            // Todo: Generalize the enemies using enemy groups
-            var instance = Instantiate(this.minion, startingPoint, Quaternion.identity);
+            var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
             // Set enemies path
             instance.GetComponent<Enemy_Generic>().SetWayPoints(this.associatedPath);
