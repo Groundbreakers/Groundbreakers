@@ -82,7 +82,7 @@
 
             while (this.currentWave < this.totalWaves)
             {
-                // TEMP
+                // This for loop is *TEMP*
                 for (int i = 10 - 1; i >= 0; i--)
                 {
                     // Spawn
@@ -92,10 +92,13 @@
                 }
 
                 this.currentWave++;
+                BattleManager.Instance.OnWaveUpdate(this.currentWave);
 
                 // Wait until next round
                 yield return new WaitForSeconds(this.waveDuration);
             }
+
+            // Now we have finished this level
         }
 
         /// <summary>

@@ -20,9 +20,6 @@
 
         #region Inspector Variables
 
-        //[SerializeField]
-        //private GameObject spawner = null;
-
         #endregion
 
         #region Private Fields
@@ -166,48 +163,23 @@
                     });
 
             StartListening(
-                "block ready",
+                "update wave",
                 () =>
                     {
-                        GameState = Stages.Combating;
+                        GameState = Stages.Exiting;
                     });
         }
 
         public void Start()
         {
-            //this.gameMap = this.GetComponent<GameMap>();
 
-            //this.gameMap.spawner = this.spawner;
         }
 
         public void Update()
         {
-            // Debug only
-            if (Input.GetKeyDown("space"))
-            {
-                switch (GameState)
-                {
-                    case Stages.Null:
-                        GameState = Stages.Entering;
-                        break;
-                    case Stages.Entering:
-                        GameState = Stages.Combating;
-                        break;
-                    case Stages.Combating:
-                        GameState = Stages.Exiting;
-                        break;
-                    case Stages.Exiting:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                Debug.Log(GameState);
-            }
-
             if (Input.GetKeyDown("q"))
             {
-                BattleManager.TriggerEvent("test");
+                TriggerEvent("test");
             }
         }
 
@@ -215,10 +187,19 @@
 
         #region On Event Handler
 
-        private void OnBlocksReady()
+        public void OnWaveUpdate(int currentWave)
         {
-            // When all blocks are in position, change the stage. 
-            GameState = Stages.Combating;
+            Debug.Log("Current wave " + currentWave);
+
+            // Todo: make it more generic
+            if (currentWave == 5 - 1)
+            {
+                Debug.Log("Bing");
+                GameState = Stages.Exiting;
+                TriggerEvent("battle finished");
+            }
+
+            // Should update the UI.
         }
 
         #endregion

@@ -43,6 +43,7 @@
         {
             // Setup event listener
             BattleManager.StartListening("test", this.OnTilesEntering);
+            BattleManager.StartListening("battle finished", this.OnTilesExiting);
 
             // Initialize field
             this.rb2D = this.GetComponent<Rigidbody2D>();
