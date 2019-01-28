@@ -96,8 +96,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 70
   target: {fileID: 0}
-  damage: 1
-  armorpen: 2
+  damage: 100
+  armorpen: 80
 --- !u!61 &4101858626869767788
 BoxCollider2D:
   m_ObjectHideFlags: 0
