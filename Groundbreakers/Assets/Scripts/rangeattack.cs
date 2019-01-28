@@ -4,34 +4,21 @@ using UnityEngine;
 
 public class rangeattack : MonoBehaviour
 {
+    public int armorpen = 2;
+
+    public int damage = 1;
+
     public float speed = 10f;
 
     public Transform target;
-    
-    public int damage = 1;
 
-    public int armorpen = 2;
-
-
-    public void chase(Transform _target) {
+    public void chase(Transform _target)
+    {
         this.target = _target;
     }
 
-    void Update() {
-        if (this.target == null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        Vector3 direction = this.target.position - this.transform.position;
-        float distancePerFrame = this.speed * Time.deltaTime;
-
-        this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
-    }
-      
     // Deals damage to the enemies
-    void OnTriggerEnter2D(Collider2D hitTarget)
+    private void OnTriggerEnter2D(Collider2D hitTarget)
     {
         if (hitTarget.gameObject.tag == "Enemy")
         {
@@ -39,5 +26,19 @@ public class rangeattack : MonoBehaviour
             hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
             Destroy(this.gameObject);
         }
+    }
+
+    private void Update()
+    {
+        if (this.target == null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        var direction = this.target.position - this.transform.position;
+        var distancePerFrame = this.speed * Time.deltaTime;
+
+        this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
     }
 }

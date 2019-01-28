@@ -20,7 +20,7 @@
 
         #region Internal Variables
 
-        private const float TempOffset = 9.0f;
+        private const float TempOffset = 10.0f;
 
         private Rigidbody2D rb2D;
 
@@ -44,6 +44,11 @@
             this.sprite = this.GetComponent<SpriteRenderer>();
         }
 
+        public void OnDisable()
+        {
+            BattleManager.StopListening("test", this.OnTilesEntering);
+        }
+
         public void Start()
         {
             // Saving starting position
@@ -52,7 +57,6 @@
             this.transform.SetPositionAndRotation(
                 new Vector3(this.originalPosition.x, this.originalPosition.y - TempOffset),
                 Quaternion.identity);
-
         }
 
         public void FixedUpdate()
@@ -63,7 +67,8 @@
                     break;
                 case BattleManager.Stages.Entering:
                     this.CheckTileReachDestination();
-                    //GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) - 1;
+
+                    // GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) - 1;
                     break;
                 case BattleManager.Stages.Combating:
                     break;

@@ -163,7 +163,6 @@
         public void Start()
         {
             this.gameMap = this.GetComponent<GameMap>();
-
         }
 
         public void Update()

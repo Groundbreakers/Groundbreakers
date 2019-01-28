@@ -88,8 +88,11 @@
             this.tilesHolder.SetParent(this.mapHolder);
 
             this.GenerateTerrain();
-            this.CreatePath(0, 3);
-            this.CreatePath(4, 7);
+
+            // this.CreatePath(0, 3);
+            // this.CreatePath(4, 7);
+
+            this.CreateTempPaths();
             this.CreateGameBoard();
 
             // Locating the mother board
@@ -263,6 +266,28 @@
                 this.data[current, depth] = Tiles.Path;
                 depth++;
             }
+        }
+
+        private void CreateTempPaths()
+        {
+            this.data[1, 0] = Tiles.Path;
+            this.data[1, 1] = Tiles.Path;
+            this.data[1, 2] = Tiles.Path;
+            this.data[1, 3] = Tiles.Path;
+            this.data[1, 4] = Tiles.Path;
+            this.data[1, 5] = Tiles.Path;
+            this.data[1, 6] = Tiles.Path;
+            this.data[1, 7] = Tiles.Path;
+
+            this.data[5, 0] = Tiles.Path;
+            this.data[5, 1] = Tiles.Path;
+            this.data[5, 2] = Tiles.Path;
+            this.data[5, 3] = Tiles.Path;
+            this.data[5, 4] = Tiles.Path;
+            this.data[6, 4] = Tiles.Path;
+            this.data[6, 5] = Tiles.Path;
+            this.data[6, 6] = Tiles.Path;
+            this.data[6, 7] = Tiles.Path;
         }
 
         #endregion
