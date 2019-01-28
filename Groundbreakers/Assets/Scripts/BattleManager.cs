@@ -20,11 +20,8 @@
 
         #region Inspector Variables
 
-        [SerializeField]
-        private GameObject spawner = null;
-
-        [SerializeField]
-        private GameObject wayPoint = null;
+        //[SerializeField]
+        //private GameObject spawner = null;
 
         #endregion
 
@@ -159,11 +156,28 @@
 
         #region Unity Callbacks
 
+        public void OnEnable()
+        {
+            StartListening(
+                "block ready",
+                () =>
+                    {
+                        GameState = Stages.Combating;
+                    });
+
+            StartListening(
+                "block ready",
+                () =>
+                    {
+                        GameState = Stages.Combating;
+                    });
+        }
+
         public void Start()
         {
-            this.gameMap = this.GetComponent<GameMap>();
+            //this.gameMap = this.GetComponent<GameMap>();
 
-            this.gameMap.spawner = this.spawner;
+            //this.gameMap.spawner = this.spawner;
         }
 
         public void Update()
@@ -195,6 +209,16 @@
             {
                 BattleManager.TriggerEvent("test");
             }
+        }
+
+        #endregion
+
+        #region On Event Handler
+
+        private void OnBlocksReady()
+        {
+            // When all blocks are in position, change the stage. 
+            GameState = Stages.Combating;
         }
 
         #endregion

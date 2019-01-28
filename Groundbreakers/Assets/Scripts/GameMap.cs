@@ -10,7 +10,7 @@
     {
         #region Internal Constants
 
-        private const uint Dimension = 8;
+        public const uint Dimension = 8;
 
         private const float CellSize = 1.0f;
 
@@ -29,6 +29,9 @@
 
         [SerializeField]
         private GameObject tilePath = null;
+
+        [SerializeField]
+        private GameObject spawner = null;
 
         [SerializeField]
         [Range(0.0f, 10.0f)]
@@ -64,10 +67,7 @@
         // Temp solution, will fix later
         private List<Vector3> pathA = new List<Vector3>();
         private List<Vector3> pathB = new List<Vector3>();
-
-        public GameObject spawner;
         
-
         #endregion
 
         #region Public Properties
@@ -193,7 +193,6 @@
                     var instance = this.InstantiateTileAt(this.data[i, j], i, j);
 
                     this.tileBlocks[i, j] = instance.transform;
-                    Debug.Log("a");
                 }
             }
         }

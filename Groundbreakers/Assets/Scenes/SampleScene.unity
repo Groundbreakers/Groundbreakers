@@ -311,8 +311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e00639b60cb50b46a32253a06ee72fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner: {fileID: 5050378152402868157, guid: d6bce0e6fdbc75f41b1a8be064854f03, type: 3}
-  wayPoint: {fileID: 0}
 --- !u!4 &1936963042
 Transform:
   m_ObjectHideFlags: 0
@@ -344,8 +342,8 @@ MonoBehaviour:
   tileC: {fileID: 8551013971022768650, guid: 23b3ca1f61ecfe6448292c64a101db6b, type: 3}
   tilePath: {fileID: 1809324964200828645, guid: a602e853128d0da45b66c9bf7da59b5b,
     type: 3}
+  spawner: {fileID: 5050378152402868157, guid: d6bce0e6fdbc75f41b1a8be064854f03, type: 3}
   frequency: 4.58
   grassMax: 0.65
   sandMax: 0.45
   stoneMax: 1
-  spawner: {fileID: 0}

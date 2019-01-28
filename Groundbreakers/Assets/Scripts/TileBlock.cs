@@ -10,6 +10,11 @@
     [RequireComponent(typeof(Rigidbody2D))]
     public class TileBlock : MonoBehaviour, IBattlePhaseHandler
     {
+        // 8 * 8 = 64
+        private const uint TotalBlocks = GameMap.Dimension * GameMap.Dimension; 
+
+        private static uint blocksReady = 0;
+
         #region Inspector Variables
 
         [SerializeField]
@@ -27,6 +32,8 @@
         private SpriteRenderer sprite;
 
         private Vector3 originalPosition;
+
+        private bool stabled = false;
 
         #endregion
 
@@ -61,21 +68,17 @@
 
         public void FixedUpdate()
         {
-            switch (BattleManager.GameState)
+            if (!this.stabled && this.CheckTileReachDestination())
             {
-                case BattleManager.Stages.Null:
-                    break;
-                case BattleManager.Stages.Entering:
-                    this.CheckTileReachDestination();
+                this.stabled = true;
+                blocksReady++;
 
-                    // GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) - 1;
-                    break;
-                case BattleManager.Stages.Combating:
-                    break;
-                case BattleManager.Stages.Exiting:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                // Check if all tiles are ready and emit event.
+                if (blocksReady == TotalBlocks)
+                {
+                    Debug.Log("All block ready");
+                    BattleManager.TriggerEvent("block ready");
+                }
             }
         }
 
