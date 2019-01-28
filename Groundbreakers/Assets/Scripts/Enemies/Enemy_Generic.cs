@@ -149,7 +149,7 @@
             {
                 flyingMod = 0.75f;
             }
-            if (accuracyroll < accuracy && dodgeroll > this.evasion + flyingMod )
+            if (accuracyroll <= accuracy && dodgeroll > this.evasion + flyingMod )
             {
                 int damagevalue;
                 if (this.attributes.Contains("Armored"))
