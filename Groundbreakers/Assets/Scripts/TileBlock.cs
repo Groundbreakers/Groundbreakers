@@ -34,6 +34,10 @@
 
         public void OnEnable()
         {
+            // Setup event listener
+            BattleManager.StartListening("test", this.OnTilesEntering);
+
+            // Initialize field
             this.rb2D = this.GetComponent<Rigidbody2D>();
             this.rb2D.gravityScale = 0f;
 
