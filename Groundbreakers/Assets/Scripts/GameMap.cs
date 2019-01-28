@@ -101,12 +101,6 @@
 
             this.CreateTempPaths();
             this.CreateGameBoard();
-
-            // Locating the mother board
-            float newX = -Dimension * CellSize / 2.0f;
-            float newY = -Dimension * CellSize / 2.0f;
-
-            this.mapHolder.SetPositionAndRotation(new Vector3(newX, newY, 0.0f), Quaternion.identity);
         }
 
         #endregion
@@ -116,11 +110,6 @@
         public Transform GetTileAt(int x, int y)
         {
             return this.tileBlocks[x, y];
-        }
-
-        public List<Vector3> GetPathA()
-        {
-            return this.pathA;
         }
 
         #endregion
@@ -251,7 +240,7 @@
             }
 
             // Finally Instantiate it.
-            var instance = Instantiate(tile, new Vector3(x * CellSize, y * CellSize, 0f), Quaternion.identity);
+            var instance = Instantiate(tile, new Vector3(x * CellSize, y * CellSize, 0.0f), Quaternion.identity);
 
             instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - y;
             instance.transform.SetParent(this.tilesHolder);
@@ -300,7 +289,6 @@
             this.pathB.Add(new Vector3(5, 6));
             this.pathB.Add(new Vector3(5, 7));
 
-
             foreach (var pos in this.pathA)
             {
                 this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
@@ -311,8 +299,27 @@
                 this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
             }
 
-            // Temp instantiate Spanwer
-            Instantiate(this.spawner, this.pathA[0], Quaternion.identity);
+            // Temp instantiate Spanwer B
+            var newX = this.pathA[0].x;
+            var newY = this.pathA[0].y;
+            var instance = Instantiate(
+                this.spawner, 
+                new Vector3(newX * CellSize, newY * CellSize), 
+                Quaternion.identity);
+
+            instance.GetComponent<MobSpawner>().SetAssociativePath(this.pathA);
+            instance.transform.SetParent(this.mapHolder);
+
+            // Temp instantiate Spanwer B
+            newX = this.pathB[0].x;
+            newY = this.pathB[0].y;
+            instance = Instantiate(
+                this.spawner,
+                new Vector3(newX * CellSize, newY * CellSize),
+                Quaternion.identity);
+
+            instance.GetComponent<MobSpawner>().SetAssociativePath(this.pathB);
+            instance.transform.SetParent(this.mapHolder);
         }
 
         #endregion

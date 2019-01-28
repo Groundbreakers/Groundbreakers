@@ -1,5 +1,6 @@
 ﻿namespace Assets.Scripts
 {
+    using System.Collections;
     using System.Collections.Generic;
     using Assets.Enemies.Scripts;
 
@@ -27,28 +28,80 @@
 
         private List<Vector3> associatedPath;
 
+        private bool active = false;
+
+        private int currentWave = 0;
+
         #endregion
+
+        public void SetAssociativePath(List<Vector3> path)
+        {
+            this.associatedPath = path;
+        }
+
+        #region Unity callbacks
 
         private void OnEnable()
         {
             // Setup event listener
-            BattleManager.StartListening("spawn", this.SpawnEnemy);
-        }
-
-        private void Start()
-        {
-            var map = BattleManager.Instance.GetComponent<GameMap>();
-            this.associatedPath = map.GetPathA();
+            // BattleManager.StartListening("spawn", this.InstantiateEnemyAtSpawnPoint);
         }
 
         private void Update()
         {
-            
+            if (BattleManager.GameState != BattleManager.Stages.Combating)
+            {
+                return;
+            }
+
+            this.StartWaves();
         }
+
+        #endregion
 
         #region Internal Functions
 
-        private void SpawnEnemy()
+        private void StartWaves()
+        {
+            if (!this.active)
+            {
+                this.active = true;
+                this.StartCoroutine(this.SpawnWave());
+            }
+        }
+
+        /// <summary>
+        /// The main function that spawns the 5 waves
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerator"/>.
+        /// </returns>
+        private IEnumerator SpawnWave()
+        {
+            yield return new WaitForSeconds(this.timeBeforeFirstWave);
+
+            while (this.currentWave < this.totalWaves)
+            {
+                // TEMP
+                for (int i = 10 - 1; i >= 0; i--)
+                {
+                    // Spawn
+                    this.InstantiateEnemyAtSpawnPoint();
+
+                    yield return new WaitForSeconds(1.0f);
+                }
+
+                this.currentWave++;
+
+                // Wait until next round
+                yield return new WaitForSeconds(this.waveDuration);
+            }
+        }
+
+        /// <summary>
+        /// The spawn enemy.
+        /// </summary>
+        private void InstantiateEnemyAtSpawnPoint()
         {
             var startingPoint = this.transform.position;
 
@@ -57,6 +110,7 @@
 
             // Set enemies path
             instance.GetComponent<Enemy_Generic>().SetWayPoints(this.associatedPath);
+            instance.transform.SetParent(this.transform.parent);
         }
 
         #endregion

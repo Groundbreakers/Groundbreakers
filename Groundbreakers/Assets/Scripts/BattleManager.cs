@@ -195,11 +195,6 @@
             {
                 BattleManager.TriggerEvent("test");
             }
-
-            if (Input.GetKeyDown("w"))
-            {
-                BattleManager.TriggerEvent("spawn");
-            }
         }
 
         #endregion

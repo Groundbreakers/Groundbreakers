@@ -1,24 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PackLists : MonoBehaviour
+﻿namespace Assets.Scripts
 {
-    // References to all enemy prefabs go here
-    public Transform FireBatPrefab;
+    using System.Collections.Generic;
 
-    // List of enemy packs. Stored as an array of Lists of prefabs. CHANGE THIS NUMBER WHEN YOU ADD PACKS
-    public List<Transform>[] Packs = new List<Transform>[2];
+    using UnityEngine;
 
-    void Awake()
+    public class PackLists : MonoBehaviour
     {
-        this.PackInitialization();
-    }
+        // References to all enemy prefabs go here
+        public Transform FireBatPrefab;
 
-    // Add all packs here using "new List<Transform>(new Transform[]{ENEMY PREFABS});
-    void PackInitialization()
-    {
-        this.Packs[0] = new List<Transform>(new Transform[]{ this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab });
-        this.Packs[1] = new List<Transform>(new Transform[]{ this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab });
+        // List of enemy packs. Stored as an array of Lists of prefabs. CHANGE THIS NUMBER WHEN YOU ADD PACKS
+        public List<Transform>[] Packs = new List<Transform>[2];
+
+        private void Awake()
+        {
+            this.PackInitialization();
+        }
+
+        // Add all packs here using "new List<Transform>(new Transform[]{ENEMY PREFABS});
+        private void PackInitialization()
+        {
+            this.Packs[0] = new List<Transform>(
+                new[]
+                    {
+                        this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab,
+                        this.FireBatPrefab
+                    });
+            this.Packs[1] = new List<Transform>(new[] { this.FireBatPrefab, this.FireBatPrefab, this.FireBatPrefab });
+        }
     }
 }

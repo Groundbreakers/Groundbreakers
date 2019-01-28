@@ -1,96 +1,102 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Assets.Enemies.Scripts;
-
-using UnityEngine;
-
-using Random = UnityEngine.Random;
-
-public class WaveSpawner : MonoBehaviour
+namespace Assets.Scripts
 {
-    public Transform spawnPoint1;
-    public Transform spawnPoint2;
+    using System.Collections;
+    using System.Collections.Generic;
 
-    private float timeBtwWaves = 30f;
-    private float timeBeforeFirstWave = 2f;
+    using Assets.Enemies.Scripts;
 
-    private int WaveNum = 0;
+    using UnityEngine;
 
-    // Waypoint lists
-    public List<Vector3> path1 = new List<Vector3>();
-    public List<Vector3> path2 = new List<Vector3>();
-
-    // Packs for paths 1 and 2. Stored as an array of Lists of prefabs.
-    public List<Transform>[] pack1 = new List<Transform>[5];
-    public List<Transform>[] pack2 = new List<Transform>[5];
-
-    void Start()
+    public class WaveSpawner : MonoBehaviour
     {
-        GetNewPacks(0,1);
-    }
+        // Packs for paths 1 and 2. Stored as an array of Lists of prefabs.
+        private List<Transform>[] pack1 = new List<Transform>[5];
 
-    // Updates timers, spawning a wave if 30 seconds are up.
-    void Update() {
-        if (this.timeBeforeFirstWave <= 0f && this.WaveNum < 5)
+        private List<Transform>[] pack2 = new List<Transform>[5];
+
+        // Waypoint lists
+        private List<Vector3> path1 = new List<Vector3>();
+
+        private List<Vector3> path2 = new List<Vector3>();
+
+        private Transform spawnPoint1;
+
+        private Transform spawnPoint2;
+
+        private float timeBeforeFirstWave = 2f;
+
+        private float timeBtwWaves = 30f;
+
+        private int WaveNum;
+
+        // Adds a waypoint to a path. Presumably called by the terrain generator.
+        public void addPoint(Transform point, int path)
         {
-            this.StartCoroutine(this.SpawnWave(WaveNum));
-            this.timeBeforeFirstWave = this.timeBtwWaves;
+            if (path == 1)
+            {
+                this.path1.Add(point.position);
+            }
+            else
+            {
+                this.path2.Add(point.position);
+            }
         }
 
-        this.timeBeforeFirstWave -= Time.deltaTime;
-    }
-
-    // Spawns a wave at each lane, then increments the wave number.
-    IEnumerator SpawnWave(int num)
-    {
-        Transform thisEnemy;
-        for (int i = 0; i < this.pack1[num].Count || i < this.pack2[num].Count; i++)
+        // Gets the packs for a level. Use lowerRange and upperRange to specify which packs to use.
+        public void GetNewPacks(int lowerRange, int upperRange)
         {
-            if (i < this.pack1[num].Count)
+            int diceroll1, diceroll2;
+            for (var i = 0; i < 5; i++)
             {
-                thisEnemy = Instantiate(this.pack1[num][i], this.spawnPoint1.position, this.spawnPoint1.rotation);
-                thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path1);
+                diceroll1 = Random.Range(lowerRange, upperRange + 1);
+                this.pack1[i] = new List<Transform>();
+                this.pack1[i].AddRange(this.GetComponent<PackLists>().Packs[diceroll1]);
+
+                diceroll2 = Random.Range(lowerRange, upperRange + 1);
+                this.pack2[i] = new List<Transform>();
+                this.pack2[i].AddRange(this.GetComponent<PackLists>().Packs[diceroll2]);
+            }
+        }
+
+        // Spawns a wave at each lane, then increments the wave number.
+        private IEnumerator SpawnWave(int num)
+        {
+            Transform thisEnemy;
+            for (var i = 0; i < this.pack1[num].Count || i < this.pack2[num].Count; i++)
+            {
+                if (i < this.pack1[num].Count)
+                {
+                    thisEnemy = Instantiate(this.pack1[num][i], this.spawnPoint1.position, this.spawnPoint1.rotation);
+                    thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path1);
+                }
+
+                if (i < this.pack2[num].Count)
+                {
+                    thisEnemy = Instantiate(this.pack2[num][i], this.spawnPoint2.position, this.spawnPoint2.rotation);
+                    thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path2);
+                }
+
+                yield return new WaitForSeconds(1f);
             }
 
-            if (i < this.pack2[num].Count)
+            this.WaveNum++;
+        }
+
+        private void Start()
+        {
+            this.GetNewPacks(0, 1);
+        }
+
+        // Updates timers, spawning a wave if 30 seconds are up.
+        private void Update()
+        {
+            if (this.timeBeforeFirstWave <= 0f && this.WaveNum < 5)
             {
-                thisEnemy = Instantiate(this.pack2[num][i], this.spawnPoint2.position, this.spawnPoint2.rotation);
-                thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path2);
+                this.StartCoroutine(this.SpawnWave(this.WaveNum));
+                this.timeBeforeFirstWave = this.timeBtwWaves;
             }
-            yield return new WaitForSeconds(1f);
-        }
 
-        this.WaveNum++;
-    }
-
-    // Adds a waypoint to a path. Presumably called by the terrain generator.
-    public void addPoint(Transform point, int path)
-    {
-        if (path == 1)
-        {
-            this.path1.Add(point.position);
-        }
-        else
-        {
-            this.path2.Add(point.position);
-        }
-    }
-
-    // Gets the packs for a level. Use lowerRange and upperRange to specify which packs to use.
-    public void GetNewPacks(int lowerRange, int upperRange)
-    {
-        int diceroll1, diceroll2;
-        for (int i = 0; i < 5; i++)
-        {
-            diceroll1 = Random.Range(lowerRange, upperRange + 1);
-            this.pack1[i] = new List<Transform>();
-            this.pack1[i].AddRange(this.GetComponent<PackLists>().Packs[diceroll1]);
-
-            diceroll2 = Random.Range(lowerRange, upperRange + 1);
-            this.pack2[i] = new List<Transform>();
-            this.pack2[i].AddRange(this.GetComponent<PackLists>().Packs[diceroll2]);
+            this.timeBeforeFirstWave -= Time.deltaTime;
         }
     }
 }
