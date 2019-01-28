@@ -6489,7 +6489,7 @@ Canvas:
   m_GameObject: {fileID: 5623790535995462809}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -6499,7 +6499,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &5623790535995462800
 MonoBehaviour:
@@ -6583,6 +6583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mytext: {fileID: 5623790535938796771}
+  healthPoint: 20
 --- !u!114 &5623790535995462804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6653,6 +6654,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 5623790536735988555}
+  node: {fileID: 0}
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
+  character5: {fileID: 0}
 --- !u!114 &5623790535995462814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6666,6 +6673,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 5623790535896599992}
+  node: {fileID: 0}
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
+  character5: {fileID: 0}
+  character1Pos: {fileID: 0}
+  character2Pos: {fileID: 0}
+  character3Pos: {fileID: 0}
+  character4Pos: {fileID: 0}
+  character5Pos: {fileID: 0}
 --- !u!114 &5623790535995462807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9462,6 +9480,7 @@ GameObject:
   - component: {fileID: 5623790536386699598}
   - component: {fileID: 5623790536386699592}
   - component: {fileID: 4791149456481221889}
+  - component: {fileID: 3230133665694496812}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -9537,6 +9556,27 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!223 &3230133665694496812
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5623790536386699594}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: -10
+  m_TargetDisplay: 0
 --- !u!1 &5623790536397798814
 GameObject:
   m_ObjectHideFlags: 0
