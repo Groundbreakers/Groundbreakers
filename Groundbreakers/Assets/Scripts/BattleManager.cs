@@ -20,13 +20,18 @@
 
         #region Inspector Variables
 
+        [SerializeField]
+        private GameObject character;
+
         #endregion
 
         #region Private Fields
 
         private Dictionary<string, UnityEvent> eventDictionary;
 
-        private GameMap gameMap = null;
+        private List<GameObject> characterPoll = new List<GameObject>();
+
+        private Transform currentSelectedTile = null;
 
         #endregion
 
@@ -172,20 +177,52 @@
 
         public void Start()
         {
-
+            // Initialize Character poll
         }
 
         public void Update()
         {
+            // This is for debugging purpose
             if (Input.GetKeyDown("q"))
             {
                 TriggerEvent("test");
+            }
+
+            // These are actual part Input Update *NOT FINAL*
+            if (this.currentSelectedTile && Input.GetMouseButtonDown(0))
+            {
+                var newPos = this.currentSelectedTile.position;
+
+                // Todo: encapsulate in methods
+                if (this.characterPoll.Count < 5 && this.CanDeployAt(newPos)) 
+                {
+                    var instance = Instantiate(this.character, newPos, Quaternion.identity);
+                    this.characterPoll.Add(instance);
+                }
+            }
+
+            if (this.currentSelectedTile && Input.GetMouseButtonDown(1))
+            {
+                var pos = this.currentSelectedTile.position;
+
+                var selected = this.characterPoll.Find(x => Math.Abs(Vector3.Distance(pos, x.transform.position)) < Mathf.Epsilon);
+
+                if (selected)
+                {
+                    // *Not final*
+                    this.characterPoll.Remove(selected);
+                    Destroy(selected);
+                }
+                else
+                {
+                    // Play error sound?
+                }
             }
         }
 
         #endregion
 
-        #region On Event Handler
+        #region Public Functions
 
         public void OnWaveUpdate(int currentWave)
         {
@@ -202,6 +239,11 @@
             // Should update the UI.
         }
 
+        public void SetCurrentSelectedTile(Transform currentGrid)
+        {
+            this.currentSelectedTile = currentGrid;
+        }
+
         #endregion
 
         #region Internal functions  
@@ -212,6 +254,19 @@
             {
                 this.eventDictionary = new Dictionary<string, UnityEvent>();
             }
+        }
+
+        private bool CanDeployAt(Vector3 pos)
+        {
+            if (!this.GetComponent<GameMap>().CanDeployAt(pos))
+            {
+                return false;
+            }
+
+            // Then check all player
+            var selected = this.characterPoll.Find(chara => Math.Abs(Vector3.Distance(pos, chara.transform.position)) < Mathf.Epsilon);
+
+            return !selected;
         }
 
         #endregion

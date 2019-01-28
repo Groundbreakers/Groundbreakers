@@ -107,9 +107,14 @@
 
         #region Public functions
 
-        public Transform GetTileAt(int x, int y)
+        public bool CanDeployAt(Vector3 pos)
         {
-            return this.tileBlocks[x, y];
+            return this.data[(int)pos.x, (int)pos.y] != Tiles.Path;
+        }
+
+        public Transform GetTileAt(Vector3 pos)
+        {
+            return this.tileBlocks[(int)pos.x, (int)pos.y];
         }
 
         #endregion

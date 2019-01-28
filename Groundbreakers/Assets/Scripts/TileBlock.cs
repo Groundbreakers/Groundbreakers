@@ -10,8 +10,7 @@
     [RequireComponent(typeof(Rigidbody2D))]
     public class TileBlock : MonoBehaviour, IBattlePhaseHandler
     {
-        // 8 * 8 = 64
-        private const uint TotalBlocks = GameMap.Dimension * GameMap.Dimension; 
+        private const uint TotalBlocks = GameMap.Dimension * GameMap.Dimension; // 8 * 8 = 64
 
         private static uint blocksReady = 0;
 
