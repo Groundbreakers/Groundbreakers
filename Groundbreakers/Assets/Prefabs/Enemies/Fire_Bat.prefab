@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3171230714936546568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.6338036, y: 0.7357236, z: 0.0022056424}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -115,12 +115,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f8be7e63c6ca44c8f82627b1235771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  maxHealth: 400
+  health: 400
   speed: 1
+  speedMultiplier: 1
   power: 1
-  attributes: []
+  powerMultiplier: 1
+  evasion: 0
+  regen: 0
+  attributes:
+  - Armored
+  - Flying
   deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
     type: 3}
+  waypointList: []
 --- !u!114 &4499857591035348143
 MonoBehaviour:
   m_ObjectHideFlags: 0

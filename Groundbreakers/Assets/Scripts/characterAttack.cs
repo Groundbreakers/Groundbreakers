@@ -22,7 +22,6 @@ public class characterAttack : MonoBehaviour
     private string attackMode = "default";
 
     private List<GameObject> targetedEnemies;
-
     // draw the attack range of the character selected
 
     void Awake() { targetedEnemies = new List<GameObject>(); }
@@ -52,7 +51,7 @@ public class characterAttack : MonoBehaviour
     void Start() {
         //this.InvokeRepeating("updateTarget", 0f, 0.1f);
     }
-
+    
     void Update() {
         this.fireCount();
 
@@ -131,20 +130,17 @@ public class characterAttack : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (Input.GetKeyDown("r"))
-        {
+        if (Input.GetKeyDown("r")) {
             this.attackMode = "multi-shot";
             //Debug.Log(this.attackMode);
         }
-        else if (Input.GetKeyDown("n"))
-        {
+        else if (Input.GetKeyDown("n")) {
             this.attackMode = "default";
             //Debug.Log(this.attackMode);
         }
     }
 
-    void fireCount()
-    {
+    void fireCount() {
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
@@ -160,10 +156,7 @@ public class characterAttack : MonoBehaviour
         this.fireCountdown -= Time.deltaTime;
     }
 
-
-    void defaultMode()
-    {
-
+    void defaultMode() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
