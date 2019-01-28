@@ -61,6 +61,13 @@
 
         private Transform[,] tileBlocks;
 
+        // Temp solution, will fix later
+        private List<Vector3> pathA = new List<Vector3>();
+        private List<Vector3> pathB = new List<Vector3>();
+
+        public GameObject spawner;
+        
+
         #endregion
 
         #region Public Properties
@@ -109,6 +116,11 @@
         public Transform GetTileAt(int x, int y)
         {
             return this.tileBlocks[x, y];
+        }
+
+        public List<Vector3> GetPathA()
+        {
+            return this.pathA;
         }
 
         #endregion
@@ -270,24 +282,37 @@
 
         private void CreateTempPaths()
         {
-            this.data[1, 0] = Tiles.Path;
-            this.data[1, 1] = Tiles.Path;
-            this.data[1, 2] = Tiles.Path;
-            this.data[1, 3] = Tiles.Path;
-            this.data[1, 4] = Tiles.Path;
-            this.data[1, 5] = Tiles.Path;
-            this.data[1, 6] = Tiles.Path;
-            this.data[1, 7] = Tiles.Path;
+            this.pathA.Add(new Vector3(1, 0));
+            this.pathA.Add(new Vector3(1, 1));
+            this.pathA.Add(new Vector3(1, 2));
+            this.pathA.Add(new Vector3(1, 3));
+            this.pathA.Add(new Vector3(1, 4));
+            this.pathA.Add(new Vector3(1, 5));
+            this.pathA.Add(new Vector3(1, 6));
+            this.pathA.Add(new Vector3(1, 7));
 
-            this.data[5, 0] = Tiles.Path;
-            this.data[5, 1] = Tiles.Path;
-            this.data[5, 2] = Tiles.Path;
-            this.data[5, 3] = Tiles.Path;
-            this.data[5, 4] = Tiles.Path;
-            this.data[6, 4] = Tiles.Path;
-            this.data[6, 5] = Tiles.Path;
-            this.data[6, 6] = Tiles.Path;
-            this.data[6, 7] = Tiles.Path;
+            this.pathB.Add(new Vector3(5, 0));
+            this.pathB.Add(new Vector3(5, 1));
+            this.pathB.Add(new Vector3(5, 2));
+            this.pathB.Add(new Vector3(5, 3));
+            this.pathB.Add(new Vector3(5, 4));
+            this.pathB.Add(new Vector3(5, 5));
+            this.pathB.Add(new Vector3(5, 6));
+            this.pathB.Add(new Vector3(5, 7));
+
+
+            foreach (var pos in this.pathA)
+            {
+                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
+            }
+
+            foreach (var pos in this.pathB)
+            {
+                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
+            }
+
+            // Temp instantiate Spanwer
+            Instantiate(this.spawner, this.pathA[0], Quaternion.identity);
         }
 
         #endregion

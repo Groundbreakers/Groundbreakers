@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
 
     using UnityEngine;
     using UnityEngine.Events;
@@ -163,6 +162,8 @@
         public void Start()
         {
             this.gameMap = this.GetComponent<GameMap>();
+
+            this.gameMap.spawner = this.spawner;
         }
 
         public void Update()
@@ -194,34 +195,12 @@
             {
                 BattleManager.TriggerEvent("test");
             }
+
+            if (Input.GetKeyDown("w"))
+            {
+                BattleManager.TriggerEvent("spawn");
+            }
         }
-
-        #endregion
-
-        #region IBattlePhaseHandler
-
-        //public void OnTilesEntering()
-        //{
-        //    foreach (Transform child in this.tilesHolder)
-        //    {
-        //        var tb = child.GetComponent<TileBlock>();
-        //        tb.OnTilesEntering();
-        //    }
-        //}
-
-        //public void OnBattling()
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //public void OnTilesExiting()
-        //{
-        //    foreach (Transform child in this.tilesHolder)
-        //    {
-        //        var tb = child.GetComponent<TileBlock>();
-        //        tb.OnTilesExiting();
-        //    }
-        //}
 
         #endregion
 
@@ -235,8 +214,6 @@
             }
         }
 
-
         #endregion
-
     }
 }

@@ -19,8 +19,8 @@ public class WaveSpawner : MonoBehaviour
     private int WaveNum = 0;
 
     // Waypoint lists
-    public List<Transform> path1 = new List<Transform>();
-    public List<Transform> path2 = new List<Transform>();
+    public List<Vector3> path1 = new List<Vector3>();
+    public List<Vector3> path2 = new List<Vector3>();
 
     // Packs for paths 1 and 2. Stored as an array of Lists of prefabs.
     public List<Transform>[] pack1 = new List<Transform>[5];
@@ -51,13 +51,13 @@ public class WaveSpawner : MonoBehaviour
             if (i < this.pack1[num].Count)
             {
                 thisEnemy = Instantiate(this.pack1[num][i], this.spawnPoint1.position, this.spawnPoint1.rotation);
-                thisEnemy.GetComponent<Enemy_Generic>().waypointList = this.path1;
+                thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path1);
             }
 
             if (i < this.pack2[num].Count)
             {
                 thisEnemy = Instantiate(this.pack2[num][i], this.spawnPoint2.position, this.spawnPoint2.rotation);
-                thisEnemy.GetComponent<Enemy_Generic>().waypointList = this.path2;
+                thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path2);
             }
             yield return new WaitForSeconds(1f);
         }
@@ -70,11 +70,11 @@ public class WaveSpawner : MonoBehaviour
     {
         if (path == 1)
         {
-            this.path1.Add(point);
+            this.path1.Add(point.position);
         }
         else
         {
-            this.path2.Add(point);
+            this.path2.Add(point.position);
         }
     }
 

@@ -30,8 +30,11 @@
         public GameObject deathEffect;
 
         // Positioning objects and variables
-        public List<Transform> waypointList;
-        private Transform target;
+
+        // I am changing these this to Vector3 now - Ivan
+        private List<Vector3> waypointList;
+        private Vector3 target;
+
         private int waypointIndex = -1;
         private Vector3 startingPosition;
 
@@ -50,6 +53,15 @@
         private float blightTimer = 1;
         private float burnTimer = 1;
         private float regenTimer = 1;
+
+        #endregion
+
+        #region Ivan's Change
+
+        public void SetWayPoints(List<Vector3> path)
+        {
+            this.waypointList = path;
+        }
 
         #endregion
 
@@ -121,11 +133,11 @@
             if (!this.isStunned)
             {
                 // Move the enemy towards the target waypoint
-                Vector2 dir = this.target.position - this.transform.position;
+                Vector2 dir = this.target - this.transform.position;
                 this.transform.Translate(dir.normalized * this.speed * this.speedMultiplier * Time.deltaTime, Space.World);
 
                 // Check if the waypoint has been reached
-                if (Vector2.Distance(this.transform.position, this.target.position) <= 0.01f)
+                if (Vector2.Distance(this.transform.position, this.target) <= 0.01f)
                 {
                     this.GetNextWaypoint();
                 }

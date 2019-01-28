@@ -1,5 +1,8 @@
 ﻿namespace Assets.Scripts
 {
+    using System.Collections.Generic;
+    using Assets.Enemies.Scripts;
+
     using UnityEngine;
 
     public class MobSpawner : MonoBehaviour
@@ -20,9 +23,22 @@
 
         #endregion
 
+        #region Internal fields
+
+        private List<Vector3> associatedPath;
+
+        #endregion
+
+        private void OnEnable()
+        {
+            // Setup event listener
+            BattleManager.StartListening("spawn", this.SpawnEnemy);
+        }
+
         private void Start()
         {
-
+            var map = BattleManager.Instance.GetComponent<GameMap>();
+            this.associatedPath = map.GetPathA();
         }
 
         private void Update()
@@ -32,9 +48,15 @@
 
         #region Internal Functions
 
-        private void Spawn()
+        private void SpawnEnemy()
         {
+            var startingPoint = this.transform.position;
 
+            // Todo: Generalize the enemies using enemy groups
+            var instance = Instantiate(this.minion, startingPoint, Quaternion.identity);
+
+            // Set enemies path
+            instance.GetComponent<Enemy_Generic>().SetWayPoints(this.associatedPath);
         }
 
         #endregion
