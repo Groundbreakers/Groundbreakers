@@ -4,31 +4,21 @@ using UnityEngine;
 
 public class rangeattack : MonoBehaviour
 {
-    public int armorpen = 2;
+    public float speed = 70f;
+
+    public Transform target;
 
     public int damage = 1;
 
-    public float speed = 10f;
+    public int armorpen = 2;
 
-    public Transform target;
 
     public void chase(Transform _target)
     {
         this.target = _target;
     }
 
-    // Deals damage to the enemies
-    private void OnTriggerEnter2D(Collider2D hitTarget)
-    {
-        if (hitTarget.gameObject.tag == "Enemy")
-        {
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
-            Destroy(this.gameObject);
-        }
-    }
-
-    private void Update()
+    void Update()
     {
         if (this.target == null)
         {
@@ -36,9 +26,20 @@ public class rangeattack : MonoBehaviour
             return;
         }
 
-        var direction = this.target.position - this.transform.position;
-        var distancePerFrame = this.speed * Time.deltaTime;
+        Vector3 direction = this.target.position - this.transform.position;
+        float distancePerFrame = this.speed * Time.deltaTime;
 
-        this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
+        transform.Translate(direction.normalized * distancePerFrame, Space.World);
+    }
+
+    // Deals damage to the enemies
+    void OnTriggerEnter2D(Collider2D hitTarget)
+    {
+        if (hitTarget.gameObject.tag == "Enemy")
+        {
+            //hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen);
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+            Destroy(this.gameObject);
+        }
     }
 }
