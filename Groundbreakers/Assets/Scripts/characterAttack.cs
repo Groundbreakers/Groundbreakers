@@ -19,6 +19,8 @@ public class characterAttack : MonoBehaviour
 
     private Transform target;
 
+    private string attackMode = "default";
+
     private List<GameObject> targetedEnemies;
 
     // draw the attack range of the character selected
@@ -52,27 +54,8 @@ public class characterAttack : MonoBehaviour
     }
 
     void Update() {
-        
-        if (this.target == null)
-        {
-            animator.SetBool("Firing", false);
-            return;
-            
-        }
-            
+        this.fireCount();
 
-
-        if (this.fireCountdown <= 0f)
-        {
-            animator.SetBool("Firing", true);
-            this.shoot();
-            this.fireCountdown = 1f / this.fireRate;
-            
-        }
-
-        
-
-        this.fireCountdown -= Time.deltaTime;
         if (target != null)
         {
             //calculate angle
@@ -119,7 +102,7 @@ public class characterAttack : MonoBehaviour
 
 
 
-   //if an enemy enters in range
+    //if an enemy enters in range
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
@@ -143,20 +126,66 @@ public class characterAttack : MonoBehaviour
 
     // update the closest target in range
     void updateTarget() {
-          
-          if(targetedEnemies.Count != 0)
-          {
-            target = targetedEnemies[0].transform;
-          }
-          else
-          {
-            target = null;
-          }
+        if (this.attackMode == "default") defaultMode();
     }
-        
-        
 
-       
+    void OnMouseOver()
+    {
+        if (Input.GetKeyDown("r"))
+        {
+            this.attackMode = "multi-shot";
+            //Debug.Log(this.attackMode);
+        }
+        else if (Input.GetKeyDown("n"))
+        {
+            this.attackMode = "default";
+            //Debug.Log(this.attackMode);
+        }
+    }
 
-    
+    void fireCount()
+    {
+        if (this.target == null)
+        {
+            animator.SetBool("Firing", false);
+            return;
+        }
+
+        if (this.fireCountdown <= 0f)
+        {
+            this.shoot();
+            this.fireCountdown = 1f / this.fireRate;
+        }
+
+        this.fireCountdown -= Time.deltaTime;
+    }
+
+
+    void defaultMode()
+    {
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestEnemy = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector2.Distance(this.transform.position, enemy.transform.position);
+
+            if (distanceToEnemy < shortestDistance)
+            {
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy;
+            }
+
+            if (nearestEnemy != null && shortestDistance <= this.range)
+            {
+                this.target = nearestEnemy.transform;
+            }
+            else
+            {
+                this.target = null;
+            }
+        }
+    }
 }
