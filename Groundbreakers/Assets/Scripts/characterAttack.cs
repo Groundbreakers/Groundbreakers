@@ -26,12 +26,6 @@ public class characterAttack : MonoBehaviour
 
     void Awake() { targetedEnemies = new List<GameObject>(); }
 
-
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, this.range);
-    }
-
     // Instantiate and and chase the target
     void shoot() {
         GameObject rangeAttack_object = (GameObject)Instantiate(
@@ -44,12 +38,7 @@ public class characterAttack : MonoBehaviour
         if (rangeattack != null)
         {
             rangeattack.chase(this.target);
-            //rangeattack.transform.position = Vector3.MoveTowards(transform.position, this.target.position, 100f);
         }
-    }
-
-    void Start() {
-        //this.InvokeRepeating("updateTarget", 0f, 0.1f);
     }
     
     void Update() {
@@ -99,8 +88,6 @@ public class characterAttack : MonoBehaviour
         }
     }
 
-
-
     //if an enemy enters in range
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -109,8 +96,6 @@ public class characterAttack : MonoBehaviour
             targetedEnemies.Add(other.gameObject);
             updateTarget();
         }
-        
-       
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -149,6 +134,7 @@ public class characterAttack : MonoBehaviour
 
         if (this.fireCountdown <= 0f)
         {
+            animator.SetBool("Firing", true);
             this.shoot();
             this.fireCountdown = 1f / this.fireRate;
         }

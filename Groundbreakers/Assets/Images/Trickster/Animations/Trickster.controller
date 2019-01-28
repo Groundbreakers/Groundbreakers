@@ -37,7 +37,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 0}
   - m_Name: FacingUp
     m_Type: 4
@@ -3768,12 +3768,12 @@ AnimatorStateMachine:
   m_EntryTransitions:
   - {fileID: 1109704215730608290}
   m_StateMachineTransitions:
-  - first: {fileID: 1107178539237052298}
-    second:
-    - {fileID: 1109191506832185714}
   - first: {fileID: 1107602575596742686}
     second:
     - {fileID: 1109971220561908710}
+  - first: {fileID: 1107178539237052298}
+    second:
+    - {fileID: 1109191506832185714}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -504, y: -84, z: 0}
   m_EntryPosition: {x: -264, y: -84, z: 0}

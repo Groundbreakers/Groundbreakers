@@ -13,11 +13,6 @@ public class WaveSpawner : MonoBehaviour
     public Transform spawnPoint1;
     public Transform spawnPoint2;
 
-    private float timeBtwWaves = 30f;
-    private float timeBeforeFirstWave = 2f;
-
-    private int WaveNum = 0;
-
     // Waypoint lists
     public List<Transform> path1 = new List<Transform>();
     public List<Transform> path2 = new List<Transform>();
@@ -31,19 +26,8 @@ public class WaveSpawner : MonoBehaviour
         GetNewPacks(0,1);
     }
 
-    // Updates timers, spawning a wave if 30 seconds are up.
-    void Update() {
-        if (this.timeBeforeFirstWave <= 0f && this.WaveNum < 5)
-        {
-            this.StartCoroutine(this.SpawnWave(WaveNum));
-            this.timeBeforeFirstWave = this.timeBtwWaves;
-        }
-
-        this.timeBeforeFirstWave -= Time.deltaTime;
-    }
-
     // Spawns a wave at each lane, then increments the wave number.
-    IEnumerator SpawnWave(int num)
+    public IEnumerator SpawnWave(int num)
     {
         Transform thisEnemy;
         for (int i = 0; i < this.pack1[num].Count || i < this.pack2[num].Count; i++)
@@ -61,8 +45,6 @@ public class WaveSpawner : MonoBehaviour
             }
             yield return new WaitForSeconds(1f);
         }
-
-        this.WaveNum++;
     }
 
     // Adds a waypoint to a path. Presumably called by the terrain generator.

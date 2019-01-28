@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,28 +12,39 @@ public class Timer : MonoBehaviour
     public float countdown;
     public float waveDelay;
     public int waveCount;
+    public Boolean isBattle;
+
+    void Start()
+    {
+        this.isBattle = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            this.Initialize();
             this.Toggle();
         }
-        if (this.countdown <= 0F)
+
+        if (this.isBattle)
         {
-            this.waveCount += 1;
-            this.wave.text = "WAVE " + this.waveCount;
-            this.countdown = this.waveDelay;
-            NextWave(waveCount);
+            if (this.countdown <= 0F)
+            {
+                NextWave(waveCount);
+                this.waveCount += 1;
+                this.wave.text = "WAVE " + this.waveCount;
+                this.countdown = this.waveDelay;
+            }
+
+            this.countdown -= Time.deltaTime;
+            this.timer.text = Mathf.Round(this.countdown).ToString();
         }
-        this.countdown -= Time.deltaTime;
-        this.timer.text = Mathf.Round(this.countdown).ToString();
     }
 
     public void Initialize()
     {
+        this.isBattle = true;
         this.countdown = 10.0F;
         this.waveDelay = 30.0F;
         this.waveCount = 0;
@@ -42,11 +54,21 @@ public class Timer : MonoBehaviour
 
     public void NextWave(int count)
     {
-
+        GameObject battleManager = GameObject.Find("BattleManager");
+        WaveSpawner waveSpawner = battleManager.GetComponent<WaveSpawner>();
+        waveSpawner.StartCoroutine(waveSpawner.SpawnWave(count));
     }
 
     public void Toggle()
     {
         ui.SetActive(!ui.activeSelf);
+        if (!this.isBattle)
+        {
+            this.Initialize();
+        }
+        else
+        {
+            this.isBattle = false;
+        }
     }
 }

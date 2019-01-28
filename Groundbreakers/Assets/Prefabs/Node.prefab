@@ -93,17 +93,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748a71bdf4580624ab46a9f92ea21425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character1: {fileID: 6175580704399427360, guid: 7c6520b826cd815498a32f8ccf0271e7,
+  Character1: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
     type: 3}
-  Character2: {fileID: 6320350576026632519, guid: 2ccb2c10a84383e41b5ba17ac52bb3b1,
+  Character2: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
     type: 3}
-  Character3: {fileID: 6175580704399427360, guid: 7c6520b826cd815498a32f8ccf0271e7,
-    type: 3}
-  Character4: {fileID: 6175580704399427360, guid: 7c6520b826cd815498a32f8ccf0271e7,
-    type: 3}
-  Character5: {fileID: 6175580704399427360, guid: 7c6520b826cd815498a32f8ccf0271e7,
-    type: 3}
-  maximumCharacter: 5
   hoverColor: {r: 0.084905684, g: 0.0540673, b: 0.0540673, a: 0.23137255}
 --- !u!61 &4017891094411609680
 BoxCollider2D:
