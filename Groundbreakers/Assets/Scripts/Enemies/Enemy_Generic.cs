@@ -34,6 +34,10 @@
         private Transform target;
         private int waypointIndex = -1;
         private Vector3 startingPosition;
+        private Vector2 dir;
+        private float waypointDetection;
+        private float waypointWaitTime;
+        private bool waiting = false;
 
         // Animator
         private Animator animator;
@@ -57,9 +61,12 @@
         void Start()
         {
             this.startingPosition = this.gameObject.transform.position;
-            this.GetNextWaypoint();
             this.animator = this.GetComponent<Animator>();
             InitializeAttributes();
+            // Randomize position and waypoint accuracy
+            this.transform.Translate(new Vector3(Random.Range(-0.2f,0.3f),Random.Range(-0.2f,0.3f),0));
+            // Get first waypoint
+            this.GetNextWaypoint();
         }
 
         void Update()
@@ -121,13 +128,24 @@
             if (!this.isStunned)
             {
                 // Move the enemy towards the target waypoint
-                Vector2 dir = this.target.position - this.transform.position;
-                this.transform.Translate(dir.normalized * this.speed * this.speedMultiplier * Time.deltaTime, Space.World);
+                this.transform.Translate(this.dir.normalized * this.speed * this.speedMultiplier * Time.deltaTime, Space.World);
 
                 // Check if the waypoint has been reached
-                if (Vector2.Distance(this.transform.position, this.target.position) <= 0.01f)
+                if (Vector2.Distance(this.transform.position, this.target.position) <= this.waypointDetection)
                 {
-                    this.GetNextWaypoint();
+                    this.waiting = true;
+                }
+                // Do random 'wait time' if applicable
+                if (this.waiting == true)
+                {
+                    if (this.waypointWaitTime > 0)
+                    {
+                        this.waypointWaitTime -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        this.GetNextWaypoint();
+                    }
                 }
             }
             else
@@ -265,6 +283,20 @@
             }
             this.waypointIndex++;
             this.target = this.waypointList[this.waypointIndex];
+            // Get new random waypoint accuracy
+            this.dir = this.target.position - this.transform.position;
+            float positiondiceroll = Random.Range(-0.4f, 0.4f);
+            if (positiondiceroll < 0)
+            {
+                this.waypointDetection = 0.03f;
+                this.waypointWaitTime = Math.Abs(positiondiceroll);
+            }
+            else
+            {
+                this.waypointDetection = positiondiceroll;
+                this.waypointWaitTime = 0;
+            }
+            this.waiting = false;
             /* Direction animations
             Vector2 dir = this.target.position - this.transform.position; // Change animation to fit the angle
             if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0) { this.animator.SetInteger("Direction", 0); } // Up
