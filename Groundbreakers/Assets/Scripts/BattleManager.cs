@@ -30,7 +30,12 @@
 
         private List<GameObject> characterPoll = new List<GameObject>();
 
-        private Transform currentSelectedTile = null;
+        private Transform currentSelectedTile;
+
+        /// <summary>
+        /// This stores the HUD game object (bad solution)
+        /// </summary>
+        private GameObject uiCanvas;
 
         #endregion
 
@@ -110,7 +115,7 @@
         /// </param>
         public static void StartListening(string eventName, UnityAction listener)
         {
-            UnityEvent thisEvent = null;
+            UnityEvent thisEvent;
             if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
             {
                 thisEvent.AddListener(listener);
@@ -159,19 +164,11 @@
 
         public void OnEnable()
         {
-            StartListening(
-                "block ready",
-                () =>
-                    {
-                        GameState = Stages.Combating;
-                    });
+            this.uiCanvas = GameObject.Find("Canvas"); // should do a safe check
 
             StartListening(
-                "update wave",
-                () =>
-                    {
-                        GameState = Stages.Exiting;
-                    });
+                "block ready",
+                () => GameState = Stages.Combating);
         }
 
         public void Start()
@@ -182,7 +179,7 @@
         public void Update()
         {
             // This is for debugging purpose
-            if (Input.GetKeyDown("q"))
+            if (Input.GetKeyDown("space"))
             {
                 TriggerEvent("test");
             }
@@ -227,17 +224,16 @@
 
         public void OnWaveUpdate(int currentWave)
         {
-            Debug.Log("Current wave " + currentWave);
+            // Should update the UI. *NOT Final*
+            var timer = this.uiCanvas.GetComponent<Timer>();
+            timer.UpdateWave(currentWave);
+        }
 
-            // Todo: make it more generic
-            if (currentWave == 5 - 1)
-            {
-                Debug.Log("Bing");
-                GameState = Stages.Exiting;
-                TriggerEvent("battle finished");
-            }
-
-            // Should update the UI.
+        public void OnLevelFinished()
+        {
+            Debug.Log("Bing");
+            GameState = Stages.Exiting;
+            TriggerEvent("battle finished");
         }
 
         public void SetCurrentSelectedTile(Transform currentGrid)

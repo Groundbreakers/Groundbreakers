@@ -111,6 +111,7 @@
             }
 
             // Now we have finished this level
+            BattleManager.Instance.OnLevelFinished();
         }
 
         private void InstantiateEnemyAtSpawnPoint(GameObject minion)

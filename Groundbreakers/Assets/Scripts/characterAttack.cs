@@ -112,21 +112,6 @@
             }
         }
 
-        // Instantiate and and chase the target
-        private void shoot()
-        {
-            var rangeAttack_object = Instantiate(
-                this.rangeAttackPrefab,
-                this.rangeAttackFirepoint.position,
-                this.rangeAttackFirepoint.rotation);
-            var rangeattack = rangeAttack_object.GetComponent<Rangeattack>();
-
-            if (rangeattack != null)
-            {
-                rangeattack.Chase(this.target);
-            }
-        }
-
         private void Update()
         {
             this.fireCount();
@@ -185,6 +170,21 @@
             if (this.attackMode == "default")
             {
                 this.defaultMode();
+            }
+        }
+
+        // Instantiate and and chase the target
+        private void shoot()
+        {
+            GameObject rangeAttack_object = (GameObject)Instantiate(
+                this.rangeAttackPrefab,
+                this.rangeAttackFirepoint.position,
+                this.rangeAttackFirepoint.rotation);
+            RangeAttack rangeAttack = rangeAttack_object.GetComponent<RangeAttack>();
+
+            if (rangeAttack != null)
+            {
+                rangeAttack.Chase(this.target);
             }
         }
     }

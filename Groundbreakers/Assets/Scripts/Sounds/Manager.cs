@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Scripts;
+
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -13,14 +16,17 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Ivan's change
+        this.isBattle = BattleManager.GameState == BattleManager.Stages.Combating;
+
         // Press Spacebar to switch between themes
-        if (Input.GetKeyDown("space"))
-        {
-            if (isBattle)
-                isBattle = false;
-            else
-                isBattle = true;
-        }
+        //if (Input.GetKeyDown("space"))
+        //{
+        //    if (isBattle)
+        //        isBattle = false;
+        //    else
+        //        isBattle = true;
+        //}
 
         // Fade in & out effects
         if (isBattle)

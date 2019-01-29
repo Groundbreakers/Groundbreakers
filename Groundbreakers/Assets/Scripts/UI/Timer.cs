@@ -17,6 +17,11 @@ public class Timer : MonoBehaviour
     public int waveCount;
     public Boolean isBattle;
 
+    public void OnEnable()
+    {
+        BattleManager.StartListening("block ready", this.Toggle);
+    }
+
     void Start()
     {
         this.isBattle = false;
@@ -25,16 +30,17 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            this.Toggle();
-        }
-
-        if (this.isBattle)
+        //if (Input.GetKeyDown("space"))
+        //{
+        //    this.Toggle();
+        //}
+        
+        //if (this.isBattle)
+        if (BattleManager.GameState == BattleManager.Stages.Combating)
         {
             if (this.countdown <= 0F)
             {
-                NextWave(waveCount);
+                //NextWave(waveCount);
                 this.waveCount += 1;
                 this.wave.text = "WAVE " + this.waveCount;
                 this.countdown = this.waveDelay;
@@ -43,6 +49,14 @@ public class Timer : MonoBehaviour
             this.countdown -= Time.deltaTime;
             this.timer.text = Mathf.Round(this.countdown).ToString();
         }
+    }
+
+    public void UpdateWave(int wave)
+    {
+        this.waveCount = wave;
+        this.wave.text = "WAVE " + this.waveCount;
+        this.countdown = this.waveDelay;
+        this.timer.text = Mathf.Round(this.countdown).ToString();
     }
 
     public void Initialize()
@@ -65,7 +79,7 @@ public class Timer : MonoBehaviour
     public void Toggle()
     {
         ui.SetActive(!ui.activeSelf);
-        if (!this.isBattle)
+        if (BattleManager.GameState != BattleManager.Stages.Combating)
         {
             this.Initialize();
         }
