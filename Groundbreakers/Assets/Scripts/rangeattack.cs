@@ -1,46 +1,48 @@
-﻿using Assets.Enemies.Scripts;
-using Assets.Scripts.Enemies;
-
-using UnityEngine;
-
-public class rangeattack : MonoBehaviour
+﻿namespace Assets.Scripts
 {
-    public float speed = 70f;
+    using Assets.Scripts.Enemies;
 
-    public Transform target;
+    using UnityEngine;
 
-    public int damage = 10;
-
-    public int armorpen = 2;
-
-
-    public void chase(Transform _target)
+    public class Rangeattack : MonoBehaviour
     {
-        this.target = _target;
-    }
+        public int armorpen = 2;
 
-    void Update()
-    {
-        if (this.target == null)
+        public int damage = 10;
+
+        public float speed = 70f;
+
+        public Transform target;
+
+        public void Chase(Transform _target)
         {
-            Destroy(this.gameObject);
-            return;
+            this.target = _target;
         }
 
-        Vector3 direction = this.target.position - this.transform.position;
-        float distancePerFrame = this.speed * Time.deltaTime;
-
-        transform.Translate(direction.normalized * distancePerFrame, Space.World);
-    }
-
-    // Deals damage to the enemies
-    void OnTriggerEnter2D(Collider2D hitTarget)
-    {
-        if (hitTarget.gameObject.tag == "Enemy")
+        // Deals damage to the enemies
+        public void OnTriggerEnter2D(Collider2D hitTarget)
         {
-            hitTarget.gameObject.GetComponent<EnemyGeneric>().DamageEnemy(this.damage, this.armorpen, 1, false);
-            //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
-            Destroy(this.gameObject);
+            if (hitTarget.gameObject.tag == "Enemy")
+            {
+                hitTarget.gameObject.GetComponent<EnemyGeneric>().DamageEnemy(this.damage, this.armorpen, 1, false);
+
+                // hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+                Destroy(this.gameObject);
+            }
+        }
+
+        public void Update()
+        {
+            if (this.target == null)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+
+            var direction = this.target.position - this.transform.position;
+            var distancePerFrame = this.speed * Time.deltaTime;
+
+            this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
         }
     }
 }

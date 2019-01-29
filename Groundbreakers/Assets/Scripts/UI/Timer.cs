@@ -57,9 +57,9 @@ public class Timer : MonoBehaviour
 
     public void NextWave(int count)
     {
-        GameObject battleManager = GameObject.Find("BattleManager");
-        WaveSpawner waveSpawner = battleManager.GetComponent<WaveSpawner>();
-        waveSpawner.StartCoroutine(waveSpawner.SpawnWave(count));
+        //GameObject battleManager = GameObject.Find("BattleManager");
+        //WaveSpawner waveSpawner = battleManager.GetComponent<WaveSpawner>();
+        //waveSpawner.StartCoroutine(waveSpawner.SpawnWave(count));
     }
 
     public void Toggle()

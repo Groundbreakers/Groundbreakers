@@ -4,26 +4,36 @@
     using System.Collections.Generic;
 
     using UnityEditor;
+
     using UnityEngine;
+
+    using Random = UnityEngine.Random;
 
     public class EnemyGroup : MonoBehaviour
     {
+#pragma warning disable 649
         [SerializeField]
         private EnemyPrefab[] enemies;
-
-        #region Internal field
+#pragma warning restore 649
 
         private List<GameObject> enemyList = new List<GameObject>();
 
-        #endregion
-
-        #region Public Functions
-
         /// <summary>
-        /// Get the next enemy from this enemy group.
+        ///     Check if this queue has finished.
         /// </summary>
         /// <returns>
-        /// The <see cref="GameObject"/> a random enemy from this group.
+        ///     The <see cref="bool" /> True if queue is empty.
+        /// </returns>
+        public bool Done()
+        {
+            return this.enemyList.Count == 0;
+        }
+
+        /// <summary>
+        ///     Get the next enemy from this enemy group.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="GameObject" /> a random enemy from this group.
         /// </returns>
         public GameObject GetNext()
         {
@@ -34,18 +44,7 @@
         }
 
         /// <summary>
-        /// Check if this queue has finished. 
-        /// </summary>
-        /// <returns>
-        /// The <see cref="bool"/> True if queue is empty.
-        /// </returns>
-        public bool Done()
-        {
-            return this.enemyList.Count == 0;
-        }
-
-        /// <summary>
-        /// Resetting the queue, basically generate a new sequence of enemies.
+        ///     Resetting the queue, basically generate a new sequence of enemies.
         /// </summary>
         public void ReSet()
         {
@@ -56,7 +55,7 @@
                 var prefab = enemyPrefab.prefab;
                 var amount = enemyPrefab.amount;
 
-                for (int i = 0; i < amount; i++)
+                for (var i = 0; i < amount; i++)
                 {
                     this.enemyList.Add(prefab);
                 }
@@ -65,18 +64,10 @@
             Shuffle(this.enemyList);
         }
 
-        #endregion
-
-        #region Unity Callbacks
-
         public void Start()
         {
             this.ReSet();
         }
-
-        #endregion
-
-        #region Internal Functions
 
         private static void Shuffle<T>(IList<T> ts)
         {
@@ -84,31 +75,29 @@
             var last = count - 1;
             for (var i = 0; i < last; ++i)
             {
-                var r = UnityEngine.Random.Range(i, count);
+                var r = Random.Range(i, count);
                 var tmp = ts[i];
                 ts[i] = ts[r];
                 ts[r] = tmp;
             }
         }
-
-        #endregion
     }
 
     #region Inspector Editor
 
     /// <summary>
-    /// This Class basically serves as an interface for EnemyGroup's enemies field. 
+    ///     This Class basically serves as an interface for EnemyGroup's enemies field.
     /// </summary>
     [Serializable]
     public class EnemyPrefab
     {
-        public GameObject prefab;
-
         public int amount;
+
+        public GameObject prefab;
     }
 
     /// <summary>
-    /// This Class must exist because Unity Editor will need to refer to this.
+    ///     This Class must exist because Unity Editor will need to refer to this.
     /// </summary>
     [CustomPropertyDrawer(typeof(EnemyPrefab))]
     public class EnemyGroupDrawer : PropertyDrawer

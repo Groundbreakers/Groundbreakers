@@ -2,6 +2,7 @@
 {
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     /// The Tiles that can deploy behavior.
     /// Attach this component to any object if you wish to deploy the character on.

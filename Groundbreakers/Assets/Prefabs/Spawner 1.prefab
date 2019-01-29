@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalWaves: 5
   waveDuration: 30
-  timeBeforeFirstWave: 2
+  timeBeforeFirstWave: 10
 --- !u!212 &1002423794600617361
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109,6 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+  - amount: 7
+    prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
       type: 3}
-    amount: 5
