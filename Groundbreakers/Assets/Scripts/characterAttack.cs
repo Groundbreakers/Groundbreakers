@@ -25,21 +25,6 @@ public class characterAttack : MonoBehaviour
     // draw the attack range of the character selected
 
     void Awake() { targetedEnemies = new List<GameObject>(); }
-
-    // Instantiate and and chase the target
-    void shoot() {
-        GameObject rangeAttack_object = (GameObject)Instantiate(
-            this.rangeAttackPrefab,
-            this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation);
-        rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
-
-        
-        if (rangeattack != null)
-        {
-            rangeattack.chase(this.target);
-        }
-    }
     
     void Update() {
         this.fireCount();
@@ -107,7 +92,6 @@ public class characterAttack : MonoBehaviour
         }
     }
 
-
     // update the closest target in range
     void updateTarget() {
         if (this.attackMode == "default") defaultMode();
@@ -140,6 +124,21 @@ public class characterAttack : MonoBehaviour
         }
 
         this.fireCountdown -= Time.deltaTime;
+    }
+
+    // Instantiate and and chase the target
+    void shoot()
+    {
+        GameObject rangeAttack_object = (GameObject)Instantiate(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation);
+        rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
+
+        if (rangeattack != null)
+        {
+            rangeattack.chase(this.target);
+        }
     }
 
     void defaultMode() {

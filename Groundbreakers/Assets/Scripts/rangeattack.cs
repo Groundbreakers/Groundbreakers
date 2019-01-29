@@ -1,4 +1,6 @@
-﻿using Assets.Enemies.Scripts;
+﻿using System;
+
+using Assets.Enemies.Scripts;
 
 using UnityEngine;
 
@@ -12,6 +14,7 @@ public class rangeattack : MonoBehaviour
 
     public int armorpen = 2;
 
+    public Boolean hit;
 
     public void chase(Transform _target) {
         this.target = _target;
@@ -35,8 +38,12 @@ public class rangeattack : MonoBehaviour
     {
         if (hitTarget.gameObject.tag == "Enemy")
         {
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
-            //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+            if (!hit)
+            {
+                hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
+                //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+            }
+            this.hit = true;
             Destroy(this.gameObject);
         }
     }
