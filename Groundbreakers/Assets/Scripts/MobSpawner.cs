@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using Assets.Enemies.Scripts;
+    using Assets.Scripts.Enemies;
 
     using UnityEngine;
 
@@ -119,7 +120,7 @@
             var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
             // Set enemies path
-            instance.GetComponent<Enemy_Generic>().SetWayPoints(this.associatedPath);
+            instance.GetComponent<EnemyGeneric>().SetWayPoints(this.associatedPath);
             instance.transform.SetParent(this.transform.parent);
         }
 

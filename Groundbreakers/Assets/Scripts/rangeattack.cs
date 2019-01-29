@@ -1,4 +1,5 @@
 ﻿using Assets.Enemies.Scripts;
+using Assets.Scripts.Enemies;
 
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class rangeattack : MonoBehaviour
 
     public Transform target;
 
-    public int damage = 1;
+    public int damage = 10;
 
     public int armorpen = 2;
 
@@ -37,8 +38,8 @@ public class rangeattack : MonoBehaviour
     {
         if (hitTarget.gameObject.tag == "Enemy")
         {
-            //hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen);
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+            hitTarget.gameObject.GetComponent<EnemyGeneric>().DamageEnemy(this.damage, this.armorpen, 1, false);
+            //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
             Destroy(this.gameObject);
         }
     }

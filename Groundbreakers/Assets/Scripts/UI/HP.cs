@@ -6,21 +6,21 @@ using UnityEngine.UI;
 public class HP : MonoBehaviour
 {
     public Text mytext = null;
-    public static int healthPoint = 20;
+    public int healthPoint = 20;
 
     // Start is called before the first frame update
     void Start()
     {
-        mytext.text = healthPoint.ToString();
+        this.mytext.text = this.healthPoint.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        this.mytext.text = this.healthPoint.ToString();
+        if (this.healthPoint <= 0)
         {
-            healthPoint--;
-            mytext.text = healthPoint.ToString();
+            // Game Over
         }
     }
 }

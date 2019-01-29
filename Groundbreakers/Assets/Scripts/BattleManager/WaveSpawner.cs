@@ -4,6 +4,7 @@ namespace Assets.Scripts
     using System.Collections.Generic;
 
     using Assets.Enemies.Scripts;
+    using Assets.Scripts.Enemies;
 
     using UnityEngine;
 
@@ -59,7 +60,7 @@ namespace Assets.Scripts
         }
 
         // Spawns a wave at each lane, then increments the wave number.
-        private IEnumerator SpawnWave(int num)
+        public IEnumerator SpawnWave(int num)
         {
             Transform thisEnemy;
             for (var i = 0; i < this.pack1[num].Count || i < this.pack2[num].Count; i++)
@@ -67,13 +68,13 @@ namespace Assets.Scripts
                 if (i < this.pack1[num].Count)
                 {
                     thisEnemy = Instantiate(this.pack1[num][i], this.spawnPoint1.position, this.spawnPoint1.rotation);
-                    thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path1);
+                    thisEnemy.GetComponent<EnemyGeneric>().SetWayPoints(this.path1);
                 }
 
                 if (i < this.pack2[num].Count)
                 {
                     thisEnemy = Instantiate(this.pack2[num][i], this.spawnPoint2.position, this.spawnPoint2.rotation);
-                    thisEnemy.GetComponent<Enemy_Generic>().SetWayPoints(this.path2);
+                    thisEnemy.GetComponent<EnemyGeneric>().SetWayPoints(this.path2);
                 }
 
                 yield return new WaitForSeconds(1f);

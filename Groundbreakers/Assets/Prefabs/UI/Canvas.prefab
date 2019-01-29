@@ -6489,17 +6489,17 @@ Canvas:
   m_GameObject: {fileID: 5623790535995462809}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &5623790535995462800
 MonoBehaviour:
@@ -6552,10 +6552,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64ba44c563888342905783b788707da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundRawImage: {fileID: 5623790536386699593}
-  background1: {fileID: 0}
+  backgroundRawImage: {fileID: 4791149456481221889}
+  background1: {fileID: 2800000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
   background2: {fileID: 2800000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
-  background3: {fileID: 0}
+  background3: {fileID: 2800000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
 --- !u!114 &5623790535995462802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6583,6 +6583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mytext: {fileID: 5623790535938796771}
+  healthPoint: 20
 --- !u!114 &5623790535995462804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6639,6 +6640,7 @@ MonoBehaviour:
   countdown: 0
   waveDelay: 0
   waveCount: 0
+  isBattle: 0
 --- !u!114 &5623790535995462815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6652,6 +6654,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 5623790536735988555}
+  node: {fileID: 0}
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
+  character5: {fileID: 0}
 --- !u!114 &5623790535995462814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6665,6 +6673,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 5623790535896599992}
+  node: {fileID: 0}
+  character1: {fileID: 0}
+  character2: {fileID: 0}
+  character3: {fileID: 0}
+  character4: {fileID: 0}
+  character5: {fileID: 0}
+  character1Pos: {fileID: 0}
+  character2Pos: {fileID: 0}
+  character3Pos: {fileID: 0}
+  character4Pos: {fileID: 0}
+  character5Pos: {fileID: 0}
 --- !u!114 &5623790535995462807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9459,8 +9478,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5623790536386699595}
   - component: {fileID: 5623790536386699598}
-  - component: {fileID: 5623790536386699593}
   - component: {fileID: 5623790536386699592}
+  - component: {fileID: 4791149456481221889}
+  - component: {fileID: 3230133665694496812}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -9495,7 +9515,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5623790536386699594}
   m_CullTransparentMesh: 0
---- !u!114 &5623790536386699593
+--- !u!114 &5623790536386699592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5623790536386699594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 4
+  m_AspectRatio: 2.4096045
+--- !u!114 &4791149456481221889
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9522,20 +9556,27 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &5623790536386699592
-MonoBehaviour:
+--- !u!223 &3230133665694496812
+Canvas:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5623790536386699594}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1254083943, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 4
-  m_AspectRatio: 2.4096045
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: -10
+  m_TargetDisplay: 0
 --- !u!1 &5623790536397798814
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,20 +3,22 @@
     using System.Collections;
     using System.Collections.Generic;
 
+    using Assets.Scripts.Enemies;
+
     using UnityEngine;
 
-    [RequireComponent(typeof(Enemy_Generic))]
+    [RequireComponent(typeof(EnemyGeneric))]
     public class Fire_Bat_Script : MonoBehaviour
     {
         #region Variable Declarations
 
-        private Enemy_Generic enemy;
+        private EnemyGeneric enemy;
 
         #endregion
 
         void Start()
         {
-            enemy = this.GetComponent<Enemy_Generic>();
+            enemy = this.GetComponent<EnemyGeneric>();
         }
 
         void Update()

@@ -26,33 +26,24 @@ public class characterAttack : MonoBehaviour
 
     void Awake() { targetedEnemies = new List<GameObject>(); }
 
-
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, this.range);
-    }
-
     // Instantiate and and chase the target
-    void shoot() {
+    void shoot()
+    {
         GameObject rangeAttack_object = (GameObject)Instantiate(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
             this.rangeAttackFirepoint.rotation);
         rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
 
-        
+
         if (rangeattack != null)
         {
             rangeattack.chase(this.target);
-            //rangeattack.transform.position = Vector3.MoveTowards(transform.position, this.target.position, 100f);
         }
     }
 
-    void Start() {
-        //this.InvokeRepeating("updateTarget", 0f, 0.1f);
-    }
-    
-    void Update() {
+    void Update()
+    {
         this.fireCount();
 
         if (target != null)
@@ -67,39 +58,37 @@ public class characterAttack : MonoBehaviour
             }
 
             //check if it's pointing right
-            //if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
-            //{
-            //    animator.SetBool("FacingRight", true);
-            //    animator.SetBool("FacingLeft", false);
-            //    animator.SetBool("FacingUp", false);
-            //    animator.SetBool("FacingDown", false);
-            //}
-            //else if (angle >= 45 && angle < 135) //check if it's pointing up
-            //{
-            //    animator.SetBool("FacingRight", false);
-            //    animator.SetBool("FacingLeft", false);
-            //    animator.SetBool("FacingUp", true);
-            //    animator.SetBool("FacingDown", false);
-            //}
-            //else if (angle >= 135 && angle < 225) //check if it's pointing left
-            //{
-            //    animator.SetBool("FacingRight", false);
-            //    animator.SetBool("FacingLeft", true);
-            //    animator.SetBool("FacingUp", false);
-            //    animator.SetBool("FacingDown", false);
-            //}
-            //else if (angle >= 225 && angle < 315) //check if it's pointing down
-            //{
-            //    animator.SetBool("FacingRight", false);
-            //    animator.SetBool("FacingLeft", false);
-            //    animator.SetBool("FacingUp", false);
-            //    animator.SetBool("FacingDown", true);
-            //}
+            if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+            {
+                animator.SetBool("FacingRight", true);
+                animator.SetBool("FacingLeft", false);
+                animator.SetBool("FacingUp", false);
+                animator.SetBool("FacingDown", false);
+            }
+            else if (angle >= 45 && angle < 135) //check if it's pointing up
+            {
+                animator.SetBool("FacingRight", false);
+                animator.SetBool("FacingLeft", false);
+                animator.SetBool("FacingUp", true);
+                animator.SetBool("FacingDown", false);
+            }
+            else if (angle >= 135 && angle < 225) //check if it's pointing left
+            {
+                animator.SetBool("FacingRight", false);
+                animator.SetBool("FacingLeft", true);
+                animator.SetBool("FacingUp", false);
+                animator.SetBool("FacingDown", false);
+            }
+            else if (angle >= 225 && angle < 315) //check if it's pointing down
+            {
+                animator.SetBool("FacingRight", false);
+                animator.SetBool("FacingLeft", false);
+                animator.SetBool("FacingUp", false);
+                animator.SetBool("FacingDown", true);
+            }
             //Debug.Log(angle);
         }
     }
-
-
 
     //if an enemy enters in range
     void OnTriggerEnter2D(Collider2D other)
@@ -109,8 +98,6 @@ public class characterAttack : MonoBehaviour
             targetedEnemies.Add(other.gameObject);
             updateTarget();
         }
-        
-       
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -124,31 +111,36 @@ public class characterAttack : MonoBehaviour
 
 
     // update the closest target in range
-    void updateTarget() {
+    void updateTarget()
+    {
         if (this.attackMode == "default") defaultMode();
     }
 
     void OnMouseOver()
     {
-        if (Input.GetKeyDown("r")) {
+        if (Input.GetKeyDown("r"))
+        {
             this.attackMode = "multi-shot";
             //Debug.Log(this.attackMode);
         }
-        else if (Input.GetKeyDown("n")) {
+        else if (Input.GetKeyDown("n"))
+        {
             this.attackMode = "default";
             //Debug.Log(this.attackMode);
         }
     }
 
-    void fireCount() {
+    void fireCount()
+    {
         if (this.target == null)
         {
-            //animator.SetBool("Firing", false);
+            animator.SetBool("Firing", false);
             return;
         }
 
         if (this.fireCountdown <= 0f)
         {
+            animator.SetBool("Firing", true);
             this.shoot();
             this.fireCountdown = 1f / this.fireRate;
         }
@@ -156,7 +148,8 @@ public class characterAttack : MonoBehaviour
         this.fireCountdown -= Time.deltaTime;
     }
 
-    void defaultMode() {
+    void defaultMode()
+    {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
