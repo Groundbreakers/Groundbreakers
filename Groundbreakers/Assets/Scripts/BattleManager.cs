@@ -184,38 +184,38 @@
                 TriggerEvent("test");
             }
 
-            // These are actual part Input Update *NOT FINAL*
-            if (this.currentSelectedTile && Input.GetMouseButtonDown(0))
-            {
-                var newPos = this.currentSelectedTile.position;
+            //// These are actual part Input Update *NOT FINAL*
+            //if (this.currentSelectedTile && Input.GetMouseButtonDown(0))
+            //{
+            //    var newPos = this.currentSelectedTile.position;
 
-                // Todo: encapsulate in methods
-                if (this.characterPoll.Count < 5 && this.CanDeployAt(newPos)) 
-                {
-                    var instance = Instantiate(this.character, newPos, Quaternion.identity);
-                    this.characterPoll.Add(instance);
-                    this.currentSelectedTile.GetComponent<Deployable>().enabled = false;
-                }
-            }
+            //    // Todo: encapsulate in methods
+            //    if (this.characterPoll.Count < 5 && this.CanDeployAt(newPos)) 
+            //    {
+            //        var instance = Instantiate(this.character, newPos, Quaternion.identity);
+            //        this.characterPoll.Add(instance);
+            //        this.currentSelectedTile.GetComponent<Deployable>().enabled = false;
+            //    }
+            //}
 
-            if (this.currentSelectedTile && Input.GetMouseButtonDown(1))
-            {
-                var pos = this.currentSelectedTile.position;
+            //if (this.currentSelectedTile && Input.GetMouseButtonDown(1))
+            //{
+            //    var pos = this.currentSelectedTile.position;
 
-                var selected = this.characterPoll.Find(x => Math.Abs(Vector3.Distance(pos, x.transform.position)) < Mathf.Epsilon);
+            //    var selected = this.characterPoll.Find(x => Math.Abs(Vector3.Distance(pos, x.transform.position)) < Mathf.Epsilon);
 
-                if (selected)
-                {
-                    // *Not final*
-                    this.characterPoll.Remove(selected);
-                    Destroy(selected);
-                    this.currentSelectedTile.GetComponent<Deployable>().enabled = true;
-                }
-                else
-                {
-                    // Play error sound?
-                }
-            }
+            //    if (selected)
+            //    {
+            //        // *Not final*
+            //        this.characterPoll.Remove(selected);
+            //        Destroy(selected);
+            //        this.currentSelectedTile.GetComponent<Deployable>().enabled = true;
+            //    }
+            //    else
+            //    {
+            //        // Play error sound?
+            //    }
+            //}
         }
 
         #endregion
