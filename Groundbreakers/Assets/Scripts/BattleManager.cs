@@ -192,13 +192,12 @@
             {
                 var newPos = this.currentSelectedTile.position;
 
-                Debug.Log(newPos);
-
                 // Todo: encapsulate in methods
                 if (this.characterPoll.Count < 5 && this.CanDeployAt(newPos)) 
                 {
                     var instance = Instantiate(this.character, newPos, Quaternion.identity);
                     this.characterPoll.Add(instance);
+                    this.currentSelectedTile.GetComponent<Deployable>().enabled = false;
                 }
             }
 
@@ -213,6 +212,7 @@
                     // *Not final*
                     this.characterPoll.Remove(selected);
                     Destroy(selected);
+                    this.currentSelectedTile.GetComponent<Deployable>().enabled = true;
                 }
                 else
                 {

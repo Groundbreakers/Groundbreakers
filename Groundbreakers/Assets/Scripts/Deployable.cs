@@ -17,11 +17,18 @@
 
         private Color originalColor;
 
+        #region Unity Callbacks
+
         public void OnEnable()
         {
             this.sprite = this.GetComponent<SpriteRenderer>();
 
             this.originalColor = this.sprite.color;
+        }
+
+        public void OnDisable()
+        {
+            this.sprite.color = this.originalColor;
         }
 
         public void OnMouseOver()
@@ -31,14 +38,14 @@
                 return;
             }
 
+            BattleManager.Instance.SetCurrentSelectedTile(this.transform);
+
             if (!this.enabled)
             {
                 return;
             }
 
             this.sprite.color = this.mouseOverColor;
-
-            BattleManager.Instance.SetCurrentSelectedTile(this.transform);
         }
 
         public void OnMouseExit()
@@ -48,14 +55,16 @@
                 return;
             }
 
+            BattleManager.Instance.SetCurrentSelectedTile(null);
+
             if (!this.enabled)
             {
                 return;
             }
 
-            this.sprite.color = this.originalColor;
-
-            BattleManager.Instance.SetCurrentSelectedTile(null);
+            this.OnDisable();
         }
+
+        #endregion
     }
 }

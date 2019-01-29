@@ -19,6 +19,12 @@
 
         #region Public Functions
 
+        /// <summary>
+        /// Get the next enemy from this enemy group.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="GameObject"/> a random enemy from this group.
+        /// </returns>
         public GameObject GetNext()
         {
             const int Head = 0;
@@ -27,17 +33,24 @@
             return prefab;
         }
 
+        /// <summary>
+        /// Check if this queue has finished. 
+        /// </summary>
+        /// <returns>
+        /// The <see cref="bool"/> True if queue is empty.
+        /// </returns>
         public bool Done()
         {
             return this.enemyList.Count == 0;
         }
 
-        #endregion
-
-        #region Unity Callbacks
-
-        private void Start()
+        /// <summary>
+        /// Resetting the queue, basically generate a new sequence of enemies.
+        /// </summary>
+        public void ReSet()
         {
+            this.enemyList.Clear();
+
             foreach (var enemyPrefab in this.enemies)
             {
                 var prefab = enemyPrefab.prefab;
@@ -54,9 +67,18 @@
 
         #endregion
 
+        #region Unity Callbacks
+
+        public void Start()
+        {
+            this.ReSet();
+        }
+
+        #endregion
+
         #region Internal Functions
 
-        public static void Shuffle<T>(IList<T> ts)
+        private static void Shuffle<T>(IList<T> ts)
         {
             var count = ts.Count;
             var last = count - 1;

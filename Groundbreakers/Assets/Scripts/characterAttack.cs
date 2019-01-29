@@ -67,34 +67,34 @@ public class characterAttack : MonoBehaviour
             }
 
             //check if it's pointing right
-            if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
-            {
-                animator.SetBool("FacingRight", true);
-                animator.SetBool("FacingLeft", false);
-                animator.SetBool("FacingUp", false);
-                animator.SetBool("FacingDown", false);
-            }
-            else if (angle >= 45 && angle < 135) //check if it's pointing up
-            {
-                animator.SetBool("FacingRight", false);
-                animator.SetBool("FacingLeft", false);
-                animator.SetBool("FacingUp", true);
-                animator.SetBool("FacingDown", false);
-            }
-            else if (angle >= 135 && angle < 225) //check if it's pointing left
-            {
-                animator.SetBool("FacingRight", false);
-                animator.SetBool("FacingLeft", true);
-                animator.SetBool("FacingUp", false);
-                animator.SetBool("FacingDown", false);
-            }
-            else if (angle >= 225 && angle < 315) //check if it's pointing down
-            {
-                animator.SetBool("FacingRight", false);
-                animator.SetBool("FacingLeft", false);
-                animator.SetBool("FacingUp", false);
-                animator.SetBool("FacingDown", true);
-            }
+            //if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+            //{
+            //    animator.SetBool("FacingRight", true);
+            //    animator.SetBool("FacingLeft", false);
+            //    animator.SetBool("FacingUp", false);
+            //    animator.SetBool("FacingDown", false);
+            //}
+            //else if (angle >= 45 && angle < 135) //check if it's pointing up
+            //{
+            //    animator.SetBool("FacingRight", false);
+            //    animator.SetBool("FacingLeft", false);
+            //    animator.SetBool("FacingUp", true);
+            //    animator.SetBool("FacingDown", false);
+            //}
+            //else if (angle >= 135 && angle < 225) //check if it's pointing left
+            //{
+            //    animator.SetBool("FacingRight", false);
+            //    animator.SetBool("FacingLeft", true);
+            //    animator.SetBool("FacingUp", false);
+            //    animator.SetBool("FacingDown", false);
+            //}
+            //else if (angle >= 225 && angle < 315) //check if it's pointing down
+            //{
+            //    animator.SetBool("FacingRight", false);
+            //    animator.SetBool("FacingLeft", false);
+            //    animator.SetBool("FacingUp", false);
+            //    animator.SetBool("FacingDown", true);
+            //}
             //Debug.Log(angle);
         }
     }
@@ -143,7 +143,7 @@ public class characterAttack : MonoBehaviour
     void fireCount() {
         if (this.target == null)
         {
-            animator.SetBool("Firing", false);
+            //animator.SetBool("Firing", false);
             return;
         }
 

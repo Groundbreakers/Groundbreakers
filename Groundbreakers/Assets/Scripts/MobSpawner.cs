@@ -34,6 +34,12 @@
 
         #endregion
 
+        /// <summary>
+        /// Must set a path to this spawn, so that mobs generated will follow this path.
+        /// </summary>
+        /// <param name="path">
+        /// The path that this spawn is associated to.
+        /// </param>
         public void SetAssociativePath(List<Vector3> path)
         {
             this.associatedPath = path;
@@ -94,6 +100,7 @@
                     yield return new WaitForSeconds(1.0f);
                 }
 
+                this.group.ReSet();
 
                 this.currentWave++;
                 BattleManager.Instance.OnWaveUpdate(this.currentWave);

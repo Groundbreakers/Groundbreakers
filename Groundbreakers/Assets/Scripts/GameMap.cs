@@ -437,15 +437,14 @@
 
     #region Editor Stuff
 
-    //[Serializable]
-    //public class TilePrefab 
-    //{
-    //    public GameObject prefab;
+    [Serializable]
+    public class TilePrefab
+    {
+        public GameObject prefab;
 
-    //    public int amount;
-    //}
-    
+        public int amount;
+    }
+
 
     #endregion
-
 }
