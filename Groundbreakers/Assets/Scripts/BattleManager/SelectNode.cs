@@ -1,6 +1,4 @@
-﻿// Currently supports 2 characters, can always add more
-
-using System;
+﻿using System;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
