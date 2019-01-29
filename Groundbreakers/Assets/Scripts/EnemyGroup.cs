@@ -6,8 +6,6 @@
     using UnityEditor;
     using UnityEngine;
 
-    using Random = UnityEngine.Random;
-
     public class EnemyGroup : MonoBehaviour
     {
         [SerializeField]
@@ -76,6 +74,9 @@
 
     #region Inspector Editor
 
+    /// <summary>
+    /// This Class basically serves as an interface for EnemyGroup's enemies field. 
+    /// </summary>
     [Serializable]
     public class EnemyPrefab
     {
@@ -84,10 +85,12 @@
         public int amount;
     }
 
+    /// <summary>
+    /// This Class must exist because Unity Editor will need to refer to this.
+    /// </summary>
     [CustomPropertyDrawer(typeof(EnemyPrefab))]
     public class EnemyGroupDrawer : PropertyDrawer
     {
-        // Draw the property inside the given rect
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             // Using BeginProperty / EndProperty on the parent property means that

@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+
     using UnityEngine;
 
+    using Debug = UnityEngine.Debug;
     using Random = UnityEngine.Random;
 
     public class GameMap : MonoBehaviour
@@ -17,6 +20,9 @@
         #endregion
 
         #region Inspector Properties
+
+        //[SerializeField]
+        //private GameObject[] tiles;
 
         [SerializeField]
         private GameObject tileA = null;
@@ -64,10 +70,6 @@
 
         private Transform[,] tileBlocks;
 
-        // Temp solution, will fix later
-        private List<Vector3> pathA = new List<Vector3>();
-        private List<Vector3> pathB = new List<Vector3>();
-        
         #endregion
 
         #region Public Properties
@@ -78,6 +80,14 @@
             Grass,
             Stone,
             Wall,
+        }
+
+        [Flags]
+        public enum Direction
+        {
+            Down = 1,
+            Left = 2,
+            Right = 4,
         }
 
         #endregion
@@ -96,10 +106,14 @@
 
             this.GenerateTerrain();
 
-            // this.CreatePath(0, 3);
-            // this.CreatePath(4, 7);
+            // Generation Both Paths
+            var n = 12;
+            var path = this.CreatePathSmart(n, 0, 3); // 0, 1, 2, 3 ... 4, 5, 6, 7
+            this.RefreshPath(path);
 
-            this.CreateTempPaths();
+            path = this.CreatePathSmart(n, 4, 7);
+            this.RefreshPath(path);
+
             this.CreateGameBoard();
         }
 
@@ -120,6 +134,8 @@
         #endregion
 
         #region Internal functions
+
+        #region Terrain Generation Related
 
         /// <summary>
         /// The generate terrain, and store the information into the data field.
@@ -251,81 +267,185 @@
             return instance;
         }
 
-        private void CreatePath(int leftMargin, int rightMargin)
+        #endregion
+
+        #region Path Generation Related
+
+        /// <summary>
+        /// Get a new direction given the constrain.
+        /// </summary>
+        /// <param name="allowed">
+        /// The Bitmask that constrains your options
+        /// </param>
+        /// <returns>
+        /// The <see cref="Direction"/>.
+        /// </returns>
+        private Direction GetNewDirection(Direction allowed)
         {
-            var startIndex = Random.Range(leftMargin, rightMargin);
-
-            List<Vector2> path = new List<Vector2>();
-
-            // Naive path algorithm
-            var depth = 0;
-            var current = startIndex;
-            while (depth < Dimension)
+            Direction newDir;
+            do
             {
-                int newX;
-                newX = Random.Range(current - 1, current + 2);
-                newX = Mathf.Clamp(newX, leftMargin, rightMargin);
-
-                current = newX;
-
-                this.data[current, depth] = Tiles.Path;
-                depth++;
+                var values = Enum.GetValues(typeof(Direction));
+                newDir = (Direction)values.GetValue(Random.Range(0, values.Length));
             }
+            while ((allowed & newDir) == 0);
+            return newDir;
         }
 
-        private void CreateTempPaths()
+        /// <summary>
+        /// Using very dummy approach (Random Walk with constrains) to generate a path within the margins.
+        /// </summary>
+        /// <param name="leftMargin">
+        /// The left margin in index [0,...7]
+        /// </param>
+        /// <param name="rightMargin">
+        /// The right margin in index [0,...7]
+        /// </param>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// should not happen.
+        /// </exception>
+        private List<Vector3> CreatePath(int leftMargin, int rightMargin)
         {
-            this.pathA.Add(new Vector3(1, 0));
-            this.pathA.Add(new Vector3(1, 1));
-            this.pathA.Add(new Vector3(1, 2));
-            this.pathA.Add(new Vector3(1, 3));
-            this.pathA.Add(new Vector3(1, 4));
-            this.pathA.Add(new Vector3(1, 5));
-            this.pathA.Add(new Vector3(1, 6));
-            this.pathA.Add(new Vector3(1, 7));
+            List<Vector3> path = new List<Vector3>();
+            
+            var currentX = Random.Range(leftMargin, rightMargin + 1);
+            var currentY = 7;
 
-            this.pathB.Add(new Vector3(5, 0));
-            this.pathB.Add(new Vector3(5, 1));
-            this.pathB.Add(new Vector3(5, 2));
-            this.pathB.Add(new Vector3(5, 3));
-            this.pathB.Add(new Vector3(5, 4));
-            this.pathB.Add(new Vector3(5, 5));
-            this.pathB.Add(new Vector3(5, 6));
-            this.pathB.Add(new Vector3(5, 7));
+            path.Add(new Vector3(currentX, currentY));
 
-            foreach (var pos in this.pathA)
+            var currentAllowed = Direction.Down;
+            var lastDirection = Direction.Down;
+            while (currentY != 0)
+            {
+                var option = this.GetNewDirection(currentAllowed);
+
+                int newX = currentX;
+                int newY = currentY;
+
+                switch (option)
+                {
+                    case Direction.Down:
+                        if (lastDirection == Direction.Left)
+                        {
+                            currentAllowed = Direction.Left | Direction.Down;
+                        }
+                        else if (lastDirection == Direction.Right)
+                        {
+                            currentAllowed = Direction.Down | Direction.Right;
+                        }
+                        else
+                        {
+                            currentAllowed = Direction.Left | Direction.Down | Direction.Right;
+                        }
+
+                        newY--;
+                        break;
+                    case Direction.Left:
+                        currentAllowed = Direction.Left | Direction.Down;
+                        newX--;
+                        break;
+                    case Direction.Right:
+                        currentAllowed = Direction.Down | Direction.Right;
+                        newX++;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                newX = Mathf.Clamp(newX, leftMargin, rightMargin);
+
+                if (path.Contains(new Vector3(newX, newY)))
+                {
+                    continue;
+                }
+
+                lastDirection = option;
+                currentX = newX;
+                currentY = newY;
+                path.Add(new Vector3(currentX, currentY));
+            }
+
+            path.Reverse();
+            return path;
+        }
+
+        /// <summary>
+        /// Using a very smart way to generate a path with Fixed length N.
+        /// </summary>
+        /// <param name="length">
+        /// The length N, which should be greater that otherwise Infinite loop.
+        /// </param>
+        /// <param name="leftMargin">
+        /// The left margin in index [0,...7]
+        /// </param>
+        /// <param name="rightMargin">
+        /// The right margin in index [0,...7]
+        /// </param>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        private List<Vector3> CreatePathSmart(int length, int leftMargin, int rightMargin)
+        {
+            Stopwatch sw = new Stopwatch();
+
+            sw.Start();
+            List<Vector3> path;
+            do
+            {
+                path = this.CreatePath(leftMargin, rightMargin);
+            }
+            while (path.Count != length);
+            sw.Stop();
+
+            Debug.Log("Elapsed " + sw.Elapsed.Milliseconds);
+
+            return path;
+        }
+
+        /// <summary>
+        /// Given an list of vector as path, set the corresponding data field to type Tiles.Path. 
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        private void RefreshPath(List<Vector3> path)
+        {
+            foreach (var pos in path)
             {
                 this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
             }
 
-            foreach (var pos in this.pathB)
-            {
-                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
-            }
-
-            // Temp instantiate Spanwer B
-            var newX = this.pathA[0].x;
-            var newY = this.pathA[0].y;
+            // Temp instantiate Spanwer
+            var newX = path[0].x;
+            var newY = path[0].y;
             var instance = Instantiate(
-                this.spawner, 
-                new Vector3(newX * CellSize, newY * CellSize), 
-                Quaternion.identity);
-
-            instance.GetComponent<MobSpawner>().SetAssociativePath(this.pathA);
-            instance.transform.SetParent(this.mapHolder);
-
-            // Temp instantiate Spanwer B
-            newX = this.pathB[0].x;
-            newY = this.pathB[0].y;
-            instance = Instantiate(
                 this.spawner,
                 new Vector3(newX * CellSize, newY * CellSize),
                 Quaternion.identity);
 
-            instance.GetComponent<MobSpawner>().SetAssociativePath(this.pathB);
+            instance.GetComponent<MobSpawner>().SetAssociativePath(path);
             instance.transform.SetParent(this.mapHolder);
         }
 
         #endregion
+
+        #endregion
     }
+
+    #region Editor Stuff
+
+    //[Serializable]
+    //public class TilePrefab 
+    //{
+    //    public GameObject prefab;
+
+    //    public int amount;
+    //}
+    
+
+    #endregion
+
 }

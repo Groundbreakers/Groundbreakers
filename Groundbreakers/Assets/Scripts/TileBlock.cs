@@ -12,6 +12,8 @@
     {
         private const uint TotalBlocks = GameMap.Dimension * GameMap.Dimension; // 8 * 8 = 64
 
+        private const float TempOffset = 10.0f;
+
         private static uint blocksReady = 0;
 
         #region Inspector Variables
@@ -23,8 +25,6 @@
         #endregion
 
         #region Internal Variables
-
-        private const float TempOffset = 10.0f;
 
         private Rigidbody2D rb2D;
 

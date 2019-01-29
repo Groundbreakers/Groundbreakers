@@ -31,6 +31,11 @@
                 return;
             }
 
+            if (!this.enabled)
+            {
+                return;
+            }
+
             this.sprite.color = this.mouseOverColor;
 
             BattleManager.Instance.SetCurrentSelectedTile(this.transform);
@@ -39,6 +44,11 @@
         public void OnMouseExit()
         {
             if (BattleManager.GameState != BattleManager.Stages.Combating)
+            {
+                return;
+            }
+
+            if (!this.enabled)
             {
                 return;
             }
