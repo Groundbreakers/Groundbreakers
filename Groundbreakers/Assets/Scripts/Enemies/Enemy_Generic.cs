@@ -30,8 +30,8 @@
         public GameObject deathEffect;
 
         // Positioning objects and variables
-        public List<Transform> waypointList;
-        private Transform target;
+        public List<Vector3> waypointList;
+        private Vector3 target;
         private int waypointIndex = -1;
         private Vector3 startingPosition;
         private Vector2 dir;
@@ -131,7 +131,7 @@
                 this.transform.Translate(this.dir.normalized * this.speed * this.speedMultiplier * Time.deltaTime, Space.World);
 
                 // Check if the waypoint has been reached
-                if (Vector2.Distance(this.transform.position, this.target.position) <= this.waypointDetection)
+                if (Vector2.Distance(this.transform.position, this.target) <= this.waypointDetection)
                 {
                     this.waiting = true;
                 }
@@ -284,7 +284,7 @@
             this.waypointIndex++;
             this.target = this.waypointList[this.waypointIndex];
             // Get new random waypoint accuracy
-            this.dir = this.target.position - this.transform.position;
+            this.dir = this.target - this.transform.position;
             float positiondiceroll = Random.Range(-0.4f, 0.4f);
             if (positiondiceroll < 0)
             {

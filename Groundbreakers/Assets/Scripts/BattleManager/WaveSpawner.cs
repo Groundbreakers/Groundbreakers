@@ -10,12 +10,12 @@ using Random = UnityEngine.Random;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public Transform spawnPoint1;
-    public Transform spawnPoint2;
+    public Vector3 spawnPoint1;
+    public Vector3 spawnPoint2;
 
     // Waypoint lists
-    public List<Transform> path1 = new List<Transform>();
-    public List<Transform> path2 = new List<Transform>();
+    public List<Vector3> path1 = new List<Vector3>();
+    public List<Vector3> path2 = new List<Vector3>();
 
     // Packs for paths 1 and 2. Stored as an array of Lists of prefabs.
     public List<Transform>[] pack1 = new List<Transform>[5];
@@ -34,13 +34,13 @@ public class WaveSpawner : MonoBehaviour
         {
             if (i < this.pack1[num].Count)
             {
-                thisEnemy = Instantiate(this.pack1[num][i], this.spawnPoint1.position, this.spawnPoint1.rotation);
+                thisEnemy = Instantiate(this.pack1[num][i], this.spawnPoint1, Quaternion.identity);
                 thisEnemy.GetComponent<Enemy_Generic>().waypointList = this.path1;
             }
 
             if (i < this.pack2[num].Count)
             {
-                thisEnemy = Instantiate(this.pack2[num][i], this.spawnPoint2.position, this.spawnPoint2.rotation);
+                thisEnemy = Instantiate(this.pack2[num][i], this.spawnPoint2, Quaternion.identity);
                 thisEnemy.GetComponent<Enemy_Generic>().waypointList = this.path2;
             }
             yield return new WaitForSeconds(1f);
@@ -48,7 +48,7 @@ public class WaveSpawner : MonoBehaviour
     }
 
     // Adds a waypoint to a path. Presumably called by the terrain generator.
-    public void addPoint(Transform point, int path)
+    public void AddPoint(Vector3 point, int path)
     {
         if (path == 1)
         {
