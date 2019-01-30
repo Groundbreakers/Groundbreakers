@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1532188311416232541}
   - component: {fileID: 3124917645374331934}
   - component: {fileID: 8152719776645912219}
+  - component: {fileID: 1771347737225813590}
+  - component: {fileID: 6022396151225349170}
   m_Layer: 0
   m_Name: GrassTile
   m_TagString: Untagged
@@ -115,3 +117,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enterDuration: 2
+--- !u!114 &1771347737225813590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6053165304404215142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748a71bdf4580624ab46a9f92ea21425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverColor: {r: 0, g: 0, b: 0, a: 0}
+  characterOnTop: 0
+--- !u!61 &6022396151225349170
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6053165304404215142}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.09375}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.57894737}
+    oldSize: {x: 1, y: 1.1875}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.1875}
+  m_EdgeRadius: 0

@@ -10,6 +10,12 @@
     [RequireComponent(typeof(Rigidbody2D))]
     public class TileBlock : MonoBehaviour, IBattlePhaseHandler
     {
+        private const uint TotalBlocks = GameMap.Dimension * GameMap.Dimension; // 8 * 8 = 64
+
+        private const float TempOffset = 10.0f;
+
+        private static uint blocksReady = 0;
+
         #region Inspector Variables
 
         [SerializeField]
@@ -20,13 +26,13 @@
 
         #region Internal Variables
 
-        private const float TempOffset = 9.0f;
-
         private Rigidbody2D rb2D;
 
         private SpriteRenderer sprite;
 
         private Vector3 originalPosition;
+
+        private bool stabled = false;
 
         #endregion
 
@@ -34,10 +40,20 @@
 
         public void OnEnable()
         {
+            // Setup event listener
+            BattleManager.StartListening("test", this.OnTilesEntering);
+            BattleManager.StartListening("battle finished", this.OnTilesExiting);
+
+            // Initialize field
             this.rb2D = this.GetComponent<Rigidbody2D>();
             this.rb2D.gravityScale = 0f;
 
             this.sprite = this.GetComponent<SpriteRenderer>();
+        }
+
+        public void OnDisable()
+        {
+            BattleManager.StopListening("test", this.OnTilesEntering);
         }
 
         public void Start()
@@ -48,25 +64,21 @@
             this.transform.SetPositionAndRotation(
                 new Vector3(this.originalPosition.x, this.originalPosition.y - TempOffset),
                 Quaternion.identity);
-
         }
 
         public void FixedUpdate()
         {
-            switch (BattleManager.GameState)
+            if (!this.stabled && this.CheckTileReachDestination())
             {
-                case BattleManager.Stages.Null:
-                    break;
-                case BattleManager.Stages.Entering:
-                    this.CheckTileReachDestination();
-                    //GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) - 1;
-                    break;
-                case BattleManager.Stages.Combating:
-                    break;
-                case BattleManager.Stages.Exiting:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                this.stabled = true;
+                blocksReady++;
+
+                // Check if all tiles are ready and emit event.
+                if (blocksReady == TotalBlocks)
+                {
+                    Debug.Log("All block ready");
+                    BattleManager.TriggerEvent("block ready");
+                }
             }
         }
 
