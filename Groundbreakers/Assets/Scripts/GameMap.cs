@@ -426,6 +426,9 @@
                 new Vector3(newX * CellSize, newY * CellSize),
                 Quaternion.identity);
 
+            // Removing the first tile
+            path.RemoveAt(0);
+
             instance.GetComponent<MobSpawner>().SetAssociativePath(path);
             instance.transform.SetParent(this.mapHolder);
         }
