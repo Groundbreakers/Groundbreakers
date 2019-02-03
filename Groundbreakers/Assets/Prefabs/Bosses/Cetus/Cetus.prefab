@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1488686941386252704}
   - component: {fileID: 8813340176414161547}
   - component: {fileID: 452090767429262217}
-  - component: {fileID: 1488686941386252716}
+  - component: {fileID: 8519304357723558555}
   m_Layer: 0
   m_Name: Cetus
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488686941386252707}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.94, y: 3.16, z: 0.0022056424}
+  m_LocalPosition: {x: 10.94, y: 3.16, z: -1}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,7 +129,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1488686941386252716
+--- !u!114 &8519304357723558555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,6 +138,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1488686941386252707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6d611858277cc45913a594cec3519d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bfd5e77f4573fb4583b4ee6774973cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 10000
+  health: 10000
+  power: 1
+  powerMultiplier: 1
+  deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
+    type: 3}
+  chargeParticle: {fileID: 8712480500940496337, guid: 027f57a200e8c6a42ae4333f0523737d,
+    type: 3}
