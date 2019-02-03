@@ -27,8 +27,6 @@ public class characterAttack : MonoBehaviour
     void Awake() { targetedEnemies = new List<GameObject>(); }
     
     void Update() {
-        this.fireCount();
-
         if (target != null)
         {
             //calculate angle
@@ -71,6 +69,9 @@ public class characterAttack : MonoBehaviour
             }
             //Debug.Log(angle);
         }
+        this.fireCount();
+
+        
     }
 
     //if an enemy enters in range
@@ -142,28 +143,10 @@ public class characterAttack : MonoBehaviour
     }
 
     void defaultMode() {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        foreach (GameObject enemy in enemies)
+        if(targetedEnemies.Count != 0)
         {
-            float distanceToEnemy = Vector2.Distance(this.transform.position, enemy.transform.position);
-
-            if (distanceToEnemy < shortestDistance)
-            {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
-            }
-
-            if (nearestEnemy != null && shortestDistance <= this.range)
-            {
-                this.target = nearestEnemy.transform;
-            }
-            else
-            {
-                this.target = null;
-            }
+            target = targetedEnemies[0].transform;
         }
+        
     }
 }
