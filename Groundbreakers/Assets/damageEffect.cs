@@ -60,7 +60,7 @@ public class damageEffect : MonoBehaviour
     void RangeAttackMode() {
         this.moduleObject = GameObject.Find("BattleManager");
         ModuleTemplate module = this.moduleObject.GetComponent<ModuleTemplate>();
-        if (module.multiShotAE == true) Debug.Log("multishot");
+        if (module.multiShotAE == true) StartCoroutine(multiShot(fireCountdown,3));
         else shoot();
     }
     
@@ -73,8 +73,8 @@ public class damageEffect : MonoBehaviour
 
         if (this.fireCountdown <= 0f)
         {
-            RangeAttackMode();
-            this.fireCountdown = 1f / this.fireRate;
+           this.fireCountdown = 1f / this.fireRate;
+           RangeAttackMode();
         }
 
         this.fireCountdown -= Time.deltaTime;
@@ -88,8 +88,15 @@ public class damageEffect : MonoBehaviour
             this.rangeAttackFirepoint.rotation); 
     }
 
-    void multiShot(float delay) {
-    
+    IEnumerator multiShot(float fireCountdown, int burstSize) {
+        for (int i = 0; i < burstSize; i++)
+        {
+            instantiateBullet(
+                this.rangeAttackPrefab,
+                this.rangeAttackFirepoint.position,
+                this.rangeAttackFirepoint.rotation);
+            yield return new WaitForSeconds(5f * Time.deltaTime);
+        }
 
     }
 
