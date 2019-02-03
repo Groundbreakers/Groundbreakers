@@ -215,9 +215,17 @@
             {
                 for (var j = 0; j < Dimension; j++)
                 {
-                    var instance = this.InstantiateTileAt(this.data[i, j], i, j);
+                    Tiles tileType = this.data[i, j];
+                    var instance = this.InstantiateTileAt(tileType, i, j);
 
                     this.tileBlocks[i, j] = instance.transform;
+
+                    // TODO: Refactor this part
+                    if (tileType == Tiles.Path)
+                    {
+                        // Basically disable the component that allows the player to select.
+                        instance.GetComponent<SelectNode>().SetCanDeploy(false);
+                    }
                 }
             }
         }
