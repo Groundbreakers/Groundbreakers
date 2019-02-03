@@ -119,7 +119,7 @@ public class characterAttack : MonoBehaviour
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
-            //this.shoot();
+            //this.shoot(); 
             this.fireCountdown = 1f / this.fireRate;
         }
 

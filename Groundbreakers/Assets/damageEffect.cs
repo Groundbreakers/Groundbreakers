@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using Assets.Scripts;
 using UnityEditor.Experimental.UIElements.GraphView;
 
@@ -53,16 +54,16 @@ public class damageEffect : MonoBehaviour
 
     // update the closest target in range
     void updateTarget() {
-        //defaultMode();
+        defaultMode();
+    }
 
+    void RangeAttackMode() {
         this.moduleObject = GameObject.Find("BattleManager");
         ModuleTemplate module = this.moduleObject.GetComponent<ModuleTemplate>();
         if (module.multiShotAE == true) Debug.Log("multishot");
-        else defaultMode();
-        ;
+        else shoot();
     }
     
-
     void fireCount()
     {
         if (this.target == null)
@@ -72,7 +73,7 @@ public class damageEffect : MonoBehaviour
 
         if (this.fireCountdown <= 0f)
         {
-          this.shoot();
+            RangeAttackMode();
             this.fireCountdown = 1f / this.fireRate;
         }
 
@@ -80,19 +81,36 @@ public class damageEffect : MonoBehaviour
     }
 
     // Instantiate and and chase the target
-    void shoot()
-    {
-        GameObject rangeAttack_object = (GameObject)Instantiate(
+    void shoot() {
+        instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation);
-        rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
-
-        if (rangeattack != null)
-        {
-            rangeattack.chase(this.target);
-        }
+            this.rangeAttackFirepoint.rotation); 
     }
+
+    void multiShot(float delay) {
+    
+
+    }
+
+    void instantiateBullet(GameObject rangeAttackPrefab, Vector3 rangeAttackFirepointPosition, Quaternion rangeAttackFirepointRoatation) {
+
+        
+        GameObject rangeAttackObject= (GameObject)Instantiate(
+             rangeAttackPrefab,
+             rangeAttackFirepointPosition,
+             rangeAttackFirepointRoatation);
+         rangeattack rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+
+
+         if (rangeattack != null)
+         {
+             rangeattack.chase(this.target);
+         }
+       
+    }
+
+
 
     void defaultMode()
     {
