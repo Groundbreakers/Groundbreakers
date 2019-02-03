@@ -32,15 +32,16 @@
         // Positioning objects and variables
         public List<Vector3> waypointList;
         private Vector3 target;
-        private int waypointIndex = -1;
+        private int waypointIndex = 0;
         private Vector3 startingPosition;
         private Vector2 dir;
         private float waypointDetection;
         private float waypointWaitTime;
         private bool waiting = false;
 
-        // Animator
+        // Animator & visuals
         private Animator animator;
+        private bool fadingIn = true;
 
         // Status flags
         private float statusMultiplier = 1;
@@ -48,6 +49,8 @@
         private bool isBlighted = false;
         private int blightStacks = 0;
         private bool isBurned = false;
+        private bool isSlowed = false;
+        private float strongestSlow = 0;
 
         // Timers
         private float stunTime = 0;
@@ -60,6 +63,11 @@
         public int time = 0;
         void Start()
         {
+            // Enemy fade-in
+            Color tmpcolor = this.gameObject.GetComponent<SpriteRenderer>().color;
+            tmpcolor.a = 0;
+            this.gameObject.GetComponent<SpriteRenderer>().color = tmpcolor;
+
             this.startingPosition = this.gameObject.transform.position;
             this.animator = this.GetComponent<Animator>();
             InitializeAttributes();
@@ -79,6 +87,16 @@
             if (!this.isBurned && Input.GetKeyDown("u"))
             {
                 this.BurnEnemy();
+            }
+
+            if (!this.isSlowed && Input.GetKeyDown("s"))
+            {
+                this.SlowEnemy(0.5f);
+            }
+            // Do fade-in if not opaque yet
+            if (fadingIn)
+            {
+                FadeIn();
             }
             // Do Blight & Burn damage
             if (this.isBlighted)
@@ -257,6 +275,17 @@
             this.burnTimer = 1;
         }
 
+        // Slow handler. Takes a float for slow strength (0.2 = 20% slow, 0.05 = 5% slow, etc)
+        public void SlowEnemy(float strength)
+        {
+            this.isSlowed = true;
+            if (strength > this.strongestSlow)
+            {
+                this.strongestSlow = strength;
+                this.speedMultiplier = 1 - strongestSlow;
+            }
+        }
+
         // Regen handler
         void RegenTick()
         {
@@ -293,7 +322,7 @@
             }
             else
             {
-                this.waypointDetection = positiondiceroll;
+                this.waypointDetection = 0.03f + positiondiceroll;
                 this.waypointWaitTime = 0;
             }
             this.waiting = false;
@@ -338,6 +367,17 @@
             {
                 Invoke("MakeAggregationClone", 0.3f);
                 Invoke("MakeAggregationClone", 0.6f);
+            }
+        }
+
+        void FadeIn()
+        {
+            Color tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
+            tmp.a += 0.05f;
+            this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
+            if (tmp.a >= 1)
+            {
+                this.fadingIn = false;
             }
         }
 
