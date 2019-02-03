@@ -74,7 +74,7 @@ public class characterAttack : MonoBehaviour
     }
 
     //if an enemy enters in range
-    void OnTriggerEnter2D(Collider2D other)
+   /* void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
         {
@@ -91,13 +91,13 @@ public class characterAttack : MonoBehaviour
             updateTarget();
         }
     }
-
+    */
     // update the closest target in range
     void updateTarget() {
         if (this.attackMode == "default") defaultMode();
     }
 
-    void OnMouseOver()
+    /*void OnMouseOver()
     {
         if (Input.GetKeyDown("r")) {
             this.attackMode = "multi-shot";
@@ -107,7 +107,7 @@ public class characterAttack : MonoBehaviour
             this.attackMode = "default";
             //Debug.Log(this.attackMode);
         }
-    }
+    }*/
 
     void fireCount() {
         if (this.target == null)
@@ -119,7 +119,7 @@ public class characterAttack : MonoBehaviour
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
-            this.shoot();
+            //this.shoot();
             this.fireCountdown = 1f / this.fireRate;
         }
 
@@ -141,7 +141,7 @@ public class characterAttack : MonoBehaviour
         }
     }
 
-    void defaultMode() {
+  void defaultMode() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;

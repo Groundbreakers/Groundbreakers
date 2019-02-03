@@ -362,6 +362,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 81181532}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &90294876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5532768320582009158, guid: a07f7aa8259d3a64787087f6bc61d26f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018631165}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &90294877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90294876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5675d141b4ad7d44290ab64386aeee5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moduleTitle: 
+  rarity: 0
+  slot: 0
+  icon: {fileID: 0}
+  descirption: 
+  POW: 0
+  ROF: 0
+  RNG: 0
+  MOB: 0
+  AMP: 0
+  multiShotAE: 0
+  ricochetAE: 0
+  burstAE: 0
+  laserAE: 0
+  whirwindAE: 0
+  reachAE: 0
+  splashAE: 0
+  chargeAE: 0
+  trueStrikeAE: 0
+  antiAirAE: 0
+  nullifyAE: 0
+  chaosAE: 0
+  slowSE: 0
+  stunSE: 0
+  burnSE: 0
+  markSE: 0
+  purgeSE: 0
+  breakSE: 0
+  blightSE: 0
+  netSE: 0
 --- !u!1001 &115170747
 PrefabInstance:
   m_ObjectHideFlags: 0
