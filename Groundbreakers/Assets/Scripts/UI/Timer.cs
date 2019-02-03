@@ -33,7 +33,7 @@ public class Timer : MonoBehaviour
             {
                 NextWave(waveCount);
                 this.waveCount += 1;
-                this.wave.text = "WAVE " + this.waveCount;
+                this.wave.text = "WAVE " + this.waveCount + "/5";
                 this.countdown = this.waveDelay;
             }
 
