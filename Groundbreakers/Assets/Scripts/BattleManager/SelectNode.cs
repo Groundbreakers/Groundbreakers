@@ -5,22 +5,23 @@ using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(TileBlock))]
+[RequireComponent(typeof(LineRenderer))]
 public class SelectNode : MonoBehaviour
 {
+    public int characterOnTop;
+
     #region Inspector values
 
-    public Color hoverColor;
 
-    public Color errorColor;
 
     #endregion
 
-    public int characterOnTop;
-
     #region Internal fields
 
-    private Color startColor;
-
+    /// <summary>
+    /// The sprite renderer of the Child of this game object. (used for hover icon)
+    /// </summary>
     private SpriteRenderer rend;
 
     /// <summary>
@@ -28,6 +29,13 @@ public class SelectNode : MonoBehaviour
     /// 'GameObject.Find' every time.
     /// </summary>
     private GameObject canvas;
+
+    /// <summary>
+    /// Keeps a reference to the TileBlock script in this game object.
+    /// </summary>
+    private TileBlock tileBlock;
+
+    private LineRenderer lineRenderer;
 
     private bool canDeploy = true;
 
@@ -44,15 +52,23 @@ public class SelectNode : MonoBehaviour
 
     #region Unity Callbacks
 
-    void Start()
+    public void Start()
     {
-        this.rend = this.GetComponent<SpriteRenderer>();
-        this.startColor = this.rend.color;
         this.canvas = GameObject.Find("Canvas");
+        this.tileBlock = this.GetComponent<TileBlock>();
+
+        var components = this.GetComponentsInChildren<SpriteRenderer>();
+        this.rend = components[1];
+
         this.characterOnTop = 0;
+        this.rend.sprite = this.tileBlock.CanDeployIcon;
+        this.rend.enabled = false;
+
+        this.lineRenderer = this.GetComponent<LineRenderer>();
+        this.InitializeLineRenderer();
     }
 
-    void Update()
+    public void Update()
     {
         if (Input.GetMouseButtonUp(1))
         {
@@ -62,8 +78,19 @@ public class SelectNode : MonoBehaviour
             status.Close();
         }
     }
-    
-    void OnMouseOver()
+
+    private void FixedUpdate()
+    {
+        // well, just don't rotate if it is a cross
+        if (!this.canDeploy)
+        {
+            return;
+        }
+
+        this.rend.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f));
+    }
+
+    public void OnMouseOver()
     {
         // Clearly, do nothing when the battleManager is not in the battle state
         if (BattleManager.GameState != BattleManager.Stages.Combating)
@@ -71,9 +98,18 @@ public class SelectNode : MonoBehaviour
             return;
         }
 
+        if (this.IsOccupied())
+        {
+            this.rend.sprite = this.tileBlock.OccupiedIcon;
+            this.rend.enabled = true;
+            this.lineRenderer.enabled = true;
+            return;
+        }
+
         if (!this.canDeploy)
         {
-            this.rend.color = this.errorColor;
+            this.rend.sprite = this.tileBlock.CanNotDeployIcon;
+            this.rend.enabled = true;
             return;
         }
 
@@ -82,11 +118,12 @@ public class SelectNode : MonoBehaviour
             return;
         }
 
-        this.rend.color = this.hoverColor;
+        this.rend.sprite = this.rend.sprite = this.tileBlock.CanDeployIcon;
+        this.rend.enabled = true;
         this.MouseInput();
     }
 
-    void MouseInput()
+    public void MouseInput()
     {
         if (Input.GetMouseButtonUp(0) && this.characterOnTop == 0)
         {
@@ -100,9 +137,54 @@ public class SelectNode : MonoBehaviour
         }
     }
 
-    void OnMouseExit()
+    public void OnMouseExit()
     {
-        this.rend.color = this.startColor;
+        this.rend.enabled = false;
+        this.lineRenderer.enabled = false;
+    }
+
+    #endregion
+
+    #region Internal Functions
+
+    private bool IsOccupied()
+    {
+        return this.characterOnTop != 0;
+    }
+
+    private void InitializeLineRenderer()
+    {
+        int segments = 25;
+        this.lineRenderer.positionCount = segments + 1;
+        this.lineRenderer.useWorldSpace = false;
+        this.lineRenderer.enabled = false;
+
+        // Trying to get the radius of the collider box
+        // To be honest, I don't like this solution, but it works, and it does not break
+        // others code.
+        var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop + 1);
+        var radius = character.GetComponent<CircleCollider2D>().radius;
+
+        this.CreatePoints(radius, radius, segments);
+    }
+
+    private void CreatePoints(float xradius, float yradius, int segments)
+    {
+        float x;
+        float y;
+        float z = this.transform.position.z - 1;
+
+        float angle = 20f;
+
+        for (int i = 0; i < segments + 1; i++)
+        {
+            x = Mathf.Sin(Mathf.Deg2Rad * angle) * xradius;
+            y = Mathf.Cos(Mathf.Deg2Rad * angle) * yradius;
+
+            this.lineRenderer.SetPosition(i, new Vector3(x, y, z));
+
+            angle += 360f / segments;
+        }
     }
 
     #endregion

@@ -253,7 +253,7 @@
         {
             GameObject tile;
 
-            // Determine Enum -> GameObject
+            // A function that maps Enum -> GameObject.
             switch (tileType)
             {
                 case Tiles.Path:
@@ -278,7 +278,7 @@
                 new Vector3(x * CellSize, y * CellSize, 0.0f), 
                 Quaternion.identity);
 
-            instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - y;
+            instance.GetComponent<TileBlock>().SetSortingOrder((int)Dimension - y);
             instance.transform.SetParent(this.tilesHolder);
             return instance;
         }
@@ -385,7 +385,7 @@
                 path.Add(new Vector3(currentX, currentY));
             }
 
-            path.Reverse();
+            // path.Reverse();
             return path;
         }
 
