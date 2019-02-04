@@ -26,7 +26,7 @@ public class Cetus_Charge_Particle : MonoBehaviour
         this.gameObject.GetComponent<SpriteRenderer>().size = this.gameObject.GetComponent<SpriteRenderer>().size - (this.gameObject.GetComponent<SpriteRenderer>().size / 20);
         this.gameObject.GetComponent<TrailRenderer>().widthMultiplier = this.gameObject.GetComponent<TrailRenderer>().widthMultiplier - (this.gameObject.GetComponent<TrailRenderer>().widthMultiplier / 20);
         this.timeAlive -= Time.deltaTime;
-        if (timeAlive <= 0 || Vector2.Distance(this.transform.position, this.thisParent.position) < 0.1)
+        if (timeAlive <= 0 || Vector2.Distance(this.transform.position, this.thisParent.position) < 0.7)
         {
             Destroy(this.gameObject);
         }

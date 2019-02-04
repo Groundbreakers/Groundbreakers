@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -27,6 +28,9 @@ public class Cetus_Script : MonoBehaviour
     // Stored objects
     public GameObject deathEffect;
     public GameObject chargeParticle;
+    public GameObject chargeShot;
+    private Transform[] splashTiles = new Transform[20];
+    private Transform[] waterStrikeTiles = new Transform[8];
 
     // Timers
     private float stunTime = 0;
@@ -34,13 +38,11 @@ public class Cetus_Script : MonoBehaviour
     private float burnTimer = 1;
 
     private float cleanseTimer = 12;
-    private float waterStrikeTimer = 6;
-    private float splashTimer = 24;
-    private float chargeShotTimer = 3;
+    public float waterStrikeTimer = 6;
+    public float splashTimer = 24;
+    public float chargeShotTimer = 36;
 
     private float entranceTimer = 4;
-
-    // Sorting layer groundtiles 4.5
 
     // Start is called before the first frame update
     void Start()
@@ -99,13 +101,16 @@ public class Cetus_Script : MonoBehaviour
                     {
                         this.doingAttack = true;
                         StartCoroutine(ChargeShot());
-                        this.chargeShotTimer = 3;
+                        this.chargeShotTimer = 36;
+                        this.splashTimer = Mathf.Floor(this.splashTimer);
+                        this.waterStrikeTimer = Mathf.Floor(this.waterStrikeTimer);
                     }
                     else if (this.splashTimer <= 0)
                     {
                         this.doingAttack = true;
                         StartCoroutine(Splash());
                         this.splashTimer = 24;
+                        this.waterStrikeTimer = Mathf.Floor(this.waterStrikeTimer);
                     }
                     else if (this.waterStrikeTimer <= 0)
                     {
@@ -239,7 +244,7 @@ public class Cetus_Script : MonoBehaviour
     // Cleanse action
     private IEnumerator Cleanse()
     {
-        Color tmpcolor = this.gameObject.GetComponent<SpriteRenderer>().color;
+        Color tmpcolor = Color.white;
         // Fade to blue
         while (tmpcolor.r > 0)
         {
@@ -287,6 +292,8 @@ public class Cetus_Script : MonoBehaviour
             tmp.transform.position = new Vector3(randomX, randomY, 0);
             yield return 0;
         }
+        yield return new WaitForSeconds(1f);
+        Instantiate(chargeShot, this.transform.position, Quaternion.identity);
         this.doingAttack = false;
         yield return 0;
     }
@@ -294,13 +301,128 @@ public class Cetus_Script : MonoBehaviour
     // Splash action
     private IEnumerator Splash()
     {
+        GetSplashTiles();
+        Transform characterlist = GameObject.Find("CharacterList").transform;
+        // Affected tiles flash blue
+        Color tmpcolor = Color.white;
+        while (tmpcolor.r > 0)
+        {
+            tmpcolor.r -= 0.02f;
+            for (int i = 0; i < 20; i++)
+            {
+                this.splashTiles[i].GetComponent<SpriteRenderer>().color = tmpcolor;
+            }
+            yield return 0;
+        }
+        // Stun characters on affected tiles
+        for (int i = 0; i < 20; i++)
+        {
+            int tmpchar = this.splashTiles[i].GetComponent<SelectNode>().characterOnTop;
+            if (tmpchar != 0)
+            {
+                //characterlist.GetChild(tmpchar-1).GetComponent<characterAttack>().StunCharacter(3);
+            }
+        }
+        // Affected tiles go back to normal color
+        while (tmpcolor.r < 1)
+        {
+            tmpcolor.r += 0.02f;
+            for (int i = 0; i < 20; i++)
+            {
+                this.splashTiles[i].GetComponent<SpriteRenderer>().color = tmpcolor;
+            }
+            yield return 0;
+        }
+        this.doingAttack = false;
         yield return 0;
+    }
+
+    // Get the 20 surrounding tiles
+    private void GetSplashTiles()
+    {
+        Transform TileHolder = GameObject.Find("tilesHolder").transform;
+        this.splashTiles[0] = TileHolder.GetChild(9);
+        this.splashTiles[1] = TileHolder.GetChild(10);
+        this.splashTiles[2] = TileHolder.GetChild(11);
+        this.splashTiles[3] = TileHolder.GetChild(12);
+        this.splashTiles[4] = TileHolder.GetChild(13);
+        this.splashTiles[5] = TileHolder.GetChild(14);
+        this.splashTiles[6] = TileHolder.GetChild(17);
+        this.splashTiles[7] = TileHolder.GetChild(22);
+        this.splashTiles[8] = TileHolder.GetChild(25);
+        this.splashTiles[9] = TileHolder.GetChild(30);
+        this.splashTiles[10] = TileHolder.GetChild(33);
+        this.splashTiles[11] = TileHolder.GetChild(38);
+        this.splashTiles[12] = TileHolder.GetChild(41);
+        this.splashTiles[13] = TileHolder.GetChild(46);
+        this.splashTiles[14] = TileHolder.GetChild(49);
+        this.splashTiles[15] = TileHolder.GetChild(50);
+        this.splashTiles[16] = TileHolder.GetChild(51);
+        this.splashTiles[17] = TileHolder.GetChild(52);
+        this.splashTiles[18] = TileHolder.GetChild(53);
+        this.splashTiles[19] = TileHolder.GetChild(54);
     }
 
     // Water Strike action
     private IEnumerator WaterStrike()
     {
+        GetWaterStrikeTiles();
+        Transform characterlist = GameObject.Find("CharacterList").transform;
+        // Affected tiles flash blue
+        Color tmpcolor = Color.white;
+        while (tmpcolor.r > 0)
+        {
+            tmpcolor.r -= 0.02f;
+            for (int i = 0; i < 8; i++)
+            {
+                this.waterStrikeTiles[i].GetComponent<SpriteRenderer>().color = tmpcolor;
+            }
+            yield return 0;
+        }
+        // Stun characters on affected tiles
+        for (int i = 0; i < 8; i++)
+        {
+            int tmpchar = this.waterStrikeTiles[i].GetComponent<SelectNode>().characterOnTop;
+            if (tmpchar != 0)
+            {
+                //characterlist.GetChild(tmpchar-1).GetComponent<characterAttack>().StunCharacter(3);
+            }
+        }
+        // Affected tiles go back to normal color
+        while (tmpcolor.r < 1)
+        {
+            tmpcolor.r += 0.02f;
+            for (int i = 0; i < 8; i++)
+            {
+                this.waterStrikeTiles[i].GetComponent<SpriteRenderer>().color = tmpcolor;
+            }
+            yield return 0;
+        }
+        this.doingAttack = false;
         yield return 0;
+    }
+
+    private void GetWaterStrikeTiles()
+    {
+        Transform TileHolder = GameObject.Find("tilesHolder").transform;
+        int[] tiles = new int[8];
+        int tmp;
+
+        // Get 8 random tile numbers. Tiles cannot be in the middle 4x4, or already be a chosen tile.
+        for (int j = 0; j < 8; j++)
+        {
+            tmp = Random.Range(0, 64);
+            while (new int[] { 18, 19, 20, 21, 26, 27, 28, 29, 34, 35, 36, 37, 42, 43, 44, 45 }.Contains(tmp) || tiles.Contains(tmp))
+            {
+                tmp = Random.Range(0, 64);
+            }
+            tiles[j] = tmp;
+        }
+        // Get the tile objects from the tile numbers.
+        for (int i = 0; i < 8; i++)
+        {
+            this.waterStrikeTiles[i] = TileHolder.GetChild(tiles[i]);
+        }
     }
 
     #endregion
