@@ -112,11 +112,16 @@ public class damageEffect : MonoBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
-            
-               // Enemy_Generic test = hits[i].transform.GetComponent<Enemy_Generic>();
-               if(hits[i].collider.gameObject.tag == "Enemy")
-                Debug.Log(hits[i].collider.gameObject.name);
-            
+            // hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
+            // Enemy_Generic test = hits[i].transform.GetComponent<Enemy_Generic>();
+            if (hits[i].collider.gameObject.tag == "Enemy")
+               {
+                   if (hits[i].collider.gameObject != null)
+                   {
+                       Enemy_Generic test = hits[i].collider.gameObject.GetComponent<Enemy_Generic>();
+                       test.DamageEnemy(100, 80, 1, false);
+                }
+               }
         }
     }
 
