@@ -98,11 +98,8 @@ public class SelectNode : MonoBehaviour
             return;
         }
 
-        if (this.IsOccupied())
+        if (EventSystem.current.IsPointerOverGameObject())
         {
-            this.rend.sprite = this.tileBlock.OccupiedIcon;
-            this.rend.enabled = true;
-            this.lineRenderer.enabled = true;
             return;
         }
 
@@ -113,14 +110,19 @@ public class SelectNode : MonoBehaviour
             return;
         }
 
-        if (EventSystem.current.IsPointerOverGameObject())
+        this.MouseInput();
+
+        if (this.IsOccupied())
         {
+            this.rend.sprite = this.tileBlock.OccupiedIcon;
+            this.rend.enabled = true;
+            this.lineRenderer.enabled = true;
             return;
         }
 
+
         this.rend.sprite = this.rend.sprite = this.tileBlock.CanDeployIcon;
         this.rend.enabled = true;
-        this.MouseInput();
     }
 
     public void MouseInput()
