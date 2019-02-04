@@ -22,13 +22,31 @@
         [Range(0.1f, 5.0f)]
         private float enterDuration = 2.5f;
 
+        [SerializeField]
+        public Sprite CanDeployIcon;
+
+        [SerializeField]
+        public Sprite CanNotDeployIcon;
+
+        [SerializeField]
+        public Sprite OccupiedIcon;
+
         #endregion
 
         #region Internal Variables
 
         private Rigidbody2D rb2D;
 
+        /// <summary>
+        /// This is the sprite renderer that of this object
+        /// </summary>
         private SpriteRenderer sprite;
+
+        /// <summary>
+        /// This contains the reference to the SpriteRenderer of the CHILD object.
+        /// Used for Icon sprite when you hover your mouse over. 
+        /// </summary>
+        private SpriteRenderer hoverIconSprite;
 
         private Vector3 originalPosition;
 
@@ -48,7 +66,9 @@
             this.rb2D = this.GetComponent<Rigidbody2D>();
             this.rb2D.gravityScale = 0f;
 
-            this.sprite = this.GetComponent<SpriteRenderer>();
+            var components = this.GetComponentsInChildren<SpriteRenderer>();
+            this.sprite = components[0];
+            this.hoverIconSprite = components[1];
         }
 
         public void OnDisable()
@@ -80,6 +100,22 @@
                     BattleManager.TriggerEvent("block ready");
                 }
             }
+        }
+
+        #endregion
+
+        #region Public functions
+
+        /// <summary>
+        /// The the sorting order, typically called by GameMap when instantiating the tiles.
+        /// </summary>
+        /// <param name="z">
+        /// The z.
+        /// </param>
+        public void SetSortingOrder(int z)
+        {
+            this.sprite.sortingOrder = z;
+            this.hoverIconSprite.sortingOrder = z + 1;
         }
 
         #endregion

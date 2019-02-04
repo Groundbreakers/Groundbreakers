@@ -173,6 +173,7 @@
 
         #region Public Functions
 
+        [Obsolete("TBD")]
         public void OnWaveUpdate(int currentWave)
         {
             // Should update the UI. *NOT Final*
@@ -186,6 +187,7 @@
             TriggerEvent("battle finished");
         }
 
+        [Obsolete("TBD")]
         public void SetCurrentSelectedTile(Transform currentGrid)
         {
             throw new NotImplementedException();
