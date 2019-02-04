@@ -15,6 +15,8 @@ TextureImporter:
     21300020: down_stand_attack_10
     21300022: down_stand_attack_11
     21300024: down_stand_attack_12
+    21300026: down_stand_attack_13
+    21300028: down_stand_attack_14
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -76,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -87,7 +89,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -111,7 +113,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d2bcd71c1351214e84438f1aa033c67
+      spriteID: 8ee3fa3b170c2b941aef53ee00143905
       vertices: []
       indices: 
       edges: []
@@ -131,7 +133,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9dc212d711cca4f4e9e99a026d84258b
+      spriteID: 1cafc2fc08134704b873a8fc99c63d85
       vertices: []
       indices: 
       edges: []
@@ -151,7 +153,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f2cf76531997c04384c0706201e4032
+      spriteID: 38e02824f709e194bb2272e0e1f619f8
       vertices: []
       indices: 
       edges: []
@@ -171,7 +173,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62e6f00fbda1ea54e866c389dd719052
+      spriteID: b89e67ac7423b2e42ba11608fa4c207b
       vertices: []
       indices: 
       edges: []
@@ -191,7 +193,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 499cb8023bda8e0459de68edbbc1977b
+      spriteID: 813cd898981f26048bde25129a9c6ffa
       vertices: []
       indices: 
       edges: []
@@ -211,7 +213,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3202af38b41992a4d841257e4385ed0c
+      spriteID: dfba861c96554ee4da274892f6389815
       vertices: []
       indices: 
       edges: []
@@ -231,7 +233,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d317723f4a77bb4b91b25e85c4b1d65
+      spriteID: 1d1682e089bd7f04199fe2bc1434cad3
       vertices: []
       indices: 
       edges: []
@@ -251,7 +253,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9049d7faee8cb784abbca5315f15a56f
+      spriteID: caff950e5b408724dbb95b405fef2889
       vertices: []
       indices: 
       edges: []
@@ -271,7 +273,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bb05f51da410724090bd51955065a2f
+      spriteID: 392c33912e2d6b4428b67fbd0c2faef6
       vertices: []
       indices: 
       edges: []
@@ -291,7 +293,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f13c9b6aa3f6d848a57bf6d53e5399e
+      spriteID: 387566642cb092c4aa0c355bbbc10e37
       vertices: []
       indices: 
       edges: []
@@ -311,7 +313,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 896fa34b9e2028d4da182062dd1b1acc
+      spriteID: fd9d8c22e4328d24dba5b812b57ccfe4
       vertices: []
       indices: 
       edges: []
@@ -331,7 +333,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d68add9a67debc4aa2143af20373994
+      spriteID: 448a93bd905720346aa933fc34b6e9bb
       vertices: []
       indices: 
       edges: []
@@ -351,7 +353,47 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 955b53345cf52144cbb7deec7cb1f51d
+      spriteID: 63e7b579e986d4448bc8d846cda482ca
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: down_stand_attack_13
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0231d9d98b50db847835d4c111d9423d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: down_stand_attack_14
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d78018e476866f5409cf2ba38390f2d6
       vertices: []
       indices: 
       edges: []

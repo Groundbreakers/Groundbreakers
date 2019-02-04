@@ -15,6 +15,10 @@ public class characterAttack : MonoBehaviour
 
     public Animator animator;
 
+    public string stance = "Gun";
+
+    private bool isChanging = false;
+
     private float fireCountdown = 0f;
 
     private Transform target;
@@ -24,10 +28,13 @@ public class characterAttack : MonoBehaviour
     private List<GameObject> targetedEnemies;
     // draw the attack range of the character selected
 
-    void Awake() { targetedEnemies = new List<GameObject>(); }
+    private CircleCollider2D myCollider;
+
+
+    void Awake() { targetedEnemies = new List<GameObject>();  myCollider = GetComponent<CircleCollider2D>(); }
     
     void Update() {
-        if (target != null)
+        if (target != null && !isChanging)
         {
             //calculate angle
             Vector2 direction = target.transform.position - this.transform.position;
@@ -69,7 +76,17 @@ public class characterAttack : MonoBehaviour
             }
             //Debug.Log(angle);
         }
-        this.fireCount();
+
+        if (!isChanging)
+        {
+            this.fireCount();
+        }
+
+        if (!animator.GetBool("Transition"))
+        {
+            isChanging = false;
+            
+        }
 
         
     }
@@ -121,6 +138,8 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", true);
             this.shoot();
+
+            
             this.fireCountdown = 1f / this.fireRate;
         }
 
@@ -134,13 +153,18 @@ public class characterAttack : MonoBehaviour
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
             this.rangeAttackFirepoint.rotation);
+       
         rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
-
+        if(stance.Equals("Melee"))
+        {
+            rangeAttack_object.GetComponent<SpriteRenderer>().enabled = false;
+        }
         if (rangeattack != null)
         {
             rangeattack.chase(this.target);
         }
     }
+
 
     void defaultMode() {
         if(targetedEnemies.Count != 0)
@@ -148,5 +172,28 @@ public class characterAttack : MonoBehaviour
             target = targetedEnemies[0].transform;
         }
         
+    }
+
+    public void change()
+    {
+        isChanging = true;
+        if (stance.Equals("Melee"))
+        {
+            
+            stance = "Gun";
+            animator.SetBool("Transition", true);
+            animator.SetBool("Sitting", true);
+            animator.SetBool("Standing", false);
+            myCollider.radius = 2f; // or whatever radius you want.
+
+        }
+        else
+        {
+            stance = "Melee";
+            animator.SetBool("Transition", true);
+            animator.SetBool("Sitting", false);
+            animator.SetBool("Standing", true);
+            myCollider.radius = 1f; // or whatever radius you want.
+        }
     }
 }

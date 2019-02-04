@@ -9,6 +9,7 @@ TextureImporter:
     21300008: left_sit_attack_4
     21300010: left_sit_attack_5
     21300012: left_sit_attack_6
+    21300014: left_sit_attack_7
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -70,7 +71,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -81,7 +82,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,7 +106,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbee8f7e6b92ab348a1d881acb223900
+      spriteID: ad23c3fa725df7846ba9bddaa76115e1
       vertices: []
       indices: 
       edges: []
@@ -125,7 +126,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98131dabdbc1992409ea2a867eb22832
+      spriteID: f7ac82e98b6397543bfe9f1ff1092634
       vertices: []
       indices: 
       edges: []
@@ -145,7 +146,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 710a19ec27cca7648971a4322a110e15
+      spriteID: 3812ac690dc55c5439abf334157e7b06
       vertices: []
       indices: 
       edges: []
@@ -165,7 +166,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f05b0b00ed64e354bb1271220240326d
+      spriteID: deacb13b3cc89ba489fd48a248a3f872
       vertices: []
       indices: 
       edges: []
@@ -185,7 +186,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b153def93d5f3034295437e4fa25a014
+      spriteID: 45f5649247992e548ab5011a11df74fe
       vertices: []
       indices: 
       edges: []
@@ -205,7 +206,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2c5ee913cb5549429ceebbc1ec0f133
+      spriteID: 68ca36e0fc8128040b0210420770905e
       vertices: []
       indices: 
       edges: []
@@ -225,7 +226,27 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60236786dd482c241a1f237de752ca05
+      spriteID: 5b6a3c0613a237544b906dd81a990860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: left_sit_attack_7
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.3}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fbcfc191a48e0f4b9583ac70209070b
       vertices: []
       indices: 
       edges: []
