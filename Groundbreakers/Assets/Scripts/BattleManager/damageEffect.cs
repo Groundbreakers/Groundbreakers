@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Assets.Enemies.Scripts;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class damageEffect : MonoBehaviour
 {
@@ -78,6 +81,7 @@ public class damageEffect : MonoBehaviour
             return;
         }
 
+        this.module.laserAE = true;
         if (this.module.laserAE == true)
         {
             Laser();
@@ -101,7 +105,19 @@ public class damageEffect : MonoBehaviour
         if (this.lineRenderer.enabled == false) this.lineRenderer.enabled = true;
         this.lineRenderer.SetPosition(0, this.rangeAttackFirepoint.position);
         this.lineRenderer.SetPosition(1,this.target.position);
-        
+
+     
+        RaycastHit2D[] hits;
+        hits = Physics2D.RaycastAll(this.lineRenderer.transform.position, this.target.position - this.transform.position, Mathf.Infinity);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            
+               // Enemy_Generic test = hits[i].transform.GetComponent<Enemy_Generic>();
+               if(hits[i].collider.gameObject.tag == "Enemy")
+                Debug.Log(hits[i].collider.gameObject.name);
+            
+        }
     }
 
     void instantiateBullet(
