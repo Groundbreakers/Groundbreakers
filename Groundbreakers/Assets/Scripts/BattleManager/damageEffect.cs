@@ -36,6 +36,7 @@ public class damageEffect : MonoBehaviour
     void Update()
     {
         this.fireCount();
+       
     }
 
 
@@ -73,11 +74,10 @@ public class damageEffect : MonoBehaviour
             {
                 if (this.lineRenderer.enabled) this.lineRenderer.enabled = false;
             }
-
+           
             return;
         }
 
-        this.module.laserAE = true;
         if (this.module.laserAE == true)
         {
             Laser();
@@ -85,6 +85,8 @@ public class damageEffect : MonoBehaviour
         }
         else
         {
+            this.lineRenderer.enabled = false;
+
             if (this.fireCountdown <= 0f)
             {
                 this.fireCountdown = 1f / this.fireRate;
@@ -97,7 +99,6 @@ public class damageEffect : MonoBehaviour
 
     void Laser() {
         if (this.lineRenderer.enabled == false) this.lineRenderer.enabled = true;
-
         this.lineRenderer.SetPosition(0, this.rangeAttackFirepoint.position);
         this.lineRenderer.SetPosition(1,this.target.position);
         
