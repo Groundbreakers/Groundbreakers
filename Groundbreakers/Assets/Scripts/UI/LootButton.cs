@@ -41,7 +41,14 @@ public class LootButton : MonoBehaviour
 
     public void HandleconfirmButton()
     {
-        Debug.Log(title.text);
+        GameObject inventory = GameObject.Find("Inventory");
+        Inventory inventoryScript = inventory.GetComponent<Inventory>();
+        GameObject newLoot = (GameObject)GameObject.Instantiate(this.loot, inventory.transform);
+        inventoryScript.AddModule(newLoot);
+        this.Toggle();
+        GameObject canvas = GameObject.Find("Canvas");
+        Loot loot = canvas.GetComponent<Loot>();
+        loot.Toggle();
     }
 
     public void Toggle()

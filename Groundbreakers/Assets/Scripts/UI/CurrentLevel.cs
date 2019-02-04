@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CurrentLevel : MonoBehaviour
 {
     public Text ui;
+    public Text ui2;
     public int region;
     public int level;
     
@@ -14,7 +15,8 @@ public class CurrentLevel : MonoBehaviour
     {
         this.region = 1;
         this.level = 1;
-        this.ui.text = this.region + "-" + this.level;
+        this.ui.text = "Region " + this.region;
+        this.ui2.text = "Level " + this.level + "/8";
         this.ChangeRegion();
     }
 
@@ -44,6 +46,7 @@ public class CurrentLevel : MonoBehaviour
             this.level += 1;
         }
 
-        this.ui.text = this.region + "-" + this.level;
+        this.ui.text = "Region " + this.region;
+        this.ui2.text = "Level " + this.level + "/8";
     }
 }

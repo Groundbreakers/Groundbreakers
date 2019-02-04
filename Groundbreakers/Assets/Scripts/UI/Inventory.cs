@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public Image[] moduleIcons = new Image[numSlots];
+    public Sprite[] moduleIcons = new Sprite[numSlots];
     public GameObject[] modules = new GameObject[numSlots];
     public const int numSlots = 30;
 
@@ -17,8 +17,7 @@ public class Inventory : MonoBehaviour
             {
                 ModuleTemplate script = module.GetComponent<ModuleTemplate>();
                 modules[i] = module;
-                moduleIcons[i].sprite = script.icon;
-                moduleIcons[i].enabled = true;
+                moduleIcons[i] = script.icon;
                 return;
             }
         }
@@ -31,8 +30,7 @@ public class Inventory : MonoBehaviour
             if (modules[i] == moduleToRemove)
             {
                 modules[i] = null;
-                moduleIcons[i].sprite = null;
-                moduleIcons[i].enabled = false;
+                moduleIcons[i] = null;
                 return;
             }
         }
