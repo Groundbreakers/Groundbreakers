@@ -9,10 +9,11 @@ public class Timer : MonoBehaviour
     public GameObject ui;
     public Text wave;
     public Text timer;
-    public float countdown;
-    public float waveDelay;
-    public int waveCount;
-    public Boolean isBattle;
+
+    private float countdown;
+    private float waveDelay;
+    private int waveCount;
+    private Boolean isBattle;
 
     void Start()
     {

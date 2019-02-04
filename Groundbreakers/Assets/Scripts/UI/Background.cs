@@ -9,14 +9,13 @@ public class Background : MonoBehaviour
     public Texture background1;
     public Texture background2;
     public Texture background3;
+    public CurrentLevel currentLevel;
 
     public void UpdateBackground()
     {
-        GameObject canvas = GameObject.Find("Canvas");
-        CurrentLevel currentLevel = canvas.GetComponent<CurrentLevel>();
-        if (currentLevel.region == 1)
+        if (this.currentLevel.GetRegion() == 1)
             backgroundRawImage.texture = this.background1;
-        else if (currentLevel.region == 2)
+        else if (this.currentLevel.GetRegion() == 2)
             backgroundRawImage.texture = this.background2;
         else
             backgroundRawImage.texture = this.background3;

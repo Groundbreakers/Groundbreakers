@@ -6,17 +6,17 @@ public class Status : MonoBehaviour
 {
     public GameObject ui;
 
-    public GameObject node;
+    private GameObject node;
 
-    public GameObject character1;
+    private GameObject character1;
 
-    public GameObject character2;
+    private GameObject character2;
 
-    public GameObject character3;
+    private GameObject character3;
 
-    public GameObject character4;
+    private GameObject character4;
 
-    public GameObject character5;
+    private GameObject character5;
 
     void Start()
     {
@@ -112,5 +112,15 @@ public class Status : MonoBehaviour
     {
         ui.SetActive(false);
         Time.timeScale = 1.0F;
+    }
+
+    public GameObject GetNode()
+    {
+        return this.node;
+    }
+
+    public void SetNode(GameObject newNode)
+    {
+        this.node = newNode;
     }
 }

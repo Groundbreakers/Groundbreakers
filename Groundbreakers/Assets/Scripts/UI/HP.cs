@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HP : MonoBehaviour
 {
     public Text mytext = null;
-    public int healthPoint = 20;
+    private int healthPoint = 20;
 
     // Start is called before the first frame update
     void Start()
@@ -14,9 +14,9 @@ public class HP : MonoBehaviour
         this.mytext.text = this.healthPoint.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealth(int amount)
     {
+        this.healthPoint += amount;
         this.mytext.text = this.healthPoint.ToString();
         if (this.healthPoint <= 0)
         {
