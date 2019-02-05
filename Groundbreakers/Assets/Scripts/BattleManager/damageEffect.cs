@@ -36,6 +36,8 @@ public class damageEffect : MonoBehaviour
 
     public int bulletNum = 5;
 
+    public float damageReductionPercent;
+
     // draw the attack range of the character selected
     private GameObject moduleObject;
 
@@ -52,7 +54,40 @@ public class damageEffect : MonoBehaviour
     // control flow for discrete projectile attack mode
     void BulletMode() {
         if (this.module.burstAE == true) this.StartCoroutine(this.burstShot(this.fireCountdown, 3));
+        else if (this.module.multiShotAE == true) multiShot();
         else this.shoot();
+    }
+
+    void multiShot() {
+     //   Debug.Log("multishot");
+      //  Vector2 direction = target.transform.position - this.transform.position;
+     //   float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        this.instantiateBullet(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation,0f);
+
+        this.instantiateBullet(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation, 15f);
+
+
+        this.instantiateBullet(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation, 30f);
+
+        this.instantiateBullet(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation, -15f);
+
+        this.instantiateBullet(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation, -30f);
     }
 
     // default target searching, set the nearest enemy as target
@@ -113,16 +148,21 @@ public class damageEffect : MonoBehaviour
     void instantiateBullet(
         GameObject rangeAttackPrefab,
         Vector3 rangeAttackFirepointPosition,
-        Quaternion rangeAttackFirepointRoatation) {
+        Quaternion rangeAttackFirepointRoatation, float angleToRotate) {
         GameObject rangeAttackObject = (GameObject)Instantiate(
             rangeAttackPrefab,
             rangeAttackFirepointPosition,
             rangeAttackFirepointRoatation);
         rangeattack rangeattack = rangeAttackObject.GetComponent<rangeattack>();
 
-        if (rangeattack != null)
+        if (rangeattack != null && this.module.multiShotAE != true)
         {
             rangeattack.chase(this.target);
+        }
+        else if(rangeattack != null && this.module.multiShotAE == true)
+        {
+            rangeattack.chase(this.target);
+            rangeattack.setAngle(angleToRotate);
         }
     }
 
@@ -157,7 +197,7 @@ public class damageEffect : MonoBehaviour
             this.instantiateBullet(
                 this.rangeAttackPrefab,
                 this.rangeAttackFirepoint.position,
-                this.rangeAttackFirepoint.rotation);
+                this.rangeAttackFirepoint.rotation, 0f);
             yield return new WaitForSeconds(5f * Time.deltaTime);
         }
     }
@@ -184,7 +224,7 @@ public class damageEffect : MonoBehaviour
         this.instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation);
+            this.rangeAttackFirepoint.rotation,0f);
     }
 
     void Update() {

@@ -16,8 +16,22 @@ public class rangeattack : MonoBehaviour
 
     private Vector2 direction;
 
+    private ModuleTemplate module;
+
+    private GameObject moduleObject;
+
+    private Vector2 rotatedDirection;
+
+    private float angle;
+
+
     public void chase(Transform _target) {
         this.target = _target;
+    }
+
+    public void setAngle(float _angle)
+    {
+        this.angle = _angle;
     }
 
     // Deals damage to the enemies
@@ -37,7 +51,16 @@ public class rangeattack : MonoBehaviour
     }
 
     void Start() {
+        this.moduleObject = GameObject.Find("BattleManager");
+        this.module = this.moduleObject.GetComponent<ModuleTemplate>();
         this.direction = this.target.position - this.transform.position;
+        this.rotatedDirection = vectorRotation(angle) * (this.target.position - this.transform.position);
+        // this.angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //  Debug.Log(angle);
+    }
+
+    Quaternion vectorRotation(float angle) {
+        return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     void Update() {
@@ -47,9 +70,18 @@ public class rangeattack : MonoBehaviour
             return;
         }
 
-        float distancePerFrame = this.speed * Time.deltaTime;
+        if (this.module.multiShotAE != true)
+        {
+            
+            float distancePerFrame = this.speed * Time.deltaTime;
+            // transform.Translate(direction.normalized * distancePerFrame, Space.World); // if bullet tracking
+            this.transform.Translate(Time.deltaTime * this.direction.normalized * distancePerFrame, Space.World);
+        }
+        else
+        {
+            float distancePerFrame = this.speed * Time.deltaTime;
+            this.transform.Translate(Time.deltaTime * this.rotatedDirection.normalized * distancePerFrame, Space.World);
+        }
 
-        // transform.Translate(direction.normalized * distancePerFrame, Space.World); // if bullet tracking
-        this.transform.Translate(Time.deltaTime * this.direction.normalized * distancePerFrame, Space.World);
     }
 }
