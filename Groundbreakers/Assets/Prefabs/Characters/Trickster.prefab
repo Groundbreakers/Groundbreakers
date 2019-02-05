@@ -151,12 +151,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTag: Enemy
-  fireRate: 1
   range: 15
   rangeAttackFirepoint: {fileID: 1171955736483787512}
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
+  fireRate: 1
   lineRenderer: {fileID: 8248728817624174951}
+  laserArmorPen: 0
+  laserDamage: 0
+  sprayAngle: 60
+  bulletNum: 5
+  damageReductionPercent: 0
 --- !u!120 &8248728817624174951
 LineRenderer:
   m_ObjectHideFlags: 0

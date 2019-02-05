@@ -34,6 +34,13 @@ public class rangeattack : MonoBehaviour
         this.angle = _angle;
     }
 
+    public void damageReduction(int _damageReduction)
+    {
+        this.damage -= _damageReduction;
+        Debug.Log("My damage = " + this.damage);
+    }
+
+
     // Deals damage to the enemies
     void OnTriggerEnter2D(Collider2D hitTarget) {
         if (hitTarget.gameObject.tag == "Enemy")

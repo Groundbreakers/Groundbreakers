@@ -1,9 +1,9 @@
 ﻿// Created by Javy
-// This script handles different damage effects and target searching modes
+// This script handles different damage effects and target searching modes for bullet_template. It'll will be separated into smaller script once new bullet gameObject is in use.
 
+using Assets.Enemies.Scripts;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Enemies.Scripts;
 using UnityEngine;
 
 public class damageEffect : MonoBehaviour
@@ -32,12 +32,15 @@ public class damageEffect : MonoBehaviour
     private ModuleTemplate module;
 
     [Header("MultiShot")]
-    public float sprayAngle = 140f;
+    public float sprayAngle;
 
     public int bulletNum = 5;
 
-    public float damageReductionPercent;
+    public int damageReduction = 50;
 
+    [Header("BurstShot")]
+    public int burstSize = 3;
+    
     // draw the attack range of the character selected
     private GameObject moduleObject;
 
@@ -53,41 +56,49 @@ public class damageEffect : MonoBehaviour
 
     // control flow for discrete projectile attack mode
     void BulletMode() {
-        if (this.module.burstAE == true) this.StartCoroutine(this.burstShot(this.fireCountdown, 3));
+        if (this.module.burstAE == true) this.StartCoroutine(this.burstShot());
         else if (this.module.multiShotAE == true) multiShot();
         else this.shoot();
     }
 
     void multiShot() {
-     //   Debug.Log("multishot");
-      //  Vector2 direction = target.transform.position - this.transform.position;
-     //   float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        float angleBtwBullets = (this.sprayAngle / (this.bulletNum - 1));
+        GameObject rangeAttackObject;
+        rangeattack rangeattack;
 
         this.instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation,0f);
+            this.rangeAttackFirepoint.rotation, 0);
 
-        this.instantiateBullet(
+        rangeAttackObject = (GameObject)this.instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, 15f);
+            this.rangeAttackFirepoint.rotation, angleBtwBullets);
+         rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+         rangeattack.damageReduction(this.damageReduction);
 
-
-        this.instantiateBullet(
+         rangeAttackObject = (GameObject)this.instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, 30f);
+            this.rangeAttackFirepoint.rotation, -angleBtwBullets);
+        rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+        rangeattack.damageReduction(this.damageReduction);
 
-        this.instantiateBullet(
+        rangeAttackObject = (GameObject)this.instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, -15f);
+            this.rangeAttackFirepoint.rotation, angleBtwBullets * 2);
+        rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+        rangeattack.damageReduction(this.damageReduction);
 
-        this.instantiateBullet(
+        rangeAttackObject = (GameObject)this.instantiateBullet(
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, -30f);
+            this.rangeAttackFirepoint.rotation, -angleBtwBullets * 2);
+        rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+        rangeattack.damageReduction(this.damageReduction);
     }
 
     // default target searching, set the nearest enemy as target
@@ -145,7 +156,7 @@ public class damageEffect : MonoBehaviour
         }
     }
 
-    void instantiateBullet(
+    GameObject instantiateBullet(
         GameObject rangeAttackPrefab,
         Vector3 rangeAttackFirepointPosition,
         Quaternion rangeAttackFirepointRoatation, float angleToRotate) {
@@ -164,6 +175,8 @@ public class damageEffect : MonoBehaviour
             rangeattack.chase(this.target);
             rangeattack.setAngle(angleToRotate);
         }
+
+        return rangeAttackObject;
     }
 
     void Laser() {
@@ -191,8 +204,8 @@ public class damageEffect : MonoBehaviour
     }
 
     // burst shot
-    IEnumerator burstShot(float fireCountdown, int burstSize) {
-        for (int i = 0; i < burstSize; i++)
+    IEnumerator burstShot() {
+        for (int i = 0; i < this.burstSize; i++)
         {
             this.instantiateBullet(
                 this.rangeAttackPrefab,
