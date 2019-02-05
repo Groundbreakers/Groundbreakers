@@ -1,5 +1,5 @@
 ﻿// Created by Javy
-// This script handles different damage effects and target searching modes for bullet_template. It'll will be separated into smaller script once new bullet gameObject is in use.
+// This script handles different damage effects and target searching modes for bullet_template. It'll will be separated into smaller script once new bullet gameObjects are in use.
 
 using Assets.Enemies.Scripts;
 using System.Collections;
@@ -32,7 +32,7 @@ public class damageEffect : MonoBehaviour
     private ModuleTemplate module;
 
     [Header("MultiShot")]
-    public float sprayAngle;
+    public float sprayAngle =60;
 
     public int bulletNum = 5;
 
@@ -40,8 +40,8 @@ public class damageEffect : MonoBehaviour
 
     [Header("BurstShot")]
     public int burstSize = 3;
-    
-    // draw the attack range of the character selected
+  
+ 
     private GameObject moduleObject;
 
     private Transform target;
@@ -54,55 +54,43 @@ public class damageEffect : MonoBehaviour
         this.module = this.moduleObject.GetComponent<ModuleTemplate>();
     }
 
-    // control flow for discrete projectile attack mode
-    void BulletMode() {
-        if (this.module.burstAE == true) this.StartCoroutine(this.burstShot());
-        else if (this.module.multiShotAE == true) multiShot();
-        else this.shoot();
+    void Update()
+    {
+        this.fireCount();
     }
 
-    void multiShot() {
+    void fireCount()
+    {
+        if (this.target == null)
+        {
+            if (this.module.laserAE == true)
+            {
+                if (this.lineRenderer.enabled) this.lineRenderer.enabled = false;
+            }
+            return;
+        }
 
-        float angleBtwBullets = (this.sprayAngle / (this.bulletNum - 1));
-        GameObject rangeAttackObject;
-        rangeattack rangeattack;
+        if (this.module.laserAE == true)
+        {
+            this.Laser();
+        }
+        else
+        {
+            this.lineRenderer.enabled = false;
 
-        this.instantiateBullet(
-            this.rangeAttackPrefab,
-            this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, 0);
+            if (this.fireCountdown <= 0f)
+            {
+                this.fireCountdown = 1f / this.fireRate;
+                this.BulletMode();
+            }
 
-        rangeAttackObject = (GameObject)this.instantiateBullet(
-            this.rangeAttackPrefab,
-            this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, angleBtwBullets);
-         rangeattack = rangeAttackObject.GetComponent<rangeattack>();
-         rangeattack.damageReduction(this.damageReduction);
-
-         rangeAttackObject = (GameObject)this.instantiateBullet(
-            this.rangeAttackPrefab,
-            this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, -angleBtwBullets);
-        rangeattack = rangeAttackObject.GetComponent<rangeattack>();
-        rangeattack.damageReduction(this.damageReduction);
-
-        rangeAttackObject = (GameObject)this.instantiateBullet(
-            this.rangeAttackPrefab,
-            this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, angleBtwBullets * 2);
-        rangeattack = rangeAttackObject.GetComponent<rangeattack>();
-        rangeattack.damageReduction(this.damageReduction);
-
-        rangeAttackObject = (GameObject)this.instantiateBullet(
-            this.rangeAttackPrefab,
-            this.rangeAttackFirepoint.position,
-            this.rangeAttackFirepoint.rotation, -angleBtwBullets * 2);
-        rangeattack = rangeAttackObject.GetComponent<rangeattack>();
-        rangeattack.damageReduction(this.damageReduction);
+            this.fireCountdown -= Time.deltaTime;
+        }
     }
 
     // default target searching, set the nearest enemy as target
-    void defaultMode() {
+    void defaultMode()
+    {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
         float shortestDistance = Mathf.Infinity;
         GameObject nearestEnemy = null;
@@ -128,38 +116,11 @@ public class damageEffect : MonoBehaviour
         }
     }
 
-    void fireCount() {
-        if (this.target == null)
-        {
-            if (this.module.laserAE == true)
-            {
-                if (this.lineRenderer.enabled) this.lineRenderer.enabled = false;
-            }
-            return;
-        }
-        
-        if (this.module.laserAE == true)
-        {
-            this.Laser();
-        }
-        else
-        {
-            this.lineRenderer.enabled = false;
-
-            if (this.fireCountdown <= 0f)
-            {
-                this.fireCountdown = 1f / this.fireRate;
-                this.BulletMode();
-            }
-
-            this.fireCountdown -= Time.deltaTime;
-        }
-    }
-
     GameObject instantiateBullet(
         GameObject rangeAttackPrefab,
         Vector3 rangeAttackFirepointPosition,
-        Quaternion rangeAttackFirepointRoatation, float angleToRotate) {
+        Quaternion rangeAttackFirepointRoatation, float angleToRotate)
+    {
         GameObject rangeAttackObject = (GameObject)Instantiate(
             rangeAttackPrefab,
             rangeAttackFirepointPosition,
@@ -170,7 +131,7 @@ public class damageEffect : MonoBehaviour
         {
             rangeattack.chase(this.target);
         }
-        else if(rangeattack != null && this.module.multiShotAE == true)
+        else if (rangeattack != null && this.module.multiShotAE == true)
         {
             rangeattack.chase(this.target);
             rangeattack.setAngle(angleToRotate);
@@ -178,6 +139,48 @@ public class damageEffect : MonoBehaviour
 
         return rangeAttackObject;
     }
+   
+    // control flow for discrete projectile attack mode
+    void BulletMode() {
+        if (this.module.burstAE == true) this.StartCoroutine(this.burstShot());
+        else if (this.module.multiShotAE == true) multiShot();
+        else this.shoot();
+    }
+
+    // Currently only supports odd bullets
+    void multiShot() {
+
+        float angleBtwBullets = (this.sprayAngle / (this.bulletNum - 1));
+        GameObject rangeAttackObject;
+        rangeattack rangeattack;
+
+        this.instantiateBullet(
+            this.rangeAttackPrefab,
+            this.rangeAttackFirepoint.position,
+            this.rangeAttackFirepoint.rotation, 0);
+
+    
+        int counter = (this.bulletNum - 1)/2;
+
+        for (int i = 1; i < counter + 1 ; i++)
+        {
+            rangeAttackObject = (GameObject)this.instantiateBullet(
+                this.rangeAttackPrefab,
+                this.rangeAttackFirepoint.position,
+                this.rangeAttackFirepoint.rotation, angleBtwBullets * i);
+            rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+            rangeattack.damageReduction(this.damageReduction);
+
+            rangeAttackObject = (GameObject)this.instantiateBullet(
+                this.rangeAttackPrefab,
+                this.rangeAttackFirepoint.position,
+                this.rangeAttackFirepoint.rotation, -angleBtwBullets * i);
+            rangeattack = rangeAttackObject.GetComponent<rangeattack>();
+            rangeattack.damageReduction(this.damageReduction);
+        }
+
+    }
+    
 
     void Laser() {
         if (this.lineRenderer.enabled == false) this.lineRenderer.enabled = true;
@@ -239,11 +242,7 @@ public class damageEffect : MonoBehaviour
             this.rangeAttackFirepoint.position,
             this.rangeAttackFirepoint.rotation,0f);
     }
-
-    void Update() {
-        this.fireCount();
-    }
-
+    
     void updateTarget() {
         this.defaultMode();
     }
