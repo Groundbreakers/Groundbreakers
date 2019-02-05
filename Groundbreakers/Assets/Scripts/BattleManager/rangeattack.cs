@@ -1,5 +1,4 @@
-﻿using System;
-using Assets.Enemies.Scripts;
+﻿using Assets.Enemies.Scripts;
 using UnityEngine;
 
 public class rangeattack : MonoBehaviour
@@ -14,6 +13,8 @@ public class rangeattack : MonoBehaviour
 
     public Transform target;
 
+    private float angle;
+
     private Vector2 direction;
 
     private ModuleTemplate module;
@@ -22,24 +23,20 @@ public class rangeattack : MonoBehaviour
 
     private Vector2 rotatedDirection;
 
-    private float angle;
-
-
+    // set this bullet's target 
     public void chase(Transform _target) {
         this.target = _target;
     }
 
-    public void setAngle(float _angle)
-    {
+    // set this bullet's angle 
+    public void damageReduction(int _damageReduction) {
+        this.damage -= _damageReduction;
+    }
+
+    // set this bullet's angle 
+    public void setAngle(float _angle) {
         this.angle = _angle;
     }
-
-    public void damageReduction(int _damageReduction)
-    {
-        this.damage -= _damageReduction;
-        Debug.Log("My damage = " + this.damage);
-    }
-
 
     // Deals damage to the enemies
     void OnTriggerEnter2D(Collider2D hitTarget) {
@@ -61,13 +58,7 @@ public class rangeattack : MonoBehaviour
         this.moduleObject = GameObject.Find("BattleManager");
         this.module = this.moduleObject.GetComponent<ModuleTemplate>();
         this.direction = this.target.position - this.transform.position;
-        this.rotatedDirection = vectorRotation(angle) * (this.target.position - this.transform.position);
-        // this.angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //  Debug.Log(angle);
-    }
-
-    Quaternion vectorRotation(float angle) {
-        return Quaternion.AngleAxis(angle, Vector3.forward);
+        this.rotatedDirection = this.vectorRotation(this.angle) * (this.target.position - this.transform.position);
     }
 
     void Update() {
@@ -79,8 +70,8 @@ public class rangeattack : MonoBehaviour
 
         if (this.module.multiShotAE != true)
         {
-            
             float distancePerFrame = this.speed * Time.deltaTime;
+
             // transform.Translate(direction.normalized * distancePerFrame, Space.World); // if bullet tracking
             this.transform.Translate(Time.deltaTime * this.direction.normalized * distancePerFrame, Space.World);
         }
@@ -89,6 +80,9 @@ public class rangeattack : MonoBehaviour
             float distancePerFrame = this.speed * Time.deltaTime;
             this.transform.Translate(Time.deltaTime * this.rotatedDirection.normalized * distancePerFrame, Space.World);
         }
+    }
 
+    Quaternion vectorRotation(float angle) {
+        return Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }

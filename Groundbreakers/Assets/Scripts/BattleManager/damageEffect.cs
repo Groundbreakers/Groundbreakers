@@ -159,9 +159,9 @@ public class damageEffect : MonoBehaviour
             this.rangeAttackFirepoint.position,
             this.rangeAttackFirepoint.rotation, 0);
 
-    
+        
         int counter = (this.bulletNum - 1)/2;
-
+        // create and apply damage reduction to the rest of the bullets
         for (int i = 1; i < counter + 1 ; i++)
         {
             rangeAttackObject = (GameObject)this.instantiateBullet(
