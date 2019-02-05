@@ -161,7 +161,7 @@ public class damageEffect : MonoBehaviour
 
         
         int counter = (this.bulletNum - 1)/2;
-        // create and apply damage reduction to the rest of the bullets
+        // create and apply damage reduction to the rest of the bullets, not fully tested yet
         for (int i = 1; i < counter + 1 ; i++)
         {
             rangeAttackObject = (GameObject)this.instantiateBullet(
