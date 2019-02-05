@@ -1,15 +1,15 @@
-﻿using System;
+﻿// Created by Javy
+// This script handles different damage effects and target searching modes
+
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Enemies.Scripts;
 using UnityEngine;
-using UnityEngineInternal;
 
 public class damageEffect : MonoBehaviour
 {
+    [Header("Set Up")]
     public string enemyTag = "Enemy";
-
-    public float fireRate = 1f;
 
     public float range = 15f;
 
@@ -17,7 +17,24 @@ public class damageEffect : MonoBehaviour
 
     public GameObject rangeAttackPrefab;
 
+    [Header("Discrete Projectile Attack")]
+    public float fireRate = 1f;
+
+    [Header("Laser")]
+    public LineRenderer lineRenderer;
+    
+    public int laserArmorPen = 0;
+
+    public int laserDamage = 0;
+    
     private float fireCountdown = 0f;
+
+    private ModuleTemplate module;
+
+    [Header("MultiShot")]
+    public float sprayAngle = 140f;
+
+    public int bulletNum = 5;
 
     // draw the attack range of the character selected
     private GameObject moduleObject;
@@ -26,22 +43,17 @@ public class damageEffect : MonoBehaviour
 
     private List<GameObject> targetedEnemies;
 
-    private ModuleTemplate module;
-
-    public LineRenderer lineRenderer;
-
     void Awake() {
         this.targetedEnemies = new List<GameObject>();
         this.moduleObject = GameObject.Find("BattleManager");
-        module = this.moduleObject.GetComponent<ModuleTemplate>();
+        this.module = this.moduleObject.GetComponent<ModuleTemplate>();
     }
 
-    void Update()
-    {
-        this.fireCount();
-       
+    // control flow for discrete projectile attack mode
+    void BulletMode() {
+        if (this.module.burstAE == true) this.StartCoroutine(this.burstShot(this.fireCountdown, 3));
+        else this.shoot();
     }
-
 
     // default target searching, set the nearest enemy as target
     void defaultMode() {
@@ -77,15 +89,12 @@ public class damageEffect : MonoBehaviour
             {
                 if (this.lineRenderer.enabled) this.lineRenderer.enabled = false;
             }
-           
             return;
         }
-
-        this.module.laserAE = true;
+        
         if (this.module.laserAE == true)
         {
-            Laser();
-
+            this.Laser();
         }
         else
         {
@@ -98,30 +107,6 @@ public class damageEffect : MonoBehaviour
             }
 
             this.fireCountdown -= Time.deltaTime;
-        }
-    }
-
-    void Laser() {
-        if (this.lineRenderer.enabled == false) this.lineRenderer.enabled = true;
-        this.lineRenderer.SetPosition(0, this.rangeAttackFirepoint.position);
-        this.lineRenderer.SetPosition(1,this.target.position);
-
-     
-        RaycastHit2D[] hits;
-        hits = Physics2D.RaycastAll(this.lineRenderer.transform.position, this.target.position - this.transform.position, Mathf.Infinity);
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            // hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
-            // Enemy_Generic test = hits[i].transform.GetComponent<Enemy_Generic>();
-            if (hits[i].collider.gameObject.tag == "Enemy")
-               {
-                   if (hits[i].collider.gameObject != null)
-                   {
-                       Enemy_Generic test = hits[i].collider.gameObject.GetComponent<Enemy_Generic>();
-                       test.DamageEnemy(100, 80, 1, false);
-                }
-               }
         }
     }
 
@@ -141,8 +126,32 @@ public class damageEffect : MonoBehaviour
         }
     }
 
+    void Laser() {
+        if (this.lineRenderer.enabled == false) this.lineRenderer.enabled = true;
+        this.lineRenderer.SetPosition(0, this.rangeAttackFirepoint.position);
+        this.lineRenderer.SetPosition(1, this.target.position);
+
+        //Collision detection using Raycast
+        RaycastHit2D[] hits;
+        Vector2 direction = this.target.position - this.transform.position;
+        hits = Physics2D.RaycastAll(this.lineRenderer.transform.position, direction, Mathf.Infinity);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.gameObject.tag == "Enemy")
+            {
+                if (hits[i].collider.gameObject != null)
+                {
+                    Enemy_Generic enemy = hits[i].collider.gameObject.GetComponent<Enemy_Generic>();
+                    //Currently set to 0 damage because Update function 1 shot the Enemy
+                    enemy.DamageEnemy(this.laserDamage, this.laserArmorPen, 1, false);
+                }
+            }
+        }
+    }
+
     // burst shot
-    IEnumerator multiShot(float fireCountdown, int burstSize) {
+    IEnumerator burstShot(float fireCountdown, int burstSize) {
         for (int i = 0; i < burstSize; i++)
         {
             this.instantiateBullet(
@@ -170,13 +179,6 @@ public class damageEffect : MonoBehaviour
         }
     }
 
-    // control flow for attack mode
-    void BulletMode() {
-       // ModuleTemplate module = this.moduleObject.GetComponent<ModuleTemplate>();
-        if (module.multiShotAE == true) this.StartCoroutine(this.multiShot(this.fireCountdown, 3));
-        else this.shoot();
-    }
-
     // Instantiate and and chase the target
     void shoot() {
         this.instantiateBullet(
@@ -184,7 +186,11 @@ public class damageEffect : MonoBehaviour
             this.rangeAttackFirepoint.position,
             this.rangeAttackFirepoint.rotation);
     }
-    
+
+    void Update() {
+        this.fireCount();
+    }
+
     void updateTarget() {
         this.defaultMode();
     }
