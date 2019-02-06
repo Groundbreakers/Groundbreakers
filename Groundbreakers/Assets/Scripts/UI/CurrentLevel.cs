@@ -6,15 +6,17 @@ using UnityEngine.UI;
 public class CurrentLevel : MonoBehaviour
 {
     public Text ui;
-    public int region;
-    public int level;
+    public Text ui2;
+    private int region;
+    private int level;
     
     // Start is called before the first frame update
     void Start()
     {
         this.region = 1;
         this.level = 1;
-        this.ui.text = this.region + "-" + this.level;
+        this.ui.text = "Region " + this.region;
+        this.ui2.text = "Level " + this.level + "/8";
         this.ChangeRegion();
     }
 
@@ -44,6 +46,17 @@ public class CurrentLevel : MonoBehaviour
             this.level += 1;
         }
 
-        this.ui.text = this.region + "-" + this.level;
+        this.ui.text = "Region " + this.region;
+        this.ui2.text = "Level " + this.level + "/8";
+    }
+
+    public int GetRegion()
+    {
+        return this.region;
+    }
+
+    public int GetLevel()
+    {
+        return this.level;
     }
 }

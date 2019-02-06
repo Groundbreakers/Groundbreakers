@@ -9,10 +9,11 @@ public class Timer : MonoBehaviour
     public GameObject ui;
     public Text wave;
     public Text timer;
-    public float countdown;
-    public float waveDelay;
-    public int waveCount;
-    public Boolean isBattle;
+
+    private float countdown;
+    private float waveDelay;
+    private int waveCount;
+    private Boolean isBattle;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class Timer : MonoBehaviour
             {
                 NextWave(waveCount);
                 this.waveCount += 1;
-                this.wave.text = "WAVE " + this.waveCount;
+                this.wave.text = "WAVE " + this.waveCount + "/5";
                 this.countdown = this.waveDelay;
             }
 

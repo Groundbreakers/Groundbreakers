@@ -6,17 +6,17 @@ public class Status : MonoBehaviour
 {
     public GameObject ui;
 
-    public GameObject node;
+    private GameObject node;
 
-    public GameObject character1;
+    private GameObject character1;
 
-    public GameObject character2;
+    private GameObject character2;
 
-    public GameObject character3;
+    private GameObject character3;
 
-    public GameObject character4;
+    private GameObject character4;
 
-    public GameObject character5;
+    private GameObject character5;
 
     void Start()
     {
@@ -45,7 +45,32 @@ public class Status : MonoBehaviour
 
     public void Transform()
     {
-
+        SelectNode selectNode = this.node.GetComponent<SelectNode>();
+        if (selectNode.characterOnTop == 0)
+        {
+            return;
+        }
+        else if (selectNode.characterOnTop == 1)
+        {
+            this.character1.GetComponent<characterAttack>().change();
+        }
+        else if (selectNode.characterOnTop == 2)
+        {
+            this.character2.GetComponent<characterAttack>().change();
+        }
+        else if (selectNode.characterOnTop == 3)
+        {
+            this.character3.GetComponent<characterAttack>().change();
+        }
+        else if (selectNode.characterOnTop == 4)
+        {
+            this.character4.GetComponent<characterAttack>().change();
+        }
+        else if (selectNode.characterOnTop == 5)
+        {
+            this.character5.GetComponent<characterAttack>().change();
+        }
+        this.Close();
     }
 
     public void Retreat()
@@ -87,5 +112,15 @@ public class Status : MonoBehaviour
     {
         ui.SetActive(false);
         Time.timeScale = 1.0F;
+    }
+
+    public GameObject GetNode()
+    {
+        return this.node;
+    }
+
+    public void SetNode(GameObject newNode)
+    {
+        this.node = newNode;
     }
 }

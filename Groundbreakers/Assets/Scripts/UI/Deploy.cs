@@ -6,30 +6,21 @@ public class Deploy : MonoBehaviour
 {
     public GameObject ui;
 
-    public GameObject node;
-
-    public GameObject character1;
-
-    public GameObject character2;
-
-    public GameObject character3;
-
-    public GameObject character4;
-
-    public GameObject character5;
-
-    public GameObject character1Pos;
-
-    public GameObject character2Pos;
-
-    public GameObject character3Pos;
-
-    public GameObject character4Pos;
-
-    public GameObject character5Pos;
+    private GameObject node;
+    private GameObject character1;
+    private GameObject character2;
+    private GameObject character3;
+    private GameObject character4;
+    private GameObject character5;
+    private GameObject character1Pos;
+    private GameObject character2Pos;
+    private GameObject character3Pos;
+    private GameObject character4Pos;
+    private GameObject character5Pos;
 
     void Start()
     {
+        // Reference five characters
         GameObject characterList = GameObject.Find("CharacterList");
         this.character1 = characterList.transform.GetChild(0).gameObject;
         this.character2 = characterList.transform.GetChild(1).gameObject;
@@ -55,13 +46,16 @@ public class Deploy : MonoBehaviour
 
     public void DeployC1()
     {
+        // If character 1 is on the battlefield, retrieve it first
         if (this.character1.activeSelf)
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
-            status.node = this.character1Pos;
+            status.SetNode(this.character1Pos);
             status.Retreat();
         }
+
+        // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 1;
         this.character1.transform.position = this.node.transform.position;
@@ -77,7 +71,7 @@ public class Deploy : MonoBehaviour
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
-            status.node = this.character2Pos;
+            status.SetNode(this.character2Pos);
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
@@ -95,7 +89,7 @@ public class Deploy : MonoBehaviour
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
-            status.node = this.character3Pos;
+            status.SetNode(this.character3Pos);
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
@@ -113,7 +107,7 @@ public class Deploy : MonoBehaviour
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
-            status.node = this.character4Pos;
+            status.SetNode(this.character4Pos);
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
@@ -131,7 +125,7 @@ public class Deploy : MonoBehaviour
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
-            status.node = this.character5Pos;
+            status.SetNode(this.character5Pos);
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
