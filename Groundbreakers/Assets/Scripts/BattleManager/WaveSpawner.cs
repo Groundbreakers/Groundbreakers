@@ -18,7 +18,7 @@ public class WaveSpawner : MonoBehaviour
     public List<Vector3> path2 = new List<Vector3>();
 
     // Packs for paths 1 and 2. Stored as an array of Lists of prefabs.
-    public List<Transform>[] pack1 = new List<Transform>[5]; 
+    public List<Transform>[] pack1 = new List<Transform>[5];
     public List<Transform>[] pack2 = new List<Transform>[5];
 
     void Start()
