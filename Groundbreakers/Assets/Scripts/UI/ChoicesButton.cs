@@ -29,6 +29,8 @@ public class ChoicesButton : MonoBehaviour
     public void HandleClick()
     {
         // Call Battle function here
+
+        // Close the choice panel
         GameObject canvas = GameObject.Find("Canvas");
         Choices choices = canvas.GetComponent<Choices>();
         choices.Toggle();

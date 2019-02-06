@@ -15,6 +15,10 @@ public class characterAttack : MonoBehaviour
 
     public Animator animator;
 
+    public string stance = "Gun";
+
+    private bool isChanging = false;
+
     private float fireCountdown = 0f;
 
     private Transform target;
@@ -24,12 +28,13 @@ public class characterAttack : MonoBehaviour
     private List<GameObject> targetedEnemies;
     // draw the attack range of the character selected
 
-    void Awake() { targetedEnemies = new List<GameObject>(); }
+    private CircleCollider2D myCollider;
+
+
+    void Awake() { targetedEnemies = new List<GameObject>();  myCollider = GetComponent<CircleCollider2D>(); }
     
     void Update() {
-        this.fireCount();
-
-        if (target != null)
+        if (target != null && !isChanging)
         {
             //calculate angle
             Vector2 direction = target.transform.position - this.transform.position;
@@ -71,6 +76,19 @@ public class characterAttack : MonoBehaviour
             }
             //Debug.Log(angle);
         }
+
+        if (!isChanging)
+        {
+            this.fireCount();
+        }
+
+        if (!animator.GetBool("Transition"))
+        {
+            isChanging = false;
+            
+        }
+
+        
     }
 
     //if an enemy enters in range
@@ -119,7 +137,13 @@ public class characterAttack : MonoBehaviour
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
+<<<<<<< HEAD
             this.shoot(); 
+=======
+            this.shoot();
+
+            
+>>>>>>> c2a87cb66820f7fe8104bd4063f5c43dc91c4a04
             this.fireCountdown = 1f / this.fireRate;
         }
 
@@ -133,37 +157,47 @@ public class characterAttack : MonoBehaviour
             this.rangeAttackPrefab,
             this.rangeAttackFirepoint.position,
             this.rangeAttackFirepoint.rotation);
+       
         rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
-
+        if(stance.Equals("Melee"))
+        {
+            rangeAttack_object.GetComponent<SpriteRenderer>().enabled = false;
+        }
         if (rangeattack != null)
         {
             rangeattack.chase(this.target);
         }
     }
 
+
     void defaultMode() {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(this.enemyTag);
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        foreach (GameObject enemy in enemies)
+        if(targetedEnemies.Count != 0)
         {
-            float distanceToEnemy = Vector2.Distance(this.transform.position, enemy.transform.position);
+            target = targetedEnemies[0].transform;
+        }
+        
+    }
 
-            if (distanceToEnemy < shortestDistance)
-            {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
-            }
+    public void change()
+    {
+        isChanging = true;
+        if (stance.Equals("Melee"))
+        {
+            
+            stance = "Gun";
+            animator.SetBool("Transition", true);
+            animator.SetBool("Sitting", true);
+            animator.SetBool("Standing", false);
+            myCollider.radius = 2f; // or whatever radius you want.
 
-            if (nearestEnemy != null && shortestDistance <= this.range)
-            {
-                this.target = nearestEnemy.transform;
-            }
-            else
-            {
-                this.target = null;
-            }
+        }
+        else
+        {
+            stance = "Melee";
+            animator.SetBool("Transition", true);
+            animator.SetBool("Sitting", false);
+            animator.SetBool("Standing", true);
+            myCollider.radius = 1f; // or whatever radius you want.
         }
     }
 }

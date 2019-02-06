@@ -215,9 +215,17 @@
             {
                 for (var j = 0; j < Dimension; j++)
                 {
-                    var instance = this.InstantiateTileAt(this.data[i, j], i, j);
+                    Tiles tileType = this.data[i, j];
+                    var instance = this.InstantiateTileAt(tileType, i, j);
 
                     this.tileBlocks[i, j] = instance.transform;
+
+                    // TODO: Refactor this part
+                    if (tileType == Tiles.Path)
+                    {
+                        // Basically disable the component that allows the player to select.
+                        instance.GetComponent<SelectNode>().SetCanDeploy(false);
+                    }
                 }
             }
         }
@@ -245,7 +253,7 @@
         {
             GameObject tile;
 
-            // Determine Enum -> GameObject
+            // A function that maps Enum -> GameObject.
             switch (tileType)
             {
                 case Tiles.Path:
@@ -270,7 +278,7 @@
                 new Vector3(x * CellSize, y * CellSize, 0.0f), 
                 Quaternion.identity);
 
-            instance.GetComponent<SpriteRenderer>().sortingOrder = (int)Dimension - y;
+            instance.GetComponent<TileBlock>().SetSortingOrder((int)Dimension - y);
             instance.transform.SetParent(this.tilesHolder);
             return instance;
         }
@@ -377,7 +385,7 @@
                 path.Add(new Vector3(currentX, currentY));
             }
 
-            path.Reverse();
+            // path.Reverse();
             return path;
         }
 

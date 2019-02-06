@@ -41,7 +41,17 @@ public class LootButton : MonoBehaviour
 
     public void HandleconfirmButton()
     {
-        Debug.Log(title.text);
+        // Create a child clone under the parent Inventory
+        GameObject inventory = GameObject.Find("Inventory");
+        GameObject newLoot = (GameObject)GameObject.Instantiate(this.loot, inventory.transform);
+
+        // Close the tooltip panel
+        this.Toggle();
+
+        // Close the loot panel
+        GameObject canvas = GameObject.Find("Canvas");
+        Loot loot = canvas.GetComponent<Loot>();
+        loot.Toggle();
     }
 
     public void Toggle()

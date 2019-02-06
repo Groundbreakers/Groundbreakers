@@ -47,7 +47,7 @@ public class Manager : MonoBehaviour
         // Get to know what is the current region
         GameObject canvas = GameObject.Find("Canvas");
         CurrentLevel currentLevel = canvas.GetComponent<CurrentLevel>();
-        this.region = currentLevel.region;
+        this.region = currentLevel.GetRegion();
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
         if (region == 1)
