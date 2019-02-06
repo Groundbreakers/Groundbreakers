@@ -16,7 +16,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        this.isBattle = true;  //modified for development convenience- javy
+        this.isBattle = false; 
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
             if (this.countdown <= 0F)
             {
                 NextWave(waveCount);
-                //this.waveCount += 1; //modified for development convenience- javy
+                this.waveCount += 1; 
                 this.wave.text = "WAVE " + this.waveCount;
                 this.countdown = this.waveDelay;
             }
