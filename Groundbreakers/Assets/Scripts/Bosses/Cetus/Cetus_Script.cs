@@ -96,27 +96,30 @@ public class Cetus_Script : MonoBehaviour
                 if (!doingAttack) // Don't try to do multiple attacks at once
                 {
                     this.AttackTimerTick();
-                    // Choose the strongest available attack
+                    // Choose the strongest available attack. Round the other timers to avoid 'double attacks'
                     if (this.chargeShotTimer <= 0)
                     {
                         this.doingAttack = true;
                         StartCoroutine(ChargeShot());
                         this.chargeShotTimer = 36;
-                        this.splashTimer = Mathf.Floor(this.splashTimer);
-                        this.waterStrikeTimer = Mathf.Floor(this.waterStrikeTimer);
+                        this.splashTimer = Mathf.Round(this.splashTimer);
+                        this.waterStrikeTimer = Mathf.Round(this.waterStrikeTimer);
                     }
                     else if (this.splashTimer <= 0)
                     {
                         this.doingAttack = true;
                         StartCoroutine(Splash());
                         this.splashTimer = 24;
-                        this.waterStrikeTimer = Mathf.Floor(this.waterStrikeTimer);
+                        this.chargeShotTimer = Mathf.Round(this.chargeShotTimer);
+                        this.waterStrikeTimer = Mathf.Round(this.waterStrikeTimer);
                     }
                     else if (this.waterStrikeTimer <= 0)
                     {
                         this.doingAttack = true;
                         StartCoroutine(WaterStrike());
                         this.waterStrikeTimer = 6;
+                        this.chargeShotTimer = Mathf.Round(this.chargeShotTimer);
+                        this.splashTimer = Mathf.Round(this.splashTimer);
                     }
 
                     // Reset timers for overridden attacks
@@ -158,7 +161,7 @@ public class Cetus_Script : MonoBehaviour
     private void startCombat()
     {
         this.combat = true;
-        this.tag = "Enemy";
+        this.tag = "Boss";
     }
 
     // Update combat timers
@@ -167,6 +170,24 @@ public class Cetus_Script : MonoBehaviour
         this.waterStrikeTimer -= Time.deltaTime;
         this.splashTimer -= Time.deltaTime;
         this.chargeShotTimer -= Time.deltaTime;
+    }
+
+    // Damage function. Takes armorpen, but I don't know if it'll be used in the calculation or not.
+    public void DamageCetus(int damage, int armorpen, float accuracy)
+    {
+        // Check if the attack missed (Low-accuracy attacks?). If it hits, do damage calculation
+        float accuracyroll = Random.Range(0.0f, 1.0f);
+        if (accuracyroll <= accuracy)
+        {
+            int damagevalue;
+            damagevalue = damage;
+            this.health -= damagevalue;
+        }
+        else
+        {
+            // Attack missed
+            return;
+        }
     }
 
     #region Status Handlers

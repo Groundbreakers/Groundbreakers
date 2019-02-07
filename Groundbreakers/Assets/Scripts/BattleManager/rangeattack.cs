@@ -46,5 +46,14 @@ public class rangeattack : MonoBehaviour
             this.hit = true;
             Destroy(this.gameObject);
         }
+        if (hitTarget.gameObject.tag == "Boss")
+        {
+            if (!hit)
+            {
+                hitTarget.gameObject.GetComponent<Cetus_Script>().DamageCetus(this.damage, this.armorpen, 1);
+            }
+            this.hit = true;
+            Destroy(this.gameObject);
+        }
     }
 }
