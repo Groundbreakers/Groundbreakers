@@ -84,11 +84,13 @@
             this.transform.SetPositionAndRotation(
                 new Vector3(this.originalPosition.x, this.originalPosition.y - TempOffset),
                 Quaternion.identity);
+
+            this.StopCoroutine(this.StartDropping());
         }
 
         public void FixedUpdate()
         {
-            if (!this.stabled && this.CheckTileReachDestination())
+            if (!this.stabled && this.HasReachDestination())
             {
                 this.stabled = true;
                 blocksReady++;
@@ -118,6 +120,19 @@
             this.hoverIconSprite.sortingOrder = z + 1;
         }
 
+        public void ResetPosition()
+        {
+            if (this.stabled)
+            {
+                blocksReady--;
+            }
+
+            this.stabled = false;
+            this.transform.SetPositionAndRotation(
+                this.originalPosition,
+                Quaternion.identity);
+        }
+
         #endregion
 
         #region IBattlePhaseHandler
@@ -142,7 +157,7 @@
 
         #region Internal Functions
 
-        private bool CheckTileReachDestination()
+        private bool HasReachDestination()
         {
             var delta = Mathf.Abs(this.gameObject.transform.position.y - this.originalPosition.y);
 

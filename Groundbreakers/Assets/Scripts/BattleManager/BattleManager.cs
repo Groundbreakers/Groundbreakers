@@ -160,6 +160,12 @@
             {
                 TriggerEvent("test");
             }
+
+            // This is for debugging purpose
+            if (Input.GetKeyDown("r"))
+            {
+                TriggerEvent("reset");
+            }
         }
 
         #endregion
