@@ -21,11 +21,6 @@
 
         private Dictionary<string, UnityEvent> eventDictionary;
 
-        /// <summary>
-        /// This stores the HUD game object (bad solution)
-        /// </summary>
-        private GameObject uiCanvas;
-
         #endregion
 
         #region Public Properties
@@ -153,8 +148,6 @@
 
         public void OnEnable()
         {
-            this.uiCanvas = GameObject.Find("Canvas"); // should do a safe check
-
             StartListening(
                 "block ready",
                 () => GameState = Stages.Combating);
@@ -177,7 +170,7 @@
         public void OnWaveUpdate(int currentWave)
         {
             // Should update the UI. *NOT Final*
-            var timer = this.uiCanvas.GetComponent<Timer>();
+            // var timer = this.uiCanvas.GetComponent<Timer>();
             //timer.UpdateWave(currentWave);
         }
 
