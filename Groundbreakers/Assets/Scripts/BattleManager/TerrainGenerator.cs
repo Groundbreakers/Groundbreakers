@@ -71,6 +71,11 @@
             this.GeneratePaths();
         }
 
+        public Tiles GeTileTypeAt(int x, int y)
+        {
+            return this.data[x, y];
+        }
+
         #endregion
 
         #region Terrain Generation Related

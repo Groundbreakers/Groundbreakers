@@ -1,5 +1,7 @@
 ﻿namespace Assets.Scripts
 {
+    using System;
+
     using UnityEngine;
 
     using TG = TerrainGenerator;
@@ -47,101 +49,123 @@
         /// </summary>
         private TG generator;
 
+        private bool shouldGenerate = true;
+
         #endregion
 
         #region Unity Callbacks
 
         private void OnEnable()
         {
+            this.waveSpawner = this.GetComponent<WaveSpawner>();
             this.generator = this.GetComponent<TG>();
+
+            if (this.shouldGenerate)
+            {
+                this.generator.Initialize();
+            }
+            else
+            {
+                this.SetupFromChildren();
+            }
         }
 
         private void Start()
         {
-            this.waveSpawner = this.GetComponent<WaveSpawner>();
-
-            // this.GenerateTerrain();
-            // this.CreateGameBoard();
+            if (this.shouldGenerate)
+            {
+                this.SetupFromGenerator();
+            }
         }
 
         #endregion
 
         #region Internal Functions
 
-        //private void CreateGameBoard()
-        //{
-        //    // Spawning each individual tiles
-        //    for (var x = 0; x < TG.Dimension; x++)
-        //    {
-        //        for (var y = 0; y < TG.Dimension; y++)
-        //        {
-        //            Tiles tileType = this.data[x, y];
-        //            var instance = this.InstantiateTileAt(tileType, x, y);
+        private void SetupFromChildren()
+        {
+            var index = 0;
+            foreach (Transform child in this.transform)
+            {
+                if (child.CompareTag("Tile"))
+                {
+                    var x = index % TG.Dimension;
+                    var y = index / TG.Dimension;
 
-        //            this.tileBlocks[x, y] = instance.transform;
+                    this.tileBlocks[x, y] = child;
 
-        //            // TODO: Refactor this part
-        //            if (tileType == Tiles.Path)
-        //            {
-        //                // Basically disable the component that allows the player to select.
-        //                instance.GetComponent<SelectNode>().SetCanDeploy(false);
-        //            }
-        //        }
-        //    }
-        //}
+                    index++;
+                }
+            }
+        }
 
-        ///// <summary>
-        ///// Given the tile type, instantiate a GameObject from corresponding prefab at the
-        ///// location (x,y).
-        ///// </summary>
-        ///// <param name="tileType">
-        ///// The tile type <see cref="Tiles"/>
-        ///// </param>
-        ///// <param name="x">
-        ///// The X coordinate of the desired grid to place the tile.
-        ///// </param>
-        ///// <param name="y">
-        ///// The Y coordinate of the desired grid to place the tile.
-        ///// </param>
-        ///// <returns>
-        ///// The <see cref="GameObject"/>.
-        ///// </returns>
-        ///// <exception cref="System.ArgumentOutOfRangeException">
-        ///// Should not happen.
-        ///// </exception>
-        //private GameObject InstantiateTileAt(Tiles tileType, int x, int y)
-        //{
-        //    GameObject tile;
+        private void SetupFromGenerator()
+        {
+            for (var x = 0; x < TG.Dimension; x++)
+            {
+                for (var y = 0; y < TG.Dimension; y++)
+                {
+                    Tiles tileType = this.generator.GeTileTypeAt(x, y);
 
-        //    // A function that maps Enum -> GameObject.
-        //    switch (tileType)
-        //    {
-        //        case Tiles.Path:
-        //            tile = this.tilePath;
-        //            break;
-        //        case Tiles.Grass:
-        //            tile = this.tileA;
-        //            break;
-        //        case Tiles.Stone:
-        //            tile = this.tileB;
-        //            break;
-        //        case Tiles.Wall:
-        //            tile = this.tileC;
-        //            break;
-        //        default:
-        //            throw new ArgumentOutOfRangeException();
-        //    }
+                    var instance = this.InstantiateTileAt(tileType, x, y);
+                    this.tileBlocks[x, y] = instance.transform;
+                }
+            }
+        }
 
-        //    // Finally Instantiate it.
-        //    var instance = Instantiate(
-        //        tile, 
-        //        new Vector3(x * CellSize, y * CellSize, 0.0f), 
-        //        Quaternion.identity);
+        /// <summary>
+        /// Given the tile type, instantiate a GameObject from corresponding prefab at the
+        /// location (x,y).
+        /// </summary>
+        /// <param name="tileType">
+        /// The tile type <see cref="Tiles"/>
+        /// </param>
+        /// <param name="x">
+        /// The X coordinate of the desired grid to place the tile.
+        /// </param>
+        /// <param name="y">
+        /// The Y coordinate of the desired grid to place the tile.
+        /// </param>
+        /// <returns>
+        /// The <see cref="GameObject"/>.
+        /// </returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Should not happen.
+        /// </exception>
+        private GameObject InstantiateTileAt(Tiles tileType, int x, int y)
+        {
+            GameObject tile;
 
-        //    instance.GetComponent<TileBlock>().SetSortingOrder(TG.Dimension - y);
-        //    instance.transform.SetParent(this.tilesHolder);
-        //    return instance;
-        //}
+            // A function that maps Enum -> GameObject.
+            switch (tileType)
+            {
+                case Tiles.Path:
+                    tile = this.tilePath;
+                    break;
+                case Tiles.Grass:
+                    tile = this.tileA;
+                    break;
+                case Tiles.Stone:
+                    tile = this.tileB;
+                    break;
+                case Tiles.Wall:
+                    tile = this.tileC;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // Finally Instantiate it.
+            var instance = Instantiate(
+                tile,
+                new Vector3(x * CellSize, y * CellSize, 0.0f),
+                Quaternion.identity);
+
+            // Setting order and parent
+            instance.GetComponent<TileBlock>().SetSortingOrder(TG.Dimension - y);
+            instance.transform.SetParent(this.transform);
+            return instance;
+        }
 
         #endregion
     }

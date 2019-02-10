@@ -1,23 +1,17 @@
 ﻿namespace Assets.Scripts
 {
-    using System;
-    using System.Collections;
     using UnityEngine;
 
-    using Random = UnityEngine.Random;
+    using TG = TerrainGenerator;
 
     [RequireComponent(typeof(SpriteRenderer))]
     public class TileBlock : MonoBehaviour
     {
-        private static readonly int TotalBlocks = TerrainGenerator.Dimension * TerrainGenerator.Dimension;
+        private static readonly int TotalBlocks = TG.Dimension * TG.Dimension;
 
-        private static uint blocksReady;
+        private static int blocksReady;
 
         #region Inspector Variables
-
-        [SerializeField]
-        [Range(0.1f, 5.0f)]
-        private float enterDuration = 2.5f;
 
         [SerializeField]
         public Sprite CanDeployIcon;
@@ -54,22 +48,6 @@
             this.hoverIconSprite = components[1];
         }
 
-        public void FixedUpdate()
-        {
-            //if (!this.stabled && this.HasReachDestination())
-            //{
-            //    this.stabled = true;
-            //    blocksReady++;
-
-            //    // Check if all tiles are ready and emit event.
-            //    if (blocksReady == TotalBlocks)
-            //    {
-            //        Debug.Log("All block ready");
-            //        BattleManager.TriggerEvent("block ready");
-            //    }
-            //}
-        }
-
         #endregion
 
         #region Public functions
@@ -85,6 +63,7 @@
             this.sprite.sortingOrder = z;
             this.hoverIconSprite.sortingOrder = z + 1;
         }
+
         #endregion
     }
 }
