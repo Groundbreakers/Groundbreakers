@@ -43,35 +43,29 @@
         private Transform[,] tileBlocks = new Transform[TG.Dimension, TG.Dimension];
 
         private MobSpawner mobSpawner;
-        // private WaveSpawner waveSpawner;
 
         /// <summary>
         /// The Saving a reference to the tile generator component.
         /// </summary>
         private TG generator;
 
-        private bool shouldGenerate = true;
-
         #endregion
 
         #region IBattlePhaseHandler
 
-        public void OnTilesEntering()
+        public void OnBattleBegin()
         {
-            var children = this.GetComponentsInChildren<EnterBehavior>();
+            this.SetupNewLevel();
 
+            // Tell each tiles to start tween in.
+            var children = this.GetComponentsInChildren<EnterBehavior>();
             foreach (var behavior in children)
             {
                 behavior.StartEntering();
             }
         }
 
-        public void OnBattling()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnTilesExiting()
+        public void OnBattleEnd()
         {
             var children = this.GetComponentsInChildren<EnterBehavior>();
 
@@ -83,38 +77,37 @@
 
         #endregion
 
+        #region Public Functions
+
+        public void SetupNewLevel()
+        {
+            // Generate new map data
+            this.generator.Initialize();
+
+            // Instantiate tiles from data
+            this.InstantiateTiles();
+            this.SetupMobSpawner();
+        }
+
+        #endregion
+
         #region Unity Callbacks
 
         private void OnEnable()
         {
-            BattleManager.StartListening("start", this.OnTilesEntering);
+            BattleManager.StartListening("start", this.OnBattleBegin);
 
             this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
             this.generator = this.GetComponent<TG>();
-
-            if (this.shouldGenerate)
-            {
-                this.generator.Initialize();
-            }
-            else
-            {
-                this.SetupFromChildren();
-            }
-        }
-
-        private void Start()
-        {
-            if (this.shouldGenerate)
-            {
-                this.SetupFromGenerator();
-                this.SetupMobSpawner();
-            }
         }
 
         #endregion
 
         #region Internal Functions
 
+        /// <summary>
+        /// Heritage from Austin. Adding vector3 points to the spawn. 
+        /// </summary>
         private void SetupMobSpawner()
         {
             var path = this.generator.GetPathA();
@@ -147,8 +140,19 @@
             }
         }
 
-        private void SetupFromGenerator()
+        /// <summary>
+        /// Instantiate all tiles. Must call generator.Initialize before using this function.
+        /// This function will destroy any existing tileBlock GameObjects. 
+        /// </summary>
+        private void InstantiateTiles()
         {
+            // Clear the 2D array
+            foreach (Transform tileBlock in this.transform)
+            {
+                GameObject.Destroy(tileBlock.gameObject);
+            }
+
+            // Re instantiate all tiles
             for (var x = 0; x < TG.Dimension; x++)
             {
                 for (var y = 0; y < TG.Dimension; y++)

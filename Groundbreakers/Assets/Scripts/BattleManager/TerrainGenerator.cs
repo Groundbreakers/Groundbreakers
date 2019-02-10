@@ -69,22 +69,50 @@
 
         #region Public functions
 
+        /// <summary>
+        /// This function should be called by GameMap. A new sets of data is generated each time
+        /// you call this Initialize Function.
+        /// </summary>
         public void Initialize()
         {
             this.GenerateTerrain();
             this.GeneratePaths();
         }
 
+        /// <summary>
+        /// The get tile type at.
+        /// </summary>
+        /// <param name="x">
+        /// The x coordinate of the data. Range: [0, 7]
+        /// </param>
+        /// <param name="y">
+        /// The y coordinate of the data. Range: [0, 7]
+        /// </param>
+        /// <returns>
+        /// The <see cref="Tiles"/>. The enumeration that represent the tile's type. 
+        /// </returns>
         public Tiles GetTileTypeAt(int x, int y)
         {
             return this.data[x, y];
         }
 
+        /// <summary>
+        /// Heritage from Austin. Get the left path. 
+        /// </summary>
+        /// <returns>
+        /// The <see cref="List"/>. List of the positions in a path.
+        /// </returns>
         public List<Vector3> GetPathA()
         {
             return this.pathA;
         }
 
+        /// <summary>
+        /// Heritage from Austin. Get the right path. 
+        /// </summary>
+        /// <returns>
+        /// The <see cref="List"/>. List of the positions in a path.
+        /// </returns>
         public List<Vector3> GetPathB()
         {
             return this.pathB;

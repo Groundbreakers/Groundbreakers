@@ -165,24 +165,10 @@
 
         #region Public Functions
 
-        [Obsolete("TBD")]
-        public void OnWaveUpdate(int currentWave)
-        {
-            // Should update the UI. *NOT Final*
-            // var timer = this.uiCanvas.GetComponent<Timer>();
-            //timer.UpdateWave(currentWave);
-        }
-
         public void OnLevelFinished()
         {
             GameState = Stages.Exiting;
             TriggerEvent("battle finished");
-        }
-
-        [Obsolete("TBD")]
-        public void SetCurrentSelectedTile(Transform currentGrid)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

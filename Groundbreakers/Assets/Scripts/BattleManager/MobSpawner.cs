@@ -99,8 +99,8 @@ namespace Assets.Scripts
 
         private void OnEnable()
         {
+            // Time.timeScale = 10;
             this.pack = this.GetComponent<EnemyPacks>();
-            Time.timeScale = 10;
         }
 
         #endregion
