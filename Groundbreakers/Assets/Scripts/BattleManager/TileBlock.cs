@@ -14,7 +14,7 @@
 
         private const float TempOffset = 10.0f;
 
-        private static uint blocksReady = 0;
+        private static uint blocksReady;
 
         #region Inspector Variables
 
@@ -120,6 +120,9 @@
             this.hoverIconSprite.sortingOrder = z + 1;
         }
 
+        /// <summary>
+        /// The reset position.
+        /// </summary>
         public void ResetPosition()
         {
             if (this.stabled)
