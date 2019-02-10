@@ -42,6 +42,15 @@ namespace Assets.Scripts
         #region Public Functions
 
         /// <summary>
+        /// Clear both the paths. Should be called before AddingPoints. 
+        /// </summary>
+        public void ClearPoints()
+        {
+            this.pathA.Clear();
+            this.pathB.Clear();
+        }
+
+        /// <summary>
         /// Heritage from Austin. 
         /// </summary>
         /// <param name="point">

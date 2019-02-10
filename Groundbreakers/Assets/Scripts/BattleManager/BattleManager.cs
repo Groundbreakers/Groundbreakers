@@ -9,7 +9,7 @@
 
     using Random = UnityEngine.Random;
 
-    public class BattleManager : MonoBehaviour
+    public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
         #region Singleton
 
@@ -144,31 +144,55 @@
 
         #endregion
 
+        #region Public Utility Functions
+
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void KillAllEnemies()
+        {
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                GameObject.Destroy(enemy);
+            }
+        }
+
+        #endregion
+
+        #region IBattlePhaseHandler
+
+        public void OnBattleBegin()
+        {
+            this.KillAllEnemies();
+            GameState = Stages.Entering;
+        }
+
+        public void OnBattleEnd()
+        {
+            GameState = Stages.Exiting;
+        }
+
+        #endregion
+
         #region Unity Callbacks
 
-        public void OnEnable()
+        private void OnEnable()
         {
             StartListening(
                 "block ready",
                 () => GameState = Stages.Combating);
         }
 
-        public void Update()
+        private void Update()
         {
             if (Input.GetKeyDown("space"))
             {
                 TriggerEvent("start");
+                this.OnBattleBegin();
             }
-        }
-
-        #endregion
-
-        #region Public Functions
-
-        public void OnLevelFinished()
-        {
-            GameState = Stages.Exiting;
-            TriggerEvent("battle finished");
         }
 
         #endregion

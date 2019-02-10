@@ -110,6 +110,8 @@
         /// </summary>
         private void SetupMobSpawner()
         {
+            this.mobSpawner.ClearPoints();
+
             var path = this.generator.GetPathA();
             foreach (var node in path)
             {
