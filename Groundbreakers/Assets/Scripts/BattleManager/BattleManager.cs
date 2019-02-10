@@ -175,6 +175,10 @@
         public void OnBattleEnd()
         {
             GameState = Stages.Exiting;
+
+            // Temp, 
+            var lootUI = FindObjectOfType<Loot>();
+            lootUI.Toggle();
         }
 
         #endregion
@@ -194,6 +198,12 @@
             {
                 TriggerEvent("start");
                 this.OnBattleBegin();
+            }
+
+            if (Input.GetKeyDown("r"))
+            {
+                TriggerEvent("end");
+                this.OnBattleEnd();
             }
         }
 

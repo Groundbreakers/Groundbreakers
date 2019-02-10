@@ -103,9 +103,16 @@
         private void OnEnable()
         {
             BattleManager.StartListening("start", this.OnBattleBegin);
+            BattleManager.StartListening("end", this.OnBattleEnd);
 
             this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
             this.generator = this.GetComponent<TG>();
+        }
+
+        private void OnDisable()
+        {
+            BattleManager.StopListening("start", this.OnBattleBegin);
+            BattleManager.StopListening("end", this.OnBattleEnd);
         }
 
         #endregion
