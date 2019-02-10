@@ -7,10 +7,6 @@
     [RequireComponent(typeof(SpriteRenderer))]
     public class TileBlock : MonoBehaviour
     {
-        private static readonly int TotalBlocks = TG.Dimension * TG.Dimension;
-
-        private static int blocksReady;
-
         #region Inspector Variables
 
         [SerializeField]

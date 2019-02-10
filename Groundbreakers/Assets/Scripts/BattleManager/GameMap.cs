@@ -1,6 +1,7 @@
 ﻿namespace Assets.Scripts
 {
     using System;
+    using System.Collections;
 
     using UnityEngine;
 
@@ -23,6 +24,16 @@
         #endregion
 
         #region Inspector Properties
+
+        /// <summary>
+        /// The total enter duration for the map. Recommend set the value to (MaxDelay + Duration)
+        /// of the TilePrefab's Enter Behaviour setting. While the tiles are entering, the player
+        /// can not deploy characters on to the tiles.
+        /// <see cref="EnterBehavior"/>
+        /// </summary>
+        [SerializeField]
+        [Range(3.0f, 10.0f)]
+        private float totalEnterDuration = 4.0f;
 
         [SerializeField]
         private GameObject tileA;
@@ -55,14 +66,10 @@
 
         public void OnBattleBegin()
         {
+            // Create a new level
             this.SetupNewLevel();
 
-            // Tell each tiles to start tween in.
-            var children = this.GetComponentsInChildren<EnterBehavior>();
-            foreach (var behavior in children)
-            {
-                behavior.StartEntering();
-            }
+            this.StartCoroutine(this.StartEntering());
         }
 
         public void OnBattleEnd()
@@ -104,6 +111,22 @@
         #endregion
 
         #region Internal Functions
+
+        private IEnumerator StartEntering()
+        {
+            // Tell each tiles to start tween in.
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+            foreach (var behavior in children)
+            {
+                behavior.StartEntering();
+            }
+
+            yield return new WaitForSeconds(this.totalEnterDuration);
+
+            Debug.Log("all block ready");
+
+            BattleManager.TriggerEvent("block ready");
+        }
 
         /// <summary>
         /// Heritage from Austin. Adding vector3 points to the spawn. 
@@ -162,6 +185,13 @@
                     Tiles tileType = this.generator.GetTileTypeAt(x, y);
 
                     var instance = this.InstantiateTileAt(tileType, x, y);
+
+                    // TODO: Refactor here
+                    if (tileType == Tiles.Path)
+                    {
+                        instance.GetComponent<SelectNode>().SetCanDeploy(false);
+                    }
+
                     this.tileBlocks[x, y] = instance.transform;
                 }
             }

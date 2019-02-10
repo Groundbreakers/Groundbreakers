@@ -4,6 +4,8 @@
     using System.Collections;
     using System.Collections.Generic;
 
+    using DG.Tweening;
+
     using UnityEngine;
     using UnityEngine.Events;
 
@@ -205,6 +207,8 @@
             {
                 this.eventDictionary = new Dictionary<string, UnityEvent>();
             }
+
+            DOTween.Init(true, true);
         }
 
         #endregion

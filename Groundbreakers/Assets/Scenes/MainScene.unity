@@ -3099,8 +3099,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1186630414}
   - component: {fileID: 1186630413}
-  - component: {fileID: 1186630416}
-  - component: {fileID: 1186630417}
   - component: {fileID: 1186630418}
   - component: {fileID: 1186630415}
   m_Layer: 0
@@ -3149,34 +3147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firebatPrefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
-    type: 3}
---- !u!114 &1186630416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186630412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eee4627acdcfe44193675a3bd6444b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoint1: {x: 0, y: 0, z: 0}
-  spawnPoint2: {x: 0, y: 0, z: 0}
---- !u!114 &1186630417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186630412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afabc89a5c6f76b4990fcc713b33a1ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FireBatPrefab: {fileID: 3171230714936546570, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
     type: 3}
 --- !u!114 &1186630418
 MonoBehaviour:
@@ -3586,6 +3556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc170adaf989e646b89f97214fcaa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalEnterDuration: 4
   tileA: {fileID: 5300740713263289941, guid: 1f88124d7a16c474491994a173fa260d, type: 3}
   tileB: {fileID: 5890712410309033143, guid: 60370c669cd5e9e47afda8e5c8ba3751, type: 3}
   tileC: {fileID: 3812301382797932396, guid: 32b050950fbf1334b8ba07ee7cc1294a, type: 3}

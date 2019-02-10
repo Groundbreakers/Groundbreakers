@@ -60,7 +60,7 @@ public class Timer : MonoBehaviour
     {
         GameObject battleManager = GameObject.Find("BattleManager");
         var waveSpawner = battleManager.GetComponent<MobSpawner>();
-        // WaveSpawner waveSpawner = battleManager.GetComponent<WaveSpawner>();
+
         waveSpawner.StartCoroutine(waveSpawner.SpawnWave(count));
     }
 
