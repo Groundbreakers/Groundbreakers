@@ -4,14 +4,14 @@
     using UnityEngine;
 
     using Random = UnityEngine.Random;
-    using Vector3 = UnityEngine.Vector3;
 
     /// <summary>
     ///     This component handles tile enter/exiting animation. Attaching this component to object
     ///     that you wish to falling and fade. We are using DOTween to do the job for us, and it
     ///     is very cool.
     /// </summary>
-    public class EnterBehavior : MonoBehaviour
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class EnterBehavior : MonoBehaviour, IBattlePhaseHandler
     {
         #region Inspector Values
 
@@ -19,21 +19,21 @@
         /// The offset: it is the position of where you would like the object to travel from.
         /// </summary>
         [SerializeField]
-        private Vector3 offset;
+        private Vector3 offset = new Vector3(0.0f, -4.0f);
 
         /// <summary>
         /// The duration of object traveling in seconds.
         /// </summary>
         [SerializeField]
         [Range(0.5f, 5.0f)]
-        private float duration;
+        private float duration = 1.75f;
 
         /// <summary>
         /// The maximum random delay allowed in seconds.
         /// </summary>
         [SerializeField]
         [Range(0.0f, 3.0f)]
-        private float maxDelay;
+        private float maxDelay = 2.0f;
 
         #endregion
 
@@ -44,6 +44,25 @@
         private Vector3 originalPos;
 
         private Vector3 targetPos;
+
+        #endregion
+
+        #region IBattlePhaseHandler
+
+        public void OnTilesEntering()
+        {
+            this.StartEntering();
+        }
+
+        public void OnBattling()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnTilesExiting()
+        {
+            this.StartExiting();
+        }
 
         #endregion
 
@@ -79,7 +98,7 @@
         #region Internal Functions
 
         /// <summary>
-        /// Let DOTween handle the entering animation(i.e. transform and fading).
+        /// Let DOTween handle the entering animation(i.e. transform and fade in).
         /// </summary>
         private void StartEntering()
         {
@@ -94,6 +113,9 @@
                 .SetDelay(delay);
         }
 
+        /// <summary>
+        /// Let DOTween handle the exiting animation(i.e. transform and fade out).
+        /// </summary>
         private void StartExiting()
         {
             var delay = Random.Range(0.0f, this.maxDelay);

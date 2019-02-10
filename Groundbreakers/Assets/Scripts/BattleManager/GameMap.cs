@@ -96,11 +96,6 @@
 
         #region Unity Callbacks
 
-        private void OnEnable()
-        {
-            BattleManager.StartListening("reset", this.ResetTiles);
-        }
-
         public void Start()
         {
             this.mapHolder = new GameObject("Map").transform;
@@ -136,15 +131,6 @@
         public Transform GetTileAt(Vector3 pos)
         {
             return this.tileBlocks[(int)pos.x, (int)pos.y];
-        }
-
-        public void ResetTiles()
-        {
-            foreach (var tileBlock in this.tileBlocks)
-            {
-                // Bad Solution
-                tileBlock.GetComponent<TileBlock>().ResetPosition();
-            }            
         }
 
         #endregion
