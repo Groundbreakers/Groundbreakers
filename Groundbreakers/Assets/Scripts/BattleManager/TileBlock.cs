@@ -9,7 +9,7 @@
     [RequireComponent(typeof(SpriteRenderer))]
     public class TileBlock : MonoBehaviour
     {
-        private const uint TotalBlocks = GameMap.Dimension * GameMap.Dimension; // 8 * 8 = 64
+        private static readonly int TotalBlocks = TerrainGenerator.Dimension * TerrainGenerator.Dimension;
 
         private static uint blocksReady;
 
