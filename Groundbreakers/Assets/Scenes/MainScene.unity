@@ -2657,6 +2657,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5623790535995462804, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fb14a2bb4791934bb6b635d45b7653e, type: 3}
 --- !u!1001 &238084779
@@ -3096,6 +3101,8 @@ GameObject:
   - component: {fileID: 1186630413}
   - component: {fileID: 1186630416}
   - component: {fileID: 1186630417}
+  - component: {fileID: 1186630418}
+  - component: {fileID: 1186630415}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -3129,7 +3136,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1186630416
+--- !u!114 &1186630415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3137,6 +3144,20 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186630412}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecb602155ae405081d6e924f0ac3471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firebatPrefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+    type: 3}
+--- !u!114 &1186630416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186630412}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eee4627acdcfe44193675a3bd6444b4, type: 3}
   m_Name: 
@@ -3157,6 +3178,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FireBatPrefab: {fileID: 3171230714936546570, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
     type: 3}
+--- !u!114 &1186630418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186630412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06b48eb47164974bf7f93be1062d4b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 25
 --- !u!1 &1310936382
 GameObject:
   m_ObjectHideFlags: 0

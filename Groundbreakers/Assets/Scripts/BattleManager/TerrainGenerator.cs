@@ -75,7 +75,7 @@
             this.GeneratePaths();
         }
 
-        public Tiles GeTileTypeAt(int x, int y)
+        public Tiles GetTileTypeAt(int x, int y)
         {
             return this.data[x, y];
         }

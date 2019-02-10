@@ -42,7 +42,8 @@
 
         private Transform[,] tileBlocks = new Transform[TG.Dimension, TG.Dimension];
 
-        private WaveSpawner waveSpawner;
+        private MobSpawner mobSpawner;
+        // private WaveSpawner waveSpawner;
 
         /// <summary>
         /// The Saving a reference to the tile generator component.
@@ -88,7 +89,7 @@
         {
             BattleManager.StartListening("start", this.OnTilesEntering);
 
-            this.waveSpawner = this.GetComponent<WaveSpawner>();
+            this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
             this.generator = this.GetComponent<TG>();
 
             if (this.shouldGenerate)
@@ -106,12 +107,28 @@
             if (this.shouldGenerate)
             {
                 this.SetupFromGenerator();
+                this.SetupMobSpawner();
             }
         }
 
         #endregion
 
         #region Internal Functions
+
+        private void SetupMobSpawner()
+        {
+            var path = this.generator.GetPathA();
+            foreach (var node in path)
+            {
+                this.mobSpawner.AddPoint(node, 1);
+            }
+
+            path = this.generator.GetPathB();
+            foreach (var node in path)
+            {
+                this.mobSpawner.AddPoint(node, 2);
+            }
+        }
 
         private void SetupFromChildren()
         {
@@ -136,7 +153,7 @@
             {
                 for (var y = 0; y < TG.Dimension; y++)
                 {
-                    Tiles tileType = this.generator.GeTileTypeAt(x, y);
+                    Tiles tileType = this.generator.GetTileTypeAt(x, y);
 
                     var instance = this.InstantiateTileAt(tileType, x, y);
                     this.tileBlocks[x, y] = instance.transform;
