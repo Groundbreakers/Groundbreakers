@@ -1,23 +1,39 @@
 ﻿namespace Assets.Scripts
 {
     using DG.Tweening;
-
     using UnityEngine;
+
+    using Random = UnityEngine.Random;
+    using Vector3 = UnityEngine.Vector3;
 
     /// <summary>
     ///     This component handles tile enter/exiting animation. Attaching this component to object
-    ///     that you wish to falling and fade.
+    ///     that you wish to falling and fade. We are using DOTween to do the job for us, and it
+    ///     is very cool.
     /// </summary>
     public class EnterBehavior : MonoBehaviour
     {
         #region Inspector Values
 
+        /// <summary>
+        /// The offset: it is the position of where you would like the object to travel from.
+        /// </summary>
         [SerializeField]
         private Vector3 offset;
 
+        /// <summary>
+        /// The duration of object traveling in seconds.
+        /// </summary>
         [SerializeField]
         [Range(0.5f, 5.0f)]
-        private float enterDuration;
+        private float duration;
+
+        /// <summary>
+        /// The maximum random delay allowed in seconds.
+        /// </summary>
+        [SerializeField]
+        [Range(0.0f, 3.0f)]
+        private float maxDelay;
 
         #endregion
 
@@ -25,7 +41,9 @@
 
         private SpriteRenderer sprite;
 
-        private Vector3 originalPosition;
+        private Vector3 originalPos;
+
+        private Vector3 targetPos;
 
         #endregion
 
@@ -34,8 +52,9 @@
         private void OnEnable()
         {
             // Init transform
-            this.originalPosition = this.transform.position;
+            this.originalPos = this.transform.position;
             this.transform.Translate(this.offset);
+            this.targetPos = this.originalPos - this.offset;
 
             // Init sprite 
             this.sprite = this.GetComponent<SpriteRenderer>();
@@ -44,12 +63,48 @@
 
         private void Start()
         {
-            // Let DOTween handle the animation.
-            this.transform.DOMove(this.originalPosition, this.enterDuration)
-                    .SetEase(Ease.OutBack);
+            this.StartEntering();
+        }
 
-            this.sprite.DOFade(1.0f, this.enterDuration)
-                    .SetEase(Ease.OutExpo);
+        private void Update()
+        {
+            if (Input.GetKeyDown("f"))
+            {
+                this.StartExiting();
+            }
+        }
+
+        #endregion
+
+        #region Internal Functions
+
+        /// <summary>
+        /// Let DOTween handle the entering animation(i.e. transform and fading).
+        /// </summary>
+        private void StartEntering()
+        {
+            var delay = Random.Range(0.0f, this.maxDelay);
+
+            this.transform.DOMove(this.originalPos, this.duration)
+                .SetEase(Ease.OutBack)
+                .SetDelay(delay);
+
+            this.sprite.DOFade(1.0f, this.duration)
+                .SetEase(Ease.OutExpo)
+                .SetDelay(delay);
+        }
+
+        private void StartExiting()
+        {
+            var delay = Random.Range(0.0f, this.maxDelay);
+
+            this.transform.DOMove(this.targetPos, this.duration)
+                .SetEase(Ease.InBack)
+                .SetDelay(delay);
+
+            this.sprite.DOFade(0.0f, this.duration)
+                .SetEase(Ease.InExpo)
+                .SetDelay(delay);
         }
 
         #endregion
