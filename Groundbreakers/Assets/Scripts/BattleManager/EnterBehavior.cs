@@ -11,7 +11,7 @@
     ///     is very cool.
     /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
-    public class EnterBehavior : MonoBehaviour, IBattlePhaseHandler
+    public class EnterBehavior : MonoBehaviour
     {
         #region Inspector Values
 
@@ -47,21 +47,39 @@
 
         #endregion
 
-        #region IBattlePhaseHandler
+        #region Public Functions
 
-        public void OnTilesEntering()
+        /// <summary>
+        /// Let DOTween handle the entering animation(i.e. transform and fade in).
+        /// </summary>
+        public void StartEntering()
         {
-            this.StartEntering();
+            var delay = Random.Range(0.0f, this.maxDelay);
+
+            this.transform.DOMove(this.originalPos, this.duration)
+                .SetEase(Ease.OutBack)
+                .SetDelay(delay);
+
+            this.sprite.DOFade(1.0f, this.duration)
+                .SetEase(Ease.OutExpo)
+                .SetDelay(delay);
         }
 
-        public void OnBattling()
+        /// <summary>
+        /// Let DOTween handle the exiting animation(i.e. transform and fade out).
+        /// </summary>
+        public void StartExiting()
         {
-            throw new System.NotImplementedException();
-        }
+            var delay = Random.Range(0.0f, this.maxDelay);
 
-        public void OnTilesExiting()
-        {
-            this.StartExiting();
+            this.transform.DOMove(this.targetPos, this.duration)
+                .SetEase(Ease.InBack)
+                .SetDelay(delay);
+
+            this.sprite.DOFade(0.0f, this.duration)
+                .SetEase(Ease.InExpo)
+                .SetDelay(delay)
+                .OnComplete(() => Destroy(this));
         }
 
         #endregion
@@ -82,53 +100,10 @@
 
         private void Start()
         {
-            this.StartEntering();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown("f"))
-            {
-                this.StartExiting();
-            }
+            // this.StartEntering();
         }
 
         #endregion
 
-        #region Internal Functions
-
-        /// <summary>
-        /// Let DOTween handle the entering animation(i.e. transform and fade in).
-        /// </summary>
-        private void StartEntering()
-        {
-            var delay = Random.Range(0.0f, this.maxDelay);
-
-            this.transform.DOMove(this.originalPos, this.duration)
-                .SetEase(Ease.OutBack)
-                .SetDelay(delay);
-
-            this.sprite.DOFade(1.0f, this.duration)
-                .SetEase(Ease.OutExpo)
-                .SetDelay(delay);
-        }
-
-        /// <summary>
-        /// Let DOTween handle the exiting animation(i.e. transform and fade out).
-        /// </summary>
-        private void StartExiting()
-        {
-            var delay = Random.Range(0.0f, this.maxDelay);
-
-            this.transform.DOMove(this.targetPos, this.duration)
-                .SetEase(Ease.InBack)
-                .SetDelay(delay);
-
-            this.sprite.DOFade(0.0f, this.duration)
-                .SetEase(Ease.InExpo)
-                .SetDelay(delay);
-        }
-
-        #endregion
     }
 }

@@ -13,7 +13,7 @@
     /// using the data obtained from the TerrainGenerator. 
     /// </summary>
     [RequireComponent(typeof(TG))]
-    public class GameMap : MonoBehaviour
+    public class GameMap : MonoBehaviour, IBattlePhaseHandler
     {
         #region Internal Constants
 
@@ -53,10 +53,41 @@
 
         #endregion
 
+        #region IBattlePhaseHandler
+
+        public void OnTilesEntering()
+        {
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+
+            foreach (var behavior in children)
+            {
+                behavior.StartEntering();
+            }
+        }
+
+        public void OnBattling()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnTilesExiting()
+        {
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+
+            foreach (var behavior in children)
+            {
+                behavior.StartExiting();
+            }
+        }
+
+        #endregion
+
         #region Unity Callbacks
 
         private void OnEnable()
         {
+            BattleManager.StartListening("start", this.OnTilesEntering);
+
             this.waveSpawner = this.GetComponent<WaveSpawner>();
             this.generator = this.GetComponent<TG>();
 

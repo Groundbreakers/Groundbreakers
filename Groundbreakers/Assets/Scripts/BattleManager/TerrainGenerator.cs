@@ -39,6 +39,10 @@
 
         private Tiles[,] data = new Tiles[Dimension, Dimension];
 
+        private List<Vector3> pathA = new List<Vector3>();
+
+        private List<Vector3> pathB = new List<Vector3>();
+
         #endregion
 
         #region Public Properties
@@ -74,6 +78,16 @@
         public Tiles GeTileTypeAt(int x, int y)
         {
             return this.data[x, y];
+        }
+
+        public List<Vector3> GetPathA()
+        {
+            return this.pathA;
+        }
+
+        public List<Vector3> GetPathB()
+        {
+            return this.pathB;
         }
 
         #endregion
@@ -159,22 +173,22 @@
         /// </summary>
         private void GeneratePaths()
         {
-            var n = 12;
+            const int Length = 12;
 
-            // Creating the first path
-            var path = this.CreatePathSmart(n, 0, 3);
-            foreach (var pos in path)
+            this.pathA = this.CreatePathSmart(Length, 0, 3);
+            this.pathB = this.CreatePathSmart(Length, 4, 7);
+
+            foreach (var pos in this.pathA)
             {
                 this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
             }
 
-            // Creating the second path
-            path = this.CreatePathSmart(n, 4, 7);
-            foreach (var pos in path)
+            foreach (var pos in this.pathB)
             {
                 this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
             }
         }
+
 
         /// <summary>
         ///     Get a new direction given the constrain.

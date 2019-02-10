@@ -1,6 +1,7 @@
 ﻿namespace Assets.Scripts
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
 
     using UnityEngine;
@@ -8,7 +9,6 @@
 
     using Random = UnityEngine.Random;
 
-    [RequireComponent(typeof(GameMap))]
     public class BattleManager : MonoBehaviour
     {
         #region Singleton
@@ -155,16 +155,9 @@
 
         public void Update()
         {
-            // This is for debugging purpose
             if (Input.GetKeyDown("space"))
             {
-                TriggerEvent("test");
-            }
-
-            // This is for debugging purpose
-            if (Input.GetKeyDown("r"))
-            {
-                TriggerEvent("reset");
+                TriggerEvent("start");
             }
         }
 
