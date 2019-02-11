@@ -130,7 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e75a4495ee9c9a4481c7178aa46d997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTipButton: {fileID: 5438662794504247088}
+  button: {fileID: 5438662794504247088}
   icon: {fileID: 3200053973331253644}
-  title: {fileID: 0}
-  description: {fileID: 0}
+  title: null
+  description: null
+  slot: 0
+  selectedModule: {fileID: 0}
+  characterIndex: 0

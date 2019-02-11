@@ -9,21 +9,7 @@ public class ModulePool : MonoBehaviour
     public GameObject prefab;
 
     private int count;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.UpdatePool();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Toggle();
-        }
-    }
+    private int characterIndex;
 
     public void UpdatePool()
     {
@@ -49,7 +35,7 @@ public class ModulePool : MonoBehaviour
 
             // Setup the component of the clones
             ModuleButton module = newModule.GetComponent<ModuleButton>();
-            module.Setup(inventory.transform.GetChild(i).gameObject);
+            module.Setup(inventory.transform.GetChild(i).gameObject, this.characterIndex);
         }
 
         // Calculate how many modules in the inventory and change the height of the content according to that
@@ -65,6 +51,7 @@ public class ModulePool : MonoBehaviour
 
     public void Toggle()
     {
+        this.characterIndex = this.GetComponent<Characters>().GetCharacterIndex();
         this.UpdatePool();
         ui.SetActive(!ui.activeSelf);
     }
