@@ -7,15 +7,10 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(TileBlock))]
 [RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class SelectNode : MonoBehaviour
 {
     public int characterOnTop;
-
-    #region Inspector values
-
-
-
-    #endregion
 
     #region Internal fields
 

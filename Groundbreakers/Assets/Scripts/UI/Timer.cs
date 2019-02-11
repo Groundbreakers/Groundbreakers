@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Scripts;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,7 +59,8 @@ public class Timer : MonoBehaviour
     public void NextWave(int count)
     {
         GameObject battleManager = GameObject.Find("BattleManager");
-        WaveSpawner waveSpawner = battleManager.GetComponent<WaveSpawner>();
+        var waveSpawner = battleManager.GetComponent<MobSpawner>();
+
         waveSpawner.StartCoroutine(waveSpawner.SpawnWave(count));
     }
 

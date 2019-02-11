@@ -1,15 +1,17 @@
 ﻿namespace Assets.Scripts
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+
+    using DG.Tweening;
 
     using UnityEngine;
     using UnityEngine.Events;
 
     using Random = UnityEngine.Random;
 
-    [RequireComponent(typeof(GameMap))]
-    public class BattleManager : MonoBehaviour
+    public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
         #region Singleton
 
@@ -144,52 +146,65 @@
 
         #endregion
 
+        #region Public Utility Functions
+
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void KillAllEnemies()
+        {
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                GameObject.Destroy(enemy);
+            }
+        }
+
+        #endregion
+
+        #region IBattlePhaseHandler
+
+        public void OnBattleBegin()
+        {
+            this.KillAllEnemies();
+            GameState = Stages.Entering;
+        }
+
+        public void OnBattleEnd()
+        {
+            GameState = Stages.Exiting;
+
+            // Temp, 
+            var lootUI = FindObjectOfType<Loot>();
+            lootUI.Toggle();
+        }
+
+        #endregion
+
         #region Unity Callbacks
 
-        public void OnEnable()
+        private void OnEnable()
         {
             StartListening(
                 "block ready",
                 () => GameState = Stages.Combating);
         }
 
-        public void Update()
+        private void Update()
         {
-            // This is for debugging purpose
             if (Input.GetKeyDown("space"))
             {
-                TriggerEvent("test");
+                TriggerEvent("start");
+                this.OnBattleBegin();
             }
 
-            // This is for debugging purpose
             if (Input.GetKeyDown("r"))
             {
-                TriggerEvent("reset");
+                TriggerEvent("end");
+                this.OnBattleEnd();
             }
-        }
-
-        #endregion
-
-        #region Public Functions
-
-        [Obsolete("TBD")]
-        public void OnWaveUpdate(int currentWave)
-        {
-            // Should update the UI. *NOT Final*
-            // var timer = this.uiCanvas.GetComponent<Timer>();
-            //timer.UpdateWave(currentWave);
-        }
-
-        public void OnLevelFinished()
-        {
-            GameState = Stages.Exiting;
-            TriggerEvent("battle finished");
-        }
-
-        [Obsolete("TBD")]
-        public void SetCurrentSelectedTile(Transform currentGrid)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -202,6 +217,8 @@
             {
                 this.eventDictionary = new Dictionary<string, UnityEvent>();
             }
+
+            DOTween.Init(true, true);
         }
 
         #endregion
