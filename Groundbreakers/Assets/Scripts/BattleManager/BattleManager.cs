@@ -158,9 +158,6 @@
                 return;
             }
 
-            // Clear existing mobs
-            this.KillAllEnemies();
-
             // Changing state
             GameState = Stages.Entering;
 
@@ -181,6 +178,24 @@
             }
         }
 
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void RetreatAllCharacters()
+        {
+            // TODO: Please nicely Refactor this :)
+            var characterList = GameObject.Find("CharacterList").transform;
+
+            Debug.Log("Ding");
+
+            foreach (Transform character in characterList)
+            {
+                Debug.Log("Bing");
+                character.gameObject.SetActive(false);
+            }
+        }
+
         #endregion
 
         #region IBattlePhaseHandler
@@ -191,15 +206,21 @@
 
         public void OnBattleEnd()
         {
+            this.RetreatAllCharacters();
+
             GameState = Stages.Exiting;
         }
 
         public void OnBattleVictory()
         {
-            // Temp, call the loot scene
+            // Clear existing mobs
+            this.KillAllEnemies();
+
+            // Temp, call the loot 
             var lootUI = FindObjectOfType<Loot>();
             lootUI.Toggle();
 
+            this.timer.ResetTimer();
             GameState = Stages.Null;
         }
 
@@ -211,13 +232,11 @@
         {
             this.timer = this.GetComponent<GameTimer>();
 
-            StartListening(
-                "block ready",
-                () => GameState = Stages.Combating);
+            StartListening("block ready", () => GameState = Stages.Combating);
 
-            StartListening(
-                "victory", 
-                this.OnBattleVictory);
+            StartListening("end", this.OnBattleEnd);
+
+            StartListening("victory", this.OnBattleVictory);
         }
 
         #endregion

@@ -42,11 +42,19 @@
         #region Public Functions
 
         /// <summary>
-        /// The start level.
+        /// Should be called by Battle manager when battle start.
         /// </summary>
         public void StartLevel()
         {
             this.StartCoroutine(this.StartLevelTimer());
+        }
+
+        /// <summary>
+        /// Should be called by Battle manager when battle end.
+        /// </summary>
+        public void ResetTimer()
+        {
+            this.currentWave = 0;
         }
 
         #region Unit Callbacks

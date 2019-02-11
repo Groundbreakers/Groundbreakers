@@ -113,7 +113,12 @@ namespace Assets.Scripts
             this.pack = this.GetComponent<EnemyPacks>();
 
             BattleManager.StartListening("spawn wave", this.ShouldSpawnWave);
-            BattleManager.StartListening("end", () => { this.currentWave = 0; });
+            BattleManager.StartListening("end",
+                () =>
+                    {
+                        this.currentWave = 0;
+                        this.pack.ResetPack();
+                    });
         }
 
         #endregion

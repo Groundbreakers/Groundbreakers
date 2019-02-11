@@ -32,6 +32,7 @@
 
         public void OnBattleBegin()
         {
+            this.ResetTimer();
             this.ui.SetActive(true);
         }
 
@@ -52,12 +53,6 @@
         {
             BattleManager.StartListening("start", this.OnBattleBegin);
             BattleManager.StartListening("end", this.OnBattleEnd);
-
-            this.countdown = 10.0F;
-            this.waveDelay = 30.0F;
-            this.waveCount = 0;
-            this.wave.text = "BEGINS IN";
-            this.timer.text = this.countdown.ToString();
         }
 
         // Update is called once per frame
@@ -75,6 +70,19 @@
                 this.countdown -= Time.deltaTime;
                 this.timer.text = Mathf.Round(this.countdown).ToString();
             }
+        }
+
+        #endregion
+
+        #region Internal Functions
+
+        private void ResetTimer()
+        {
+            this.countdown = 10.0F;
+            this.waveDelay = 30.0F;
+            this.waveCount = 0;
+            this.wave.text = "BEGINS IN";
+            this.timer.text = this.countdown.ToString();
         }
 
         #endregion
