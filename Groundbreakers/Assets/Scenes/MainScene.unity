@@ -112,6 +112,49 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &87670068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 87670070}
+  - component: {fileID: 87670069}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &87670069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87670068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d23d98b293427a4484827c611d8a1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &87670070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87670068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1604857, y: 4.9191465, z: 0.7921875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &92262145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -257,6 +300,16 @@ PrefabInstance:
     - target: {fileID: 5623790536386699595, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623790536386699595, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623790536386699595, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5623790535823380164, guid: 4fb14a2bb4791934bb6b635d45b7653e,
@@ -3051,15 +3104,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1186630414}
   - component: {fileID: 1186630413}
+  - component: {fileID: 1186630418}
   - component: {fileID: 1186630415}
-  - component: {fileID: 1186630416}
-  - component: {fileID: 1186630417}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1186630413
 MonoBehaviour:
@@ -3096,19 +3148,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1186630412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fc170adaf989e646b89f97214fcaa6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ecb602155ae405081d6e924f0ac3471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileA: {fileID: 6053165304404215142, guid: 6a55053f0e651a74da987b3d8457b38a, type: 3}
-  tileB: {fileID: 4482696110323340980, guid: 5d9f9953f99010f42a0705b81a3f63fc, type: 3}
-  tileC: {fileID: 8551013971022768650, guid: 23b3ca1f61ecfe6448292c64a101db6b, type: 3}
-  tilePath: {fileID: 1809324964200828645, guid: a602e853128d0da45b66c9bf7da59b5b,
+  firebatPrefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
     type: 3}
-  frequency: 5
-  grassMax: 0.65
-  sandMax: 0.45
-  stoneMax: 1
---- !u!114 &1186630416
+--- !u!114 &1186630418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3117,27 +3162,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1186630412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eee4627acdcfe44193675a3bd6444b4, type: 3}
+  m_Script: {fileID: 11500000, guid: b06b48eb47164974bf7f93be1062d4b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint1: {x: 0, y: 0, z: 0}
-  spawnPoint2: {x: 0, y: 0, z: 0}
-  path1: []
-  path2: []
---- !u!114 &1186630417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186630412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afabc89a5c6f76b4990fcc713b33a1ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FireBatPrefab: {fileID: 3171230714936546570, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
-    type: 3}
+  duration: 25
 --- !u!1 &1310936382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3265,6 +3293,7 @@ GameObject:
   - component: {fileID: 1983138505}
   - component: {fileID: 1983138504}
   - component: {fileID: 1983138503}
+  - component: {fileID: 1983138507}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3356,6 +3385,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1983138507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983138502}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9351497f638c6734a9813016ddefc5f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0
+  shakeMagnitude: 0.35
+  dampingSpeed: 0.85
+  invokeMethod:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1983138507}
+        m_MethodName: TriggerShake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &1996242927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3441,3 +3501,69 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1996242927}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8074855493714766000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074855493714766002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905304b1878845cca937d6a03909a0ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 5
+  grassMax: 0.65
+  sandMax: 0.45
+  stoneMax: 1
+--- !u!4 &8074855493714766001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074855493714766002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00083972514}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8074855493714766002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8074855493714766001}
+  - component: {fileID: 8074855493714766007}
+  - component: {fileID: 8074855493714766000}
+  m_Layer: 0
+  m_Name: TileMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &8074855493714766007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074855493714766002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc170adaf989e646b89f97214fcaa6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalEnterDuration: 4
+  tileA: {fileID: 5300740713263289941, guid: 1f88124d7a16c474491994a173fa260d, type: 3}
+  tileB: {fileID: 5890712410309033143, guid: 60370c669cd5e9e47afda8e5c8ba3751, type: 3}
+  tileC: {fileID: 3812301382797932396, guid: 32b050950fbf1334b8ba07ee7cc1294a, type: 3}
+  tilePath: {fileID: 1942026652032526461, guid: ddfc422ffedce114eaac0ee09f3f625c,
+    type: 3}

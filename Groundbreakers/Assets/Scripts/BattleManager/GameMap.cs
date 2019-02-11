@@ -1,231 +1,205 @@
 ﻿namespace Assets.Scripts
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
+    using System.Collections;
 
     using UnityEngine;
 
-    using Debug = UnityEngine.Debug;
-    using Random = UnityEngine.Random;
+    using TG = TerrainGenerator;
+    using Tiles = TerrainGenerator.Tiles;
 
-    public class GameMap : MonoBehaviour
+    /// <summary>
+    /// This function should be attached to the GameMap Object in the MainScene. This class handles
+    /// All tile block related features. For example, at each level, it construct a new tile map
+    /// using the data obtained from the TerrainGenerator. 
+    /// </summary>
+    [RequireComponent(typeof(TG))]
+    public class GameMap : MonoBehaviour, IBattlePhaseHandler
     {
         #region Internal Constants
 
-        public const uint Dimension = 8;
-
+        // We assume each tile block takes 1 unit in the space.
         private const float CellSize = 1.0f;
 
         #endregion
 
         #region Inspector Properties
 
-        //[SerializeField]
-        //private GameObject[] tiles;
+        /// <summary>
+        /// The total enter duration for the map. Recommend set the value to (MaxDelay + Duration)
+        /// of the TilePrefab's Enter Behaviour setting. While the tiles are entering, the player
+        /// can not deploy characters on to the tiles.
+        /// <see cref="EnterBehavior"/>
+        /// </summary>
+        [SerializeField]
+        [Range(3.0f, 10.0f)]
+        private float totalEnterDuration = 4.0f;
 
         [SerializeField]
-        private GameObject tileA = null;
+        private GameObject tileA;
 
         [SerializeField]
-        private GameObject tileB = null;
+        private GameObject tileB;
 
         [SerializeField]
-        private GameObject tileC = null;
+        private GameObject tileC;
 
         [SerializeField]
-        private GameObject tilePath = null;
-
-        //[SerializeField]
-        //private GameObject spawner = null;
-
-        [SerializeField]
-        [Range(0.0f, 10.0f)]
-        private float frequency = 5.0f;
-
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
-        private float grassMax = 0.65f;
-
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
-        private float sandMax = 0.45f;
-
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
-        private float stoneMax = 1.0f;
+        private GameObject tilePath;
 
         #endregion
 
         #region Internal Variables
 
+        private Transform[,] tileBlocks = new Transform[TG.Dimension, TG.Dimension];
+
+        private MobSpawner mobSpawner;
+
         /// <summary>
-        /// The parent transform that hold all sub sprite for tiles.
+        /// The Saving a reference to the tile generator component.
         /// </summary>
-        private Transform tilesHolder;
-
-        private Transform mapHolder;
-
-        private Tiles[,] data;
-
-        private Transform[,] tileBlocks;
-
-        private WaveSpawner waveSpawner;
+        private TG generator;
 
         #endregion
 
-        #region Public Properties
+        #region IBattlePhaseHandler
 
-        public enum Tiles
+        public void OnBattleBegin()
         {
-            Path,
-            Grass,
-            Stone,
-            Wall,
+            // Create a new level
+            this.SetupNewLevel();
+
+            this.StartCoroutine(this.StartEntering());
         }
 
-        [Flags]
-        public enum Direction
+        public void OnBattleEnd()
         {
-            Down = 1,
-            Left = 2,
-            Right = 4,
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+
+            foreach (var behavior in children)
+            {
+                behavior.StartExiting();
+            }
+        }
+
+        #endregion
+
+        #region Public Functions
+
+        public void SetupNewLevel()
+        {
+            // Generate new map data
+            this.generator.Initialize();
+
+            // Instantiate tiles from data
+            this.InstantiateTiles();
+            this.SetupMobSpawner();
         }
 
         #endregion
 
         #region Unity Callbacks
 
-        public void Start()
+        private void OnEnable()
         {
-            this.mapHolder = new GameObject("Map").transform;
-            this.data = new Tiles[Dimension, Dimension];
-            this.tileBlocks = new Transform[Dimension, Dimension];
+            BattleManager.StartListening("start", this.OnBattleBegin);
+            BattleManager.StartListening("end", this.OnBattleEnd);
 
-            this.tilesHolder = new GameObject("tilesHolder").transform;
-            this.tilesHolder.SetParent(this.mapHolder);
+            this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
+            this.generator = this.GetComponent<TG>();
+        }
 
-            this.waveSpawner = this.GetComponent<WaveSpawner>();
-
-            this.GenerateTerrain();
-
-            this.InitializeWaveSpawner();
-                
-
-            this.CreateGameBoard();
+        private void OnDisable()
+        {
+            BattleManager.StopListening("start", this.OnBattleBegin);
+            BattleManager.StopListening("end", this.OnBattleEnd);
         }
 
         #endregion
 
-        #region Public functions
+        #region Internal Functions
 
-        /// <summary>
-        /// The get tile at.
-        /// </summary>
-        /// <param name="pos">
-        /// The pos.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Transform"/>.
-        /// </returns>
-        public Transform GetTileAt(Vector3 pos)
+        private IEnumerator StartEntering()
         {
-            return this.tileBlocks[(int)pos.x, (int)pos.y];
-        }
-
-        #endregion
-
-        #region Internal functions
-
-        #region Terrain Generation Related
-
-        /// <summary>
-        /// The generate terrain, and store the information into the data field.
-        /// After calling this function, the 'data' field is filled with biome data.
-        /// </summary>
-        private void GenerateTerrain()
-        {
-            float freq = this.frequency;
-            float[,] heightMap = new float[Dimension, Dimension];
-            float[,] moisture = new float[Dimension, Dimension];
-
-            // Generating Noise
-            for (var i = 0; i < Dimension; i++)
+            // Tell each tiles to start tween in.
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+            foreach (var behavior in children)
             {
-                for (var j = 0; j < Dimension; j++)
-                {
-                    var nx = (i / (float)Dimension) - 0.5f;
-                    var ny = (j / (float)Dimension) - 0.5f;
-
-                    var a = Mathf.PerlinNoise(freq * nx, freq * ny);
-                    var b = freq / 2 * Mathf.PerlinNoise(freq * 2 * nx, freq * 2 * ny);
-                    var c = freq / 4 * Mathf.PerlinNoise((freq * 4) + nx, (freq * 4) + ny);
-
-                    heightMap[i, j] = a + b + c;
-                    heightMap[i, j] = (heightMap[i, j] + 1) / 2;
-                }
+                behavior.StartEntering();
             }
 
-            // Generate Tile map
-            for (var i = 0; i < Dimension; i++)
-            {
-                for (var j = 0; j < Dimension; j++)
-                {
-                    var e = heightMap[i, j];
-                    var m = moisture[i, j];
+            yield return new WaitForSeconds(this.totalEnterDuration);
 
-                    this.data[i, j] = this.GetBiomeType(e, m);
+            Debug.Log("all block ready");
+
+            BattleManager.TriggerEvent("block ready");
+        }
+
+        /// <summary>
+        /// Heritage from Austin. Adding vector3 points to the spawn. 
+        /// </summary>
+        private void SetupMobSpawner()
+        {
+            this.mobSpawner.ClearPoints();
+
+            var path = this.generator.GetPathA();
+            foreach (var node in path)
+            {
+                this.mobSpawner.AddPoint(node, 1);
+            }
+
+            path = this.generator.GetPathB();
+            foreach (var node in path)
+            {
+                this.mobSpawner.AddPoint(node, 2);
+            }
+        }
+
+        private void SetupFromChildren()
+        {
+            var index = 0;
+            foreach (Transform child in this.transform)
+            {
+                if (child.CompareTag("Tile"))
+                {
+                    var x = index % TG.Dimension;
+                    var y = index / TG.Dimension;
+
+                    this.tileBlocks[x, y] = child;
+
+                    index++;
                 }
             }
         }
 
         /// <summary>
-        /// Returns the type of terrain that corresponds to the given parameters.
+        /// Instantiate all tiles. Must call generator.Initialize before using this function.
+        /// This function will destroy any existing tileBlock GameObjects. 
         /// </summary>
-        /// <param name="e">
-        /// The 2D array data that represents the elevation.
-        /// </param>
-        /// <param name="m">
-        /// The 2D array data that represents the moisture.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Tiles"/> that corresponds to a specific tile type.
-        /// </returns>
-        private Tiles GetBiomeType(float e, float m)
+        private void InstantiateTiles()
         {
-            e -= 1;
-
-            if (e < this.sandMax)
+            // Clear the 2D array
+            foreach (Transform tileBlock in this.transform)
             {
-                return Tiles.Grass;
+                GameObject.Destroy(tileBlock.gameObject);
             }
 
-            if (e < this.grassMax)
+            // Re instantiate all tiles
+            for (var x = 0; x < TG.Dimension; x++)
             {
-                return Tiles.Wall;
-            }
-
-            return Tiles.Stone;
-        }
-
-        private void CreateGameBoard()
-        {
-            // Spawning each individual tiles
-            for (var i = 0; i < Dimension; i++)
-            {
-                for (var j = 0; j < Dimension; j++)
+                for (var y = 0; y < TG.Dimension; y++)
                 {
-                    Tiles tileType = this.data[i, j];
-                    var instance = this.InstantiateTileAt(tileType, i, j);
+                    Tiles tileType = this.generator.GetTileTypeAt(x, y);
 
-                    this.tileBlocks[i, j] = instance.transform;
+                    var instance = this.InstantiateTileAt(tileType, x, y);
 
-                    // TODO: Refactor this part
+                    // TODO: Refactor here
                     if (tileType == Tiles.Path)
                     {
-                        // Basically disable the component that allows the player to select.
                         instance.GetComponent<SelectNode>().SetCanDeploy(false);
                     }
+
+                    this.tileBlocks[x, y] = instance.transform;
                 }
             }
         }
@@ -274,206 +248,16 @@
 
             // Finally Instantiate it.
             var instance = Instantiate(
-                tile, 
-                new Vector3(x * CellSize, y * CellSize, 0.0f), 
+                tile,
+                new Vector3(x * CellSize, y * CellSize, 0.0f),
                 Quaternion.identity);
 
-            instance.GetComponent<TileBlock>().SetSortingOrder((int)Dimension - y);
-            instance.transform.SetParent(this.tilesHolder);
+            // Setting order and parent
+            instance.GetComponent<TileBlock>().SetSortingOrder(TG.Dimension - y);
+            instance.transform.SetParent(this.transform);
             return instance;
         }
 
         #endregion
-
-        #region Path Generation Related
-
-        /// <summary>
-        /// Get a new direction given the constrain.
-        /// </summary>
-        /// <param name="allowed">
-        /// The Bitmask that constrains your options
-        /// </param>
-        /// <returns>
-        /// The <see cref="Direction"/>.
-        /// </returns>
-        private Direction GetNewDirection(Direction allowed)
-        {
-            Direction newDir;
-            do
-            {
-                var values = Enum.GetValues(typeof(Direction));
-                newDir = (Direction)values.GetValue(Random.Range(0, values.Length));
-            }
-            while ((allowed & newDir) == 0);
-            return newDir;
-        }
-
-        /// <summary>
-        /// Using very dummy approach (Random Walk with constrains) to generate a path within the
-        /// margins.
-        /// </summary>
-        /// <param name="leftMargin">
-        /// The left margin in index [0,...7]
-        /// </param>
-        /// <param name="rightMargin">
-        /// The right margin in index [0,...7]
-        /// </param>
-        /// <returns>
-        /// The <see cref="List"/>.
-        /// </returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// should not happen.
-        /// </exception>
-        private List<Vector3> CreatePath(int leftMargin, int rightMargin)
-        {
-            List<Vector3> path = new List<Vector3>();
-            
-            var currentX = Random.Range(leftMargin, rightMargin + 1);
-            var currentY = 7;
-
-            path.Add(new Vector3(currentX, currentY));
-
-            var currentAllowed = Direction.Down;
-            var lastDirection = Direction.Down;
-            while (currentY != 0)
-            {
-                var option = this.GetNewDirection(currentAllowed);
-
-                int newX = currentX;
-                int newY = currentY;
-
-                switch (option)
-                {
-                    case Direction.Down:
-                        if (lastDirection == Direction.Left)
-                        {
-                            currentAllowed = Direction.Left | Direction.Down;
-                        }
-                        else if (lastDirection == Direction.Right)
-                        {
-                            currentAllowed = Direction.Down | Direction.Right;
-                        }
-                        else
-                        {
-                            currentAllowed = Direction.Left | Direction.Down | Direction.Right;
-                        }
-
-                        newY--;
-                        break;
-                    case Direction.Left:
-                        currentAllowed = Direction.Left | Direction.Down;
-                        newX--;
-                        break;
-                    case Direction.Right:
-                        currentAllowed = Direction.Down | Direction.Right;
-                        newX++;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                newX = Mathf.Clamp(newX, leftMargin, rightMargin);
-
-                if (path.Contains(new Vector3(newX, newY)))
-                {
-                    continue;
-                }
-
-                lastDirection = option;
-                currentX = newX;
-                currentY = newY;
-                path.Add(new Vector3(currentX, currentY));
-            }
-
-            // path.Reverse();
-            return path;
-        }
-
-        /// <summary>
-        /// Using a very smart way to generate a path with Fixed length N.
-        /// </summary>
-        /// <param name="length">
-        /// The length N, which should be greater that otherwise Infinite loop.
-        /// </param>
-        /// <param name="leftMargin">
-        /// The left margin in index [0,...7]
-        /// </param>
-        /// <param name="rightMargin">
-        /// The right margin in index [0,...7]
-        /// </param>
-        /// <returns>
-        /// The <see cref="List"/>.
-        /// </returns>
-        private List<Vector3> CreatePathSmart(int length, int leftMargin, int rightMargin)
-        {
-            Stopwatch sw = new Stopwatch();
-
-            sw.Start();
-            List<Vector3> path;
-            do
-            {
-                path = this.CreatePath(leftMargin, rightMargin);
-            }
-            while (path.Count != length);
-            sw.Stop();
-
-            Debug.Log("Elapsed " + sw.Elapsed.Milliseconds);
-
-            return path;
-        }
-
-        private void InitializeWaveSpawner()
-        {
-            var n = 12;
-
-            // Creating the first path
-            var path = this.CreatePathSmart(n, 0, 3);
-            foreach (var pos in path)
-            {
-                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
-            }
-
-            foreach (var node in path)
-            {
-                this.waveSpawner.AddPoint(node, 1);
-            }
-
-            var newX = path[0].x;
-            var newY = path[0].y;
-           
-            this.waveSpawner.spawnPoint1 = new Vector3(newX, newY);
-
-            // Creating the second path
-            path = this.CreatePathSmart(n, 4, 7);
-            foreach (var pos in path)
-            {
-                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
-            }
-
-            foreach (var node in path)
-            {
-                this.waveSpawner.AddPoint(node, 2);
-            }
-
-            newX = path[0].x;
-            newY = path[0].y;
-            this.waveSpawner.spawnPoint2 = new Vector3(newX, newY);
-        }
-
-        #endregion
-
-        #endregion
     }
-
-    #region Editor Stuff
-
-    [Serializable]
-    public class TilePrefab
-    {
-        public GameObject prefab;
-
-        public int amount;
-    }
-
-    #endregion
 }

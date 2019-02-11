@@ -1,15 +1,17 @@
 ﻿namespace Assets.Scripts
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
+
+    using DG.Tweening;
 
     using UnityEngine;
     using UnityEngine.Events;
 
     using Random = UnityEngine.Random;
 
-    [RequireComponent(typeof(GameMap))]
-    public class BattleManager : MonoBehaviour
+    public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
         #region Singleton
 
@@ -20,11 +22,6 @@
         #region Private Fields
 
         private Dictionary<string, UnityEvent> eventDictionary;
-
-        /// <summary>
-        /// This stores the HUD game object (bad solution)
-        /// </summary>
-        private GameObject uiCanvas;
 
         #endregion
 
@@ -149,48 +146,65 @@
 
         #endregion
 
-        #region Unity Callbacks
+        #region Public Utility Functions
 
-        public void OnEnable()
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void KillAllEnemies()
         {
-            this.uiCanvas = GameObject.Find("Canvas"); // should do a safe check
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            StartListening(
-                "block ready",
-                () => GameState = Stages.Combating);
-        }
-
-        public void Update()
-        {
-            // This is for debugging purpose
-            if (Input.GetKeyDown("space"))
+            foreach (var enemy in enemies)
             {
-                TriggerEvent("test");
+                GameObject.Destroy(enemy);
             }
         }
 
         #endregion
 
-        #region Public Functions
+        #region IBattlePhaseHandler
 
-        [Obsolete("TBD")]
-        public void OnWaveUpdate(int currentWave)
+        public void OnBattleBegin()
         {
-            // Should update the UI. *NOT Final*
-            var timer = this.uiCanvas.GetComponent<Timer>();
-            //timer.UpdateWave(currentWave);
+            this.KillAllEnemies();
+            GameState = Stages.Entering;
         }
 
-        public void OnLevelFinished()
+        public void OnBattleEnd()
         {
             GameState = Stages.Exiting;
-            TriggerEvent("battle finished");
+
+            // Temp, 
+            var lootUI = FindObjectOfType<Loot>();
+            lootUI.Toggle();
         }
 
-        [Obsolete("TBD")]
-        public void SetCurrentSelectedTile(Transform currentGrid)
+        #endregion
+
+        #region Unity Callbacks
+
+        private void OnEnable()
         {
-            throw new NotImplementedException();
+            StartListening(
+                "block ready",
+                () => GameState = Stages.Combating);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown("space"))
+            {
+                TriggerEvent("start");
+                this.OnBattleBegin();
+            }
+
+            if (Input.GetKeyDown("r"))
+            {
+                TriggerEvent("end");
+                this.OnBattleEnd();
+            }
         }
 
         #endregion
@@ -203,6 +217,10 @@
             {
                 this.eventDictionary = new Dictionary<string, UnityEvent>();
             }
+
+            // Some setting
+            Time.timeScale = 1.0f;
+            DOTween.Init(true, true);
         }
 
         #endregion
