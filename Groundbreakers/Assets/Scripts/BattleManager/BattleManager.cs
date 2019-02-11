@@ -218,6 +218,8 @@
                 this.eventDictionary = new Dictionary<string, UnityEvent>();
             }
 
+            // Some setting
+            Time.timeScale = 1.0f;
             DOTween.Init(true, true);
         }
 
