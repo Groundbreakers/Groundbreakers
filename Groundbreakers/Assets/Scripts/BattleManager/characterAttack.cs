@@ -17,6 +17,7 @@ public class characterAttack : MonoBehaviour
 
     public string stance = "Gun";
 
+    private tricksterAttributes trickster; 
     private bool isChanging = false;
 
     private float fireCountdown = 0f;
@@ -31,7 +32,18 @@ public class characterAttack : MonoBehaviour
     private CircleCollider2D myCollider;
 
 
-    void Awake() { targetedEnemies = new List<GameObject>();  myCollider = GetComponent<CircleCollider2D>(); }
+
+    void Awake()
+    {
+        targetedEnemies = new List<GameObject>();
+        myCollider = GetComponent<CircleCollider2D>();
+        trickster = GetComponent<tricksterAttributes>();
+    }
+
+    void Start()
+    {
+        fireRate = trickster.ROF * .5f;
+    }
     
     void Update() {
         if (target != null && !isChanging)
@@ -184,7 +196,8 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Transition", true);
             animator.SetBool("Sitting", true);
             animator.SetBool("Standing", false);
-            myCollider.radius = 2f; // or whatever radius you want.
+            trickster.gun();
+            myCollider.radius = trickster.RNG * .5f; // or whatever radius you want.
 
         }
         else
@@ -193,7 +206,10 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Transition", true);
             animator.SetBool("Sitting", false);
             animator.SetBool("Standing", true);
-            myCollider.radius = 1f; // or whatever radius you want.
+            trickster.melee();
+            myCollider.radius = trickster.RNG * .5f; // or whatever radius you want.
         }
     }
+
+    
 }
