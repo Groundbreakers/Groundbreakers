@@ -2647,6 +2647,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5623790536839842851, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5036737971078238882, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -3104,6 +3109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1186630414}
   - component: {fileID: 1186630413}
+  - component: {fileID: 1186630416}
   - component: {fileID: 1186630418}
   - component: {fileID: 1186630415}
   m_Layer: 0
@@ -3153,6 +3159,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firebatPrefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
     type: 3}
+--- !u!114 &1186630416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186630412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba282b72763849bdb2295fd3d7de7a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeScale: 1
+  totalWaves: 5
+  waveDuration: 30
+  tileEnterDuration: 4
+  timeBeforeFirstWave: 10
 --- !u!114 &1186630418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3561,7 +3584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc170adaf989e646b89f97214fcaa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalEnterDuration: 4
   tileA: {fileID: 5300740713263289941, guid: 1f88124d7a16c474491994a173fa260d, type: 3}
   tileB: {fileID: 5890712410309033143, guid: 60370c669cd5e9e47afda8e5c8ba3751, type: 3}
   tileC: {fileID: 3812301382797932396, guid: 32b050950fbf1334b8ba07ee7cc1294a, type: 3}

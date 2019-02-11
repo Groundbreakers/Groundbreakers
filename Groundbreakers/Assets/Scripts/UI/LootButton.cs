@@ -52,6 +52,8 @@ public class LootButton : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");
         Loot loot = canvas.GetComponent<Loot>();
         loot.Toggle();
+
+        // I guess now we goto the next choice scene?
     }
 
     public void Toggle()

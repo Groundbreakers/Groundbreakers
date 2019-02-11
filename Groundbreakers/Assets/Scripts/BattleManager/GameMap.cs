@@ -25,16 +25,6 @@
 
         #region Inspector Properties
 
-        /// <summary>
-        /// The total enter duration for the map. Recommend set the value to (MaxDelay + Duration)
-        /// of the TilePrefab's Enter Behaviour setting. While the tiles are entering, the player
-        /// can not deploy characters on to the tiles.
-        /// <see cref="EnterBehavior"/>
-        /// </summary>
-        [SerializeField]
-        [Range(3.0f, 10.0f)]
-        private float totalEnterDuration = 4.0f;
-
         [SerializeField]
         private GameObject tileA;
 
@@ -69,7 +59,11 @@
             // Create a new level
             this.SetupNewLevel();
 
-            this.StartCoroutine(this.StartEntering());
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+            foreach (var behavior in children)
+            {
+                behavior.StartEntering();
+            }
         }
 
         public void OnBattleEnd()
@@ -79,6 +73,15 @@
             foreach (var behavior in children)
             {
                 behavior.StartExiting();
+            }
+        }
+
+        public void OnBattleVictory()
+        {
+            // Clear the 2D array
+            foreach (Transform tileBlock in this.transform)
+            {
+                GameObject.Destroy(tileBlock.gameObject);
             }
         }
 
@@ -118,22 +121,6 @@
         #endregion
 
         #region Internal Functions
-
-        private IEnumerator StartEntering()
-        {
-            // Tell each tiles to start tween in.
-            var children = this.GetComponentsInChildren<EnterBehavior>();
-            foreach (var behavior in children)
-            {
-                behavior.StartEntering();
-            }
-
-            yield return new WaitForSeconds(this.totalEnterDuration);
-
-            Debug.Log("all block ready");
-
-            BattleManager.TriggerEvent("block ready");
-        }
 
         /// <summary>
         /// Heritage from Austin. Adding vector3 points to the spawn. 
@@ -178,12 +165,6 @@
         /// </summary>
         private void InstantiateTiles()
         {
-            // Clear the 2D array
-            foreach (Transform tileBlock in this.transform)
-            {
-                GameObject.Destroy(tileBlock.gameObject);
-            }
-
             // Re instantiate all tiles
             for (var x = 0; x < TG.Dimension; x++)
             {

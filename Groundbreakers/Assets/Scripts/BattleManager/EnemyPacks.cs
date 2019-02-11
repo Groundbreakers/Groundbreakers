@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using Assets.Scripts;
+
     using UnityEditor;
 
     using UnityEngine;
@@ -19,7 +21,7 @@
         #region Internal Fields
 
         // Currenlty, hard code the level to a fixed value, we will change it when level gen is done.
-        private List<Enemies>[] packs = new List<Enemies>[8];
+        private List<Enemies>[] packs = new List<Enemies>[5];
 
         private int currentWave = -1;
 
@@ -74,8 +76,17 @@
         /// </param>
         public void SetCurrentWave(int waveNumber)
         {
-            waveNumber = Mathf.Clamp(waveNumber, 0, 7);
+            waveNumber = Mathf.Clamp(waveNumber, 0, 4);
             this.currentWave = waveNumber;
+        }
+
+        /// <summary>
+        /// Should be called after every battle.
+        /// </summary>
+        public void ResetPack()
+        {
+            this.currentWave = -1;
+            this.InitializePacks();
         }
 
         #endregion
@@ -135,44 +146,6 @@
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                };
-
-            this.packs[5] = new List<Enemies>()
-                                {
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat,
-                                };
-
-            this.packs[6] = new List<Enemies>()
-                                {
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                };
-
-            this.packs[7] = new List<Enemies>()
-                                {
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
-                                    Enemies.FireBat,
                                 };
         }
 

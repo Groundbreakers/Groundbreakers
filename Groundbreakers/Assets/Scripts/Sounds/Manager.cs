@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Scripts;
+
 using UnityEngine;
+
+using static Assets.Scripts.BattleManager;
 
 public class Manager : MonoBehaviour
 {
     private AudioSource peaceTheme;
     private AudioSource battleTheme;
-    private bool isBattle;
+    //private bool isBattle;
     private float speed = 0.01F;
     public int region;
 
@@ -14,16 +19,16 @@ public class Manager : MonoBehaviour
     void Update()
     {
         // Press Spacebar to switch between themes
-        if (Input.GetKeyDown("space"))
-        {
-            if (isBattle)
-                isBattle = false;
-            else
-                isBattle = true;
-        }
+        //if (Input.GetKeyDown("space"))
+        //{
+        //    if (isBattle)
+        //        isBattle = false;
+        //    else
+        //        isBattle = true;
+        //}
 
         // Fade in & out effects
-        if (isBattle)
+        if (BattleManager.GameState != Stages.Null)
         {
             peaceTheme.volume -= speed;
             battleTheme.volume += speed;
@@ -37,7 +42,7 @@ public class Manager : MonoBehaviour
 
     public void UpdateBGM()
     {
-        isBattle = false;
+        //isBattle = false;
         if (this.peaceTheme != null && this.battleTheme != null)
         {
             peaceTheme.Stop();
@@ -67,6 +72,6 @@ public class Manager : MonoBehaviour
         }
         peaceTheme.Play();
         battleTheme.Play();
-        isBattle = false;
+        //isBattle = false;
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
+using Assets.Scripts;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +31,7 @@ public class ChoicesButton : MonoBehaviour
     public void HandleClick()
     {
         // Call Battle function here
+        BattleManager.Instance.ShouldStartBattle();
 
         // Close the choice panel
         GameObject canvas = GameObject.Find("Canvas");

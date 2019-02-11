@@ -1,79 +1,90 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using Assets.Scripts;
-
-using UnityEngine;
-using UnityEngine.UI;
-
-public class Timer : MonoBehaviour
+﻿namespace Assets.Scripts
 {
-    public GameObject ui;
-    public Text wave;
-    public Text timer;
+    using UnityEngine;
+    using UnityEngine.UI;
 
-    private float countdown;
-    private float waveDelay;
-    private int waveCount;
-    private Boolean isBattle;
+    using static BattleManager;
 
-    void Start()
+    public class Timer : MonoBehaviour, IBattlePhaseHandler
     {
-        this.isBattle = false;
-    }
+        #region Inspector values
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown("space"))
+        [SerializeField]
+        private GameObject ui;
+
+        [SerializeField]
+        private Text wave;
+
+        [SerializeField]
+        private Text timer;
+
+        #endregion
+
+        #region Internal Fields
+
+        private float countdown;
+        private float waveDelay;
+        private int waveCount;
+
+        #endregion
+
+        #region IBattlePhaseHandler
+
+        public void OnBattleBegin()
         {
-            this.Toggle();
+            this.ResetTimer();
+            this.ui.SetActive(true);
         }
 
-        if (this.isBattle)
+        public void OnBattleEnd()
         {
-            if (this.countdown <= 0F)
+            this.ui.SetActive(false);
+        }
+
+        public void OnBattleVictory()
+        {
+        }
+
+        #endregion
+
+        #region Unity Callbacks
+
+        private void OnEnable()
+        {
+            BattleManager.StartListening("start", this.OnBattleBegin);
+            BattleManager.StartListening("end", this.OnBattleEnd);
+        }
+
+        // Update is called once per frame
+        private void Update()
+        {
+            if (BattleManager.GameState != Stages.Null)
             {
-                NextWave(waveCount);
-                this.waveCount += 1;
-                this.wave.text = "WAVE " + this.waveCount + "/5";
-                this.countdown = this.waveDelay;
+                if (this.countdown <= 0F)
+                {
+                    this.waveCount += 1;
+                    this.wave.text = "WAVE " + this.waveCount + "/5";
+                    this.countdown = this.waveDelay;
+                }
+
+                this.countdown -= Time.deltaTime;
+                this.timer.text = Mathf.Round(this.countdown).ToString();
             }
-
-            this.countdown -= Time.deltaTime;
-            this.timer.text = Mathf.Round(this.countdown).ToString();
         }
-    }
 
-    public void Initialize()
-    {
-        this.isBattle = true;
-        this.countdown = 10.0F;
-        this.waveDelay = 30.0F;
-        this.waveCount = 0;
-        this.wave.text = "BEGINS IN";
-        this.timer.text = this.countdown.ToString();
-    }
+        #endregion
 
-    public void NextWave(int count)
-    {
-        GameObject battleManager = GameObject.Find("BattleManager");
-        var waveSpawner = battleManager.GetComponent<MobSpawner>();
+        #region Internal Functions
 
-        waveSpawner.StartCoroutine(waveSpawner.SpawnWave(count));
-    }
-
-    public void Toggle()
-    {
-        ui.SetActive(!ui.activeSelf);
-        if (!this.isBattle)
+        private void ResetTimer()
         {
-            this.Initialize();
+            this.countdown = 10.0F;
+            this.waveDelay = 30.0F;
+            this.waveCount = 0;
+            this.wave.text = "BEGINS IN";
+            this.timer.text = this.countdown.ToString();
         }
-        else
-        {
-            this.isBattle = false;
-        }
+
+        #endregion
     }
 }

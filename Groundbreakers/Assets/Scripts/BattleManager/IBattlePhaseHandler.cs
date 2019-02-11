@@ -14,9 +14,14 @@
         void OnBattleBegin();
 
         /// <summary>
-        /// This function is automatically triggered when the battle terminates. 
+        /// This function is automatically triggered when the battle are almost ending. 
         /// </summary>
         void OnBattleEnd();
+
+        /// <summary>
+        /// This function is automatically triggered when the battle finally terminates. 
+        /// </summary>
+        void OnBattleVictory();
 
         #endregion
     }

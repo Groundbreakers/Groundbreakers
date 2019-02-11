@@ -37,6 +37,8 @@ namespace Assets.Scripts
 
         private Vector3 spawnPointB;
 
+        private int currentWave;
+
         #endregion
 
         #region Public Functions
@@ -108,8 +110,15 @@ namespace Assets.Scripts
 
         private void OnEnable()
         {
-            // Time.timeScale = 10;
             this.pack = this.GetComponent<EnemyPacks>();
+
+            BattleManager.StartListening("spawn wave", this.ShouldSpawnWave);
+            BattleManager.StartListening("end",
+                () =>
+                    {
+                        this.currentWave = 0;
+                        this.pack.ResetPack();
+                    });
         }
 
         #endregion
@@ -126,6 +135,12 @@ namespace Assets.Scripts
             // Set enemies path, ~Heritage from Austin
             instance.GetComponent<Enemy_Generic>().waypointList = path;
             instance.transform.SetParent(this.transform.parent);
+        }
+
+        private void ShouldSpawnWave()
+        {
+            this.StartCoroutine(this.SpawnWave(this.currentWave));
+            this.currentWave++;
         }
 
         #endregion

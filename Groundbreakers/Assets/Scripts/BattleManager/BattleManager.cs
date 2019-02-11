@@ -1,15 +1,11 @@
 ﻿namespace Assets.Scripts
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
 
     using DG.Tweening;
 
     using UnityEngine;
     using UnityEngine.Events;
-
-    using Random = UnityEngine.Random;
 
     public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
@@ -22,6 +18,8 @@
         #region Private Fields
 
         private Dictionary<string, UnityEvent> eventDictionary;
+
+        private GameTimer timer;
 
         #endregion
 
@@ -149,6 +147,24 @@
         #region Public Utility Functions
 
         /// <summary>
+        /// The main entry function call to start the battle.
+        /// </summary>
+        public void ShouldStartBattle()
+        {
+            if (GameState != Stages.Null)
+            {
+                Debug.LogWarning("Attemp To Start a battle when battle is already started.");
+
+                return;
+            }
+
+            // Changing state
+            GameState = Stages.Entering;
+
+            this.timer.StartLevel();
+        }
+
+        /// <summary>
         /// Instantly destroy all existing enemies on the scene. You might use this for some other
         /// interesting purposes. I am using during resetting the game map.
         /// </summary>
@@ -162,23 +178,50 @@
             }
         }
 
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void RetreatAllCharacters()
+        {
+            // TODO: Please nicely Refactor this :)
+            var characterList = GameObject.Find("CharacterList").transform;
+
+            Debug.Log("Ding");
+
+            foreach (Transform character in characterList)
+            {
+                Debug.Log("Bing");
+                character.gameObject.SetActive(false);
+            }
+        }
+
         #endregion
 
         #region IBattlePhaseHandler
 
         public void OnBattleBegin()
         {
-            this.KillAllEnemies();
-            GameState = Stages.Entering;
         }
 
         public void OnBattleEnd()
         {
-            GameState = Stages.Exiting;
+            this.RetreatAllCharacters();
 
-            // Temp, 
+            GameState = Stages.Exiting;
+        }
+
+        public void OnBattleVictory()
+        {
+            // Clear existing mobs
+            this.KillAllEnemies();
+
+            // Temp, call the loot 
             var lootUI = FindObjectOfType<Loot>();
             lootUI.Toggle();
+
+            this.timer.ResetTimer();
+            GameState = Stages.Null;
         }
 
         #endregion
@@ -187,24 +230,13 @@
 
         private void OnEnable()
         {
-            StartListening(
-                "block ready",
-                () => GameState = Stages.Combating);
-        }
+            this.timer = this.GetComponent<GameTimer>();
 
-        private void Update()
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                TriggerEvent("start");
-                this.OnBattleBegin();
-            }
+            StartListening("block ready", () => GameState = Stages.Combating);
 
-            if (Input.GetKeyDown("r"))
-            {
-                TriggerEvent("end");
-                this.OnBattleEnd();
-            }
+            StartListening("end", this.OnBattleEnd);
+
+            StartListening("victory", this.OnBattleVictory);
         }
 
         #endregion
@@ -219,7 +251,6 @@
             }
 
             // Some setting
-            Time.timeScale = 1.0f;
             DOTween.Init(true, true);
         }
 

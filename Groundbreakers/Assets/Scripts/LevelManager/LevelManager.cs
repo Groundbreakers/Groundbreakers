@@ -83,7 +83,10 @@
 
         public void Update()
         {
-
+            if (Input.GetKeyDown("space"))
+            {
+                BattleManager.Instance.ShouldStartBattle();
+            }
         }
 
         #endregion
