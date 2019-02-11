@@ -173,6 +173,7 @@ public class characterAttack : MonoBehaviour
         }
         if (rangeattack != null)
         {
+            rangeattack.updateStats(trickster.POW, trickster.AMP);
             rangeattack.chase(this.target);
         }
     }
@@ -182,6 +183,10 @@ public class characterAttack : MonoBehaviour
         if(targetedEnemies.Count != 0)
         {
             target = targetedEnemies[0].transform;
+        }
+        else
+        {
+            target = null;
         }
         
     }

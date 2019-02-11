@@ -7,7 +7,7 @@ public class tricksterAttributes : MonoBehaviour
     //Stats
     public int POW = 1;
     public int ROF = 2;
-    public int RNG = 4;
+    public int RNG = 6;
     public int MOB = 3;
     public int AMP = 0;
 
@@ -39,14 +39,14 @@ public class tricksterAttributes : MonoBehaviour
     public void gun()
     {
         POW = 1;
-        RNG = 4;
+        RNG = 6;
         AMP = 0;
     }
 
     public void melee()
     {
         POW = 3;
-        RNG = 2;
+        RNG = 3;
         AMP = 2;
     }
 
