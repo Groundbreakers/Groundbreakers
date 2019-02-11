@@ -53,7 +53,7 @@ public class Cetus_Charge_Shot : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");
         HP hp = canvas.GetComponent<HP>();
         Debug.Log(3);
-        hp.healthPoint -= 3;
+        hp.UpdateHealth(-3);
         Destroy(gameObject);
     }
 }
