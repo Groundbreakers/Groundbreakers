@@ -1,15 +1,11 @@
 ﻿namespace Assets.Scripts
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
 
     using DG.Tweening;
 
     using UnityEngine;
     using UnityEngine.Events;
-
-    using Random = UnityEngine.Random;
 
     public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
@@ -22,6 +18,8 @@
         #region Private Fields
 
         private Dictionary<string, UnityEvent> eventDictionary;
+
+        private GameTimer timer;
 
         #endregion
 
@@ -149,6 +147,27 @@
         #region Public Utility Functions
 
         /// <summary>
+        /// The main entry function call to start the battle.
+        /// </summary>
+        public void ShouldStartBattle()
+        {
+            if (GameState != Stages.Null)
+            {
+                Debug.LogWarning("Attemp To Start a battle when battle is already started.");
+
+                return;
+            }
+
+            // Clear existing mobs
+            this.KillAllEnemies();
+
+            // Changing state
+            GameState = Stages.Entering;
+
+            this.timer.StartLevel();
+        }
+
+        /// <summary>
         /// Instantly destroy all existing enemies on the scene. You might use this for some other
         /// interesting purposes. I am using during resetting the game map.
         /// </summary>
@@ -168,17 +187,20 @@
 
         public void OnBattleBegin()
         {
-            this.KillAllEnemies();
-            GameState = Stages.Entering;
         }
 
         public void OnBattleEnd()
         {
             GameState = Stages.Exiting;
+        }
 
-            // Temp, 
+        public void OnBattleVictory()
+        {
+            // Temp, call the loot scene
             var lootUI = FindObjectOfType<Loot>();
             lootUI.Toggle();
+
+            GameState = Stages.Null;
         }
 
         #endregion
@@ -187,24 +209,15 @@
 
         private void OnEnable()
         {
+            this.timer = this.GetComponent<GameTimer>();
+
             StartListening(
                 "block ready",
                 () => GameState = Stages.Combating);
-        }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                TriggerEvent("start");
-                this.OnBattleBegin();
-            }
-
-            if (Input.GetKeyDown("r"))
-            {
-                TriggerEvent("end");
-                this.OnBattleEnd();
-            }
+            StartListening(
+                "victory", 
+                this.OnBattleVictory);
         }
 
         #endregion
@@ -219,7 +232,6 @@
             }
 
             // Some setting
-            Time.timeScale = 1.0f;
             DOTween.Init(true, true);
         }
 
