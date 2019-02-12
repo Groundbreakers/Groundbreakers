@@ -217,7 +217,7 @@
             this.KillAllEnemies();
 
             // Temp, call the loot 
-            var lootUI = FindObjectOfType<Loot>();
+            var lootUI = FindObjectOfType<LootGenerator>();
             lootUI.Toggle();
 
             this.timer.ResetTimer();
