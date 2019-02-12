@@ -16,7 +16,7 @@ public class LootButton : MonoBehaviour
     public Button confirmButton;
     public GameObject loot;
 
-    private ModuleTemplate script;
+    private ModuleGeneric script;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class LootButton : MonoBehaviour
     public void Setup(GameObject module)
     {
         this.icon.sprite = module.GetComponent<Image>().sprite;
-        this.script = module.GetComponent<ModuleTemplate>();
+        this.script = module.GetComponent<ModuleGeneric>();
         this.title.text = this.script.title;
         this.description.text = this.script.description;
         this.loot = module;

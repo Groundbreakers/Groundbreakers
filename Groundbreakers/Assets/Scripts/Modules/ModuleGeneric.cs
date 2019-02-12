@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ModuleTemplate : MonoBehaviour
+public class ModuleGeneric : MonoBehaviour
 {
     // Title and description
     public Button button;
