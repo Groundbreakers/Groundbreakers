@@ -7,6 +7,7 @@ public class HP : MonoBehaviour
 {
     public Text mytext = null;
     private int healthPoint = 20;
+    public GameObject ui;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class HP : MonoBehaviour
         if (this.healthPoint <= 0)
         {
             // Game Over
+            this.ui.SetActive(true);
         }
     }
 }
