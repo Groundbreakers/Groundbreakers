@@ -23,6 +23,12 @@ public class HP : MonoBehaviour
         {
             // Game Over
             this.ui.SetActive(true);
+            Time.timeScale = 0.0F;
+
+            // Switch the bgm
+            GameObject bgmManager = GameObject.Find("BGM Manager");
+            Manager manager = bgmManager.GetComponent<Manager>();
+            manager.GameOver();
         }
     }
 }
