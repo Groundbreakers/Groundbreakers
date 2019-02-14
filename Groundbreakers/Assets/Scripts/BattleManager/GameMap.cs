@@ -234,7 +234,6 @@
                 Quaternion.identity);
 
             // Setting order and parent
-            instance.GetComponent<TileBlock>().SetSortingOrder(TG.Dimension - y);
             instance.transform.SetParent(this.transform);
             return instance;
         }
