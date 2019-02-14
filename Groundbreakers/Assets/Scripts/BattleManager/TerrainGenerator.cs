@@ -49,6 +49,7 @@
 
         public enum Tiles
         {
+            OutOfBound,
             Path,
             Grass,
             Stone,
@@ -91,9 +92,14 @@
         /// <returns>
         /// The <see cref="Tiles"/>. The enumeration that represent the tile's type. 
         /// </returns>
-        public Tiles GetTileTypeAt(int x, int y)
+        public Tiles GetTileTypeAt(float x, float y)
         {
-            return this.data[x, y];
+            if (x < 0 || x >= Dimension || y < 0 || y >= Dimension)
+            {
+                return Tiles.OutOfBound;
+            }
+
+            return this.data[(int)x, (int)y];
         }
 
         /// <summary>

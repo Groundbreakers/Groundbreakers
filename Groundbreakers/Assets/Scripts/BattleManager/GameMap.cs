@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
 
     using UnityEngine;
 
@@ -96,6 +97,7 @@
 
             // Instantiate tiles from data
             this.InstantiateTiles();
+            this.SetupPathSprite();
             this.SetupMobSpawner();
         }
 
@@ -121,6 +123,61 @@
         #endregion
 
         #region Internal Functions
+
+        /// <summary>
+        /// We need to manually determine what each type of the path is.
+        /// Note this solution is very ugly but works :)
+        /// </summary>
+        private void SetupPathSprite()
+        {
+            this.RelaxPath(this.generator.GetPathA());
+            this.RelaxPath(this.generator.GetPathB());
+        }
+
+        /// <summary>
+        /// Private helper function to reset sprites of path
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        private void RelaxPath(List<Vector3> path)
+        {
+            foreach (var pos in path)
+            {
+                var block =
+                    this.tileBlocks[(int)pos.x, (int)pos.y].GetComponentInChildren<PathAtlas>();
+
+                var left = this.generator.GetTileTypeAt(pos.x - 1, pos.y);
+                var right = this.generator.GetTileTypeAt(pos.x + 1, pos.y);
+                var up = this.generator.GetTileTypeAt(pos.x, pos.y - 1);
+                var down = this.generator.GetTileTypeAt(pos.x, pos.y + 1);
+
+                if (left != Tiles.Path && right != Tiles.Path)
+                {
+                    block.SetDirection("road_2");
+                }
+                else if (up != Tiles.Path && down != Tiles.Path)
+                {
+                    block.SetDirection();
+                }
+                else if (up != Tiles.Path && left != Tiles.Path)
+                {
+                    block.SetDirection("road_4");
+                }
+                else if (up != Tiles.Path && right != Tiles.Path)
+                {
+                    block.SetDirection("road_3");
+                }
+                else if (left != Tiles.Path && down != Tiles.Path)
+                {
+                    block.SetDirection("road_5");
+                }
+                else if (right != Tiles.Path && down != Tiles.Path)
+                {
+                    block.SetDirection("road_6");
+                }
+            }
+        }
 
         /// <summary>
         /// Heritage from Austin. Adding vector3 points to the spawn. 

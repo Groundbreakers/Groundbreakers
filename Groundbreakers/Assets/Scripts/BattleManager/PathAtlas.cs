@@ -19,12 +19,27 @@
 
         #endregion
 
+        #region Public Functions
+
+        /// <summary>
+        /// I am currently using string as the function argument, which is not ideal but work.
+        /// </summary>
+        /// <param name="filename">
+        /// The name.
+        /// </param>
+        public void SetDirection(string filename = "road_1")
+        {
+            this.sprite.sprite = this.spriteAtlas.GetSprite(filename);
+        }
+
+        #endregion
+
         #region Unity Callbacks
 
-        public void OnEnable()
+        private void OnEnable()
         {
             this.sprite = this.GetComponent<SpriteRenderer>();
-            this.sprite.sprite = this.spriteAtlas.GetSprite("road_1");
+            this.SetDirection();
         }
 
         #endregion
