@@ -135,7 +135,9 @@
         }
 
         /// <summary>
-        /// Private helper function to reset sprites of path
+        /// Private helper function to reset sprites of path.
+        /// I understand this is an inefficient algorithm. However, due to the scale of number of
+        /// paths is small. In this case it does not matter at all.
         /// </summary>
         /// <param name="path">
         /// The path.
@@ -147,32 +149,32 @@
                 var block =
                     this.tileBlocks[(int)pos.x, (int)pos.y].GetComponentInChildren<PathAtlas>();
 
-                var left = this.generator.GetTileTypeAt(pos.x - 1, pos.y);
-                var right = this.generator.GetTileTypeAt(pos.x + 1, pos.y);
-                var up = this.generator.GetTileTypeAt(pos.x, pos.y - 1);
-                var down = this.generator.GetTileTypeAt(pos.x, pos.y + 1);
+                var left = !path.Contains(new Vector3(pos.x - 1, pos.y));
+                var right = !path.Contains(new Vector3(pos.x + 1, pos.y));
+                var up = !path.Contains(new Vector3(pos.x, pos.y - 1));
+                var down = !path.Contains(new Vector3(pos.x, pos.y + 1));
 
-                if (left != Tiles.Path && right != Tiles.Path)
+                if (left && right)
                 {
                     block.SetDirection("road_2");
                 }
-                else if (up != Tiles.Path && down != Tiles.Path)
+                else if (up && down)
                 {
                     block.SetDirection();
                 }
-                else if (up != Tiles.Path && left != Tiles.Path)
+                else if (up && left)
                 {
                     block.SetDirection("road_4");
                 }
-                else if (up != Tiles.Path && right != Tiles.Path)
+                else if (up && right)
                 {
                     block.SetDirection("road_3");
                 }
-                else if (left != Tiles.Path && down != Tiles.Path)
+                else if (left && down)
                 {
                     block.SetDirection("road_5");
                 }
-                else if (right != Tiles.Path && down != Tiles.Path)
+                else if (right && down)
                 {
                     block.SetDirection("road_6");
                 }
