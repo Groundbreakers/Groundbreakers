@@ -190,7 +190,7 @@
                 int damagevalue;
                 if (this.attributes.Contains("Armored"))
                 {
-                    damagevalue = armorpen;
+                    damagevalue = (int) (damage * armorpen * .25f);
                 }
                 else
                 {

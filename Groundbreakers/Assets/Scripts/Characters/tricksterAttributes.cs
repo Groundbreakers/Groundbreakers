@@ -9,7 +9,7 @@ public class tricksterAttributes : MonoBehaviour
     public int ROF = 2;
     public int RNG = 6;
     public int MOB = 3;
-    public int AMP = 0;
+    public int AMP = 1;
 
     //Abilities
     public bool criticalDraw = false;
@@ -40,7 +40,7 @@ public class tricksterAttributes : MonoBehaviour
     {
         POW = 1;
         RNG = 6;
-        AMP = 0;
+        AMP = 1;
     }
 
     public void melee()

@@ -12,7 +12,7 @@ public class rangeattack : MonoBehaviour
     
     public int damage;
 
-    public int armorpen2;
+    public int armorpen;
 
     public Boolean hit;
 
@@ -23,7 +23,7 @@ public class rangeattack : MonoBehaviour
     public void updateStats(int pow, int amp)
     {
         damage = pow * 50;
-        armorpen2 = amp;
+        armorpen = amp;
     }
 
     void Update() {
