@@ -8,7 +8,7 @@ using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChoicesButton : MonoBehaviour
+public class RoutesButton : MonoBehaviour
 {
     public Button button;
     public Image icon;
@@ -35,8 +35,8 @@ public class ChoicesButton : MonoBehaviour
 
         // Close the choice panel
         GameObject canvas = GameObject.Find("Canvas");
-        Choices choices = canvas.GetComponent<Choices>();
-        choices.Toggle();
+        RoutesGenerator routes = canvas.GetComponent<RoutesGenerator>();
+        routes.Toggle();
 
         // Update Current Level
         CurrentLevel currentLevel = canvas.GetComponent<CurrentLevel>();

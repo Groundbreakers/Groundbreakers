@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Characters : MonoBehaviour
+public class CharacterManager : MonoBehaviour
 {
     public GameObject selectCircle;
     public GameObject icon1;

@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
 {
     public GameObject ui;
     public GameObject content;
-    public GameObject characters;
+    public GameObject characterManager;
     public GameObject tooltip;
 
     public GameObject c1Inventory;
@@ -72,7 +72,7 @@ public class Inventory : MonoBehaviour
 
     public void Toggle()
     {
-        this.characterIndex = this.characters.GetComponent<Characters>().GetCharacterIndex();
+        this.characterIndex = this.characterManager.GetComponent<CharacterManager>().GetCharacterIndex();
         this.UpdateInventory();
         this.ui.SetActive(!this.ui.activeSelf);
     }
@@ -136,5 +136,28 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int[] GetCharacterInventory(int index)
+    {
+        int[] sumAttributes = new int[22];
+        for (int i = 0; i < 5; i++)
+        {
+            if (this.transform.GetChild(index).GetChild(i).childCount != 0)
+            {
+                ModuleGeneric script = this.transform.GetChild(index).GetChild(i).GetChild(0).gameObject
+                    .GetComponent<ModuleGeneric>();
+                int[] moduleAttributes = script.GetModuleAttributes();
+                if (sumAttributes.Length == moduleAttributes.Length)
+                {
+                    for (int j = 0; j < 22; j++)
+                    {
+                        sumAttributes[j] = sumAttributes[j] + moduleAttributes[j];
+                    }
+                }
+            }
+        }
+
+        return sumAttributes;
     }
 }

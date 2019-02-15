@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Choices : MonoBehaviour
+public class RoutesGenerator : MonoBehaviour
 {
     public GameObject ui;
     public GameObject prefab;
@@ -31,15 +31,6 @@ public class Choices : MonoBehaviour
         newChoicesButton1.SetActive(false);
         newChoicesButton2.SetActive(false);
         newChoicesButton3.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Toggle();
-        }
     }
 
     public void Toggle()
@@ -73,7 +64,7 @@ public class Choices : MonoBehaviour
             newButton.SetActive(true);
 
             // Setup the component of the button
-            ChoicesButton button = newButton.GetComponent<ChoicesButton>();
+            RoutesButton button = newButton.GetComponent<RoutesButton>();
             int battleModifier = rnd.Next(100);
 
             // Generate options randomly

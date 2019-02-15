@@ -22,18 +22,15 @@ public class ModuleGeneric : MonoBehaviour
     public int AMP;
 
     // Attack Effects
-    public Boolean multiShotAE;
-    public Boolean ricochetAE;
     public Boolean burstAE;
+    public Boolean ricochetAE;
     public Boolean laserAE;
+    public Boolean splashAE;
+    public Boolean pierceAE;
+    public Boolean traceAE;
+    public Boolean cleaveAE;
     public Boolean whirwindAE;
     public Boolean reachAE;
-    public Boolean splashAE;
-    public Boolean chargeAE;
-    public Boolean trueStrikeAE;
-    public Boolean antiAirAE;
-    public Boolean nullifyAE;
-    public Boolean chaosAE;
 
     // Status Effects
     public Boolean slowSE;
@@ -154,5 +151,30 @@ public class ModuleGeneric : MonoBehaviour
             this.isEquipped = false;
             this.inventory.SetAvailableSlots(this.slot);
         }
+    }
+
+    public int[] GetModuleAttributes()
+    {
+        int[] attributes = { this.POW, this.ROF, this.RNG, this.MOB, this.AMP,
+                               Convert.ToInt32(this.burstAE),
+                               Convert.ToInt32(this.ricochetAE),
+                               Convert.ToInt32(this.laserAE),
+                               Convert.ToInt32(this.splashAE),
+                               Convert.ToInt32(this.pierceAE),
+                               Convert.ToInt32(this.traceAE),
+                               Convert.ToInt32(this.cleaveAE),
+                               Convert.ToInt32(this.whirwindAE),
+                               Convert.ToInt32(this.reachAE),
+
+                               Convert.ToInt32(this.slowSE),
+                               Convert.ToInt32(this.stunSE),
+                               Convert.ToInt32(this.burnSE),
+                               Convert.ToInt32(this.markSE),
+                               Convert.ToInt32(this.purgeSE),
+                               Convert.ToInt32(this.breakSE),
+                               Convert.ToInt32(this.blightSE),
+                               Convert.ToInt32(this.netSE)
+                           };
+        return attributes;
     }
 }

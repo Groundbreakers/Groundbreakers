@@ -102,7 +102,6 @@ public class Status : MonoBehaviour
     public void Close()
     {
         ui.SetActive(false);
-        Time.timeScale = 1.0F;
     }
 
     public GameObject GetNode()

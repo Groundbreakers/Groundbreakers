@@ -53,7 +53,9 @@ public class LootButton : MonoBehaviour
         LootGenerator loot = canvas.GetComponent<LootGenerator>();
         loot.Toggle();
 
-        // I guess now we goto the next choice scene?
+        // Open the route panel
+        RoutesGenerator routes = canvas.GetComponent<RoutesGenerator>();
+        routes.Toggle();
     }
 
     public void Toggle()

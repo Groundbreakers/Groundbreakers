@@ -16,15 +16,12 @@ public class Settings : MonoBehaviour
         {
             this.button.interactable = !ui.activeSelf;
         }
+    }
 
-        if (ui.activeSelf)
-        {
-            Time.timeScale = 0.0F;
-        }
-        else
-        {
-            Time.timeScale = 1.0F;
-        }
+    public void NewGame()
+    {
+        RoutesGenerator routes = this.GetComponent<RoutesGenerator>();
+        routes.Toggle();
     }
 
     public void Reset()
@@ -32,8 +29,23 @@ public class Settings : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void Exit ()
+    public void Exit()
     {
         Application.Quit();
+    }
+
+    public void TimeScale1x()
+    {
+        Time.timeScale = 1.0F;
+    }
+
+    public void TimeScale2x()
+    {
+        Time.timeScale = 2.0F;
+    }
+
+    public void TimeScale4x()
+    {
+        Time.timeScale = 4.0F;
     }
 }
