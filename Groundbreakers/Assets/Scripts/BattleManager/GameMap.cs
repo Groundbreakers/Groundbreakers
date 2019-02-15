@@ -1,11 +1,11 @@
 ﻿namespace Assets.Scripts
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
 
     using UnityEngine;
 
+    using Random = UnityEngine.Random;
     using TG = TerrainGenerator;
     using Tiles = TerrainGenerator.Tiles;
 
@@ -37,6 +37,12 @@
 
         [SerializeField]
         private GameObject tilePath;
+
+        [SerializeField]
+        private GameObject mushroom;
+
+        [SerializeField]
+        private GameObject plants;
 
         #endregion
 
@@ -99,6 +105,7 @@
             this.InstantiateTiles();
             this.SetupPathSprite();
             this.SetupMobSpawner();
+            this.InstantiateEnvironments();
         }
 
         #endregion
@@ -109,6 +116,7 @@
         {
             BattleManager.StartListening("start", this.OnBattleBegin);
             BattleManager.StartListening("end", this.OnBattleEnd);
+            BattleManager.StartListening("victory", this.OnBattleVictory);
 
             this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
             this.generator = this.GetComponent<TG>();
@@ -295,6 +303,44 @@
             // Setting order and parent
             instance.transform.SetParent(this.transform);
             return instance;
+        }
+
+        private void InstantiateEnvironments()
+        {
+            const int Mushrooms = 3;
+            const int Plants = 6;
+
+            // We use naive approach here
+            for (int i = 0; i < Mushrooms; i++)
+            {
+                var block = this.PickRandomTileBlock();
+                var mush = Instantiate(this.mushroom, block);
+                mush.transform.localPosition = Vector3.zero;
+
+                // Manually set these tile to undeployable
+                block.GetComponent<SelectNode>().SetCanDeploy(false);
+            }
+
+            // We use naive approach here
+            for (int i = 0; i < Plants; i++)
+            {
+                var mush = Instantiate(this.plants, this.PickRandomTileBlock());
+                mush.transform.localPosition = Vector3.zero;
+            }
+        }
+
+        private Transform PickRandomTileBlock()
+        {
+            int x;
+            int y;
+            do
+            {
+                x = Random.Range(0, 8);
+                y = Random.Range(0, 8);
+            }
+            while (this.generator.GetTileTypeAt(x, y) == Tiles.Path);
+
+            return this.tileBlocks[x, y];
         }
 
         #endregion
