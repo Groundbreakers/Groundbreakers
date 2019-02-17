@@ -17,7 +17,7 @@ public class Deploy : MonoBehaviour
     private GameObject character3Pos;
     private GameObject character4Pos;
     private GameObject character5Pos;
-    private tricksterAttributes trickster;
+    private characterAttributes trickster;
     void Start()
     {
         // Reference five characters
@@ -51,7 +51,7 @@ public class Deploy : MonoBehaviour
         selectNode.characterOnTop = 1;
         this.character1.transform.position = this.node.transform.position;
         this.character1.transform.rotation = this.node.transform.rotation;
-        trickster = character1.GetComponent<tricksterAttributes>();
+        trickster = character1.GetComponent<characterAttributes>();
         trickster.disable();
         this.character1.SetActive(true);
         this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
@@ -63,7 +63,7 @@ public class Deploy : MonoBehaviour
     public void SpawnC1()
     {
         this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        trickster = character1.GetComponent<tricksterAttributes>();
+        trickster = character1.GetComponent<charcterAttributes>();
         trickster.enabled();
     }
 
@@ -80,7 +80,7 @@ public class Deploy : MonoBehaviour
         selectNode.characterOnTop = 2;
         this.character2.transform.position = this.node.transform.position;
         this.character2.transform.rotation = this.node.transform.rotation;
-        trickster = character2.GetComponent<tricksterAttributes>();
+        trickster = character2.GetComponent<characterAttributes>();
         trickster.disable();
         this.character2.SetActive(true);
         this.character2.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
@@ -92,7 +92,7 @@ public class Deploy : MonoBehaviour
     public void SpawnC2()
     {
         this.character2.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        trickster = character2.GetComponent<tricksterAttributes>();
+        trickster = character2.GetComponent<characterAttributes>();
         trickster.enabled();
     }
 
@@ -109,7 +109,7 @@ public class Deploy : MonoBehaviour
         selectNode.characterOnTop = 3;
         this.character3.transform.position = this.node.transform.position;
         this.character3.transform.rotation = this.node.transform.rotation;
-        trickster = character3.GetComponent<tricksterAttributes>();
+        trickster = character3.GetComponent<characterAttributes>();
         trickster.disable();
         this.character3.SetActive(true);
         this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
@@ -121,7 +121,7 @@ public class Deploy : MonoBehaviour
     public void SpawnC3()
     {
         this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        trickster = character3.GetComponent<tricksterAttributes>();
+        trickster = character3.GetComponent<characterAttributes>();
         trickster.enabled();
     }
 
@@ -138,7 +138,7 @@ public class Deploy : MonoBehaviour
         selectNode.characterOnTop = 4;
         this.character4.transform.position = this.node.transform.position;
         this.character4.transform.rotation = this.node.transform.rotation;
-        trickster = character4.GetComponent<tricksterAttributes>();
+        trickster = character4.GetComponent<characterAttributes>();
         trickster.disable();
         this.character4.SetActive(true);
         this.character4.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
@@ -150,7 +150,7 @@ public class Deploy : MonoBehaviour
     public void SpawnC4()
     {
         this.character4.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        trickster = character4.GetComponent<tricksterAttributes>();
+        trickster = character4.GetComponent<characterAttributes>();
         trickster.enabled();
     }
 
@@ -167,7 +167,7 @@ public class Deploy : MonoBehaviour
         selectNode.characterOnTop = 5;
         this.character5.transform.position = this.node.transform.position;
         this.character5.transform.rotation = this.node.transform.rotation;
-        trickster = character5.GetComponent<tricksterAttributes>();
+        trickster = character5.GetComponent<characterAttributes>();
         trickster.disable();
         this.character5.SetActive(true);
         this.character5.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
@@ -179,7 +179,7 @@ public class Deploy : MonoBehaviour
     public void SpawnC5()
     {
         this.character5.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        trickster = character5.GetComponent<tricksterAttributes>();
+        trickster = character5.GetComponent<characterAttributes>();
         trickster.enabled();
     }
 
