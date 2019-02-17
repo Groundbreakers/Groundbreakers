@@ -5,12 +5,24 @@ using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(TileBlock))]
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class SelectNode : MonoBehaviour
 {
     public int characterOnTop;
+
+    #region Inspector Values
+
+    [SerializeField]
+    private Sprite canDeployIcon;
+
+    [SerializeField]
+    private Sprite canNotDeployIcon;
+
+    [SerializeField]
+    private Sprite occupiedIcon;
+
+    #endregion
 
     #region Internal fields
 
@@ -24,11 +36,6 @@ public class SelectNode : MonoBehaviour
     /// 'GameObject.Find' every time.
     /// </summary>
     private GameObject canvas;
-
-    /// <summary>
-    /// Keeps a reference to the TileBlock script in this game object.
-    /// </summary>
-    private TileBlock tileBlock;
 
     private LineRenderer lineRenderer;
 
@@ -50,13 +57,12 @@ public class SelectNode : MonoBehaviour
     public void Start()
     {
         this.canvas = GameObject.Find("Canvas");
-        this.tileBlock = this.GetComponent<TileBlock>();
 
         var components = this.GetComponentsInChildren<SpriteRenderer>();
         this.rend = components[1];
 
         this.characterOnTop = 0;
-        this.rend.sprite = this.tileBlock.CanDeployIcon;
+        this.rend.sprite = this.canDeployIcon;
         this.rend.enabled = false;
 
         this.lineRenderer = this.GetComponent<LineRenderer>();
@@ -100,7 +106,7 @@ public class SelectNode : MonoBehaviour
 
         if (!this.canDeploy)
         {
-            this.rend.sprite = this.tileBlock.CanNotDeployIcon;
+            this.rend.sprite = this.canNotDeployIcon;
             this.rend.enabled = true;
             return;
         }
@@ -109,14 +115,14 @@ public class SelectNode : MonoBehaviour
 
         if (this.IsOccupied())
         {
-            this.rend.sprite = this.tileBlock.OccupiedIcon;
+            this.rend.sprite = this.occupiedIcon;
             this.rend.enabled = true;
             this.lineRenderer.enabled = true;
             return;
         }
 
 
-        this.rend.sprite = this.rend.sprite = this.tileBlock.CanDeployIcon;
+        this.rend.sprite = this.rend.sprite = this.canDeployIcon;
         this.rend.enabled = true;
     }
 

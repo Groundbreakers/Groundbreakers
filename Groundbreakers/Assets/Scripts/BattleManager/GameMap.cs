@@ -1,10 +1,11 @@
 ﻿namespace Assets.Scripts
 {
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
 
     using UnityEngine;
 
+    using Random = UnityEngine.Random;
     using TG = TerrainGenerator;
     using Tiles = TerrainGenerator.Tiles;
 
@@ -36,6 +37,12 @@
 
         [SerializeField]
         private GameObject tilePath;
+
+        [SerializeField]
+        private GameObject mushroom;
+
+        [SerializeField]
+        private GameObject plants;
 
         #endregion
 
@@ -96,7 +103,9 @@
 
             // Instantiate tiles from data
             this.InstantiateTiles();
+            this.SetupPathSprite();
             this.SetupMobSpawner();
+            this.InstantiateEnvironments();
         }
 
         #endregion
@@ -107,6 +116,7 @@
         {
             BattleManager.StartListening("start", this.OnBattleBegin);
             BattleManager.StartListening("end", this.OnBattleEnd);
+            BattleManager.StartListening("victory", this.OnBattleVictory);
 
             this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
             this.generator = this.GetComponent<TG>();
@@ -121,6 +131,63 @@
         #endregion
 
         #region Internal Functions
+
+        /// <summary>
+        /// We need to manually determine what each type of the path is.
+        /// Note this solution is very ugly but works :)
+        /// </summary>
+        private void SetupPathSprite()
+        {
+            this.RelaxPath(this.generator.GetPathA());
+            this.RelaxPath(this.generator.GetPathB());
+        }
+
+        /// <summary>
+        /// Private helper function to reset sprites of path.
+        /// I understand this is an inefficient algorithm. However, due to the scale of number of
+        /// paths is small. In this case it does not matter at all.
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        private void RelaxPath(List<Vector3> path)
+        {
+            foreach (var pos in path)
+            {
+                var block =
+                    this.tileBlocks[(int)pos.x, (int)pos.y].GetComponentInChildren<PathAtlas>();
+
+                var left = !path.Contains(new Vector3(pos.x - 1, pos.y));
+                var right = !path.Contains(new Vector3(pos.x + 1, pos.y));
+                var up = !path.Contains(new Vector3(pos.x, pos.y - 1));
+                var down = !path.Contains(new Vector3(pos.x, pos.y + 1));
+
+                if (left && right)
+                {
+                    block.SetDirection("road_2");
+                }
+                else if (up && down)
+                {
+                    block.SetDirection();
+                }
+                else if (up && left)
+                {
+                    block.SetDirection("road_4");
+                }
+                else if (up && right)
+                {
+                    block.SetDirection("road_3");
+                }
+                else if (left && down)
+                {
+                    block.SetDirection("road_5");
+                }
+                else if (right && down)
+                {
+                    block.SetDirection("road_6");
+                }
+            }
+        }
 
         /// <summary>
         /// Heritage from Austin. Adding vector3 points to the spawn. 
@@ -234,9 +301,46 @@
                 Quaternion.identity);
 
             // Setting order and parent
-            instance.GetComponent<TileBlock>().SetSortingOrder(TG.Dimension - y);
             instance.transform.SetParent(this.transform);
             return instance;
+        }
+
+        private void InstantiateEnvironments()
+        {
+            const int Mushrooms = 3;
+            const int Plants = 6;
+
+            // We use naive approach here
+            for (int i = 0; i < Mushrooms; i++)
+            {
+                var block = this.PickRandomTileBlock();
+                var mush = Instantiate(this.mushroom, block);
+                mush.transform.localPosition = Vector3.zero;
+
+                // Manually set these tile to undeployable
+                block.GetComponent<SelectNode>().SetCanDeploy(false);
+            }
+
+            // We use naive approach here
+            for (int i = 0; i < Plants; i++)
+            {
+                var mush = Instantiate(this.plants, this.PickRandomTileBlock());
+                mush.transform.localPosition = Vector3.zero;
+            }
+        }
+
+        private Transform PickRandomTileBlock()
+        {
+            int x;
+            int y;
+            do
+            {
+                x = Random.Range(0, 8);
+                y = Random.Range(0, 8);
+            }
+            while (this.generator.GetTileTypeAt(x, y) == Tiles.Path);
+
+            return this.tileBlocks[x, y];
         }
 
         #endregion

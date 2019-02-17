@@ -32,15 +32,6 @@ public class Status : MonoBehaviour
     {
         this.node = selectedNode;
         ui.SetActive(!ui.activeSelf);
-
-        if (ui.activeSelf)
-        {
-            Time.timeScale = 0.0F;
-        }
-        else
-        {
-            Time.timeScale = 1.0F;
-        }
     }
 
     public void Transform()
@@ -111,7 +102,6 @@ public class Status : MonoBehaviour
     public void Close()
     {
         ui.SetActive(false);
-        Time.timeScale = 1.0F;
     }
 
     public GameObject GetNode()

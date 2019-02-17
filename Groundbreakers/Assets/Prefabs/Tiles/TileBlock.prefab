@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 5300740713263289940}
   - component: {fileID: 5300740713263289943}
   - component: {fileID: 8244441371179534952}
-  - component: {fileID: 6534124003798743205}
   - component: {fileID: 5300740713263289942}
   - component: {fileID: 7085035497353382218}
   - component: {fileID: 3860437930588547951}
@@ -153,12 +152,12 @@ SpriteRenderer:
   m_SortingLayerID: 2099931279
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 02d9c20bd2863c440837d3f4dffa7c81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 486453508fb6ea94c9466c3f28f22d3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1.1875}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -180,9 +179,9 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -0.09375}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.57894737}
-    oldSize: {x: 1, y: 1.1875}
-    newSize: {x: 1, y: 1.1875}
+    pivot: {x: 0.5, y: 0.375}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -190,21 +189,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.1875}
   m_EdgeRadius: 0
---- !u!114 &6534124003798743205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5300740713263289941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a35b4328905074ab19dadc630545c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CanDeployIcon: {fileID: 21300000, guid: b1c0eb309fbe52a458268b40bdd936f4, type: 3}
-  CanNotDeployIcon: {fileID: 21300000, guid: b969ae0e2c061b3438f61074a306dafc, type: 3}
-  OccupiedIcon: {fileID: 21300000, guid: 0c1d367553f98824fa62a179c9aa5eed, type: 3}
 --- !u!114 &5300740713263289942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,3 +315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterOnTop: 0
+  canDeployIcon: {fileID: 21300000, guid: b1c0eb309fbe52a458268b40bdd936f4, type: 3}
+  canNotDeployIcon: {fileID: 21300000, guid: b969ae0e2c061b3438f61074a306dafc, type: 3}
+  occupiedIcon: {fileID: 21300000, guid: 0c1d367553f98824fa62a179c9aa5eed, type: 3}
