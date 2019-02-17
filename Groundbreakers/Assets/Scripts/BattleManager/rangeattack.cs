@@ -10,14 +10,20 @@ public class rangeattack : MonoBehaviour
 
     public Transform target;
     
-    public int damage = 10;
+    public int damage;
 
-    public int armorpen = 2;
+    public int armorpen;
 
     public Boolean hit;
 
     public void chase(Transform _target) {
         this.target = _target;
+    }
+
+    public void updateStats(int pow, int amp)
+    {
+        damage = pow * 50;
+        armorpen = amp;
     }
 
     void Update() {

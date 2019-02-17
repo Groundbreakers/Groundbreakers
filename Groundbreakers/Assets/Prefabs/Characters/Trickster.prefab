@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7543013341955019752}
   - component: {fileID: 609067372233172761}
   - component: {fileID: 5170317579557245721}
+  - component: {fileID: 1143237542542456168}
   m_Layer: 2
   m_Name: Trickster
   m_TagString: Untagged
@@ -136,3 +137,40 @@ MonoBehaviour:
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
   animator: {fileID: 7543013341955019752}
+  stance: Gun
+--- !u!114 &1143237542542456168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4065c780f72c6c34eb8c82e1cf834458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  POW: 1
+  ROF: 2
+  RNG: 6
+  MOB: 3
+  AMP: 1
+  criticalDraw: 0
+  reaper: 0
+  alchemy: 0
+  anticipate: 0
+  chemicals: 0
+  corrode: 0
+  fleetFeet: 0
+  nullify: 0
+  chaos: 0
+  swiftness: 0
+  juggling: 0
+  exit: 0
+  modules:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
