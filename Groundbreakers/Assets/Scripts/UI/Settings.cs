@@ -20,6 +20,11 @@ public class Settings : MonoBehaviour
 
     public void NewGame()
     {
+        // Get a new BGM
+        GameObject bgm = GameObject.Find("BGM Manager");
+        Manager manager = bgm.GetComponent<Manager>();
+        manager.UpdateBGM();
+
         RoutesGenerator routes = this.GetComponent<RoutesGenerator>();
         routes.Toggle();
     }

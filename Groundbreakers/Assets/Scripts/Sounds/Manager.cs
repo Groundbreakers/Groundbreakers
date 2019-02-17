@@ -14,6 +14,14 @@ public class Manager : MonoBehaviour
     private float speed = 0.01F;
     public int region;
 
+    void Start()
+    {
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        peaceTheme = audioSources[0];
+        battleTheme = audioSources[0];
+        peaceTheme.Play();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -38,9 +46,13 @@ public class Manager : MonoBehaviour
 
     public void UpdateBGM()
     {
-        if (this.peaceTheme != null && this.battleTheme != null)
+        if (this.peaceTheme != null)
         {
             peaceTheme.Stop();
+        }
+
+        if (this.battleTheme != null)
+        {
             battleTheme.Stop();
         }
 

@@ -9,6 +9,7 @@ public class CurrentLevel : MonoBehaviour
     public Text ui2;
     private int region;
     private int level;
+    public GameObject titleScreen;
     
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,8 @@ public class CurrentLevel : MonoBehaviour
         // Get a new BGM if the region is changed
         GameObject bgm = GameObject.Find("BGM Manager");
         Manager manager = bgm.GetComponent<Manager>();
-        manager.UpdateBGM();
+        if (!this.titleScreen.activeSelf)
+            manager.UpdateBGM();
 
         // Get a new background image if the region is changed
         GameObject canvas = GameObject.Find("Canvas");
