@@ -17,7 +17,7 @@ public class characterAttack : MonoBehaviour
     
     public string stance = "Gun";
 
-    private tricksterAttributes trickster; 
+    private characterAttributes trickster; 
     private bool isChanging = false;
     private Vector3 firePoint;
     private float fireCountdown = 0f;
@@ -37,13 +37,14 @@ public class characterAttack : MonoBehaviour
     {
         targetedEnemies = new List<GameObject>();
         myCollider = GetComponent<CircleCollider2D>();
-        trickster = GetComponent<tricksterAttributes>();
+        trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
     }
 
     void Start()
     {
         fireRate = trickster.ROF * .5f;
+        animator.SetFloat("FireRate", fireRate);
     }
     
     void Update() {
@@ -65,7 +66,7 @@ public class characterAttack : MonoBehaviour
                 animator.SetBool("FacingLeft", false);
                 animator.SetBool("FacingUp", false);
                 animator.SetBool("FacingDown", false);
-                firePoint = new Vector3(gameObject.transform.position.x + .5f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                firePoint = new Vector3(gameObject.transform.position.x + .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
             }
             else if (angle >= 45 && angle < 135) //check if it's pointing up
             {
@@ -73,7 +74,7 @@ public class characterAttack : MonoBehaviour
                 animator.SetBool("FacingLeft", false);
                 animator.SetBool("FacingUp", true);
                 animator.SetBool("FacingDown", false);
-                firePoint = new Vector3(gameObject.transform.position.x , gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                firePoint = new Vector3(gameObject.transform.position.x , gameObject.transform.position.y + .25f, gameObject.transform.position.z);
             }
             else if (angle >= 135 && angle < 225) //check if it's pointing left
             {
@@ -81,7 +82,7 @@ public class characterAttack : MonoBehaviour
                 animator.SetBool("FacingLeft", true);
                 animator.SetBool("FacingUp", false);
                 animator.SetBool("FacingDown", false);
-                firePoint = new Vector3(gameObject.transform.position.x - .5f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                firePoint = new Vector3(gameObject.transform.position.x - .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
             }
             else if (angle >= 225 && angle < 315) //check if it's pointing down
             {
@@ -89,7 +90,7 @@ public class characterAttack : MonoBehaviour
                 animator.SetBool("FacingLeft", false);
                 animator.SetBool("FacingUp", false);
                 animator.SetBool("FacingDown", true);
-                firePoint = new Vector3(gameObject.transform.position.x , gameObject.transform.position.y - .5f, gameObject.transform.position.z);
+                firePoint = new Vector3(gameObject.transform.position.x , gameObject.transform.position.y - .25f, gameObject.transform.position.z);
             }
             //Debug.Log(angle);
         }

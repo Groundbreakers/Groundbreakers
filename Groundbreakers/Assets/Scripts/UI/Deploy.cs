@@ -63,7 +63,7 @@ public class Deploy : MonoBehaviour
     public void SpawnC1()
     {
         this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        trickster = character1.GetComponent<charcterAttributes>();
+        trickster = character1.GetComponent<characterAttributes>();
         trickster.enabled();
     }
 

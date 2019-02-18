@@ -6,7 +6,7 @@ public class characterAttributes : MonoBehaviour
 {
     //Stats
     public int POW = 1;
-    public int ROF = 2;
+    public int ROF = 3;
     public int RNG = 6;
     public int MOB = 3;
     public int AMP = 1;
