@@ -23,6 +23,9 @@ namespace Assets.Scripts
         [Range(10.0f, 25.0f)]
         private float duration = 25.0f;
 
+        [SerializeField]
+        private Sprite[] spawnIndicators;
+
         #endregion
 
         #region Internal Fields
@@ -33,9 +36,7 @@ namespace Assets.Scripts
 
         private List<Vector3> pathB = new List<Vector3>();
 
-        private Vector3 spawnPointA;
-
-        private Vector3 spawnPointB;
+        private GameObject[] activeIndicators;
 
         private int currentWave;
 
@@ -112,18 +113,56 @@ namespace Assets.Scripts
         {
             this.pack = this.GetComponent<EnemyPacks>();
 
+            BattleManager.StartListening("block ready", this.CreateIndicators);
             BattleManager.StartListening("spawn wave", this.ShouldSpawnWave);
             BattleManager.StartListening("end",
                 () =>
                     {
                         this.currentWave = 0;
                         this.pack.ResetPack();
+                        this.ClearPoints();
+                        this.ClearIndicators();
                     });
         }
 
         #endregion
 
         #region Internal Functions
+
+        private void CreateIndicators()
+        {
+            this.activeIndicators = new[] { new GameObject(), new GameObject(), new GameObject(), new GameObject() };
+
+            var map = GameObject.Find("TileMap");
+            foreach (var go in this.activeIndicators)
+            {
+                go.transform.SetParent(map.transform);
+            }
+
+            this.activeIndicators[0].transform.SetPositionAndRotation(
+                this.pathA[0], Quaternion.identity);
+            this.activeIndicators[1].transform.SetPositionAndRotation(
+                this.pathB[0], Quaternion.identity);
+            this.activeIndicators[2].transform.SetPositionAndRotation(
+                this.pathA[this.pathA.Count - 1], Quaternion.identity);
+            this.activeIndicators[3].transform.SetPositionAndRotation(
+                this.pathB[this.pathB.Count - 1], Quaternion.identity);
+
+            for (int i = 0; i < 4; i++)
+            {
+                var renderer = this.activeIndicators[i].AddComponent<SpriteRenderer>();
+                renderer.sprite = this.spawnIndicators[i];
+                renderer.sortingLayerName = "Mobs";
+            }
+        }
+
+        private void ClearIndicators()
+        {
+            foreach (var go in this.activeIndicators)
+            {
+                GameObject.Destroy(go);
+            }
+        }
 
         private void InstantiateEnemyAtSpawnPoint(GameObject minion, int pathId)
         {

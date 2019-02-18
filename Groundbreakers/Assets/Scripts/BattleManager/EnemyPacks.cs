@@ -3,10 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using Assets.Scripts;
-
-    using UnityEditor;
-
     using UnityEngine;
 
     public class EnemyPacks : MonoBehaviour
@@ -106,13 +102,13 @@
         [Obsolete("Well, eventually we ready from an XML/JSON File")]
         private void InitializePacks()
         {
-            this.packs[0] = new List<Enemies>()
+            this.packs[0] = new List<Enemies>
                                 {
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                 };
 
-            this.packs[1] = new List<Enemies>()
+            this.packs[1] = new List<Enemies>
                                 {
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
@@ -120,7 +116,7 @@
                                     Enemies.FireBat,
                                 };
 
-            this.packs[2] = new List<Enemies>()
+            this.packs[2] = new List<Enemies>
                                 {
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
@@ -128,7 +124,7 @@
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                 };
 
-            this.packs[3] = new List<Enemies>()
+            this.packs[3] = new List<Enemies>
                                 {
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
@@ -138,7 +134,7 @@
                                     Enemies.FireBat,
                                 };
 
-            this.packs[4] = new List<Enemies>()
+            this.packs[4] = new List<Enemies>
                                 {
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,
                                     Enemies.FireBat, Enemies.FireBat, Enemies.FireBat,

@@ -26,7 +26,7 @@ public class rangeattack : MonoBehaviour
         armorpen = amp;
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (this.target == null)
         {
             Destroy(this.gameObject);

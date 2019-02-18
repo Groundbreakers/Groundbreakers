@@ -54,6 +54,7 @@
             Grass,
             Stone,
             Wall,
+            Water,
         }
 
         [Flags]
@@ -77,6 +78,7 @@
         public void Initialize()
         {
             this.GenerateTerrain();
+            this.GenerateEnviroment();
             this.GeneratePaths();
         }
 
@@ -122,6 +124,28 @@
         public List<Vector3> GetPathB()
         {
             return this.pathB;
+        }
+
+        #endregion
+
+        #region Enviroment Generation Related
+
+        private void GenerateEnviroment()
+        {
+            var num = Random.Range(1, 3);
+            for (var i = 0; i < num; i++)
+            {
+                int x;
+                int y;
+                do
+                {
+                    x = Random.Range(0, Dimension);
+                    y = Random.Range(0, Dimension);
+                }
+                while (this.GetTileTypeAt(x, y) == Tiles.Path);
+
+                this.data[x, y] = Tiles.Water;
+            }
         }
 
         #endregion

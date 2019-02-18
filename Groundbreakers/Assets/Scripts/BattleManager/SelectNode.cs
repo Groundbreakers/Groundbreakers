@@ -14,6 +14,9 @@ public class SelectNode : MonoBehaviour
     #region Inspector Values
 
     [SerializeField]
+    private bool canDeploy;
+
+    [SerializeField]
     private Sprite canDeployIcon;
 
     [SerializeField]
@@ -38,8 +41,6 @@ public class SelectNode : MonoBehaviour
     private GameObject canvas;
 
     private LineRenderer lineRenderer;
-
-    private bool canDeploy = true;
 
     #endregion
 
