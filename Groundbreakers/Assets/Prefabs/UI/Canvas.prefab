@@ -11409,9 +11409,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundRawImage: {fileID: 4791149456481221889}
-  background1: {fileID: 2800000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
-  background2: {fileID: 2800000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
-  background3: {fileID: 2800000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
+  background1: {fileID: 2800000, guid: 79b1561f40298b4478861bf7e628766e, type: 3}
+  background2: {fileID: 2800000, guid: 79b1561f40298b4478861bf7e628766e, type: 3}
+  background3: {fileID: 2800000, guid: 79b1561f40298b4478861bf7e628766e, type: 3}
   currentLevel: {fileID: 5623790535995462804}
 --- !u!114 &5623790535995462802
 MonoBehaviour:
@@ -14186,7 +14186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 4
-  m_AspectRatio: 2.4096045
+  m_AspectRatio: 1.7777778
 --- !u!114 &4791149456481221889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19444,7 +19444,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 17719f258d98bf243b59b0b159950b2c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79b1561f40298b4478861bf7e628766e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19466,7 +19466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 4
-  m_AspectRatio: 2.409605
+  m_AspectRatio: 1.7777778
 --- !u!1 &6619685210862054649
 GameObject:
   m_ObjectHideFlags: 0
