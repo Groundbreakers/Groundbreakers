@@ -5,20 +5,21 @@ using UnityEngine.UI;
 
 public class HP : MonoBehaviour
 {
-    public Text mytext = null;
+    public Image image;
     private int healthPoint = 20;
     public GameObject ui;
+    public Sprite[] hpFrames;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.mytext.text = this.healthPoint.ToString();
+        this.image.sprite = this.hpFrames[this.healthPoint];
     }
 
     public void UpdateHealth(int amount)
     {
         this.healthPoint += amount;
-        this.mytext.text = this.healthPoint.ToString();
+        this.image.sprite = this.hpFrames[this.healthPoint];
         if (this.healthPoint <= 0)
         {
             // Game Over

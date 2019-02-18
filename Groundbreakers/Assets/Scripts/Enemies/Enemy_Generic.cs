@@ -338,8 +338,8 @@
         // When the enemy reaches the end of its path
         void EndPath()
         {
-            GameObject canvas = GameObject.Find("Canvas");
-            HP hp = canvas.GetComponent<HP>();
+            GameObject counter = GameObject.Find("HPCounter");
+            HP hp = counter.GetComponent<HP>();
             Debug.Log((int)Math.Ceiling(this.power * this.powerMultiplier));
             hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
             Destroy(this.gameObject);
