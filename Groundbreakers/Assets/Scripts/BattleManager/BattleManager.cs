@@ -228,6 +228,13 @@
 
         #region Unity Callbacks
 
+        private void Reset()
+        {
+            GameState = Stages.Null;
+
+            Debug.Log("BattleManager.Reset() is called");
+        }
+
         private void OnEnable()
         {
             this.timer = this.GetComponent<GameTimer>();
@@ -237,8 +244,10 @@
             StartListening("end", this.OnBattleEnd);
 
             StartListening("victory", this.OnBattleVictory);
-        }
 
+            StartListening("reset", this.Reset);
+        }
+        
         #endregion
 
         #region Internal functions  
