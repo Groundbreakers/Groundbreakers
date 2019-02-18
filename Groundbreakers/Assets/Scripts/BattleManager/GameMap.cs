@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using UnityEngine;
 
@@ -44,6 +45,9 @@
         [SerializeField]
         private GameObject plants;
 
+        [SerializeField]
+        private GameObject water;
+
         #endregion
 
         #region Internal Variables
@@ -56,6 +60,8 @@
         /// The Saving a reference to the tile generator component.
         /// </summary>
         private TG generator;
+
+        private List<GameObject> mushrooms = new List<GameObject>();
 
         #endregion
 
@@ -241,12 +247,6 @@
 
                     var instance = this.InstantiateTileAt(tileType, x, y);
 
-                    // TODO: Refactor here
-                    if (tileType == Tiles.Path)
-                    {
-                        instance.GetComponent<SelectNode>().SetCanDeploy(false);
-                    }
-
                     this.tileBlocks[x, y] = instance.transform;
                 }
             }
@@ -290,6 +290,9 @@
                 case Tiles.Wall:
                     tile = this.tileC;
                     break;
+                case Tiles.Water:
+                    tile = this.water;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -305,31 +308,36 @@
             return instance;
         }
 
+        /// <summary>
+        /// Instantiating fast and dirty but works fine environmental objects. 
+        /// </summary>
         private void InstantiateEnvironments()
         {
-            const int Mushrooms = 3;
-            const int Plants = 6;
+            int num = Random.Range(2, 5);
 
             // We use naive approach here
-            for (int i = 0; i < Mushrooms; i++)
+            for (int i = 0; i < num; i++)
             {
-                var block = this.PickRandomTileBlock();
+                bool duplicate;
+                Transform block;
+                do
+                {
+                    block = this.PickNonOcuppiedBlock();
+                    duplicate = this.mushrooms.Any(
+                        go => go.transform.position.Equals(block.position));
+                }
+                while (duplicate);
+
                 var mush = Instantiate(this.mushroom, block);
                 mush.transform.localPosition = Vector3.zero;
+                this.mushrooms.Add(mush);
 
                 // Manually set these tile to undeployable
                 block.GetComponent<SelectNode>().SetCanDeploy(false);
             }
-
-            // We use naive approach here
-            for (int i = 0; i < Plants; i++)
-            {
-                var mush = Instantiate(this.plants, this.PickRandomTileBlock());
-                mush.transform.localPosition = Vector3.zero;
-            }
         }
 
-        private Transform PickRandomTileBlock()
+        private Transform PickNonOcuppiedBlock()
         {
             int x;
             int y;
@@ -338,7 +346,8 @@
                 x = Random.Range(0, 8);
                 y = Random.Range(0, 8);
             }
-            while (this.generator.GetTileTypeAt(x, y) == Tiles.Path);
+            while (this.generator.GetTileTypeAt(x, y) == Tiles.Path ||
+                    this.generator.GetTileTypeAt(x, y) == Tiles.Water);
 
             return this.tileBlocks[x, y];
         }
