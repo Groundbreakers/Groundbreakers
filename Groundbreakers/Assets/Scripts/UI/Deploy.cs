@@ -38,30 +38,34 @@ public class Deploy : MonoBehaviour
 
     public void DeployC1()
     {
+        GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        
         // If character 1 is on the battlefield, retrieve it first
         if (this.character1.activeSelf)
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character1Pos);
-            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
             bar = temp.GetComponent<DeployBar>();
             bar.Reset();
             status.Retreat();
         }
 
-        // Put the character on the node and active it
-        SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 1;
-        this.character1.transform.position = this.node.transform.position;
-        this.character1.transform.rotation = this.node.transform.rotation;
-        trickster = character1.GetComponent<characterAttributes>();
-        trickster.disable();
-        this.character1.SetActive(true);
-        this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC1", 2/(trickster.MOB * .5f));
-        this.character1Pos = this.node;
-        this.Close();
+            // Put the character on the node and active it
+            SelectNode selectNode = this.node.GetComponent<SelectNode>();
+            selectNode.characterOnTop = 1;
+            this.character1.transform.position = this.node.transform.position;
+            this.character1.transform.rotation = this.node.transform.rotation;
+            trickster = character1.GetComponent<characterAttributes>();
+            trickster.disable();
+            this.character1.SetActive(true);
+            this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+            Invoke("SpawnC1", 2 / (trickster.MOB * .5f));
+            this.character1Pos = this.node;
+            this.Close();
+        
+
+        
     }
 
     public void SpawnC1()
@@ -70,6 +74,8 @@ public class Deploy : MonoBehaviour
         trickster = character1.GetComponent<characterAttributes>();
         trickster.enabled();
     }
+
+
 
 
     public void DeployC2()

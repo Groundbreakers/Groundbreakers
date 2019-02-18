@@ -18,6 +18,8 @@ public class Status : MonoBehaviour
 
     private GameObject character5;
 
+    private characterAttributes character;
+    private DeployBar bar;
     void Start()
     {
         GameObject characterList = GameObject.Find("CharacterList");
@@ -66,6 +68,8 @@ public class Status : MonoBehaviour
 
     public void Retreat()
     {
+        
+
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         if (selectNode.characterOnTop == 0)
         {
@@ -73,7 +77,14 @@ public class Status : MonoBehaviour
         }
         else if (selectNode.characterOnTop == 1)
         {
-            this.character1.SetActive(false);
+            
+            this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+            character = character1.GetComponent<characterAttributes>();
+            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            bar = temp.GetComponent<DeployBar>();
+            bar.Reset();
+            character.disable();
+            Invoke("RetreatC1", 2 / ((character.MOB * .5f)));
             selectNode.characterOnTop = 0;
         }
         else if (selectNode.characterOnTop == 2)
@@ -99,6 +110,10 @@ public class Status : MonoBehaviour
         this.Close();
     }
 
+    public void RetreatC1()
+    {
+        this.character1.SetActive(false);
+    }
     public void Close()
     {
         ui.SetActive(false);
