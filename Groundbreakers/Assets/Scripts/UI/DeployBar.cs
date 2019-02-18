@@ -11,16 +11,14 @@ public class DeployBar : MonoBehaviour
 
     void Start()
     {
-        
-        this.deployBar = this.GetComponent<Image>();
-        this.background = this.transform.parent.gameObject.GetComponent<Image>();
-        
-        this.character = this.transform.parent.parent.parent.gameObject.GetComponent<characterAttributes>();
         Reset();
     }
 
     public void Reset()
     {
+        deployBar = GetComponent<Image>();
+        background = transform.parent.gameObject.GetComponent<Image>();
+        character = transform.parent.parent.parent.gameObject.GetComponent<characterAttributes>();
         deployBar.color = new Color(deployBar.color.r, deployBar.color.g, deployBar.color.b, 1f);
         background.color = new Color(background.color.r, background.color.g, background.color.b, 1f);
         max = Time.time + (2 / (character.MOB * .5));
