@@ -117,7 +117,7 @@ public class Deploy : MonoBehaviour
         {
             // Put the character on the node and active it
             SelectNode selectNode = this.node.GetComponent<SelectNode>();
-            selectNode.characterOnTop = 1;
+            selectNode.characterOnTop = 2;
             this.character2.transform.position = this.node.transform.position;
             this.character2.transform.rotation = this.node.transform.rotation;
             characterAttributes trickster = character2.GetComponent<characterAttributes>();
@@ -137,7 +137,7 @@ public class Deploy : MonoBehaviour
         GameObject temp2 = this.character2.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 1;
+        selectNode.characterOnTop = 2;
         this.character2.transform.position = this.node.transform.position;
         this.character2.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character2.GetComponent<characterAttributes>();
@@ -192,7 +192,7 @@ public class Deploy : MonoBehaviour
         GameObject temp3 = this.character3.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 1;
+        selectNode.characterOnTop = 3;
         this.character3.transform.position = this.node.transform.position;
         this.character3.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character3.GetComponent<characterAttributes>();
@@ -248,7 +248,7 @@ public class Deploy : MonoBehaviour
         GameObject temp4 = this.character4.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 1;
+        selectNode.characterOnTop = 4;
         this.character4.transform.position = this.node.transform.position;
         this.character4.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character4.GetComponent<characterAttributes>();
@@ -303,7 +303,7 @@ public class Deploy : MonoBehaviour
         GameObject temp5 = this.character5.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 1;
+        selectNode.characterOnTop = 5;
         this.character5.transform.position = this.node.transform.position;
         this.character5.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character5.GetComponent<characterAttributes>();
