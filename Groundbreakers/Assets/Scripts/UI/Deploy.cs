@@ -76,8 +76,6 @@ public class Deploy : MonoBehaviour
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 1;
-        this.character1.transform.position = this.node.transform.position;
-        this.character1.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character1.GetComponent<characterAttributes>();
         trickster.disable();
         DeployBar bar = temp.GetComponent<DeployBar>();
@@ -138,8 +136,6 @@ public class Deploy : MonoBehaviour
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 2;
-        this.character2.transform.position = this.node.transform.position;
-        this.character2.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character2.GetComponent<characterAttributes>();
         trickster.disable();
         DeployBar bar = temp2.GetComponent<DeployBar>();

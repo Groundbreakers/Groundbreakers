@@ -9,9 +9,9 @@ public class Status : MonoBehaviour
     private GameObject node;
 
     private GameObject character1;
-
+    private Vector3 pos1;
     private GameObject character2;
-
+    private Vector3 pos2;
     private GameObject character3;
 
     private GameObject character4;
@@ -159,6 +159,7 @@ public class Status : MonoBehaviour
             DeployBar bar = temp.GetComponent<DeployBar>();
             bar.Reset();
             character.disable();
+            pos2 = this.node.transform.position;
             Invoke("RedeployC2", 2 / ((character.MOB * .5f)));
             selectNode.characterOnTop = 0;
         }
