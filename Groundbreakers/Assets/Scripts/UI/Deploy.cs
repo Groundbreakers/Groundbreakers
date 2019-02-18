@@ -18,6 +18,7 @@ public class Deploy : MonoBehaviour
     private GameObject character4Pos;
     private GameObject character5Pos;
     private characterAttributes trickster;
+    private DeployBar bar;
     void Start()
     {
         // Reference five characters
@@ -43,6 +44,9 @@ public class Deploy : MonoBehaviour
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character1Pos);
+            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            bar = temp.GetComponent<DeployBar>();
+            bar.Reset();
             status.Retreat();
         }
 
@@ -55,7 +59,7 @@ public class Deploy : MonoBehaviour
         trickster.disable();
         this.character1.SetActive(true);
         this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC1", 2);
+        Invoke("SpawnC1", 2/(trickster.MOB * .5f));
         this.character1Pos = this.node;
         this.Close();
     }
@@ -67,6 +71,7 @@ public class Deploy : MonoBehaviour
         trickster.enabled();
     }
 
+
     public void DeployC2()
     {
         if (this.character2.activeSelf)
@@ -74,7 +79,11 @@ public class Deploy : MonoBehaviour
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character2Pos);
+            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            bar = temp.GetComponent<DeployBar>();
+            bar.Reset();
             status.Retreat();
+            
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 2;
@@ -84,7 +93,7 @@ public class Deploy : MonoBehaviour
         trickster.disable();
         this.character2.SetActive(true);
         this.character2.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC2", 2);
+        Invoke("SpawnC2", 2 / (trickster.MOB * .5f));
         this.character2Pos = this.node;
         this.Close();
     }
@@ -103,6 +112,9 @@ public class Deploy : MonoBehaviour
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character3Pos);
+            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            bar = temp.GetComponent<DeployBar>();
+            bar.Reset();
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
@@ -113,7 +125,7 @@ public class Deploy : MonoBehaviour
         trickster.disable();
         this.character3.SetActive(true);
         this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC3", 2);
+        Invoke("SpawnC3", 2 / (trickster.MOB * .5f));
         this.character3Pos = this.node;
         this.Close();
     }
@@ -132,6 +144,9 @@ public class Deploy : MonoBehaviour
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character4Pos);
+            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            bar = temp.GetComponent<DeployBar>();
+            bar.Reset();
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
@@ -142,7 +157,7 @@ public class Deploy : MonoBehaviour
         trickster.disable();
         this.character4.SetActive(true);
         this.character4.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC4", 2);
+        Invoke("SpawnC4", 2 / (trickster.MOB * .5f));
         this.character4Pos = this.node;
         this.Close();
     }
@@ -161,6 +176,9 @@ public class Deploy : MonoBehaviour
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character5Pos);
+            GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            bar = temp.GetComponent<DeployBar>();
+            bar.Reset();
             status.Retreat();
         }
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
@@ -171,7 +189,7 @@ public class Deploy : MonoBehaviour
         trickster.disable();
         this.character5.SetActive(true);
         this.character5.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC5", 2);
+        Invoke("SpawnC5", 2 / (trickster.MOB * .5f));
         this.character5Pos = this.node;
         this.Close();
     }
