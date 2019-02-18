@@ -100,6 +100,11 @@ public class characterAttack : MonoBehaviour
             this.fireCount();
         }
 
+        if(trickster.disabled)
+        {
+            target = null;
+        }
+
         if (!animator.GetBool("Transition"))
         {
             isChanging = false;

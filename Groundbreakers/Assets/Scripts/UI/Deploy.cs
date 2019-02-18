@@ -72,10 +72,16 @@ public class Deploy : MonoBehaviour
 
     public void SwapC1()
     {
-        GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
+        GameObject canvas = GameObject.Find("Canvas");
+        Status status = canvas.GetComponent<Status>();
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 1;
+        status.SetNode(this.character1Pos);
+        this.character1.transform.position = this.node.transform.position;
+        this.character1.transform.rotation = this.node.transform.rotation;
+        GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        // Put the character on the node and active it
+        
         characterAttributes trickster = character1.GetComponent<characterAttributes>();
         trickster.disable();
         DeployBar bar = temp.GetComponent<DeployBar>();
@@ -132,10 +138,15 @@ public class Deploy : MonoBehaviour
 
     public void SwapC2()
     {
-        GameObject temp2 = this.character2.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
+        GameObject canvas = GameObject.Find("Canvas");
+        Status status = canvas.GetComponent<Status>();
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 2;
+        status.SetNode(this.character2Pos);
+        this.character2.transform.position = this.node.transform.position;
+        this.character2.transform.rotation = this.node.transform.rotation;
+        GameObject temp2 = this.character2.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        // Put the character on the node and active it
         characterAttributes trickster = character2.GetComponent<characterAttributes>();
         trickster.disable();
         DeployBar bar = temp2.GetComponent<DeployBar>();
@@ -155,13 +166,13 @@ public class Deploy : MonoBehaviour
 
     public void DeployC3()
     {
-        GameObject temp2 = this.character3.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        GameObject temp3 = this.character3.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         if (this.character3.activeSelf)
         {
             GameObject canvas = GameObject.Find("Canvas");
             Status status = canvas.GetComponent<Status>();
             status.SetNode(this.character3Pos);
-            DeployBar bar = temp2.GetComponent<DeployBar>();
+            DeployBar bar = temp3.GetComponent<DeployBar>();
             bar.Reset();
             status.Redeploy();
             this.Close();
@@ -175,6 +186,8 @@ public class Deploy : MonoBehaviour
             characterAttributes trickster = character3.GetComponent<characterAttributes>();
             trickster.disable();
             this.character3.SetActive(true);
+            DeployBar bar = temp3.GetComponent<DeployBar>();
+            bar.Reset();
             this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
             Invoke("SpawnC3", 2 / (trickster.MOB * .5f));
             this.character3Pos = this.node;
@@ -185,10 +198,13 @@ public class Deploy : MonoBehaviour
 
     public void SwapC3()
     {
+        GameObject canvas = GameObject.Find("Canvas");
+        Status status = canvas.GetComponent<Status>();
         GameObject temp3 = this.character3.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 3;
+        status.SetNode(this.character3Pos);
         this.character3.transform.position = this.node.transform.position;
         this.character3.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character3.GetComponent<characterAttributes>();
@@ -241,10 +257,14 @@ public class Deploy : MonoBehaviour
 
     public void SwapC4()
     {
+        GameObject canvas = GameObject.Find("Canvas");
+        Status status = canvas.GetComponent<Status>();
         GameObject temp4 = this.character4.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
+        
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 4;
+        status.SetNode(this.character4Pos);
         this.character4.transform.position = this.node.transform.position;
         this.character4.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character4.GetComponent<characterAttributes>();
@@ -296,10 +316,13 @@ public class Deploy : MonoBehaviour
 
     public void SwapC5()
     {
+        GameObject canvas = GameObject.Find("Canvas");
+        Status status = canvas.GetComponent<Status>();
         GameObject temp5 = this.character5.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         // Put the character on the node and active it
         SelectNode selectNode = this.node.GetComponent<SelectNode>();
         selectNode.characterOnTop = 5;
+        status.SetNode(this.character5Pos);
         this.character5.transform.position = this.node.transform.position;
         this.character5.transform.rotation = this.node.transform.rotation;
         characterAttributes trickster = character5.GetComponent<characterAttributes>();

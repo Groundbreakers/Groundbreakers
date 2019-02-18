@@ -159,7 +159,6 @@ public class Status : MonoBehaviour
             DeployBar bar = temp.GetComponent<DeployBar>();
             bar.Reset();
             character.disable();
-            pos2 = this.node.transform.position;
             Invoke("RedeployC2", 2 / ((character.MOB * .5f)));
             selectNode.characterOnTop = 0;
         }
