@@ -77,7 +77,7 @@
             this.GetNextWaypoint();
         }
 
-        void Update()
+        void FixedUpdate()
         {
             // Testing functions
             if (!this.isBlighted && Input.GetKeyDown("b"))
