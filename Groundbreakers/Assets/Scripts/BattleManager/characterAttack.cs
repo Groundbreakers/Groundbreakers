@@ -17,7 +17,7 @@ public class characterAttack : MonoBehaviour
     
     public string stance = "Gun";
 
-    private tricksterAttributes trickster; 
+    private characterAttributes trickster; 
     private bool isChanging = false;
     private Vector3 firePoint;
     private float fireCountdown = 0f;
@@ -37,7 +37,7 @@ public class characterAttack : MonoBehaviour
     {
         targetedEnemies = new List<GameObject>();
         myCollider = GetComponent<CircleCollider2D>();
-        trickster = GetComponent<tricksterAttributes>();
+        trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
     }
 
