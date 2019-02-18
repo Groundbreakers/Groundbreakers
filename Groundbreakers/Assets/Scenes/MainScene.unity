@@ -4084,6 +4084,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 25
+  spawnIndicators:
+  - {fileID: 21300000, guid: b4b18c8d0dbf42845852c20c30e7b13c, type: 3}
+  - {fileID: 21300000, guid: 7993a414511e9ed408caf71a2f6ffa1b, type: 3}
+  - {fileID: 21300000, guid: 238f06d813f02cc429e18a8671882d50, type: 3}
+  - {fileID: 21300000, guid: 5daff4545b1d8ee42a904715184ceb9f, type: 3}
 --- !u!1001 &1955252576
 PrefabInstance:
   m_ObjectHideFlags: 0
