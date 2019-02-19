@@ -73,6 +73,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: b4971f5e6bb2b384aa1957148df1d9b1,
         type: 3}
+    - target: {fileID: 1520603410798911212, guid: 092fbaa8c700dcd4092bf527211f7809,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 2099931279
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520603410798911212, guid: 092fbaa8c700dcd4092bf527211f7809,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520603410798911212, guid: 092fbaa8c700dcd4092bf527211f7809,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8280060614252417308, guid: 092fbaa8c700dcd4092bf527211f7809,
         type: 3}
       propertyPath: sprites.Array.size
