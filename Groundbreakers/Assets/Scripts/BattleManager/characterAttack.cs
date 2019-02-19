@@ -46,7 +46,7 @@ public class characterAttack : MonoBehaviour
     {
         fireRate = trickster.ROF * .5f;
         animator.SetFloat("FireRate", fireRate);
-        myCollider.radius = (trickster.RNG * .5f) + .5f;
+        myCollider.radius = trickster.RNG + .5f;
     }
     
     void Update() {
@@ -158,7 +158,7 @@ public class characterAttack : MonoBehaviour
     }
 
     void fireCount() {
-        myCollider.radius = (trickster.RNG * .5f) + .5f; // or whatever radius you want.
+        myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
@@ -170,7 +170,6 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Firing", true);
             this.shoot();
 
-            
             this.fireCountdown = 1f / this.fireRate;
         }
 
@@ -215,14 +214,12 @@ public class characterAttack : MonoBehaviour
         isChanging = true;
         if (stance.Equals("Melee"))
         {
-            
             stance = "Gun";
             animator.SetBool("Transition", true);
             animator.SetBool("Sitting", true);
             animator.SetBool("Standing", false);
             trickster.gun();
-            myCollider.radius = (trickster.RNG * .5f) + .5f; // or whatever radius you want.
-
+            myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         }
         else
         {
@@ -231,9 +228,7 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Sitting", false);
             animator.SetBool("Standing", true);
             trickster.melee();
-            myCollider.radius = (trickster.RNG * .5f) + .5f; // or whatever radius you want.
+            myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         }
     }
-
-    
 }
