@@ -38,7 +38,7 @@ public class SelectNode : MonoBehaviour
     /// Making this canvas a field then we don't need to call the expensive function
     /// 'GameObject.Find' every time.
     /// </summary>
-    private GameObject canvas;
+    private GameObject deployPanel;
 
     private LineRenderer lineRenderer;
 
@@ -57,7 +57,7 @@ public class SelectNode : MonoBehaviour
 
     public void Start()
     {
-        this.canvas = GameObject.Find("Canvas");
+        this.deployPanel = GameObject.Find("DeployPanel");
 
         var components = this.GetComponentsInChildren<SpriteRenderer>();
         this.rend = components[1];
@@ -74,10 +74,7 @@ public class SelectNode : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(1))
         {
-            Deploy deploy = this.canvas.GetComponent<Deploy>();
-            Status status = this.canvas.GetComponent<Status>();
-            deploy.Close();
-            status.Close();
+            Deploy deploy = this.deployPanel.GetComponent<Deploy>();
         }
     }
 
@@ -131,13 +128,8 @@ public class SelectNode : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0) && this.characterOnTop == 0)
         {
-            Deploy deploy = this.canvas.GetComponent<Deploy>();
-            deploy.Toggle(this.gameObject);
-        }
-        else if (Input.GetMouseButtonUp(0) && this.characterOnTop != 0)
-        {
-            Status status = this.canvas.GetComponent<Status>();
-            status.Toggle(this.gameObject);
+            Deploy deploy = this.deployPanel.GetComponent<Deploy>();
+            deploy.SetNode(this.gameObject);
         }
     }
 

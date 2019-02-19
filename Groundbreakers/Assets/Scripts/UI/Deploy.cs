@@ -7,343 +7,100 @@ public class Deploy : MonoBehaviour
     public GameObject ui;
 
     private GameObject node;
-    private GameObject character1;
-    private GameObject character2;
-    private GameObject character3;
-    private GameObject character4;
-    private GameObject character5;
-    private GameObject character1Pos;
-    private GameObject character2Pos;
-    private GameObject character3Pos;
-    private GameObject character4Pos;
-    private GameObject character5Pos;
-    
-    
+    private GameObject[] character = new GameObject[5];
+    private GameObject[] characterPos = new GameObject[5];
+    private characterAttributes[] characterAttributes = new characterAttributes[5];
+    private IEnumerator[] coroutine = new IEnumerator[5];
+
     void Start()
     {
         // Reference five characters
         GameObject characterList = GameObject.Find("CharacterList");
-        this.character1 = characterList.transform.GetChild(0).gameObject;
-        this.character2 = characterList.transform.GetChild(1).gameObject;
-        this.character3 = characterList.transform.GetChild(2).gameObject;
-        this.character4 = characterList.transform.GetChild(3).gameObject;
-        this.character5 = characterList.transform.GetChild(4).gameObject;
+        this.character[0] = characterList.transform.GetChild(0).gameObject;
+        this.character[1] = characterList.transform.GetChild(1).gameObject;
+        this.character[2] = characterList.transform.GetChild(2).gameObject;
+        this.character[3] = characterList.transform.GetChild(3).gameObject;
+        this.character[4] = characterList.transform.GetChild(4).gameObject;
+        this.characterAttributes[0] = this.character[0].GetComponent<characterAttributes>();
+        this.characterAttributes[1] = this.character[1].GetComponent<characterAttributes>();
+        this.characterAttributes[2] = this.character[2].GetComponent<characterAttributes>();
+        this.characterAttributes[3] = this.character[3].GetComponent<characterAttributes>();
+        this.characterAttributes[4] = this.character[4].GetComponent<characterAttributes>();
     }
 
-    public void Toggle(GameObject selectedNode)
+    public void Toggle()
     {
-        this.node = selectedNode;
-        ui.SetActive(!ui.activeSelf);
+        this.node = null;
+        this.ui.SetActive(!this.ui.activeSelf);
     }
 
-    public void DeployC1()
+    public void DeployCharacter(int index)
     {
-        GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        
-        // If character 1 is on the battlefield, retrieve it first
-        if (this.character1.activeSelf)
+        // If the character is on the battlefield, retrieve it first
+        if (this.character[index].activeSelf)
         {
-            GameObject canvas = GameObject.Find("Canvas");
-            Status status = canvas.GetComponent<Status>();
-            status.SetNode(this.character1Pos);
-            DeployBar bar = temp.GetComponent<DeployBar>();
-            bar.Reset();
-            status.Redeploy();
-            this.Close();
+            this.Retreat(index);
+            //this.DeployCharacter(index);
         }
         else
         {
             // Put the character on the node and active it
-            SelectNode selectNode = this.node.GetComponent<SelectNode>();
-            selectNode.characterOnTop = 1;
-            this.character1.transform.position = this.node.transform.position;
-            this.character1.transform.rotation = this.node.transform.rotation;
-            characterAttributes trickster = character1.GetComponent<characterAttributes>();
-            trickster.disable();
-            this.character1.SetActive(true);
+            this.character[index].transform.position = this.node.transform.position;
+            this.character[index].transform.rotation = this.node.transform.rotation;
+            this.characterAttributes[index].disable();
+            this.character[index].SetActive(true);
+            GameObject temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
             DeployBar bar = temp.GetComponent<DeployBar>();
             bar.Reset();
-            this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            Invoke("SpawnC1", 2 / (trickster.MOB * .5f));
-            this.character1Pos = this.node;
-            this.Close();
-        }   
+            this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+            this.coroutine[index] = this.Spawn(index, .0f / (float)this.characterAttributes[index].MOB * .5f);
+            this.StartCoroutine(this.coroutine[index]);
+        }
     }
 
-    public void SwapC1()
+    public IEnumerator Spawn(int index, float time)
     {
-        GameObject canvas = GameObject.Find("Canvas");
-        Status status = canvas.GetComponent<Status>();
-        SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 1;
-        status.SetNode(this.character1Pos);
-        this.character1.transform.position = this.node.transform.position;
-        this.character1.transform.rotation = this.node.transform.rotation;
-        GameObject temp = this.character1.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
-        
-        characterAttributes trickster = character1.GetComponent<characterAttributes>();
-        trickster.disable();
+        Debug.Log("Deploying Character " + index + " ...");
+        yield return new WaitForSeconds(time);
+        this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
+        this.characterAttributes[index].enabled();
+        SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
+        selectNode.characterOnTop = index;
+        this.characterPos[index] = this.node;
+    }
+
+    public void Retreat(int index)
+    {
+        this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+        GameObject temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
         DeployBar bar = temp.GetComponent<DeployBar>();
         bar.Reset();
-        this.character1.SetActive(true);
-        this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC1", 2 / (trickster.MOB * .5f));
-        this.character1Pos = this.node;
+        this.characterAttributes[index].disable();
+        this.coroutine[index] = this.Retreating(index, .0f / (float)this.characterAttributes[index].MOB * .5f);
+        this.StartCoroutine(this.coroutine[index]);
     }
 
-    public void SpawnC1()
+    private IEnumerator Retreating(int index, float time)
     {
-        this.character1.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        characterAttributes trickster = character1.GetComponent<characterAttributes>();
-        trickster.enabled();
+        Debug.Log("Retreating Character " + index + " ...");
+        yield return new WaitForSeconds(time);
+        this.character[index].SetActive(false);
+        SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
+        selectNode.characterOnTop = 0;
     }
 
-
-
-
-    public void DeployC2()
+    public void Transform(int index)
     {
-        GameObject temp2 = this.character2.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-
-        // If character 2 is on the battlefield, retrieve it first
-        if (this.character2.activeSelf)
-        {
-            GameObject canvas = GameObject.Find("Canvas");
-            Status status = canvas.GetComponent<Status>();
-            status.SetNode(this.character2Pos);
-            DeployBar bar = temp2.GetComponent<DeployBar>();
-            bar.Reset();
-            status.Redeploy();
-            this.Close();
-        }
-        else
-        {
-            // Put the character on the node and active it
-            SelectNode selectNode = this.node.GetComponent<SelectNode>();
-            selectNode.characterOnTop = 2;
-            this.character2.transform.position = this.node.transform.position;
-            this.character2.transform.rotation = this.node.transform.rotation;
-            characterAttributes trickster = character2.GetComponent<characterAttributes>();
-            trickster.disable();
-            this.character2.SetActive(true);
-            DeployBar bar = temp2.GetComponent<DeployBar>();
-            bar.Reset();
-            this.character2.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            Invoke("SpawnC2", 2 / (trickster.MOB * .5f));
-            this.character2Pos = this.node;
-            this.Close();
-        }
+        this.character[index].GetComponent<characterAttack>().change();
     }
 
-    public void SwapC2()
+    public GameObject GetNode()
     {
-        GameObject canvas = GameObject.Find("Canvas");
-        Status status = canvas.GetComponent<Status>();
-        SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 2;
-        status.SetNode(this.character2Pos);
-        this.character2.transform.position = this.node.transform.position;
-        this.character2.transform.rotation = this.node.transform.rotation;
-        GameObject temp2 = this.character2.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
-        characterAttributes trickster = character2.GetComponent<characterAttributes>();
-        trickster.disable();
-        DeployBar bar = temp2.GetComponent<DeployBar>();
-        bar.Reset();
-        this.character2.SetActive(true);
-        this.character2.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC2", 2 / (trickster.MOB * .5f));
-        this.character2Pos = this.node;
+        return this.node;
     }
 
-    public void SpawnC2()
+    public void SetNode(GameObject newNode)
     {
-        this.character2.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        characterAttributes trickster = character2.GetComponent<characterAttributes>();
-        trickster.enabled();
-    }
-
-    public void DeployC3()
-    {
-        GameObject temp3 = this.character3.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        if (this.character3.activeSelf)
-        {
-            GameObject canvas = GameObject.Find("Canvas");
-            Status status = canvas.GetComponent<Status>();
-            status.SetNode(this.character3Pos);
-            DeployBar bar = temp3.GetComponent<DeployBar>();
-            bar.Reset();
-            status.Redeploy();
-            this.Close();
-        }
-        else
-        {
-            SelectNode selectNode = this.node.GetComponent<SelectNode>();
-            selectNode.characterOnTop = 3;
-            this.character3.transform.position = this.node.transform.position;
-            this.character3.transform.rotation = this.node.transform.rotation;
-            characterAttributes trickster = character3.GetComponent<characterAttributes>();
-            trickster.disable();
-            this.character3.SetActive(true);
-            DeployBar bar = temp3.GetComponent<DeployBar>();
-            bar.Reset();
-            this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            Invoke("SpawnC3", 2 / (trickster.MOB * .5f));
-            this.character3Pos = this.node;
-            this.Close();
-        }
-       
-    }
-
-    public void SwapC3()
-    {
-        GameObject canvas = GameObject.Find("Canvas");
-        Status status = canvas.GetComponent<Status>();
-        GameObject temp3 = this.character3.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
-        SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 3;
-        status.SetNode(this.character3Pos);
-        this.character3.transform.position = this.node.transform.position;
-        this.character3.transform.rotation = this.node.transform.rotation;
-        characterAttributes trickster = character3.GetComponent<characterAttributes>();
-        trickster.disable();
-        DeployBar bar = temp3.GetComponent<DeployBar>();
-        bar.Reset();
-        this.character3.SetActive(true);
-        this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC3", 2 / (trickster.MOB * .5f));
-        this.character3Pos = this.node;
-    }
-
-    public void SpawnC3()
-    {
-        this.character3.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        characterAttributes trickster = character3.GetComponent<characterAttributes>();
-        trickster.enabled();
-    }
-
-    public void DeployC4()
-    {
-        GameObject temp4 = this.character4.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-
-        if (this.character4.activeSelf)
-        {
-            GameObject canvas = GameObject.Find("Canvas");
-            Status status = canvas.GetComponent<Status>();
-            status.SetNode(this.character4Pos);
-            DeployBar bar = temp4.GetComponent<DeployBar>();
-            bar.Reset();
-            status.Redeploy();
-            this.Close();
-        }
-        else
-        {
-            SelectNode selectNode = this.node.GetComponent<SelectNode>();
-            selectNode.characterOnTop = 4;
-            this.character4.transform.position = this.node.transform.position;
-            this.character4.transform.rotation = this.node.transform.rotation;
-            characterAttributes trickster = character4.GetComponent<characterAttributes>();
-            trickster.disable();
-            this.character4.SetActive(true);
-            this.character4.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            Invoke("SpawnC4", 2 / (trickster.MOB * .5f));
-            this.character4Pos = this.node;
-            this.Close();
-        }
-        
-    }
-
-    public void SwapC4()
-    {
-        GameObject canvas = GameObject.Find("Canvas");
-        Status status = canvas.GetComponent<Status>();
-        GameObject temp4 = this.character4.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
-        
-        SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 4;
-        status.SetNode(this.character4Pos);
-        this.character4.transform.position = this.node.transform.position;
-        this.character4.transform.rotation = this.node.transform.rotation;
-        characterAttributes trickster = character4.GetComponent<characterAttributes>();
-        trickster.disable();
-        DeployBar bar = temp4.GetComponent<DeployBar>();
-        bar.Reset();
-        this.character4.SetActive(true);
-        this.character4.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC4", 2 / (trickster.MOB * .5f));
-        this.character4Pos = this.node;
-    }
-
-    public void SpawnC4()
-    {
-        this.character4.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        characterAttributes trickster = character4.GetComponent<characterAttributes>();
-        trickster.enabled();
-    }
-
-    public void DeployC5()
-    {
-        GameObject temp5 = this.character5.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        if (this.character5.activeSelf)
-        {
-            GameObject canvas = GameObject.Find("Canvas");
-            Status status = canvas.GetComponent<Status>();
-            status.SetNode(this.character5Pos);
-            DeployBar bar = temp5.GetComponent<DeployBar>();
-            bar.Reset();
-            status.Redeploy();
-            this.Close();
-        }
-        else
-        {
-            SelectNode selectNode = this.node.GetComponent<SelectNode>();
-            selectNode.characterOnTop = 5;
-            this.character5.transform.position = this.node.transform.position;
-            this.character5.transform.rotation = this.node.transform.rotation;
-            characterAttributes trickster = character5.GetComponent<characterAttributes>();
-            trickster.disable();
-            this.character5.SetActive(true);
-            this.character5.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            Invoke("SpawnC5", 2 / (trickster.MOB * .5f));
-            this.character5Pos = this.node;
-            this.Close();
-        }
-        
-    }
-
-    public void SwapC5()
-    {
-        GameObject canvas = GameObject.Find("Canvas");
-        Status status = canvas.GetComponent<Status>();
-        GameObject temp5 = this.character5.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        // Put the character on the node and active it
-        SelectNode selectNode = this.node.GetComponent<SelectNode>();
-        selectNode.characterOnTop = 5;
-        status.SetNode(this.character5Pos);
-        this.character5.transform.position = this.node.transform.position;
-        this.character5.transform.rotation = this.node.transform.rotation;
-        characterAttributes trickster = character5.GetComponent<characterAttributes>();
-        trickster.disable();
-        DeployBar bar = temp5.GetComponent<DeployBar>();
-        bar.Reset();
-        this.character5.SetActive(true);
-        this.character5.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-        Invoke("SpawnC4", 2 / (trickster.MOB * .5f));
-        this.character5Pos = this.node;
-    }
-
-    public void SpawnC5()
-    {
-        this.character5.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-        characterAttributes trickster = character5.GetComponent<characterAttributes>();
-        trickster.enabled();
-    }
-
-    public void Close()
-    {
-        ui.SetActive(false);
+        this.node = newNode;
     }
 }
