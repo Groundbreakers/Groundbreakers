@@ -14,7 +14,7 @@ namespace Assets.Scripts
     /// This version of the spawn evenly distribute the enemies packs within the 25s period.
     /// It also provide some utility functions that enhance the performance and readability.
     /// </summary>
-    [RequireComponent(typeof(EnemyPacks))]
+    [RequireComponent(typeof(EnemyGroups))]
     public class MobSpawner : MonoBehaviour
     {
         #region Inspector Field
@@ -30,7 +30,7 @@ namespace Assets.Scripts
 
         #region Internal Fields
 
-        private EnemyPacks pack;
+        private EnemyGroups pack;
 
         private List<Vector3> pathA = new List<Vector3>();
 
@@ -111,7 +111,7 @@ namespace Assets.Scripts
 
         private void OnEnable()
         {
-            this.pack = this.GetComponent<EnemyPacks>();
+            this.pack = this.GetComponent<EnemyGroups>();
 
             BattleManager.StartListening("block ready", this.CreateIndicators);
             BattleManager.StartListening("spawn wave", this.ShouldSpawnWave);

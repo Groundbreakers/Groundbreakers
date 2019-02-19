@@ -1,6 +1,8 @@
 ﻿namespace Asset.Script
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
 #if UNITY_EDITOR
 
@@ -14,8 +16,16 @@
 
     using UnityEngine;
 
+    using Random = System.Random;
+
+    /// <summary>
+    /// The Generic EnemyGroup Component. Using OdinInspector (or without) to visualize can help
+    /// the designer to create enemy packs.
+    /// </summary>
     public class EnemyGroups : MonoBehaviour
     {
+        private static Random rng = new Random();
+
         #region Inspector Fields
 
         [SerializeField]
@@ -26,25 +36,128 @@
 
         #region Internal Fields
 
+        /// <summary>
+        /// Internal buffers that store the pending enemy mobs.
+        /// </summary>
+        private List<GameObject> buffer = new List<GameObject>();
+        private List<GameObject> bufferA = new List<GameObject>();
+        private List<GameObject> bufferB = new List<GameObject>();
 
         #endregion
 
         #region Properties
 
-        public enum Enemies
-        {
-            DireRat,
-            FireBat,
-            Manis,
-        }
-
+        /// <summary>
+        /// The difficulty represent which packs to pick.
+        /// </summary>
         public enum Difficulty
         {
             Easy,
             Medium,
             Hard,
-            Elite
+            Elite,
         }
+
+        #endregion
+
+        #region Public Functions
+
+        /// <summary>
+        ///     Check if the current wave queue has finished.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="bool" /> True if the current wave queue is empty.
+        /// </returns>
+        public bool Done()
+        {
+            return this.GetCount() == 0;
+        }
+
+        public int GetCount()
+        {
+            return this.buffer.Count;
+        }
+
+        /// <summary>
+        ///     Get the next enemy from this current group.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="GameObject" /> a random enemy from this group.
+        /// </returns>
+        public GameObject GetNextMob()
+        {
+            const int Head = 0;
+
+            var go = this.buffer[Head];
+            this.buffer.RemoveAt(Head);
+            return go;
+        }
+
+        public void SetCurrentWave(int waveNumber)
+        {
+            this.ResetPack();
+        }
+
+        /// <summary>
+        /// Should be called after every battle.
+        /// </summary>
+        public void ResetPack()
+        {
+            // Assume difficulty one
+            var level = Difficulty.Easy;
+
+            // Clear the buffer
+            this.buffer.Clear();
+
+            // Pick a random pack, but has to be in the same level
+            var bundle = this.regionAGroup.Where(group => group.level == level).ToArray();
+
+            if (!bundle.Any())
+            {
+                Debug.LogError("This should not happen: Empty enemy group");
+            }
+
+            var packs = bundle[rng.Next(bundle.Length)].packs;
+
+            // Construct an buffer based on the selected buffer
+            foreach (var pack in packs)
+            {
+                for (var i = 0; i < pack.amount; i++)
+                {
+                    this.buffer.Add(pack.prefab);
+                }
+            }
+
+            // Lastly, shuffle the buffer
+            Shuffle(this.buffer);
+        }
+
+        #endregion
+
+        private static void Shuffle(IList<GameObject> list)
+        {
+            var n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                var k = rng.Next(n + 1);
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
+
+        #region Unity Callbacks
+
+        private void OnEnable()
+        {
+            this.ResetPack();
+        }
+
+        #endregion
+
+        #region Internal 
 
         [Serializable]
         public struct Group
@@ -67,27 +180,14 @@
         }
 
         #endregion
-
-        #region Public Functions
-
-
-
-        #endregion
-
-        #region Unity Callbacks
-
-
-
-        #endregion
-
-        #region Internal Functions
-
-
-        #endregion
     }
 
 #if UNITY_EDITOR
 
+    /// <summary>
+    /// This is an OdinInspector Specific CustomDrawer implementation. Although it shows that is
+    /// never being used. Do not Remove it anyhow.
+    /// </summary>
     public class PackDrawer : OdinValueDrawer<EnemyGroups.Pack>
     {
         protected override void DrawPropertyLayout(GUIContent label)
