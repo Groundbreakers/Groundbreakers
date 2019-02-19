@@ -39,12 +39,14 @@ public class characterAttack : MonoBehaviour
         myCollider = GetComponent<CircleCollider2D>();
         trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
+
     }
 
     void Start()
     {
         fireRate = trickster.ROF * .5f;
         animator.SetFloat("FireRate", fireRate);
+        myCollider.radius = (trickster.RNG * .5f) + .5f;
     }
     
     void Update() {
@@ -68,7 +70,7 @@ public class characterAttack : MonoBehaviour
                     animator.SetBool("FacingLeft", false);
                     animator.SetBool("FacingUp", false);
                     animator.SetBool("FacingDown", false);
-                    firePoint = new Vector3(gameObject.transform.position.x + .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                    firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
                 }
                 else if (angle >= 45 && angle < 135) //check if it's pointing up
                 {
@@ -76,7 +78,7 @@ public class characterAttack : MonoBehaviour
                     animator.SetBool("FacingLeft", false);
                     animator.SetBool("FacingUp", true);
                     animator.SetBool("FacingDown", false);
-                    firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + .25f, gameObject.transform.position.z);
+                    firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + .6f, gameObject.transform.position.z);
                 }
                 else if (angle >= 135 && angle < 225) //check if it's pointing left
                 {
@@ -84,7 +86,7 @@ public class characterAttack : MonoBehaviour
                     animator.SetBool("FacingLeft", true);
                     animator.SetBool("FacingUp", false);
                     animator.SetBool("FacingDown", false);
-                    firePoint = new Vector3(gameObject.transform.position.x - .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                    firePoint = new Vector3(gameObject.transform.position.x - .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
                 }
                 else if (angle >= 225 && angle < 315) //check if it's pointing down
                 {
@@ -92,7 +94,7 @@ public class characterAttack : MonoBehaviour
                     animator.SetBool("FacingLeft", false);
                     animator.SetBool("FacingUp", false);
                     animator.SetBool("FacingDown", true);
-                    firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - .25f, gameObject.transform.position.z);
+                    firePoint = new Vector3(gameObject.transform.position.x - .05f, gameObject.transform.position.y - .05f, gameObject.transform.position.z);
                 }
                 //Debug.Log(angle);
             }
@@ -156,7 +158,7 @@ public class characterAttack : MonoBehaviour
     }
 
     void fireCount() {
-        myCollider.radius = trickster.RNG * .5f; // or whatever radius you want.
+        myCollider.radius = (trickster.RNG * .5f) + .5f; // or whatever radius you want.
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
@@ -219,7 +221,7 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Sitting", true);
             animator.SetBool("Standing", false);
             trickster.gun();
-            myCollider.radius = trickster.RNG * .5f; // or whatever radius you want.
+            myCollider.radius = (trickster.RNG * .5f) + .5f; // or whatever radius you want.
 
         }
         else
@@ -229,7 +231,7 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Sitting", false);
             animator.SetBool("Standing", true);
             trickster.melee();
-            myCollider.radius = trickster.RNG * .5f; // or whatever radius you want.
+            myCollider.radius = (trickster.RNG * .5f) + .5f; // or whatever radius you want.
         }
     }
 
