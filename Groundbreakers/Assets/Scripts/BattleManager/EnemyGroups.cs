@@ -7,10 +7,9 @@
 #if UNITY_EDITOR
     using UnityEditor;
     using Sirenix.OdinInspector.Editor;
-#endif
-
     using Sirenix.Utilities;
     using Sirenix.OdinInspector;
+#endif
 
     using UnityEngine;
 
@@ -40,6 +39,8 @@
         private List<GameObject> bufferA = new List<GameObject>();
         private List<GameObject> bufferB = new List<GameObject>();
 
+        private Difficulty currentDifficulty = Difficulty.Easy;
+
         #endregion
 
         #region Properties
@@ -58,6 +59,17 @@
         #endregion
 
         #region Public Functions
+
+        /// <summary>
+        /// Provide an API for outside caller to set the difficulty levels. 
+        /// </summary>
+        /// <param name="level">
+        /// The level.
+        /// </param>
+        public void SetDifficulty(Difficulty level)
+        {
+            this.currentDifficulty = level;
+        }
 
         /// <summary>
         /// Check if the current wave queue has finished.
@@ -104,20 +116,21 @@
         /// </summary>
         public void ResetPack()
         {
-            // Assume difficulty one
-            var level = Difficulty.Medium;
+            var level = this.currentDifficulty;
 
             this.bufferA.Clear();
             this.bufferB.Clear();
 
-            this.bufferA = this.PickRandomPack(this.regionAGroup, level);
-            this.bufferB = this.PickRandomPack(this.regionAGroup, level);
+            this.bufferA = PickRandomPack(this.regionAGroup, level);
+            this.bufferB = PickRandomPack(this.regionAGroup, level);
 
             Shuffle(this.bufferA);
             Shuffle(this.bufferB);
         }
 
         #endregion
+
+        #region Static helper functions
 
         private static void Shuffle(IList<GameObject> list)
         {
@@ -132,19 +145,20 @@
             }
         }
 
-
-        #region Unity Callbacks
-
-        private void OnEnable()
-        {
-            this.ResetPack();
-        }
-
-        #endregion
-
-        #region Internal 
-
-        private List<GameObject> PickRandomPack(Group[] region, Difficulty level)
+        /// <summary>
+        /// Internal helper function that picks a random pack first, then construct an array of
+        /// GameObject based on the described pack.
+        /// </summary>
+        /// <param name="region">
+        /// The region.
+        /// </param>
+        /// <param name="level">
+        /// The level.
+        /// </param>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        private static List<GameObject> PickRandomPack(Group[] region, Difficulty level)
         {
             // Pick a random pack, but has to be in the same level
             var bundle = region.Where(group => group.level == level).ToArray();
@@ -168,6 +182,19 @@
 
             return result;
         }
+
+        #endregion
+
+        #region Unity Callbacks
+
+        private void OnEnable()
+        {
+            this.ResetPack();
+        }
+
+        #endregion
+
+        #region Internal 
 
         [Serializable]
         public struct Group

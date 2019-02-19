@@ -338,7 +338,7 @@ public class Cetus_Script : MonoBehaviour
         // Stun characters on affected tiles
         for (int i = 0; i < 20; i++)
         {
-            int tmpchar = this.splashTiles[i].GetComponent<SelectNode>().characterOnTop;
+            int tmpchar = this.splashTiles[i].GetComponent<SelectNode>().GetCharacterIndex();
             if (tmpchar != 0)
             {
                 //characterlist.GetChild(tmpchar-1).GetComponent<characterAttack>().StunCharacter(3);
@@ -403,7 +403,7 @@ public class Cetus_Script : MonoBehaviour
         // Stun characters on affected tiles
         for (int i = 0; i < 8; i++)
         {
-            int tmpchar = this.waterStrikeTiles[i].GetComponent<SelectNode>().characterOnTop;
+            int tmpchar = this.waterStrikeTiles[i].GetComponent<SelectNode>().GetCharacterIndex();
             if (tmpchar != 0)
             {
                 //characterlist.GetChild(tmpchar-1).GetComponent<characterAttack>().StunCharacter(3);

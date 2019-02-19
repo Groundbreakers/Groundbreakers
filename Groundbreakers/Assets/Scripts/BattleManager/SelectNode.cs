@@ -13,11 +13,10 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider2D))]
 public class SelectNode : MonoBehaviour
 {
-    public int characterOnTop;
-
-    private Boolean isSelected;
-
     #region Inspector Values
+
+    [SerializeField]
+    private int characterOnTop;
 
     [SerializeField]
     private bool canDeploy;
@@ -48,6 +47,8 @@ public class SelectNode : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
+    private bool isSelected;
+
     #endregion
 
     #region Public Functions
@@ -59,11 +60,35 @@ public class SelectNode : MonoBehaviour
 
     #endregion
 
+    #region Public Function
+
+    public void SetCharacterIndex(int id)
+    {
+        this.characterOnTop = id;
+
+        //if (id == -1)
+        //{
+        //    this.lineRenderer.enabled = false;
+        //    return;
+        //}
+        //this.ResetLineRenderer();
+        //this.lineRenderer.enabled = true;
+    }
+
+    public int GetCharacterIndex()
+    {
+        return this.characterOnTop;
+    }
+
+    #endregion
+
     #region Unity Callbacks
 
-    public void Start()
+    private void Start()
     {
         this.deployPanel = GameObject.Find("DeployPanel");
+        this.lineRenderer = this.GetComponent<LineRenderer>();
+        this.lineRenderer.enabled = false;
 
         var components = this.GetComponentsInChildren<SpriteRenderer>();
         this.rend = components[1];
@@ -71,13 +96,15 @@ public class SelectNode : MonoBehaviour
         this.characterOnTop = -1;
         this.rend.sprite = this.canDeployIcon;
         this.rend.enabled = false;
-
-        this.lineRenderer = this.GetComponent<LineRenderer>();
-        this.InitializeLineRenderer();
     }
 
-    public void Update()
+    private void Update()
     {
+        if (BattleManager.GameState != BattleManager.Stages.Combating)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonUp(1))
         {
             Deploy deploy = this.deployPanel.GetComponent<Deploy>();
@@ -95,7 +122,7 @@ public class SelectNode : MonoBehaviour
         this.rend.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f));
     }
 
-    public void OnMouseOver()
+    private void OnMouseOver()
     {
         // Clearly, do nothing when the battleManager is not in the battle state
         if (BattleManager.GameState != BattleManager.Stages.Combating)
@@ -120,36 +147,39 @@ public class SelectNode : MonoBehaviour
         if (!this.isSelected)
         { 
             this.rend.sprite = this.occupiedIcon;
-            this.rend.enabled = true;
-            if (this.IsOccupied())
-            {
-                this.lineRenderer.enabled = true;
-            }
+            this.rend.enabled = true;   
+        }
+
+        if (this.IsOccupied())
+        {
+            this.ResetLineRenderer();
+            this.lineRenderer.enabled = true;
         }
     }
 
-    public void MouseInput()
+    private void MouseInput()
     {
         if (Input.GetMouseButtonUp(0))
         {
             foreach (Transform child in GameObject.Find("TileMap").transform)
             {
-                SelectNode selectNode = child.gameObject.GetComponent<SelectNode>();
+                var selectNode = child.gameObject.GetComponent<SelectNode>();
                 if (selectNode != null)
                 {
                     selectNode.isSelected = false;
                     selectNode.OnMouseExit();
                 }
             }
+
             this.rend.sprite = this.canDeployIcon;
             this.rend.enabled = true;
             this.isSelected = true;
-            Deploy deploy = this.deployPanel.GetComponent<Deploy>();
+            var deploy = this.deployPanel.GetComponent<Deploy>();
             deploy.SetNode(this.gameObject);
         }
     }
 
-    public void OnMouseExit()
+    private void OnMouseExit()
     {
         if (!this.isSelected)
         {
@@ -168,20 +198,22 @@ public class SelectNode : MonoBehaviour
         return this.characterOnTop != -1;
     }
 
-    private void InitializeLineRenderer()
+    private void ResetLineRenderer()
     {
-        int segments = 25;
-        this.lineRenderer.positionCount = segments + 1;
+        this.lineRenderer.positionCount = 0;
+
+        const int Segments = 25;
+        this.lineRenderer.positionCount = Segments + 1;
         this.lineRenderer.useWorldSpace = false;
         this.lineRenderer.enabled = false;
 
         // Trying to get the radius of the collider box
         // To be honest, I don't like this solution, but it works, and it does not break
         // others code.
-        //var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop);
-        //var radius = character.GetComponent<CircleCollider2D>().radius;
+        var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop);
+        var radius = character.GetComponent<CircleCollider2D>().radius;
 
-        //this.CreatePoints(radius, radius, segments);
+        this.CreatePoints(radius, radius, Segments);
     }
 
     private void CreatePoints(float xradius, float yradius, int segments)

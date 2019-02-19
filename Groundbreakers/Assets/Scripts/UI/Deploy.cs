@@ -69,7 +69,7 @@ public class Deploy : MonoBehaviour
             this.running[index] = false;
 
             // Reset the characterOnTop to null (-1)
-            selectNode.characterOnTop = -1;
+            selectNode.SetCharacterIndex(-1);
 
             // Change the text of the button back to Deploy
             this.characterDeployButton[index].transform.GetChild(0).gameObject.GetComponent<Text>().text = "Deploy";
@@ -81,7 +81,7 @@ public class Deploy : MonoBehaviour
             this.characterDeployButton[index].transform.GetChild(0).gameObject.GetComponent<Text>().text = "Cancel";
 
             // Have the node store the character index
-            selectNode.characterOnTop = index;
+            selectNode.SetCharacterIndex(index);
 
             // Disallow other characters to be deployed on the same tile
             this.checkNode(this.node);
@@ -177,7 +177,7 @@ public class Deploy : MonoBehaviour
 
         // Set the node's character on top to null (-1)
         SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
-        selectNode.characterOnTop = -1;
+        selectNode.SetCharacterIndex(-1);
 
         // Reset the character's position
         this.characterPos[index] = null;
@@ -213,11 +213,11 @@ public class Deploy : MonoBehaviour
     private void checkNode(GameObject nodeChecked)
     {
         // If the selected node has a character on top
-        if (nodeChecked.GetComponent<SelectNode>().characterOnTop != -1)
+        if (nodeChecked.GetComponent<SelectNode>().GetCharacterIndex() != -1)
         {
             for (int i = 0; i < 5; i++)
             {
-                if (i != nodeChecked.GetComponent<SelectNode>().characterOnTop)
+                if (i != nodeChecked.GetComponent<SelectNode>().GetCharacterIndex())
                 {
                     // Disable the deploy button for all other characters
                     this.characterDeployButton[i].GetComponent<Button>().interactable = false;

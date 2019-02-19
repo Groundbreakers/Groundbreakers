@@ -846,7 +846,6 @@ GameObject:
   - component: {fileID: 1186630413}
   - component: {fileID: 1186630416}
   - component: {fileID: 1186630418}
-  - component: {fileID: 1186630415}
   - component: {fileID: 1186630417}
   m_Layer: 0
   m_Name: BattleManager
@@ -881,20 +880,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1186630415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186630412}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ecb602155ae405081d6e924f0ac3471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firebatPrefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
-    type: 3}
 --- !u!114 &1186630416
 MonoBehaviour:
   m_ObjectHideFlags: 0
