@@ -162,7 +162,7 @@
             GameState = Stages.Entering;
 
             // Toggle UI
-            var ui = GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
 
             this.timer.StartLevel();
         }
@@ -214,7 +214,7 @@
             GameState = Stages.Exiting;
 
             // Toggle UI
-            var ui = GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
         }
 
         public void OnBattleVictory()
