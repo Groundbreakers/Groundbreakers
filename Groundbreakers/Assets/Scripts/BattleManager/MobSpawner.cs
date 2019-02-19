@@ -156,7 +156,7 @@ namespace Assets.Scripts
 
             // Set enemies path, ~Heritage from Austin
             instance.GetComponent<Enemy_Generic>().waypointList = path;
-            instance.transform.SetParent(this.transform.parent);
+            instance.transform.SetParent(this.transform);
         }
 
         private void ShouldSpawnWave()

@@ -161,9 +161,6 @@
             // Changing state
             GameState = Stages.Entering;
 
-            // Toggle UI
-            Resources.FindObjectsOfTypeAll<Deploy>()[0].ui.SetActive(true);
-
             this.timer.StartLevel();
         }
 
@@ -205,6 +202,10 @@
 
         public void OnBattleBegin()
         {
+            GameState = Stages.Combating;
+
+            // Toggle UI
+            Resources.FindObjectsOfTypeAll<Deploy>()[0].ui.SetActive(true);
         }
 
         public void OnBattleEnd()
@@ -245,7 +246,7 @@
         {
             this.timer = this.GetComponent<GameTimer>();
 
-            StartListening("block ready", () => GameState = Stages.Combating);
+            StartListening("block ready", this.OnBattleBegin);
 
             StartListening("end", this.OnBattleEnd);
 

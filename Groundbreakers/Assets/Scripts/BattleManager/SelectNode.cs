@@ -65,14 +65,6 @@ public class SelectNode : MonoBehaviour
     public void SetCharacterIndex(int id)
     {
         this.characterOnTop = id;
-
-        //if (id == -1)
-        //{
-        //    this.lineRenderer.enabled = false;
-        //    return;
-        //}
-        //this.ResetLineRenderer();
-        //this.lineRenderer.enabled = true;
     }
 
     public int GetCharacterIndex()
@@ -202,7 +194,7 @@ public class SelectNode : MonoBehaviour
     {
         this.lineRenderer.positionCount = 0;
 
-        const int Segments = 25;
+        const int Segments = 50;
         this.lineRenderer.positionCount = Segments + 1;
         this.lineRenderer.useWorldSpace = false;
         this.lineRenderer.enabled = false;

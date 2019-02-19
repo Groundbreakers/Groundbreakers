@@ -243,19 +243,16 @@ LineRenderer:
   m_SortingOrder: 15
   m_Positions:
   - {x: 1, y: 1, z: 0}
-  - {x: 2, y: 2, z: 1}
-  - {x: 3, y: 3, z: 1}
-  - {x: 4, y: 4, z: 1}
   - {x: 5, y: 5, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.032433376
-        value: 0.054525215
+        time: 0.05945669
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -267,7 +264,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0.4481132, b: 0.4481132, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
