@@ -19,6 +19,14 @@ public class HP : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         this.healthPoint += amount;
+        if (this.healthPoint < 0)
+        {
+            this.healthPoint = 0;
+        }
+        else if (this.healthPoint > 20)
+        {
+            this.healthPoint = 20;
+        }
         this.image.sprite = this.hpFrames[this.healthPoint];
         if (this.healthPoint <= 0)
         {

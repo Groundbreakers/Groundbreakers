@@ -198,6 +198,7 @@
                 }
 
                 this.health -= damagevalue;
+                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
             }
             else
             {
@@ -342,7 +343,7 @@
         {
             GameObject counter = GameObject.Find("HPCounter");
             HP hp = counter.GetComponent<HP>();
-            Debug.Log((int)Math.Ceiling(this.power * this.powerMultiplier));
+            Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
             hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
             Destroy(this.gameObject);
         }

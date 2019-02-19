@@ -5,14 +5,12 @@
     using System.Linq;
 
 #if UNITY_EDITOR
-
     using UnityEditor;
+    using Sirenix.OdinInspector.Editor;
+#endif
 
     using Sirenix.Utilities;
     using Sirenix.OdinInspector;
-    using Sirenix.OdinInspector.Editor;
-
-#endif
 
     using UnityEngine;
 

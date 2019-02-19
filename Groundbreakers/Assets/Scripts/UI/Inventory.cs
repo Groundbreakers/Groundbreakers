@@ -11,11 +11,7 @@ public class Inventory : MonoBehaviour
     public GameObject characterManager;
     public GameObject tooltip;
 
-    public GameObject c1Inventory;
-    public GameObject c2Inventory;
-    public GameObject c3Inventory;
-    public GameObject c4Inventory;
-    public GameObject c5Inventory;
+    public GameObject[] inventory = new GameObject[5];
 
     private int count;
     private int characterIndex;
@@ -30,31 +26,13 @@ public class Inventory : MonoBehaviour
         this.RearrangeModules();
 
         // Disable all character inventories
-        this.c1Inventory.SetActive(false);
-        this.c2Inventory.SetActive(false);
-        this.c3Inventory.SetActive(false);
-        this.c4Inventory.SetActive(false);
-        this.c5Inventory.SetActive(false);
+        for (int i = 0; i < 5; i++)
+        {
+            this.inventory[i].SetActive(false);
+        }
 
         // Active a specific inventory
-        switch (this.characterIndex)
-        {
-            case 0:
-                this.c1Inventory.SetActive(true);
-                break;
-            case 1:
-                this.c2Inventory.SetActive(true);
-                break;
-            case 2:
-                this.c3Inventory.SetActive(true);
-                break;
-            case 3:
-                this.c4Inventory.SetActive(true);
-                break;
-            case 4:
-                this.c5Inventory.SetActive(true);
-                break;
-        }
+        this.inventory[this.characterIndex].SetActive(true);
 
         // Calculate how many modules in the inventory and change the height of the content according to that
         this.count = 0;
@@ -68,6 +46,9 @@ public class Inventory : MonoBehaviour
 
         RectTransform rt = this.content.GetComponent<RectTransform>(); 
         rt.sizeDelta = new Vector2(rt.sizeDelta.x, ((int)((this.count - 1) / 4) + 1) * 150);
+
+        // Update character attributes
+        GameObject.Find("CharacterList").transform.GetChild(this.characterIndex).GetComponent<characterAttributes>().updateAttributes(this.GetCharacterInventory(this.characterIndex));
     }
 
     public void Toggle()

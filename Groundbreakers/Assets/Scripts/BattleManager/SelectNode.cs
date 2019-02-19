@@ -2,6 +2,10 @@
 
 using Assets.Scripts;
 
+#if UNITY_EDITOR
+using UnityEditor.Animations;
+#endif
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,6 +14,8 @@ using UnityEngine.EventSystems;
 public class SelectNode : MonoBehaviour
 {
     public int characterOnTop;
+
+    private Boolean isSelected;
 
     #region Inspector Values
 
@@ -62,7 +68,7 @@ public class SelectNode : MonoBehaviour
         var components = this.GetComponentsInChildren<SpriteRenderer>();
         this.rend = components[1];
 
-        this.characterOnTop = 0;
+        this.characterOnTop = -1;
         this.rend.sprite = this.canDeployIcon;
         this.rend.enabled = false;
 
@@ -111,23 +117,33 @@ public class SelectNode : MonoBehaviour
 
         this.MouseInput();
 
-        if (this.IsOccupied())
-        {
+        if (!this.isSelected)
+        { 
             this.rend.sprite = this.occupiedIcon;
             this.rend.enabled = true;
-            this.lineRenderer.enabled = true;
-            return;
+            if (this.IsOccupied())
+            {
+                this.lineRenderer.enabled = true;
+            }
         }
-
-
-        this.rend.sprite = this.rend.sprite = this.canDeployIcon;
-        this.rend.enabled = true;
     }
 
     public void MouseInput()
     {
-        if (Input.GetMouseButtonUp(0) && this.characterOnTop == 0)
+        if (Input.GetMouseButtonUp(0))
         {
+            foreach (Transform child in GameObject.Find("TileMap").transform)
+            {
+                SelectNode selectNode = child.gameObject.GetComponent<SelectNode>();
+                if (selectNode != null)
+                {
+                    selectNode.isSelected = false;
+                    selectNode.OnMouseExit();
+                }
+            }
+            this.rend.sprite = this.canDeployIcon;
+            this.rend.enabled = true;
+            this.isSelected = true;
             Deploy deploy = this.deployPanel.GetComponent<Deploy>();
             deploy.SetNode(this.gameObject);
         }
@@ -135,7 +151,11 @@ public class SelectNode : MonoBehaviour
 
     public void OnMouseExit()
     {
-        this.rend.enabled = false;
+        if (!this.isSelected)
+        {
+            this.rend.enabled = false;
+        }
+
         this.lineRenderer.enabled = false;
     }
 
@@ -145,7 +165,7 @@ public class SelectNode : MonoBehaviour
 
     private bool IsOccupied()
     {
-        return this.characterOnTop != 0;
+        return this.characterOnTop != -1;
     }
 
     private void InitializeLineRenderer()
@@ -158,10 +178,10 @@ public class SelectNode : MonoBehaviour
         // Trying to get the radius of the collider box
         // To be honest, I don't like this solution, but it works, and it does not break
         // others code.
-        var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop + 1);
-        var radius = character.GetComponent<CircleCollider2D>().radius;
+        //var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop);
+        //var radius = character.GetComponent<CircleCollider2D>().radius;
 
-        this.CreatePoints(radius, radius, segments);
+        //this.CreatePoints(radius, radius, segments);
     }
 
     private void CreatePoints(float xradius, float yradius, int segments)

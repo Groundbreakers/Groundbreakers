@@ -21,8 +21,9 @@ public class DeployBar : MonoBehaviour
         character = transform.parent.parent.parent.gameObject.GetComponent<characterAttributes>();
         deployBar.color = new Color(deployBar.color.r, deployBar.color.g, deployBar.color.b, 1f);
         background.color = new Color(background.color.r, background.color.g, background.color.b, 1f);
-        max = Time.time + (2 / (character.MOB * .5));
+        max = Time.time + 2 / (character.MOB * .5);
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -36,5 +37,11 @@ public class DeployBar : MonoBehaviour
             background.color = new Color(background.color.r, background.color.g, background.color.b, 0f);
         }
         
+    }
+
+    public void Hide()
+    {
+        deployBar.color = new Color(deployBar.color.r, deployBar.color.g, deployBar.color.b, 0f);
+        background.color = new Color(background.color.r, background.color.g, background.color.b, 0f);
     }
 }

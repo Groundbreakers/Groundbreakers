@@ -151,10 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4065c780f72c6c34eb8c82e1cf834458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POW: 1
+  POW: 2
   ROF: 2
-  RNG: 6
-  MOB: 3
+  RNG: 2
+  MOB: 2
   AMP: 1
   criticalDraw: 0
   reaper: 0
@@ -205,6 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d3e62fc367b5f9479f3de24434c350e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deployBar: {fileID: 0}
+  background: {fileID: 0}
+  character: {fileID: 0}
 --- !u!1001 &1692993694441429487
 PrefabInstance:
   m_ObjectHideFlags: 0

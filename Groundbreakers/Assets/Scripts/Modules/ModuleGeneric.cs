@@ -42,7 +42,9 @@ public class ModuleGeneric : MonoBehaviour
     public Boolean blightSE;
     public Boolean netSE;
 
-    private GameObject tooltip;
+    private GameObject cTooltip;
+    private GameObject iTooltip;
+    private CharacterManager characterManager;
     private Inventory inventory;
 
     private Boolean isEquipped;
@@ -50,15 +52,17 @@ public class ModuleGeneric : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.characterManager = GameObject.Find("CharactersPanel").GetComponent<CharacterManager>();
         this.inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
-        this.tooltip = GameObject.Find("InventoryTooltip");
+        this.iTooltip = GameObject.Find("InventoryTooltip");
+        this.cTooltip = GameObject.Find("CharacterTooltip");
         this.button.onClick.AddListener(this.HandleTooltip);
     }
 
     public void HandleTooltip()
     {
-        // Reference the tooltip
-        GameObject tooltipTitle = this.tooltip.transform.GetChild(0).gameObject;
+        // Reference the character tooltip
+        GameObject tooltipTitle = this.cTooltip.transform.GetChild(0).gameObject;
         Text titleText = tooltipTitle.GetComponent<Text>();
         titleText.text = this.title;
 
@@ -80,18 +84,47 @@ public class ModuleGeneric : MonoBehaviour
         }
 
         // Update the descriptionText
-        GameObject tooltipDescription = this.tooltip.transform.GetChild(1).gameObject;
+        GameObject tooltipDescription = this.cTooltip.transform.GetChild(1).gameObject;
         Text descriptionText = tooltipDescription.GetComponent<Text>();
         descriptionText.text = this.description;
 
-        // Update the tooltipButton
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // Reference the inventory tooltip
+        tooltipTitle = this.iTooltip.transform.GetChild(0).gameObject;
+        titleText = tooltipTitle.GetComponent<Text>();
+        titleText.text = this.title;
+
+        // Rarity affects text color
+        switch (this.rarity)
+        {
+            case 0:
+                titleText.color = Color.black;
+                break;
+            case 1:
+                titleText.color = new Color(0.0f, 0.4f, 1.0f);
+                break;
+            case 2:
+                titleText.color = new Color(1.0f, 0.5f, 0.0f);
+                break;
+            default:
+                titleText.color = Color.black;
+                break;
+        }
+
+        // Update the descriptionText
+        tooltipDescription = this.iTooltip.transform.GetChild(1).gameObject;
+        descriptionText = tooltipDescription.GetComponent<Text>();
+        descriptionText.text = this.description;
+
+        // Update the inventory tooltipButton
         this.UpdatetooltipButton(this.isEquipped);
     }
 
     public void UpdatetooltipButton(Boolean b)
     {
         // Find the tooltip button and text
-        GameObject tooltipButton = this.tooltip.transform.GetChild(2).gameObject;
+        GameObject tooltipButton = this.iTooltip.transform.GetChild(2).gameObject;
         Button tooltipButtonComponent = tooltipButton.GetComponent<Button>();
         GameObject tooltipButtonText = tooltipButton.transform.GetChild(0).gameObject;
         Text buttonText = tooltipButtonText.GetComponent<Text>();
@@ -101,7 +134,7 @@ public class ModuleGeneric : MonoBehaviour
         tooltipButtonComponent.onClick.RemoveAllListeners();
 
         // Reference the notEnoughSlot text and disable it for now
-        GameObject notEnoughSlot = this.tooltip.transform.GetChild(3).gameObject;
+        GameObject notEnoughSlot = this.iTooltip.transform.GetChild(3).gameObject;
         notEnoughSlot.SetActive(false);
 
         // Check if this module is equipped
@@ -139,6 +172,7 @@ public class ModuleGeneric : MonoBehaviour
             this.inventory.UpdateInventory();
             this.isEquipped = true;
             this.inventory.SetAvailableSlots(-this.slot);
+            this.characterManager.UpdatePanel();
         }
     }
 
@@ -150,6 +184,7 @@ public class ModuleGeneric : MonoBehaviour
             this.inventory.UpdateInventory();
             this.isEquipped = false;
             this.inventory.SetAvailableSlots(this.slot);
+            this.characterManager.UpdatePanel();
         }
     }
 

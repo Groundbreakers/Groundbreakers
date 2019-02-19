@@ -5,10 +5,10 @@ using UnityEngine;
 public class characterAttributes : MonoBehaviour
 {
     //Stats
-    public int POW = 1;
-    public int ROF = 3;
-    public int RNG = 6;
-    public int MOB = 3;
+    public int POW = 2;
+    public int ROF = 2;
+    public int RNG = 2;
+    public int MOB = 2;
     public int AMP = 1;
 
     //Abilities
@@ -64,8 +64,8 @@ public class characterAttributes : MonoBehaviour
     public void gun()
     {
         stance = "gun";
-        POW = 1;
-        RNG = 6;
+        POW = 2;
+        RNG = 2;
         AMP = 1;
     }
 
@@ -73,7 +73,7 @@ public class characterAttributes : MonoBehaviour
     {
         stance = "melee";
         POW = 3;
-        RNG = 3;
+        RNG = 1;
         AMP = 2;
     }
 
@@ -150,7 +150,20 @@ public class characterAttributes : MonoBehaviour
             AMP = 2;
         }
     }
-    
 
-
+    public void Transform()
+    {
+        if (stance == "gun")
+        {
+            POW += 1;
+            RNG -= 1;
+            AMP += 1;
+        }
+        else
+        {
+            POW -= 1;
+            RNG += 1;
+            AMP -= 1;
+        }
+    }
 }

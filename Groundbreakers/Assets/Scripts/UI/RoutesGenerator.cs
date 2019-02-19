@@ -67,8 +67,9 @@ public class RoutesGenerator : MonoBehaviour
             RoutesButton button = newButton.GetComponent<RoutesButton>();
             int battleModifier = rnd.Next(100);
 
+            button.Setup(this.battleIcon, "Battle", "Are you ready for the challenge?");
             // Generate options randomly
-            if (battleModifier < 50)
+            /*if (battleModifier < 50)
             {
                 button.Setup(this.battleIcon, "Battle", "Are you ready for the challenge?");
             }
@@ -103,7 +104,7 @@ public class RoutesGenerator : MonoBehaviour
             else if (battleModifier >= 85 && battleModifier < 100)
             {
                 button.Setup(this.freeLootIcon, "Free Loot", "No enemies.");
-            }
+            }*/
         }
     }
 }

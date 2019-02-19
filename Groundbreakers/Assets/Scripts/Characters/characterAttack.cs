@@ -31,8 +31,6 @@ public class characterAttack : MonoBehaviour
 
     private CircleCollider2D myCollider;
 
-
-
     void Awake()
     {
         targetedEnemies = new List<GameObject>();
@@ -117,8 +115,6 @@ public class characterAttack : MonoBehaviour
             isChanging = false;
             
         }
-
-        
     }
 
     //if an enemy enters in range
@@ -196,7 +192,6 @@ public class characterAttack : MonoBehaviour
         }
     }
 
-
     void defaultMode() {
         if(targetedEnemies.Count != 0)
         {
@@ -211,6 +206,12 @@ public class characterAttack : MonoBehaviour
 
     public void change()
     {
+        this.GetComponent<characterAttributes>().Transform();
+        if (GameObject.Find("CharactersPanel") != null)
+        {
+            GameObject.Find("CharactersPanel").GetComponent<CharacterManager>().UpdatePanel();
+        }
+
         isChanging = true;
         if (stance.Equals("Melee"))
         {
