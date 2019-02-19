@@ -137,7 +137,7 @@ public class characterAttributes : MonoBehaviour
         {
             POW = 1;
             ROF = 2;
-            RNG = 6;
+            RNG = 2;
             MOB = 3;
             AMP = 1;
         }
@@ -145,7 +145,7 @@ public class characterAttributes : MonoBehaviour
         {
             POW = 3;
             ROF = 2;
-            RNG = 3;
+            RNG = 1;
             MOB = 3;
             AMP = 2;
         }

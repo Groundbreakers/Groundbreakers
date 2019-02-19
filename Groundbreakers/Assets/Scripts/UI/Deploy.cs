@@ -14,7 +14,7 @@ public class Deploy : MonoBehaviour
 
     void Start()
     {
-        // Reference five characters
+        // Reference five characters and their attributes
         GameObject characterList = GameObject.Find("CharacterList");
         this.character[0] = characterList.transform.GetChild(0).gameObject;
         this.character[1] = characterList.transform.GetChild(1).gameObject;
@@ -41,7 +41,6 @@ public class Deploy : MonoBehaviour
         {
             Debug.Log("The character has been deployed already");
             this.Retreat(index);
-            //this.DeployCharacter(index);
         }
         else
         {
@@ -54,7 +53,7 @@ public class Deploy : MonoBehaviour
             DeployBar bar = temp.GetComponent<DeployBar>();
             bar.Reset();
             this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            this.coroutine[index] = this.Spawn(index, .0f / (float)this.characterAttributes[index].MOB * .5f);
+            this.coroutine[index] = this.Spawn(index, 2.0f / (float)this.characterAttributes[index].MOB / .5f);
             this.StartCoroutine(this.coroutine[index]);
         }
     }
@@ -62,6 +61,7 @@ public class Deploy : MonoBehaviour
     public IEnumerator Spawn(int index, float time)
     {
         Debug.Log("Deploying Character " + index + " ...");
+        Debug.Log("Time needed: " + time);
         yield return new WaitForSeconds(time);
         this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
         this.characterAttributes[index].enabled();
@@ -77,17 +77,19 @@ public class Deploy : MonoBehaviour
         DeployBar bar = temp.GetComponent<DeployBar>();
         bar.Reset();
         this.characterAttributes[index].disable();
-        this.coroutine[index] = this.Retreating(index, .0f / (float)this.characterAttributes[index].MOB * .5f);
+        this.coroutine[index] = this.Retreating(index, 2.0f / (float)this.characterAttributes[index].MOB / .5f);
         this.StartCoroutine(this.coroutine[index]);
     }
 
     private IEnumerator Retreating(int index, float time)
     {
         Debug.Log("Retreating Character " + index + " ...");
+        Debug.Log("Time needed: " + time);
         yield return new WaitForSeconds(time);
         this.character[index].SetActive(false);
         SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
         selectNode.characterOnTop = 0;
+        this.characterPos[index] = null;
     }
 
     public void Transform(int index)
