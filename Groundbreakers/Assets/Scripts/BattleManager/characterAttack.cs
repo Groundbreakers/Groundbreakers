@@ -60,39 +60,43 @@ public class characterAttack : MonoBehaviour
             }
 
             //check if it's pointing right
-            if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+            if(!trickster.disabled)
             {
-                animator.SetBool("FacingRight", true);
-                animator.SetBool("FacingLeft", false);
-                animator.SetBool("FacingUp", false);
-                animator.SetBool("FacingDown", false);
-                firePoint = new Vector3(gameObject.transform.position.x + .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+                {
+                    animator.SetBool("FacingRight", true);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", false);
+                    firePoint = new Vector3(gameObject.transform.position.x + .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                }
+                else if (angle >= 45 && angle < 135) //check if it's pointing up
+                {
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", true);
+                    animator.SetBool("FacingDown", false);
+                    firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + .25f, gameObject.transform.position.z);
+                }
+                else if (angle >= 135 && angle < 225) //check if it's pointing left
+                {
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingLeft", true);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", false);
+                    firePoint = new Vector3(gameObject.transform.position.x - .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                }
+                else if (angle >= 225 && angle < 315) //check if it's pointing down
+                {
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", true);
+                    firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - .25f, gameObject.transform.position.z);
+                }
+                //Debug.Log(angle);
             }
-            else if (angle >= 45 && angle < 135) //check if it's pointing up
-            {
-                animator.SetBool("FacingRight", false);
-                animator.SetBool("FacingLeft", false);
-                animator.SetBool("FacingUp", true);
-                animator.SetBool("FacingDown", false);
-                firePoint = new Vector3(gameObject.transform.position.x , gameObject.transform.position.y + .25f, gameObject.transform.position.z);
-            }
-            else if (angle >= 135 && angle < 225) //check if it's pointing left
-            {
-                animator.SetBool("FacingRight", false);
-                animator.SetBool("FacingLeft", true);
-                animator.SetBool("FacingUp", false);
-                animator.SetBool("FacingDown", false);
-                firePoint = new Vector3(gameObject.transform.position.x - .4f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
-            }
-            else if (angle >= 225 && angle < 315) //check if it's pointing down
-            {
-                animator.SetBool("FacingRight", false);
-                animator.SetBool("FacingLeft", false);
-                animator.SetBool("FacingUp", false);
-                animator.SetBool("FacingDown", true);
-                firePoint = new Vector3(gameObject.transform.position.x , gameObject.transform.position.y - .25f, gameObject.transform.position.z);
-            }
-            //Debug.Log(angle);
+
         }
 
         if (!isChanging && !trickster.disabled)
@@ -102,6 +106,7 @@ public class characterAttack : MonoBehaviour
 
         if(trickster.disabled)
         {
+            myCollider.radius = 0;
             target = null;
         }
 
@@ -151,6 +156,7 @@ public class characterAttack : MonoBehaviour
     }
 
     void fireCount() {
+        myCollider.radius = trickster.RNG * .5f; // or whatever radius you want.
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
