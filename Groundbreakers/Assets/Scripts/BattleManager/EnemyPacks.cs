@@ -27,7 +27,9 @@
 
         public enum Enemies
         {
-            FireBat
+            DireRat,
+            FireBat,
+            Manis,
         }
 
         #endregion

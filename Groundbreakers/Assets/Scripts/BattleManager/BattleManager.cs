@@ -161,6 +161,9 @@
             // Changing state
             GameState = Stages.Entering;
 
+            // Toggle UI
+            var ui = GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
+
             this.timer.StartLevel();
         }
 
@@ -209,6 +212,9 @@
             this.RetreatAllCharacters();
 
             GameState = Stages.Exiting;
+
+            // Toggle UI
+            var ui = GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
         }
 
         public void OnBattleVictory()
