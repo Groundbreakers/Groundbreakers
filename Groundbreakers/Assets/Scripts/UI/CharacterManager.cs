@@ -11,7 +11,7 @@ public class CharacterManager : MonoBehaviour
     public GameObject[] modules = new GameObject[5];
     public GameObject[] inventory = new GameObject[5];
     public GameObject[] attributes = new GameObject[5];
-    public Sprite[] bars = new Sprite[9];
+    public Sprite[] bars = new Sprite[11];
 
     public Sprite frame;
     public GameObject moduleButton;
