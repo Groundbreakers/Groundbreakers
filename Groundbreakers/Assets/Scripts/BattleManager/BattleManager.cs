@@ -162,7 +162,7 @@
             GameState = Stages.Entering;
 
             // Toggle UI
-            GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
+            Resources.FindObjectsOfTypeAll<Deploy>()[0].Toggle();
 
             this.timer.StartLevel();
         }

@@ -39,6 +39,7 @@ public class Deploy : MonoBehaviour
         // If the character is on the battlefield, retrieve it first
         if (this.character[index].activeSelf)
         {
+            Debug.Log("The character has been deployed already");
             this.Retreat(index);
             //this.DeployCharacter(index);
         }
@@ -64,9 +65,9 @@ public class Deploy : MonoBehaviour
         yield return new WaitForSeconds(time);
         this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
         this.characterAttributes[index].enabled();
+        this.characterPos[index] = this.node;
         SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
         selectNode.characterOnTop = index;
-        this.characterPos[index] = this.node;
     }
 
     public void Retreat(int index)
