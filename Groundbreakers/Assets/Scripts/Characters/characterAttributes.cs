@@ -135,10 +135,10 @@ public class characterAttributes : MonoBehaviour
     {
         if(stance == "gun")
         {
-            POW = 1;
+            POW = 2;
             ROF = 2;
             RNG = 2;
-            MOB = 3;
+            MOB = 2;
             AMP = 1;
         }
         else
@@ -146,7 +146,7 @@ public class characterAttributes : MonoBehaviour
             POW = 3;
             ROF = 2;
             RNG = 1;
-            MOB = 3;
+            MOB = 2;
             AMP = 2;
         }
     }
