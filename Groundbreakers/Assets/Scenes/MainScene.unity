@@ -297,6 +297,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5623790536386699595, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5623790535823380164, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4052,7 +4057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ecb602155ae405081d6e924f0ac3471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firebatPrefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+  firebatPrefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
     type: 3}
 --- !u!114 &1186630416
 MonoBehaviour:
