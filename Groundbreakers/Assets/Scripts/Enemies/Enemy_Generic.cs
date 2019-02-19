@@ -326,13 +326,15 @@
                 this.waypointWaitTime = 0;
             }
             this.waiting = false;
-            /* Direction animations
-            Vector2 dir = this.target.position - this.transform.position; // Change animation to fit the angle
+
+            Vector2 dir;
+            dir.x= this.target.x - this.transform.position.x; // Change animation to fit the angle
+            dir.y = this.target.y - this.transform.position.y; // Change animation to fit the angle
             if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0) { this.animator.SetInteger("Direction", 0); } // Up
             else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0) { this.animator.SetInteger("Direction", 1); } // Right
             else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0) { this.animator.SetInteger("Direction", 2); } // Down
             else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0) { this.animator.SetInteger("Direction", 3); } // Left
-            */
+
         }
 
         // When the enemy reaches the end of its path
