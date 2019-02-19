@@ -39,7 +39,6 @@
         /// <summary>
         /// Internal buffers that store the pending enemy mobs.
         /// </summary>
-        private List<GameObject> buffer = new List<GameObject>();
         private List<GameObject> bufferA = new List<GameObject>();
         private List<GameObject> bufferB = new List<GameObject>();
 
@@ -63,39 +62,43 @@
         #region Public Functions
 
         /// <summary>
-        ///     Check if the current wave queue has finished.
+        /// Check if the current wave queue has finished.
         /// </summary>
+        /// <param name="pathId">
+        /// The path Id.
+        /// </param>
         /// <returns>
-        ///     The <see cref="bool" /> True if the current wave queue is empty.
+        /// The <see cref="bool"/> True if the current wave queue is empty.
         /// </returns>
-        public bool Done()
+        public bool Done(int pathId)
         {
-            return this.GetCount() == 0;
+            return this.GetCount(pathId) == 0;
         }
 
-        public int GetCount()
+        public int GetCount(int pathId)
         {
-            return this.buffer.Count;
+            var buffer = pathId == 1 ? this.bufferA : this.bufferB;
+
+            return buffer.Count;
         }
 
         /// <summary>
-        ///     Get the next enemy from this current group.
+        /// Get the next enemy from this current group.
         /// </summary>
+        /// <param name="pathId">
+        /// The path Id.
+        /// </param>
         /// <returns>
-        ///     The <see cref="GameObject" /> a random enemy from this group.
+        /// The <see cref="GameObject"/> a random enemy from this group.
         /// </returns>
-        public GameObject GetNextMob()
+        public GameObject GetNextMob(int pathId)
         {
+            var buffer = pathId == 1 ? this.bufferA : this.bufferB;
             const int Head = 0;
 
-            var go = this.buffer[Head];
-            this.buffer.RemoveAt(Head);
+            var go = buffer[Head];
+            buffer.RemoveAt(Head);
             return go;
-        }
-
-        public void SetCurrentWave(int waveNumber)
-        {
-            this.ResetPack();
         }
 
         /// <summary>
@@ -104,32 +107,16 @@
         public void ResetPack()
         {
             // Assume difficulty one
-            var level = Difficulty.Easy;
+            var level = Difficulty.Medium;
 
-            // Clear the buffer
-            this.buffer.Clear();
+            this.bufferA.Clear();
+            this.bufferB.Clear();
 
-            // Pick a random pack, but has to be in the same level
-            var bundle = this.regionAGroup.Where(group => group.level == level).ToArray();
+            this.bufferA = this.PickRandomPack(this.regionAGroup, level);
+            this.bufferB = this.PickRandomPack(this.regionAGroup, level);
 
-            if (!bundle.Any())
-            {
-                Debug.LogError("This should not happen: Empty enemy group");
-            }
-
-            var packs = bundle[rng.Next(bundle.Length)].packs;
-
-            // Construct an buffer based on the selected buffer
-            foreach (var pack in packs)
-            {
-                for (var i = 0; i < pack.amount; i++)
-                {
-                    this.buffer.Add(pack.prefab);
-                }
-            }
-
-            // Lastly, shuffle the buffer
-            Shuffle(this.buffer);
+            Shuffle(this.bufferA);
+            Shuffle(this.bufferB);
         }
 
         #endregion
@@ -158,6 +145,31 @@
         #endregion
 
         #region Internal 
+
+        private List<GameObject> PickRandomPack(Group[] region, Difficulty level)
+        {
+            // Pick a random pack, but has to be in the same level
+            var bundle = region.Where(group => group.level == level).ToArray();
+
+            if (!bundle.Any())
+            {
+                Debug.LogError("This should not happen: Empty enemy group");
+            }
+
+            var packs = bundle[rng.Next(bundle.Length)].packs;
+
+            // Construct an buffer based on the selected buffer
+            List<GameObject> result = new List<GameObject>();
+            foreach (var pack in packs)
+            {
+                for (var i = 0; i < pack.amount; i++)
+                {
+                    result.Add(pack.prefab);
+                }
+            }
+
+            return result;
+        }
 
         [Serializable]
         public struct Group

@@ -74,32 +74,15 @@ namespace Assets.Scripts
             }
         }
 
-        /// <summary>
-        /// Currently this function is called by the Timer UI (???????). Which would leave us some
-        /// side effects. But I am keeping this for now. 
-        /// </summary>
-        /// <param name="waveNumber">
-        /// The wave number.
-        /// </param>
-        /// <returns>
-        /// The <see cref="IEnumerator"/>.
-        /// </returns>
-        public IEnumerator SpawnWave(int waveNumber)
+        public IEnumerator SpawnWave(int pathId = 1)
         {
-            this.pack.SetCurrentWave(waveNumber);
-
-            var count = this.pack.GetCount();
+            var count = this.pack.GetCount(pathId);
             var delta = this.duration / count * 2.0f;
             Debug.Log("total " + count + " enemies in this wave. We should emit at rate " + delta);
 
-            while (!this.pack.Done())
+            while (!this.pack.Done(pathId))
             {
-                this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(), 1);
-
-                if (!this.pack.Done())
-                {
-                    this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(), 2);
-                }
+                this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(pathId), pathId);
 
                 yield return new WaitForSeconds(delta);
             }
@@ -178,7 +161,9 @@ namespace Assets.Scripts
 
         private void ShouldSpawnWave()
         {
-            this.StartCoroutine(this.SpawnWave(this.currentWave));
+            this.pack.ResetPack();
+            this.StartCoroutine(this.SpawnWave(1));
+            this.StartCoroutine(this.SpawnWave(2));
             this.currentWave++;
         }
 
