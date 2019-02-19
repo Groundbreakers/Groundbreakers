@@ -4012,6 +4012,7 @@ GameObject:
   - component: {fileID: 1186630416}
   - component: {fileID: 1186630418}
   - component: {fileID: 1186630415}
+  - component: {fileID: 1186630417}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -4076,6 +4077,85 @@ MonoBehaviour:
   waveDuration: 30
   tileEnterDuration: 2.25
   timeBeforeFirstWave: 10
+--- !u!114 &1186630417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186630412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66bde5a4daf4d69a3717fcf11438a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regionAGroup:
+  - title: rats
+    level: 0
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+  - title: mantis
+    level: 0
+    packs:
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: firebats
+    level: 0
+    packs:
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: both
+    level: 1
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: 
+    level: 1
+    packs:
+    - amount: 50
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+  - title: 
+    level: 1
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
 --- !u!114 &1186630418
 MonoBehaviour:
   m_ObjectHideFlags: 0
