@@ -142,9 +142,9 @@ namespace Assets.Scripts
             this.activeIndicators[0].transform.SetPositionAndRotation(
                 this.pathA[0], Quaternion.identity);
             this.activeIndicators[1].transform.SetPositionAndRotation(
-                this.pathB[0], Quaternion.identity);
-            this.activeIndicators[2].transform.SetPositionAndRotation(
                 this.pathA[this.pathA.Count - 1], Quaternion.identity);
+            this.activeIndicators[2].transform.SetPositionAndRotation(
+                this.pathB[0], Quaternion.identity);
             this.activeIndicators[3].transform.SetPositionAndRotation(
                 this.pathB[this.pathB.Count - 1], Quaternion.identity);
 
