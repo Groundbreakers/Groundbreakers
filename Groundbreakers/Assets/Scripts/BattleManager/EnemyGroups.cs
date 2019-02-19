@@ -4,11 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Sirenix.OdinInspector;
+
 #if UNITY_EDITOR
-    using UnityEditor;
+
     using Sirenix.OdinInspector.Editor;
     using Sirenix.Utilities;
-    using Sirenix.OdinInspector;
+    using UnityEditor;
+
 #endif
 
     using UnityEngine;
