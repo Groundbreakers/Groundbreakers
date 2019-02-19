@@ -1,38 +1,81 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+
 using UnityEngine;
 using UnityEngine.UI;
 
+using Difficulty = Asset.Script.EnemyGroups.Difficulty;
+
 public class CurrentLevel : MonoBehaviour
 {
-    public Text ui;
-    public Text ui2;
-    private int region;
-    private int level;
+    #region Inspector Properties
+
     public GameObject titleScreen;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.region = 1;
-        this.level = 1;
-        this.ui.text = "Region " + this.region;
-        this.ui2.text = "Level " + this.level + "/8";
-        this.ChangeRegion();
-    }
+
+    public Text ui;
+
+    public Text ui2;
+
+    #endregion
+
+    #region Internal Fields
+
+    private int level;
+
+    private int region;
+
+    private Dictionary<int, Difficulty> levelDifficultyMap =
+        new Dictionary<int, Difficulty>
+            {
+                { 1, Difficulty.Easy },
+                { 2, Difficulty.Easy },
+                { 3, Difficulty.Easy },
+                { 4, Difficulty.Medium },
+                { 5, Difficulty.Medium },
+                { 6, Difficulty.Hard },
+                { 7, Difficulty.Hard },
+                { 8, Difficulty.Hard },
+            };
+
+    #endregion
+
+    #region Public Functions
 
     public void ChangeRegion()
     {
         // Get a new BGM if the region is changed
-        GameObject bgm = GameObject.Find("BGM Manager");
-        Manager manager = bgm.GetComponent<Manager>();
+        var bgm = GameObject.Find("BGM Manager");
+        var manager = bgm.GetComponent<Manager>();
         if (!this.titleScreen.activeSelf)
+        {
             manager.UpdateBGM();
+        }
 
         // Get a new background image if the region is changed
-        GameObject canvas = GameObject.Find("Canvas");
-        Background background = canvas.GetComponent<Background>();
+        var canvas = GameObject.Find("Canvas");
+        var background = canvas.GetComponent<Background>();
         background.UpdateBackground();
+    }
+
+    public int GetLevel()
+    {
+        return this.level;
+    }
+
+    public int GetRegion()
+    {
+        return this.region;
+    }
+
+    /// <summary>
+    /// Called by BattleManager (or directly called by spawn) I think
+    /// </summary>
+    /// <returns>
+    /// The <see cref="Difficulty"/>.
+    /// </returns>
+    public Difficulty GetDifficulty()
+    {
+        return this.level == 0 ? Difficulty.Easy : this.levelDifficultyMap[this.level];
     }
 
     public void UpdateLevel()
@@ -52,13 +95,18 @@ public class CurrentLevel : MonoBehaviour
         this.ui2.text = "Level " + this.level + "/8";
     }
 
-    public int GetRegion()
+    #endregion
+
+    #region Unity Callbacks
+
+    private void Start()
     {
-        return this.region;
+        this.region = 1;
+        this.level = 1;
+        this.ui.text = "Region " + this.region;
+        this.ui2.text = "Level " + this.level + "/8";
+        this.ChangeRegion();
     }
 
-    public int GetLevel()
-    {
-        return this.level;
-    }
+    #endregion
 }

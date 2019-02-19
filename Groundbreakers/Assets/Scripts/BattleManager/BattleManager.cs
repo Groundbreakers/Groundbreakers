@@ -162,7 +162,7 @@
             GameState = Stages.Entering;
 
             // Toggle UI
-            Resources.FindObjectsOfTypeAll<Deploy>()[0].Toggle();
+            Resources.FindObjectsOfTypeAll<Deploy>()[0].ui.SetActive(true);
 
             this.timer.StartLevel();
         }

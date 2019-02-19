@@ -116,7 +116,8 @@
         /// </summary>
         public void ResetPack()
         {
-            var level = this.currentDifficulty;
+            // Fast and dirty way to do
+            var level = GameObject.Find("Canvas").GetComponent<CurrentLevel>().GetDifficulty();
 
             this.bufferA.Clear();
             this.bufferB.Clear();

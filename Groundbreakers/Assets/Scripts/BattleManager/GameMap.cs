@@ -314,6 +314,7 @@
         private void InstantiateEnvironments()
         {
             int num = Random.Range(2, 5);
+            this.mushrooms.Clear();
 
             // We use naive approach here
             for (int i = 0; i < num; i++)
