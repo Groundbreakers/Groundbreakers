@@ -184,16 +184,10 @@
         /// </summary>
         public void RetreatAllCharacters()
         {
-            // TODO: Please nicely Refactor this :)
-            var characterList = GameObject.Find("CharacterList").transform;
 
             Debug.Log("Ding");
 
-            foreach (Transform character in characterList)
-            {
-                Debug.Log("Bing");
-                character.gameObject.SetActive(false);
-            }
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().InstantRetreatAllCharacter();
         }
 
         #endregion

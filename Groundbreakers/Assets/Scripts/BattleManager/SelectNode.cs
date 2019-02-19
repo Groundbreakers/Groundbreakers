@@ -43,7 +43,7 @@ public class SelectNode : MonoBehaviour
     /// Making this canvas a field then we don't need to call the expensive function
     /// 'GameObject.Find' every time.
     /// </summary>
-    private GameObject deployPanel;
+    //private GameObject deployPanel;
 
     private LineRenderer lineRenderer;
 
@@ -78,7 +78,7 @@ public class SelectNode : MonoBehaviour
 
     private void Start()
     {
-        this.deployPanel = GameObject.Find("DeployPanel");
+        //this.deployPanel = GameObject.Find("DeployPanel");
         this.lineRenderer = this.GetComponent<LineRenderer>();
         this.lineRenderer.enabled = false;
 
@@ -99,7 +99,7 @@ public class SelectNode : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            Deploy deploy = this.deployPanel.GetComponent<Deploy>();
+            Deploy deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
         }
     }
 
@@ -166,7 +166,7 @@ public class SelectNode : MonoBehaviour
             this.rend.sprite = this.canDeployIcon;
             this.rend.enabled = true;
             this.isSelected = true;
-            var deploy = this.deployPanel.GetComponent<Deploy>();
+            var deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
             deploy.SetNode(this.gameObject);
         }
     }
