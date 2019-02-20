@@ -22,6 +22,12 @@ public class SelectNode : MonoBehaviour
     private bool canDeploy;
 
     [SerializeField]
+    private bool deploying;
+
+    [SerializeField]
+    private int deployingCharacter = -1;
+
+    [SerializeField]
     private Sprite canDeployIcon;
 
     [SerializeField]
@@ -47,8 +53,6 @@ public class SelectNode : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
-    private bool isSelected;
-
     #endregion
 
     #region Public Functions
@@ -70,6 +74,18 @@ public class SelectNode : MonoBehaviour
     public int GetCharacterIndex()
     {
         return this.characterOnTop;
+    }
+
+    public void EnableDeploy(int index)
+    {
+        this.deploying = true;
+        this.deployingCharacter = index;
+    }
+
+    public void DisableDeploy()
+    {
+        this.deploying = false;
+        this.deployingCharacter = -1;
     }
 
     #endregion
@@ -111,6 +127,12 @@ public class SelectNode : MonoBehaviour
             return;
         }
 
+        if (this.IsOccupied() && this.deploying)
+        {
+            this.rend.transform.rotation = Quaternion.identity;
+            return;
+        }
+
         this.rend.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f));
     }
 
@@ -136,48 +158,52 @@ public class SelectNode : MonoBehaviour
 
         this.MouseInput();
 
-        if (!this.isSelected)
-        { 
-            this.rend.sprite = this.occupiedIcon;
-            this.rend.enabled = true;   
-        }
-
         if (this.IsOccupied())
         {
             this.ResetLineRenderer();
             this.lineRenderer.enabled = true;
         }
+
+        if (this.deploying)
+        {
+            if (this.IsOccupied())
+            {
+                this.rend.sprite = this.canNotDeployIcon;
+                this.rend.enabled = true;
+                return;
+            }
+            else
+            {
+                this.rend.sprite = this.canDeployIcon;
+                this.rend.enabled = true;
+                return;
+            }
+        }
+
+        this.rend.sprite = this.occupiedIcon;
+        this.rend.enabled = true;
     }
 
     private void MouseInput()
     {
         if (Input.GetMouseButtonUp(0))
         {
-            foreach (Transform child in GameObject.Find("TileMap").transform)
+            if (this.IsOccupied())
             {
-                var selectNode = child.gameObject.GetComponent<SelectNode>();
-                if (selectNode != null)
-                {
-                    selectNode.isSelected = false;
-                    selectNode.OnMouseExit();
-                }
+                return;
             }
-
-            this.rend.sprite = this.canDeployIcon;
-            this.rend.enabled = true;
-            this.isSelected = true;
-            var deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
-            deploy.SetNode(this.gameObject);
+            if (this.deploying && this.deployingCharacter != -1)
+            {
+                var deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
+                deploy.SetNode(this.gameObject);
+                deploy.DeployCharacter(this.deployingCharacter);
+            }
         }
     }
 
     private void OnMouseExit()
     {
-        if (!this.isSelected)
-        {
-            this.rend.enabled = false;
-        }
-
+        this.rend.enabled = false;
         this.lineRenderer.enabled = false;
     }
 
