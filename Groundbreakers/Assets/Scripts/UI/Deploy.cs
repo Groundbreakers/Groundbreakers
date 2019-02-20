@@ -1,56 +1,47 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections;
 
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Deploy : MonoBehaviour
 {
-    public GameObject ui;
-
-    private GameObject node;
-    private GameObject[] character = new GameObject[5];
-    private GameObject[] characterPos = new GameObject[5];
-    private characterAttributes[] characterAttributes = new characterAttributes[5];
-    private IEnumerator[] coroutine = new IEnumerator[5];
-    private Boolean[] running = new Boolean[5];
+    #region Inspector Properties
 
     public GameObject[] characterDeployButton;
+
     public GameObject[] characterRetreatButton;
 
-    void Start()
-    {
-        // Reference five characters and their attributes
-        GameObject characterList = GameObject.Find("CharacterList");
-        this.character[0] = characterList.transform.GetChild(0).gameObject;
-        this.character[1] = characterList.transform.GetChild(1).gameObject;
-        this.character[2] = characterList.transform.GetChild(2).gameObject;
-        this.character[3] = characterList.transform.GetChild(3).gameObject;
-        this.character[4] = characterList.transform.GetChild(4).gameObject;
-        this.characterAttributes[0] = this.character[0].GetComponent<characterAttributes>();
-        this.characterAttributes[1] = this.character[1].GetComponent<characterAttributes>();
-        this.characterAttributes[2] = this.character[2].GetComponent<characterAttributes>();
-        this.characterAttributes[3] = this.character[3].GetComponent<characterAttributes>();
-        this.characterAttributes[4] = this.character[4].GetComponent<characterAttributes>();
-    }
+    public GameObject ui;
 
-    public void Toggle()
-    {
-        this.node = null;
-        this.ui.SetActive(!this.ui.activeSelf);
-    }
+    #endregion
+
+    #region Internal Fields
+
+    private GameObject[] character = new GameObject[5];
+
+    private characterAttributes[] characterAttributes = new characterAttributes[5];
+
+    private GameObject[] characterPos = new GameObject[5];
+
+    private IEnumerator[] coroutine = new IEnumerator[5];
+
+    private GameObject node;
+
+    private bool[] running = new bool[5];
+
+    #endregion
+
+    #region Public API
 
     public void DeployCharacter(int index)
     {
         // Reference the Deploy meter
-        GameObject temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-        DeployBar bar = temp.GetComponent<DeployBar>();
+        var temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+        var bar = temp.GetComponent<DeployBar>();
 
         // Remember the character's position
         this.characterPos[index] = this.node;
-        SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
+        var selectNode = this.characterPos[index].GetComponent<SelectNode>();
 
         // If the Coroutine is still running
         if (this.running[index])
@@ -84,7 +75,7 @@ public class Deploy : MonoBehaviour
             selectNode.SetCharacterIndex(index);
 
             // Disallow other characters to be deployed on the same tile
-            this.checkNode(this.node);
+            this.CheckNode(this.node);
 
             // Put the character on the node and active it
             this.character[index].transform.position = this.node.transform.position;
@@ -93,7 +84,7 @@ public class Deploy : MonoBehaviour
 
             // Disallow the character to aim or shoot
             this.characterAttributes[index].disable();
-            
+
             // Reset the meter so that it starts going down
             bar.Reset();
 
@@ -101,12 +92,127 @@ public class Deploy : MonoBehaviour
             this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
 
             // Setup and start the coroutine
-            this.coroutine[index] = this.Spawn(index, 2.0f / (float)this.characterAttributes[index].MOB / .5f);
+            this.coroutine[index] = this.Spawn(index, 2.0f / this.characterAttributes[index].MOB / .5f);
             this.StartCoroutine(this.coroutine[index]);
         }
     }
 
-    public IEnumerator Spawn(int index, float time)
+    public GameObject GetNode()
+    {
+        return this.node;
+    }
+
+    /// <summary>
+    /// Instantly retreat(deactivate) all characters. Only Called by Battle manager
+    /// when battle finishes.
+    /// </summary>
+    public void InstantRetreatAllCharacter()
+    {
+        for (int i = 0; i < this.character.Length; i++)
+        {
+            this.DeactivateCharacter(i);
+        }
+    }
+
+    public void Retreat(int index)
+    {
+        // Reference the Deploy meter
+        var temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+        var bar = temp.GetComponent<DeployBar>();
+
+        if (this.running[index])
+        {
+            // Click on the same button again to cancel the retreat
+            Debug.Log("The character retreat has been cancelled");
+            this.StopCoroutine(this.coroutine[index]);
+
+            this.characterAttributes[index].enabled();
+            this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
+            bar.Hide();
+            this.running[index] = false;
+            this.characterRetreatButton[index].transform.GetChild(0).gameObject.GetComponent<Text>().text = "Retreat";
+        }
+        else
+        {
+            // Update the UI
+            this.characterRetreatButton[index].transform.GetChild(0).gameObject.GetComponent<Text>().text = "Cancel";
+
+            this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+            bar.Reset();
+            this.characterAttributes[index].disable();
+            this.coroutine[index] = this.Retreating(index, 2.0f / this.characterAttributes[index].MOB / .5f);
+            this.StartCoroutine(this.coroutine[index]);
+        }
+    }
+
+    public void SetNode(GameObject newNode)
+    {
+        this.node = newNode;
+        this.CheckNode(newNode);
+    }
+
+    public void Toggle()
+    {
+        this.node = null;
+        this.ui.SetActive(!this.ui.activeSelf);
+    }
+
+    public void Transform(int index)
+    {
+        // Call the character transform function, we should move the transform function out of the characterAttack script probably
+        this.character[index].GetComponent<characterAttack>().change();
+    }
+
+    #endregion
+
+    #region Unity Callbacks
+
+    private void Start()
+    {
+        // Reference five characters and their attributes
+        var characterList = GameObject.Find("CharacterList");
+        this.character[0] = characterList.transform.GetChild(0).gameObject;
+        this.character[1] = characterList.transform.GetChild(1).gameObject;
+        this.character[2] = characterList.transform.GetChild(2).gameObject;
+        this.character[3] = characterList.transform.GetChild(3).gameObject;
+        this.character[4] = characterList.transform.GetChild(4).gameObject;
+        this.characterAttributes[0] = this.character[0].GetComponent<characterAttributes>();
+        this.characterAttributes[1] = this.character[1].GetComponent<characterAttributes>();
+        this.characterAttributes[2] = this.character[2].GetComponent<characterAttributes>();
+        this.characterAttributes[3] = this.character[3].GetComponent<characterAttributes>();
+        this.characterAttributes[4] = this.character[4].GetComponent<characterAttributes>();
+    }
+
+    #endregion
+
+    #region Internal Functions
+
+    private void CheckNode(GameObject nodeChecked)
+    {
+        // If the selected node has a character on top
+        if (nodeChecked.GetComponent<SelectNode>().GetCharacterIndex() != -1)
+        {
+            for (var i = 0; i < 5; i++)
+            {
+                if (i != nodeChecked.GetComponent<SelectNode>().GetCharacterIndex())
+                {
+                    // Disable the deploy button for all other characters
+                    this.characterDeployButton[i].GetComponent<Button>().interactable = false;
+                }
+            }
+        }
+        else
+        {
+            // If not, enable deploy buttons for all characters
+            // That being said, deployed characters will still have their deploy buttons covered by their retreat buttons
+            for (var i = 0; i < 5; i++)
+            {
+                this.characterDeployButton[i].GetComponent<Button>().interactable = true;
+            }
+        }
+    }
+
+    private IEnumerator Spawn(int index, float time)
     {
         // Remember that the coroutine has started running
         this.running[index] = true;
@@ -133,37 +239,6 @@ public class Deploy : MonoBehaviour
         this.running[index] = false;
     }
 
-    public void Retreat(int index)
-    {
-        // Reference the Deploy meter
-        GameObject temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-        DeployBar bar = temp.GetComponent<DeployBar>();
-
-        if (this.running[index])
-        {
-            // Click on the same button again to cancel the retreat
-            Debug.Log("The character retreat has been cancelled");
-            this.StopCoroutine(this.coroutine[index]);
-
-            this.characterAttributes[index].enabled();
-            this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
-            bar.Hide();
-            this.running[index] = false;
-            this.characterRetreatButton[index].transform.GetChild(0).gameObject.GetComponent<Text>().text = "Retreat";
-        }
-        else
-        {
-            // Update the UI
-            this.characterRetreatButton[index].transform.GetChild(0).gameObject.GetComponent<Text>().text = "Cancel";
-
-            this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
-            bar.Reset();
-            this.characterAttributes[index].disable();
-            this.coroutine[index] = this.Retreating(index, 2.0f / (float)this.characterAttributes[index].MOB / .5f);
-            this.StartCoroutine(this.coroutine[index]);
-        }
-    }
-
     private IEnumerator Retreating(int index, float time)
     {
         this.running[index] = true;
@@ -173,10 +248,21 @@ public class Deploy : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         // After waiting for a certain amount of time, deactivate the character
+        this.DeactivateCharacter(index);
+    }
+
+    /// <summary>
+    /// After waiting for a certain amount of time, deactivate the character
+    /// </summary>
+    /// <param name="index">
+    /// The Character index.
+    /// </param>
+    private void DeactivateCharacter(int index)
+    {
         this.character[index].SetActive(false);
 
         // Set the node's character on top to null (-1)
-        SelectNode selectNode = this.characterPos[index].GetComponent<SelectNode>();
+        var selectNode = this.characterPos[index].GetComponent<SelectNode>();
         selectNode.SetCharacterIndex(-1);
 
         // Reset the character's position
@@ -184,7 +270,7 @@ public class Deploy : MonoBehaviour
 
         // This allow the player to immediately deploy another character to the same tile
         // It is very important to use this.node instead of this.characterPos[index]
-        this.checkNode(this.node);
+        this.CheckNode(this.node);
 
         // Disable the retreat button and reset its text
         this.characterRetreatButton[index].SetActive(false);
@@ -193,45 +279,5 @@ public class Deploy : MonoBehaviour
         this.running[index] = false;
     }
 
-    public void Transform(int index)
-    {
-        // Call the character transform function, we should move the transform function out of the characterAttack script probably
-        this.character[index].GetComponent<characterAttack>().change();
-    }
-
-    public GameObject GetNode()
-    {
-        return this.node;
-    }
-
-    public void SetNode(GameObject newNode)
-    {
-        this.node = newNode;
-        this.checkNode(newNode);
-    }
-
-    private void checkNode(GameObject nodeChecked)
-    {
-        // If the selected node has a character on top
-        if (nodeChecked.GetComponent<SelectNode>().GetCharacterIndex() != -1)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                if (i != nodeChecked.GetComponent<SelectNode>().GetCharacterIndex())
-                {
-                    // Disable the deploy button for all other characters
-                    this.characterDeployButton[i].GetComponent<Button>().interactable = false;
-                }
-            }
-        }
-        else
-        {
-            // If not, enable deploy buttons for all characters
-            // That being said, deployed characters will still have their deploy buttons covered by their retreat buttons
-            for (int i = 0; i < 5; i++)
-            {
-                this.characterDeployButton[i].GetComponent<Button>().interactable = true;
-            }
-        }
-    }
+    #endregion
 }
