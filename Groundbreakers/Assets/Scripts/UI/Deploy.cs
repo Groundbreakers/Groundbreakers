@@ -14,6 +14,8 @@ public class Deploy : MonoBehaviour
 
     public GameObject[] characterCancelButton;
 
+    public GameObject[] characterTransformButton;
+
     public GameObject ui;
 
     #endregion
@@ -28,7 +30,7 @@ public class Deploy : MonoBehaviour
 
     private IEnumerator[] coroutine = new IEnumerator[5];
 
-    private GameObject node;
+    private GameObject[] targetPos = new GameObject[5];
 
     [SerializeField]
     private String[] running = new String[5];
@@ -88,24 +90,21 @@ public class Deploy : MonoBehaviour
 
     public void DeployCharacter(int index)
     {
-        // If the character is already activated, redeploy instead of deploy
-        if (this.character[index].activeSelf && this.running[index] != "Spawn" && this.running[index] != "Retreating")
+        if (this.running[index] == "Transforming")
         {
+            Debug.Log("The character is transforming, do nothing instead...");
+        }
+        else if (this.character[index].activeSelf && this.running[index] != "Spawn" && this.running[index] != "Retreating")
+        {
+            // If the character is already activated, redeploy instead of deploy
             Debug.Log("The character has been deployed, relocating...");
             this.StartCoroutine(this.Redeploy(index, 2.0f / this.characterAttributes[index].MOB / .5f));
         }
         else
         {
-            // Disable the deploy
-            this.DisableDeploy(index);
-
             // Reference the Deploy meter
             var temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
             var bar = temp.GetComponent<DeployBar>();
-
-            // Remember the character's position
-            this.characterPos[index] = this.node;
-            var selectNode = this.characterPos[index].GetComponent<SelectNode>();
 
             // If the Coroutine is still running
             if (this.running[index] == "Spawn")
@@ -127,20 +126,22 @@ public class Deploy : MonoBehaviour
                 this.running[index] = "Cancelled";
 
                 // Reset the characterOnTop to null (-1)
-                selectNode.SetCharacterIndex(-1);
+                this.targetPos[index].GetComponent<SelectNode>().SetCharacterIndex(-1);
             }
             else
             {
                 // If the Coroutine is NOT running
-                // Deactivate the cancel button
+                this.characterTransformButton[index].GetComponent<Button>().interactable = false;
+
+                // Activate the cancel button
                 this.characterCancelButton[index].SetActive(true);
 
                 // Have the node store the character index
-                selectNode.SetCharacterIndex(index);
+                this.targetPos[index].GetComponent<SelectNode>().SetCharacterIndex(index);
 
                 // Put the character on the node and active it
-                this.character[index].transform.position = this.node.transform.position;
-                this.character[index].transform.rotation = this.node.transform.rotation;
+                this.character[index].transform.position = this.targetPos[index].transform.position;
+                this.character[index].transform.rotation = this.targetPos[index].transform.rotation;
                 this.character[index].SetActive(true);
 
                 // Disallow the character to aim or shoot
@@ -159,9 +160,9 @@ public class Deploy : MonoBehaviour
         }
     }
 
-    public GameObject GetNode()
+    public GameObject GetTargetPos(int index)
     {
-        return this.node;
+        return this.targetPos[index];
     }
 
     /// <summary>
@@ -194,10 +195,20 @@ public class Deploy : MonoBehaviour
             this.characterAttributes[index].enabled();
             this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
             bar.Hide();
+
+            if (this.characterPos[index] != this.targetPos[index])
+            {
+                this.targetPos[index].GetComponent<SelectNode>().SetCharacterIndex(-1);
+            }
+
             this.running[index] = "Cancelled";
+
+            this.characterTransformButton[index].GetComponent<Button>().interactable = true;
         }
         else
         {
+            this.characterTransformButton[index].GetComponent<Button>().interactable = false;
+
             // Deactivate the cancel button
             this.characterCancelButton[index].SetActive(true);
 
@@ -209,21 +220,36 @@ public class Deploy : MonoBehaviour
         }
     }
 
-    public void SetNode(GameObject newNode)
+    public void SetTargetPos(int index, GameObject newNode)
     {
-        this.node = newNode;
+        this.targetPos[index] = newNode;
     }
 
     public void Toggle()
     {
-        this.node = null;
+        for (int i = 0; i < 5; i++)
+        {
+            this.targetPos[i] = null;
+        }
         this.ui.SetActive(!this.ui.activeSelf);
     }
 
     public void Transform(int index)
     {
-        // Call the character transform function, we should move the transform function out of the characterAttack script probably
-        this.character[index].GetComponent<characterAttack>().change();
+        // Disable the transform button and the deploy button
+        this.characterTransformButton[index].GetComponent<Button>().interactable = false;
+        this.characterDeployButton[index].GetComponent<Button>().interactable = false;
+
+        // Reference the Deploy meter
+        var temp = this.character[index].transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+        var bar = temp.GetComponent<DeployBar>();
+        bar.Reset();
+
+        this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+        this.characterAttributes[index].disable();
+
+        this.coroutine[index] = this.Transforming(index, 2.0f / this.characterAttributes[index].MOB / .5f);
+        this.StartCoroutine(this.coroutine[index]);
     }
 
     #endregion
@@ -265,6 +291,9 @@ public class Deploy : MonoBehaviour
         // Wait for a certain amount of time
         yield return new WaitForSeconds(time);
 
+        // Remember the character's position
+        this.characterPos[index] = this.targetPos[index];
+
         // Set the character to solid
         this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
 
@@ -273,6 +302,9 @@ public class Deploy : MonoBehaviour
 
         // Deactivate the cancel button
         this.characterCancelButton[index].SetActive(false);
+
+        // Enable the transform button after deployment
+        this.characterTransformButton[index].GetComponent<Button>().interactable = true;
 
         // Remember that the coroutine has stopped running
         this.running[index] = "Done";
@@ -290,6 +322,29 @@ public class Deploy : MonoBehaviour
         this.DeactivateCharacter(index);
     }
 
+    private IEnumerator Transforming(int index, float time)
+    {
+        this.running[index] = "Transforming";
+
+        // Call the character transform function, we should move the transform function out of the characterAttack script probably
+        this.character[index].GetComponent<characterAttack>().change();
+
+        Debug.Log("Transforming Character " + index + " ...");
+        Debug.Log("Time needed: " + time);
+        yield return new WaitForSeconds(time);
+
+        this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f);
+
+        // Allow the character to aim and shoot
+        this.characterAttributes[index].enabled();
+
+        // Enable the transform button and the deploy button
+        this.characterTransformButton[index].GetComponent<Button>().interactable = true;
+        this.characterDeployButton[index].GetComponent<Button>().interactable = true;
+
+        this.running[index] = "Done";
+    }
+
     /// <summary>
     /// After waiting for a certain amount of time, deactivate the character
     /// </summary>
@@ -301,8 +356,7 @@ public class Deploy : MonoBehaviour
         this.character[index].SetActive(false);
 
         // Set the node's character on top to null (-1)
-        var selectNode = this.characterPos[index].GetComponent<SelectNode>();
-        selectNode.SetCharacterIndex(-1);
+        this.characterPos[index].GetComponent<SelectNode>().SetCharacterIndex(-1);
 
         // Reset the character's position
         this.characterPos[index] = null;
@@ -312,6 +366,9 @@ public class Deploy : MonoBehaviour
 
     private IEnumerator Redeploy(int index, float time)
     {
+        // Have the node store the character index
+        this.targetPos[index].GetComponent<SelectNode>().SetCharacterIndex(index);
+
         this.Retreat(index);
         yield return new WaitForSeconds(time);
         if (this.running[index] == "Done")

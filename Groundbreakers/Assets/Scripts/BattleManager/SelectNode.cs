@@ -195,8 +195,9 @@ public class SelectNode : MonoBehaviour
             if (this.deploying && this.deployingCharacter != -1)
             {
                 var deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
-                deploy.SetNode(this.gameObject);
+                deploy.SetTargetPos(this.deployingCharacter, this.gameObject);
                 deploy.DeployCharacter(this.deployingCharacter);
+                deploy.DisableDeploy(this.deployingCharacter);
             }
         }
     }
