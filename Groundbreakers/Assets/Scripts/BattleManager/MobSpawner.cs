@@ -38,8 +38,6 @@ namespace Assets.Scripts
 
         private GameObject[] activeIndicators;
 
-        private int currentWave;
-
         #endregion
 
         #region Public Functions
@@ -101,7 +99,7 @@ namespace Assets.Scripts
             BattleManager.StartListening("end",
                 () =>
                     {
-                        this.currentWave = 0;
+                        this.StopAllCoroutines();
                         this.pack.ResetPack();
                         this.ClearPoints();
                         this.ClearIndicators();
@@ -164,7 +162,6 @@ namespace Assets.Scripts
             this.pack.ResetPack();
             this.StartCoroutine(this.SpawnWave(1));
             this.StartCoroutine(this.SpawnWave(2));
-            this.currentWave++;
         }
 
         #endregion

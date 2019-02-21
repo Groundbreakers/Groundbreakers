@@ -184,7 +184,6 @@
         /// </summary>
         public void RetreatAllCharacters()
         {
-
             Debug.Log("Ding");
 
             GameObject.Find("DeployPanel").GetComponent<Deploy>().InstantRetreatAllCharacter();
@@ -210,6 +209,9 @@
 
             // Toggle UI
             GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
+
+            // Reset Timer
+            GameObject.Find("Canvas").GetComponent<Settings>().TimeScale1x();
         }
 
         public void OnBattleVictory()
