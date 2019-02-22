@@ -7,6 +7,8 @@ namespace Assets.Scripts
 
     using Assets.Enemies.Scripts;
 
+    using Sirenix.OdinInspector;
+
     using UnityEngine;
 
     /// <inheritdoc />
@@ -24,6 +26,7 @@ namespace Assets.Scripts
         private float duration = 25.0f;
 
         [SerializeField]
+        [ReadOnly]
         private Sprite[] spawnIndicators;
 
         #endregion

@@ -6,6 +6,7 @@
 
     using UnityEngine;
     using UnityEngine.Events;
+    using UnityEngine.UI;
 
     public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
@@ -211,7 +212,7 @@
             GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
 
             // Reset Timer
-            GameObject.Find("Canvas").GetComponent<Settings>().TimeScale1x();
+            GameObject.Find("1xButton").GetComponent<Button>().onClick.Invoke();
         }
 
         public void OnBattleVictory()

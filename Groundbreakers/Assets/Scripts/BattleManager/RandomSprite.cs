@@ -1,5 +1,7 @@
 ﻿namespace Assets.Scripts
 {
+    using Sirenix.OdinInspector;
+
     using UnityEngine;
     using Random = UnityEngine.Random;
 
@@ -7,17 +9,26 @@
     public class RandomSprite : MonoBehaviour
     {
         [SerializeField]
-        private Sprite[] sprites;
+        [AssetList]
+        [PreviewField(70, ObjectFieldAlignment.Center)]
+        private Sprite[] assets;
 
         private void OnEnable()
         {
-            var sprite = this.GetComponent<SpriteRenderer>();
-            sprite.sprite = this.PickRandomSprite();
+            this.PickRandomSprite();
         }
 
-        private Sprite PickRandomSprite()
+        [Button("Get New")]
+        private void PickRandomSprite()
         {
-            return this.sprites[Random.Range(0, this.sprites.Length)];
+            if (this.assets.Length == 0)
+            {
+                Debug.LogError("Attempt to PickRandomSprite with no assets");
+                return;
+            }
+
+            var sprite = this.GetComponent<SpriteRenderer>();
+            sprite.sprite = this.assets[Random.Range(0, this.assets.Length)];
         }
     }
 }
