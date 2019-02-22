@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CharacterManager : MonoBehaviour
 {
-    public GameObject selectCircle;
     public GameObject ui;
     public GameObject[] icons = new GameObject[5];
     public GameObject[] modules = new GameObject[5];
@@ -24,16 +23,9 @@ public class CharacterManager : MonoBehaviour
         this.UpdatePanel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        this.selectCircle.transform.Rotate(0.0F, 0.0F, -Time.deltaTime * this.rotateSpeed);
-    }
-
     public void Select(int index)
     {
         this.characterIndex = index;
-        this.selectCircle.transform.position = this.icons[index].transform.position;
         this.UpdatePanel();
     }
 
@@ -69,9 +61,14 @@ public class CharacterManager : MonoBehaviour
         return this.characterIndex;
     }
 
-    public void Toggle()
+    public void Open()
     {
         this.UpdatePanel();
-        this.ui.SetActive(!this.ui.activeSelf);
+        this.ui.SetActive(true);
+    }
+
+    public void Close()
+    {
+        this.ui.SetActive(false);
     }
 }

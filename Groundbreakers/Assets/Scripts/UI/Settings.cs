@@ -10,15 +10,10 @@ using UnityEngine.UI;
 public class Settings : MonoBehaviour
 {
     public GameObject ui;
-    public Button button;
 
     public void Toggle ()
     {
         ui.SetActive(!ui.activeSelf);
-        if (this.button.gameObject.activeSelf)
-        {
-            this.button.interactable = !ui.activeSelf;
-        }
     }
 
     public void NewGame()
