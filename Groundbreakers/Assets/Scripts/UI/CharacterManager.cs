@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class CharacterManager : MonoBehaviour
 {
     public GameObject ui;
-    public GameObject[] icons = new GameObject[5];
-    public GameObject[] modules = new GameObject[5];
+    public GameObject[] slots = new GameObject[5];
     public GameObject[] inventory = new GameObject[5];
     public GameObject[] attributes = new GameObject[5];
     public Sprite[] bars = new Sprite[11];
@@ -45,13 +44,21 @@ public class CharacterManager : MonoBehaviour
         {
             if (this.inventory[this.characterIndex].transform.GetChild(i).childCount != 0)
             {
-                this.modules[i].GetComponent<Image>().sprite = this.inventory[this.characterIndex].transform.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().sprite;
-                this.modules[i].GetComponent<Button>().onClick = this.inventory[this.characterIndex].transform.GetChild(i).GetChild(0).gameObject.GetComponent<Button>().onClick;
+                if (this.slots[i].transform.childCount == 0)
+                {
+                    GameObject.Instantiate(
+                        this.inventory[this.characterIndex].transform.GetChild(i).GetChild(0),
+                        this.slots[i].transform);
+                    this.slots[i].transform.GetChild(0).GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    this.slots[i].transform.GetChild(0).GetComponent<ModuleGeneric>().isDragable = false;
+                }
             }
             else
             {
-                this.modules[i].GetComponent<Image>().sprite = this.frame;
-                this.modules[i].GetComponent<Button>().onClick = this.moduleButton.GetComponent<Button>().onClick;
+                if (this.slots[i].transform.childCount != 0)
+                {
+                    Destroy(this.slots[i].transform.GetChild(0).gameObject);
+                }
             }
         }
     }

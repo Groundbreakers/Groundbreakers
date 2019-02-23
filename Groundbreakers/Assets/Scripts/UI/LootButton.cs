@@ -43,7 +43,7 @@ public class LootButton : MonoBehaviour
     {
         // Create a child clone under the parent Inventory
         Inventory inventory = Resources.FindObjectsOfTypeAll<Inventory>()[0];
-        GameObject newLoot = (GameObject)GameObject.Instantiate(this.loot, inventory.content.transform);
+        inventory.addModules(this.loot);
 
         // Close the tooltip panel
         this.Toggle();

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ModuleGeneric : MonoBehaviour
+public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     // Title and description
     public Button button;
@@ -42,19 +42,25 @@ public class ModuleGeneric : MonoBehaviour
     public Boolean blightSE;
     public Boolean netSE;
 
+    private Canvas canvas;
     private CharacterManager characterManager;
     private Inventory inventory;
     private GameObject tooltip;
+    private Transform parent;
 
     private Boolean isEquipped;
+
+    public Boolean isDragable = true;
 
     // Start is called before the first frame update
     void Start()
     {
+        this.canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         this.characterManager = GameObject.Find("CharactersPanel").GetComponent<CharacterManager>();
         this.inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
         this.tooltip = this.transform.GetChild(0).gameObject;
         this.button.onClick.AddListener(this.HandleTooltip);
+        this.parent = this.transform.parent;
     }
 
     public void HandleTooltip()
@@ -89,32 +95,6 @@ public class ModuleGeneric : MonoBehaviour
         this.tooltip.SetActive(!this.tooltip.activeSelf);
     }
 
-    public void EquipModule()
-    {
-        if (!this.isEquipped)
-        {
-            int availableSlots = this.inventory.GetAvailableSlots();
-            this.transform.SetParent(this.inventory.transform.GetChild(this.inventory.GetCharacterIndex()).GetChild(5 - availableSlots));
-            this.transform.localPosition = Vector3.zero;
-            this.inventory.UpdateInventory();
-            this.isEquipped = true;
-            this.inventory.SetAvailableSlots(-this.slot);
-            this.characterManager.UpdatePanel();
-        }
-    }
-
-    public void RemoveModule()
-    {
-        if (this.isEquipped)
-        {
-            this.transform.SetParent(this.inventory.content.transform);
-            this.inventory.UpdateInventory();
-            this.isEquipped = false;
-            this.inventory.SetAvailableSlots(this.slot);
-            this.characterManager.UpdatePanel();
-        }
-    }
-
     public int[] GetModuleAttributes()
     {
         int[] attributes = { this.POW, this.ROF, this.RNG, this.MOB, this.AMP,
@@ -138,5 +118,42 @@ public class ModuleGeneric : MonoBehaviour
                                Convert.ToInt32(this.netSE)
                            };
         return attributes;
+    }
+
+    public void NewParent(Transform transform)
+    {
+        this.transform.SetParent(transform);
+        this.parent = transform;
+        this.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+        this.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+        this.inventory.UpdateInventory();
+        this.characterManager.UpdatePanel();
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (!this.isDragable)
+        {
+            eventData.pointerDrag = null;
+        }
+        else
+        {
+            this.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            this.transform.parent = this.canvas.transform;
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        Vector2 pos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(this.canvas.transform as RectTransform, Input.mousePosition, this.canvas.worldCamera, out pos);
+        this.transform.position = this.canvas.transform.TransformPoint(pos);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        this.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        this.transform.parent = this.parent;
+        this.transform.localPosition = Vector3.zero;
     }
 }

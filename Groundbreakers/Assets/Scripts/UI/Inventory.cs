@@ -2,25 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, IDropHandler
 {
     public GameObject ui;
-    public GameObject content;
+    public GameObject modules;
     public GameObject characterManager;
 
     public GameObject[] inventory = new GameObject[5];
 
-    private int count;
     private int characterIndex;
-    private int[] availableSlots = {5, 5, 5, 5, 5};
 
     public void UpdateInventory()
     {
-        // Rearrange the character's module
-        this.RearrangeModules();
-
         // Disable all character inventories
         for (int i = 0; i < 5; i++)
         {
@@ -29,19 +25,6 @@ public class Inventory : MonoBehaviour
 
         // Active a specific inventory
         this.inventory[this.characterIndex].SetActive(true);
-
-        // Calculate how many modules in the inventory and change the height of the content according to that
-        this.count = 0;
-        foreach (Transform child in this.content.transform)
-        {
-            if (child.gameObject.activeSelf)
-            {
-                this.count++;
-            }
-        }
-
-        RectTransform rt = this.content.GetComponent<RectTransform>(); 
-        rt.sizeDelta = new Vector2(rt.sizeDelta.x, ((int)((this.count - 1) / 4) + 1) * 150);
 
         // Update character attributes
         GameObject.Find("CharacterList").transform.GetChild(this.characterIndex).GetComponent<characterAttributes>().updateAttributes(this.GetCharacterInventory(this.characterIndex));
@@ -59,37 +42,14 @@ public class Inventory : MonoBehaviour
         return this.characterIndex;
     }
 
-    public int GetAvailableSlots()
+    public void addModules(GameObject module)
     {
-        return this.availableSlots[this.characterIndex];
-    }
-
-    public void SetAvailableSlots(int count)
-    {
-        this.availableSlots[this.characterIndex] += count;
-    }
-
-    public void RearrangeModules()
-    {
-        // If the inventory is not empty
-        if (this.GetAvailableSlots() != 5)
+        foreach (Transform child in this.modules.transform)
         {
-            for (int i = 0; i < 4; i++)
+            if (child.childCount == 0)
             {
-                for (int j = 0; j < 4; j++)
-                {
-                    // If a certain module slot is empty && the next slot is not empty
-                    if (this.transform.GetChild(this.GetCharacterIndex()).GetChild(j).childCount == 0 &&
-                        this.transform.GetChild(this.GetCharacterIndex()).GetChild(j + 1).childCount != 0)
-                    {
-                        // Move the module from the next slot to this slot
-                        this.transform.GetChild(this.GetCharacterIndex()).GetChild(j + 1).GetChild(0).SetParent(
-                            this.transform.GetChild(this.GetCharacterIndex()).GetChild(j));
-
-                        // Reset its position
-                        this.transform.GetChild(this.GetCharacterIndex()).GetChild(j).GetChild(0).localPosition = Vector3.zero;
-                    }
-                }
+                GameObject.Instantiate(module, child);
+                break;
             }
         }
     }
@@ -115,5 +75,19 @@ public class Inventory : MonoBehaviour
         }
 
         return sumAttributes;
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag != null)
+        {
+            Debug.Log("Dropped object was: " + eventData.pointerDrag);
+            if (eventData.pointerCurrentRaycast.gameObject.tag == "Slot")
+            {
+                eventData.pointerDrag.GetComponent<ModuleGeneric>()
+                    .NewParent(eventData.pointerCurrentRaycast.gameObject.transform);
+                Debug.Log("On top of: " + eventData.pointerCurrentRaycast.gameObject);
+            }
+        }
     }
 }
