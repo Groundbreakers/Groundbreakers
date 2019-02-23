@@ -42,10 +42,9 @@ public class ModuleGeneric : MonoBehaviour
     public Boolean blightSE;
     public Boolean netSE;
 
-    private GameObject cTooltip;
-    private GameObject iTooltip;
     private CharacterManager characterManager;
     private Inventory inventory;
+    private GameObject tooltip;
 
     private Boolean isEquipped;
 
@@ -54,15 +53,14 @@ public class ModuleGeneric : MonoBehaviour
     {
         this.characterManager = GameObject.Find("CharactersPanel").GetComponent<CharacterManager>();
         this.inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
-        this.iTooltip = GameObject.Find("InventoryTooltip");
-        this.cTooltip = GameObject.Find("CharacterTooltip");
+        this.tooltip = this.transform.GetChild(0).gameObject;
         this.button.onClick.AddListener(this.HandleTooltip);
     }
 
     public void HandleTooltip()
     {
         // Reference the character tooltip
-        GameObject tooltipTitle = this.cTooltip.transform.GetChild(0).gameObject;
+        GameObject tooltipTitle = this.tooltip.transform.GetChild(0).gameObject;
         Text titleText = tooltipTitle.GetComponent<Text>();
         titleText.text = this.title;
 
@@ -84,82 +82,11 @@ public class ModuleGeneric : MonoBehaviour
         }
 
         // Update the descriptionText
-        GameObject tooltipDescription = this.cTooltip.transform.GetChild(1).gameObject;
+        GameObject tooltipDescription = this.tooltip.transform.GetChild(1).gameObject;
         Text descriptionText = tooltipDescription.GetComponent<Text>();
         descriptionText.text = this.description;
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        // Reference the inventory tooltip
-        tooltipTitle = this.iTooltip.transform.GetChild(0).gameObject;
-        titleText = tooltipTitle.GetComponent<Text>();
-        titleText.text = this.title;
-
-        // Rarity affects text color
-        switch (this.rarity)
-        {
-            case 0:
-                titleText.color = Color.black;
-                break;
-            case 1:
-                titleText.color = new Color(0.0f, 0.4f, 1.0f);
-                break;
-            case 2:
-                titleText.color = new Color(1.0f, 0.5f, 0.0f);
-                break;
-            default:
-                titleText.color = Color.black;
-                break;
-        }
-
-        // Update the descriptionText
-        tooltipDescription = this.iTooltip.transform.GetChild(1).gameObject;
-        descriptionText = tooltipDescription.GetComponent<Text>();
-        descriptionText.text = this.description;
-
-        // Update the inventory tooltipButton
-        this.UpdatetooltipButton(this.isEquipped);
-    }
-
-    public void UpdatetooltipButton(Boolean b)
-    {
-        // Find the tooltip button and text
-        GameObject tooltipButton = this.iTooltip.transform.GetChild(2).gameObject;
-        Button tooltipButtonComponent = tooltipButton.GetComponent<Button>();
-        GameObject tooltipButtonText = tooltipButton.transform.GetChild(0).gameObject;
-        Text buttonText = tooltipButtonText.GetComponent<Text>();
-
-        // Reset the button
-        tooltipButton.SetActive(false);
-        tooltipButtonComponent.onClick.RemoveAllListeners();
-
-        // Reference the notEnoughSlot text and disable it for now
-        GameObject notEnoughSlot = this.iTooltip.transform.GetChild(3).gameObject;
-        notEnoughSlot.SetActive(false);
-
-        // Check if this module is equipped
-        if (b)
-        {
-            tooltipButtonComponent.onClick.AddListener(this.RemoveModule);
-            buttonText.text = "Remove";
-            tooltipButton.SetActive(true);
-        }
-        else
-        {
-            // If the module is not equipped and the character has enough module slots
-            int availableSlots = this.inventory.GetAvailableSlots();
-
-            if (this.slot <= availableSlots)
-            {
-                tooltipButtonComponent.onClick.AddListener(this.EquipModule);
-                buttonText.text = "Equip";
-                tooltipButton.SetActive(true);
-            }
-            else
-            {
-                notEnoughSlot.SetActive(true);
-            }
-        }
+        this.tooltip.SetActive(!this.tooltip.activeSelf);
     }
 
     public void EquipModule()

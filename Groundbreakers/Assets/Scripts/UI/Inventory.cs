@@ -9,7 +9,6 @@ public class Inventory : MonoBehaviour
     public GameObject ui;
     public GameObject content;
     public GameObject characterManager;
-    public GameObject tooltip;
 
     public GameObject[] inventory = new GameObject[5];
 
@@ -19,9 +18,6 @@ public class Inventory : MonoBehaviour
 
     public void UpdateInventory()
     {
-        // Reset tooltip
-        this.ClearTooltip();
-
         // Rearrange the character's module
         this.RearrangeModules();
 
@@ -71,27 +67,6 @@ public class Inventory : MonoBehaviour
     public void SetAvailableSlots(int count)
     {
         this.availableSlots[this.characterIndex] += count;
-    }
-
-    public void ClearTooltip()
-    {
-        // Reset the title
-        GameObject tooltipTitle = this.tooltip.transform.GetChild(0).gameObject;
-        Text titleText = tooltipTitle.GetComponent<Text>();
-        titleText.text = string.Empty;
-
-        // Reset the description
-        GameObject tooltipDescription = this.tooltip.transform.GetChild(1).gameObject;
-        Text descriptionText = tooltipDescription.GetComponent<Text>();
-        descriptionText.text = string.Empty;
-
-        // Disable the tooltip button
-        GameObject tooltipButton = this.tooltip.transform.GetChild(2).gameObject;
-        tooltipButton.SetActive(false);
-
-        // Disable the notEnoughSlot text
-        GameObject notEnoughSlot = this.tooltip.transform.GetChild(3).gameObject;
-        notEnoughSlot.SetActive(false);
     }
 
     public void RearrangeModules()
