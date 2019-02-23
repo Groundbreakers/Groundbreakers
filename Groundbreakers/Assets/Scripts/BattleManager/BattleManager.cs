@@ -199,7 +199,7 @@
             GameState = Stages.Combating;
 
             // Toggle UI
-            Resources.FindObjectsOfTypeAll<Deploy>()[0].ui.SetActive(true);
+            GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", true);
         }
 
         public void OnBattleEnd()
@@ -209,7 +209,8 @@
             GameState = Stages.Exiting;
 
             // Toggle UI
-            GameObject.Find("DeployPanel").GetComponent<Deploy>().Toggle();
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().Clear();
+            GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", false);
 
             // Reset Timer
             GameObject.Find("1xButton").GetComponent<Button>().onClick.Invoke();

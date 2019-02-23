@@ -16,8 +16,6 @@ public class Deploy : MonoBehaviour
 
     public GameObject[] characterTransformButton;
 
-    public GameObject ui;
-
     #endregion
 
     #region Internal Fields
@@ -227,13 +225,12 @@ public class Deploy : MonoBehaviour
         this.targetPos[index] = newNode;
     }
 
-    public void Toggle()
+    public void Clear()
     {
         for (int i = 0; i < 5; i++)
         {
             this.targetPos[i] = null;
         }
-        this.ui.SetActive(!this.ui.activeSelf);
     }
 
     public void Transform(int index)
