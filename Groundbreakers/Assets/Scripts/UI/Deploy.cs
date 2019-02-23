@@ -35,6 +35,8 @@ public class Deploy : MonoBehaviour
     [SerializeField]
     private String[] running = new String[5];
 
+    private float defaultDeployTime = 2.0f;
+
     #endregion
 
     #region Public API
@@ -98,7 +100,7 @@ public class Deploy : MonoBehaviour
         {
             // If the character is already activated, redeploy instead of deploy
             Debug.Log("The character has been deployed, relocating...");
-            this.StartCoroutine(this.Redeploy(index, 2.0f / this.characterAttributes[index].MOB / .5f));
+            this.StartCoroutine(this.Redeploy(index, this.defaultDeployTime / this.characterAttributes[index].MOB / .5f));
         }
         else
         {
@@ -154,7 +156,7 @@ public class Deploy : MonoBehaviour
                 this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
 
                 // Setup and start the coroutine
-                this.coroutine[index] = this.Spawn(index, 2.0f / this.characterAttributes[index].MOB / .5f);
+                this.coroutine[index] = this.Spawn(index, this.defaultDeployTime / this.characterAttributes[index].MOB / .5f);
                 this.StartCoroutine(this.coroutine[index]);
             }
         }
@@ -215,7 +217,7 @@ public class Deploy : MonoBehaviour
             this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
             bar.Reset();
             this.characterAttributes[index].disable();
-            this.coroutine[index] = this.Retreating(index, 2.0f / this.characterAttributes[index].MOB / .5f);
+            this.coroutine[index] = this.Retreating(index, this.defaultDeployTime / this.characterAttributes[index].MOB / .5f);
             this.StartCoroutine(this.coroutine[index]);
         }
     }
@@ -248,7 +250,7 @@ public class Deploy : MonoBehaviour
         this.character[index].GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
         this.characterAttributes[index].disable();
 
-        this.coroutine[index] = this.Transforming(index, 2.0f / this.characterAttributes[index].MOB / .5f);
+        this.coroutine[index] = this.Transforming(index, this.defaultDeployTime / this.characterAttributes[index].MOB / .5f);
         this.StartCoroutine(this.coroutine[index]);
     }
 

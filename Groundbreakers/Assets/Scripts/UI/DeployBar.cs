@@ -7,41 +7,45 @@ public class DeployBar : MonoBehaviour
     public Image deployBar;
     public Image background;
     public characterAttributes character;
-    private double max;
+    private float max;
+    private float current;
+
+    private float defaultDeployTime = 2.0f;
 
     void Start()
     {
-        Reset();
+        this.Reset();
     }
 
     public void Reset()
     {
-        deployBar = GetComponent<Image>();
-        background = transform.parent.gameObject.GetComponent<Image>();
-        character = transform.parent.parent.parent.gameObject.GetComponent<characterAttributes>();
-        deployBar.color = new Color(deployBar.color.r, deployBar.color.g, deployBar.color.b, 1f);
-        background.color = new Color(background.color.r, background.color.g, background.color.b, 1f);
-        max = Time.time + 2 / (character.MOB * .5);
+        this.deployBar = this.GetComponent<Image>();
+        this.background = this.transform.parent.gameObject.GetComponent<Image>();
+        this.character = this.transform.parent.parent.parent.gameObject.GetComponent<characterAttributes>();
+        this.deployBar.color = new Color(this.deployBar.color.r, this.deployBar.color.g, this.deployBar.color.b, 1f);
+        this.background.color = new Color(this.background.color.r, this.background.color.g, this.background.color.b, 1f);
+
+        this.current = 0;
+        this.max = this.defaultDeployTime / (this.character.MOB * .5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.time <= max)
+        if (this.current <= this.max)
         {
-            this.deployBar.fillAmount = (float)max - (float)Time.time;
+            this.current += Time.deltaTime;
+            this.deployBar.fillAmount = this.current / this.max;
         }
         else
         {
-            deployBar.color = new Color(deployBar.color.r, deployBar.color.g, deployBar.color.b, 0f);
-            background.color = new Color(background.color.r, background.color.g, background.color.b, 0f);
+            this.Hide();
         }
-        
     }
 
     public void Hide()
     {
-        deployBar.color = new Color(deployBar.color.r, deployBar.color.g, deployBar.color.b, 0f);
-        background.color = new Color(background.color.r, background.color.g, background.color.b, 0f);
+        this.deployBar.color = new Color(this.deployBar.color.r, this.deployBar.color.g, this.deployBar.color.b, 0f);
+        this.background.color = new Color(this.background.color.r, this.background.color.g, this.background.color.b, 0f);
     }
 }
