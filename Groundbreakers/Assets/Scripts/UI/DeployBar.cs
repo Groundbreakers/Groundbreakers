@@ -10,7 +10,7 @@ public class DeployBar : MonoBehaviour
     private float max;
     private float current;
 
-    private float defaultDeployTime = 2.0f;
+    private float DEFAULT_DEPLOY_TIME = 2.0f;
 
     void Start()
     {
@@ -26,7 +26,7 @@ public class DeployBar : MonoBehaviour
         this.background.color = new Color(this.background.color.r, this.background.color.g, this.background.color.b, 1f);
 
         this.current = 0;
-        this.max = this.defaultDeployTime / (this.character.MOB * .5f);
+        this.max = this.DEFAULT_DEPLOY_TIME / (this.character.MOB * .5f);
     }
 
     // Update is called once per frame
