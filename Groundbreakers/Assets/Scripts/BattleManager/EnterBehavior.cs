@@ -95,7 +95,12 @@
 
             // Init sprite 
             this.sprite = this.GetComponent<SpriteRenderer>();
-            this.sprite.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+
+            var color = this.sprite.color;
+            var originalR = color.r;
+            var originalG = color.g;
+            var originalB = color.b;
+            this.sprite.color = new Color(originalR, originalG, originalB, 0.0f);
         }
 
         #endregion
