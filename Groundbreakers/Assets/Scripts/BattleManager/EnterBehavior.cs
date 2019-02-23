@@ -79,7 +79,7 @@
             this.sprite.DOFade(0.0f, this.duration)
                 .SetEase(Ease.InExpo)
                 .SetDelay(delay)
-                .OnComplete(() => Destroy(this));
+                .OnComplete(() => GameObject.Destroy(this));
         }
 
         #endregion
@@ -99,6 +99,5 @@
         }
 
         #endregion
-
     }
 }
