@@ -78,8 +78,8 @@ namespace Assets.Scripts
         public IEnumerator SpawnWave(int pathId = 1)
         {
             var count = this.pack.GetCount(pathId);
-            var delta = this.duration / count * 2.0f;
-            Debug.Log("total " + count + " enemies in this wave. We should emit at rate " + delta);
+            var delta = this.duration / count;
+            Debug.Log("total " + count + " enemies in this wave. We should emit at rate " + (int)delta);
 
             while (!this.pack.Done(pathId))
             {
@@ -99,7 +99,8 @@ namespace Assets.Scripts
 
             BattleManager.StartListening("block ready", this.CreateIndicators);
             BattleManager.StartListening("spawn wave", this.ShouldSpawnWave);
-            BattleManager.StartListening("end",
+            BattleManager.StartListening(
+                "end",
                 () =>
                     {
                         this.StopAllCoroutines();
@@ -163,6 +164,7 @@ namespace Assets.Scripts
         private void ShouldSpawnWave()
         {
             this.pack.ResetPack();
+            this.StopAllCoroutines();
             this.StartCoroutine(this.SpawnWave(1));
             this.StartCoroutine(this.SpawnWave(2));
         }
