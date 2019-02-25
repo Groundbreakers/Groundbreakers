@@ -36,6 +36,9 @@ public class SelectNode : MonoBehaviour
     [SerializeField]
     private Sprite occupiedIcon;
 
+    [SerializeField]
+    private Deploy deploy;
+
     #endregion
 
     #region Internal fields
@@ -94,7 +97,7 @@ public class SelectNode : MonoBehaviour
 
     private void Start()
     {
-        //this.deployPanel = GameObject.Find("DeployPanel");
+        this.deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
         this.lineRenderer = this.GetComponent<LineRenderer>();
         this.lineRenderer.enabled = false;
 
@@ -111,11 +114,6 @@ public class SelectNode : MonoBehaviour
         if (BattleManager.GameState != BattleManager.Stages.Combating)
         {
             return;
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            Deploy deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
         }
     }
 
@@ -180,6 +178,11 @@ public class SelectNode : MonoBehaviour
             }
         }
 
+        if (this.characterOnTop != -1)
+        {
+            this.deploy.Highlight(this.characterOnTop);
+        }
+
         this.rend.sprite = this.occupiedIcon;
         this.rend.enabled = true;
     }
@@ -194,10 +197,9 @@ public class SelectNode : MonoBehaviour
             }
             if (this.deploying && this.deployingCharacter != -1)
             {
-                var deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
-                deploy.SetTargetPos(this.deployingCharacter, this.gameObject);
-                deploy.DeployCharacter(this.deployingCharacter);
-                deploy.DisableDeploy(this.deployingCharacter);
+                this.deploy.SetTargetPos(this.deployingCharacter, this.gameObject);
+                this.deploy.DeployCharacter(this.deployingCharacter);
+                this.deploy.DisableDeploy(this.deployingCharacter);
             }
         }
     }
@@ -206,6 +208,8 @@ public class SelectNode : MonoBehaviour
     {
         this.rend.enabled = false;
         this.lineRenderer.enabled = false;
+
+        this.deploy.DisableHighlight();
     }
 
     #endregion

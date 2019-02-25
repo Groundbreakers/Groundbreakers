@@ -8,6 +8,8 @@ public class Deploy : MonoBehaviour
 {
     #region Inspector Properties
 
+    public GameObject[] characterButton;
+
     public GameObject[] characterDeployButton;
 
     public GameObject[] characterReleaseButton;
@@ -15,6 +17,10 @@ public class Deploy : MonoBehaviour
     public GameObject[] characterCancelButton;
 
     public GameObject[] characterTransformButton;
+
+    public Sprite[] transformIcons;
+
+    public GameObject highlight;
 
     #endregion
 
@@ -251,6 +257,18 @@ public class Deploy : MonoBehaviour
         this.StartCoroutine(this.coroutine[index]);
     }
 
+    public void Highlight(int index)
+    {
+        this.highlight.transform.SetParent(this.characterButton[index].transform);
+        this.highlight.transform.localPosition = Vector3.zero;
+        this.highlight.SetActive(true);
+    }
+
+    public void DisableHighlight()
+    {
+        this.highlight.SetActive(false);
+    }
+
     #endregion
 
     #region Unity Callbacks
@@ -272,6 +290,14 @@ public class Deploy : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             this.running[i] = "Done";
+            if (this.character[i].GetComponent<characterAttack>().stance == "Gun")
+            {
+                this.characterTransformButton[i].GetComponent<Image>().sprite = this.transformIcons[0];
+            }
+            else
+            {
+                this.characterTransformButton[i].GetComponent<Image>().sprite = this.transformIcons[1];
+            }
         }
     }
 
@@ -336,6 +362,16 @@ public class Deploy : MonoBehaviour
 
         // Allow the character to aim and shoot
         this.characterAttributes[index].enabled();
+
+        // Change the sprite of the transform button
+        if (this.characterTransformButton[index].GetComponent<Image>().sprite == this.transformIcons[0])
+        {
+            this.characterTransformButton[index].GetComponent<Image>().sprite = this.transformIcons[1];
+        }
+        else
+        {
+            this.characterTransformButton[index].GetComponent<Image>().sprite = this.transformIcons[0];
+        }
 
         // Enable the transform button and the deploy button
         this.characterTransformButton[index].GetComponent<Button>().interactable = true;
