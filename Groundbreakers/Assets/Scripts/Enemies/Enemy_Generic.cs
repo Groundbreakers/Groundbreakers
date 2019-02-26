@@ -46,9 +46,9 @@
         // Status flags
         private float statusMultiplier = 1;
         private bool isStunned = false;
-        private bool isBlighted = false;
+        public bool isBlighted = false;
         private int blightStacks = 0;
-        private bool isBurned = false;
+        public bool isBurned = false;
         private bool isSlowed = false;
         private float strongestSlow = 0;
 
@@ -84,10 +84,10 @@
             {
                 this.BlightEnemy();
             }
-            if (!this.isBurned && Input.GetKeyDown("u"))
+            /*if (!this.isBurned && Input.GetKeyDown("u"))
             {
                 this.BurnEnemy();
-            }
+            }*/
 
             if (!this.isSlowed && Input.GetKeyDown("s"))
             {

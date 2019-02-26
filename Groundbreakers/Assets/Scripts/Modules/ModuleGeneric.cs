@@ -34,7 +34,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     // Status Effects
     public Boolean slowSE;
-    public Boolean stunSE;
+    public Boolean stunSE = true;
     public Boolean burnSE;
     public Boolean markSE;
     public Boolean purgeSE;
@@ -61,7 +61,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         this.tooltip = this.transform.GetChild(0).gameObject;
         this.button.onClick.AddListener(this.HandleTooltip);
         this.parent = this.transform.parent;
-    }
+     }
 
     public void HandleTooltip()
     {

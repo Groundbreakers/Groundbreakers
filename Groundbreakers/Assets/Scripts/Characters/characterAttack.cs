@@ -37,7 +37,6 @@ public class characterAttack : MonoBehaviour
         myCollider = GetComponent<CircleCollider2D>();
         trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
-
     }
 
     void Start()
@@ -187,6 +186,8 @@ public class characterAttack : MonoBehaviour
         }
         if (rangeattack != null)
         {
+            if (this.trickster.burnSE == true) rangeattack.burn = true;
+
             rangeattack.updateStats(trickster.POW, trickster.AMP);
             rangeattack.chase(this.target);
         }

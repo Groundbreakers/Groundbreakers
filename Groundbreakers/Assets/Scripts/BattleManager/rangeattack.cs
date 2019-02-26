@@ -14,6 +14,10 @@ public class rangeattack : MonoBehaviour
 
     public Boolean hit;
 
+    public Boolean burn;
+
+    //private Enemy_Generic enemyGeneric;
+
     private float FLOATING_DAMAGE = 0.2f;
 
     public void chase(Transform _target)
@@ -49,6 +53,11 @@ public class rangeattack : MonoBehaviour
             {
                 hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
                 //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+
+                if (this.burn == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isBurned == false)
+                {
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().BurnEnemy();
+                }
             }
             this.hit = true;
             Destroy(this.gameObject);

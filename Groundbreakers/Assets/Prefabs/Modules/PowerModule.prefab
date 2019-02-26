@@ -152,13 +152,14 @@ MonoBehaviour:
   whirwindAE: 0
   reachAE: 0
   slowSE: 0
-  stunSE: 0
+  stunSE: 1
   burnSE: 0
   markSE: 0
   purgeSE: 0
   breakSE: 0
   blightSE: 0
   netSE: 0
+  isDragable: 1
 --- !u!225 &3657122530066585706
 CanvasGroup:
   m_ObjectHideFlags: 0
