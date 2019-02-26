@@ -11,19 +11,7 @@ public class characterAttributes : MonoBehaviour
     public int MOB = 2;
     public int AMP = 1;
 
-    //Abilities
-    public bool criticalDraw = false;
-    public bool reaper = false;
-    public bool alchemy = false;
-    public bool anticipate = false;
-    public bool chemicals = false;
-    public bool corrode = false;
-    public bool fleetFeet = false;
-    public bool nullify = false;
-    public bool chaos = false;
-    public bool swiftness = false;
-    public bool juggling = false;
-    public bool exit = false;
+   
 
     //Attack Effects
     public bool burstAE = false;
