@@ -32,8 +32,6 @@
         public void LaunchAll()
         {
             this.InstantiateBullets();
-            this.InstantiateBullets();
-            this.InstantiateBullets();
 
             this.buffer.ForEach(bullet => bullet.Launch(new Vector3(1, 1, 0)));
         }

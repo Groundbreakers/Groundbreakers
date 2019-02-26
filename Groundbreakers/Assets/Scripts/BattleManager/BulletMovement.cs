@@ -15,6 +15,9 @@
         private static readonly Bounds ValidBounds = new Bounds(
             new Vector3(4.0f, 4.0f), new Vector3(8.0f, 8.0f));
 
+        /// <summary>
+        /// The linear direction of the movement of the bullet. 
+        /// </summary>
         private Vector3 linearDirection;
 
         #endregion
@@ -32,7 +35,9 @@
 
         private void FixedUpdate()
         {
-            this.transform.Translate(this.linearDirection);
+            const float Speed = 0.1f;
+
+            this.transform.Translate(this.linearDirection * Speed);
 
             // should update with speed factor, but eventually with more complicated equation
             if (!ValidBounds.Contains(this.transform.position))
@@ -53,7 +58,7 @@
 
             if (go.CompareTag("Enemy"))
             {
-                this.HandleBulletHit();
+                this.HandleBulletHit(go);
             }
         }
 
@@ -61,7 +66,13 @@
 
         #region Internal Functions
 
-        private void HandleBulletHit()
+        /// <summary>
+        /// Triggered when hit the target we wanted.
+        /// </summary>
+        /// <param name="other">
+        /// The other.
+        /// </param>
+        private void HandleBulletHit(GameObject other)
         {
             GameObject.Destroy(this);
         }
