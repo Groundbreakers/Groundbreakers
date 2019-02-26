@@ -1,4 +1,4 @@
-﻿namespace BattleManager
+﻿namespace Assets.Scripts
 {
     using UnityEngine;
 
@@ -9,6 +9,12 @@
     {
         #region Internal Fields
 
+        /// <summary>
+        /// Using this native structure to determine if the bullet should be killed.
+        /// </summary>
+        private static readonly Bounds ValidBounds = new Bounds(
+            new Vector3(4.0f, 4.0f), new Vector3(8.0f, 8.0f));
+
         private Vector3 linearDirection;
 
         #endregion
@@ -17,7 +23,7 @@
 
         public void Launch(Vector3 initDirection)
         {
-            this.linearDirection = initDirection;
+            this.linearDirection = initDirection.normalized;
         }
 
         #endregion
@@ -27,6 +33,12 @@
         private void FixedUpdate()
         {
             this.transform.Translate(this.linearDirection);
+
+            // should update with speed factor, but eventually with more complicated equation
+            if (!ValidBounds.Contains(this.transform.position))
+            {
+                GameObject.Destroy(this.gameObject);
+            }
         }
 
         /// <summary>

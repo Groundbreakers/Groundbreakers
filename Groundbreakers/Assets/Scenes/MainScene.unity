@@ -762,7 +762,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1062277254
 MonoBehaviour:
@@ -823,6 +823,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BGM Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113914, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 7397003527070113890, guid: d8eda1dfd9427164f8bcde070631194d,
         type: 3}
@@ -971,6 +976,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1955252576}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1955252578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1955252576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1955252579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955252578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e69958c84cd49c985e874ac120ce962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 5175779971120556010, guid: e0bedfb5d4c35664ab9df9617868f003,
+    type: 3}
 --- !u!1 &1983138502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,6 +1263,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileMap
       objectReference: {fileID: 0}
+    - target: {fileID: 7590235029275169509, guid: cbcc7f00b377f714c875546a6a8e16f0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7590235029275169510, guid: cbcc7f00b377f714c875546a6a8e16f0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1311,6 +1341,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509351224212938766, guid: a7be5f1b47babde46bc56275ccee6a33,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 3509351224212938764, guid: a7be5f1b47babde46bc56275ccee6a33,
         type: 3}
