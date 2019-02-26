@@ -49,7 +49,7 @@
         public bool isBlighted = false;
         private int blightStacks = 0;
         public bool isBurned = false;
-        private bool isSlowed = false;
+        public bool isSlowed = false;
         private float strongestSlow = 0;
 
         // Timers
@@ -80,19 +80,20 @@
         void FixedUpdate()
         {
             // Testing functions
-            if (!this.isBlighted && Input.GetKeyDown("b"))
+           /* if (!this.isBlighted && Input.GetKeyDown("b"))
             {
                 this.BlightEnemy();
             }
-            /*if (!this.isBurned && Input.GetKeyDown("u"))
+            if (!this.isBurned && Input.GetKeyDown("u"))
             {
                 this.BurnEnemy();
-            }*/
-
+            }
+            
             if (!this.isSlowed && Input.GetKeyDown("s"))
             {
                 this.SlowEnemy(0.5f);
             }
+            */
             // Do fade-in if not opaque yet
             if (fadingIn)
             {

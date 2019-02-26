@@ -34,7 +34,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     // Status Effects
     public Boolean slowSE;
-    public Boolean stunSE = true;
+    public Boolean stunSE;
     public Boolean burnSE;
     public Boolean markSE;
     public Boolean purgeSE;

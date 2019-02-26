@@ -16,6 +16,12 @@ public class rangeattack : MonoBehaviour
 
     public Boolean burn;
 
+    public Boolean blight;
+
+    public Boolean slow;
+
+    private Vector3 direction;
+
     //private Enemy_Generic enemyGeneric;
 
     private float FLOATING_DAMAGE = 0.2f;
@@ -31,6 +37,10 @@ public class rangeattack : MonoBehaviour
         this.armorpen = amp;
     }
 
+    void Start() {
+       direction = this.target.position - this.transform.position;
+    }
+
     void FixedUpdate() {
         if (this.target == null)
         {
@@ -38,10 +48,9 @@ public class rangeattack : MonoBehaviour
             return;
         }
 
-        Vector3 direction = this.target.position - this.transform.position;
-        float distancePerFrame = this.speed * Time.deltaTime;
+       float distancePerFrame = this.speed * Time.deltaTime;
 
-        this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
+        this.transform.Translate( direction.normalized * distancePerFrame, Space.World);
     }
       
     // Deals damage to the enemies
@@ -52,11 +61,20 @@ public class rangeattack : MonoBehaviour
             if (!this.hit)
             {
                 hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
-                //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
-
+               
                 if (this.burn == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isBurned == false)
                 {
                     hitTarget.gameObject.GetComponent<Enemy_Generic>().BurnEnemy();
+                }
+
+                if (this.blight == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isBlighted == false)
+                {
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().BlightEnemy();
+                }
+
+                if (this.slow == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isSlowed == false)
+                {
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().SlowEnemy(0.5f);
                 }
             }
             this.hit = true;
