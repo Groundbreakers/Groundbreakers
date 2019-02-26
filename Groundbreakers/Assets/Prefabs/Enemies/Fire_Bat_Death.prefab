@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 262457747073407564}
   - component: {fileID: 5981017255391181859}
   - component: {fileID: 7752816205427773301}
+  - component: {fileID: 39200767598003198}
   m_Layer: 0
   m_Name: Fire_Bat_Death
   m_TagString: Untagged
@@ -99,3 +100,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &39200767598003198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718309088729475099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb20cd84c54af3540bf02d3416108b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 5981017255391181859}
