@@ -2,10 +2,11 @@
 {
     using UnityEngine;
 
+    /// <inheritdoc cref="IBullet"/>
     /// <summary>
     /// The most basic bullet movement pattern: move toward one direction in Linear Motion.
     /// </summary>
-    public class BulletMovement : MonoBehaviour
+    public class BulletMovement : MonoBehaviour, IBullet
     {
         #region Internal Fields
 
@@ -22,11 +23,17 @@
 
         #endregion
 
-        #region Public Functions    
+        #region IBullet
 
         public void Launch(Vector3 initDirection)
         {
             this.linearDirection = initDirection.normalized;
+        }
+
+        public void HandleBulletHit(GameObject other)
+        {
+            Debug.Log("hit");
+            GameObject.Destroy(this);
         }
 
         #endregion
@@ -37,10 +44,12 @@
         {
             const float Speed = 0.1f;
 
+            var pos = this.transform.position;
+
             this.transform.Translate(this.linearDirection * Speed);
 
             // should update with speed factor, but eventually with more complicated equation
-            if (!ValidBounds.Contains(this.transform.position))
+            if (pos.x < -1 || pos.x > 10 || pos.y < -1 || pos.y > 10)
             {
                 GameObject.Destroy(this.gameObject);
             }
@@ -66,16 +75,6 @@
 
         #region Internal Functions
 
-        /// <summary>
-        /// Triggered when hit the target we wanted.
-        /// </summary>
-        /// <param name="other">
-        /// The other.
-        /// </param>
-        private void HandleBulletHit(GameObject other)
-        {
-            GameObject.Destroy(this);
-        }
 
         #endregion
     }

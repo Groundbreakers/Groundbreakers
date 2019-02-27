@@ -31,6 +31,20 @@ public class characterAttack : MonoBehaviour
 
     private CircleCollider2D myCollider;
 
+    /// <summary>
+    /// Ivan: we keep a reference to the weapon GameObject here. Note the second child of Character
+    /// GameObject must be Weapons
+    /// </summary>
+    private GameObject rangedWeapon;
+
+    /// <summary>
+    /// Written by Ivan
+    /// </summary>
+    private void OnEnable()
+    {
+        this.rangedWeapon = this.transform.GetChild(1).gameObject; // should check error
+    }
+
     void Awake()
     {
         targetedEnemies = new List<GameObject>();
@@ -164,12 +178,22 @@ public class characterAttack : MonoBehaviour
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
-            this.shoot();
+            // this.shoot();
+            this.Fire();
 
             this.fireCountdown = 1f / this.fireRate;
         }
 
         this.fireCountdown -= Time.deltaTime;
+    }
+
+    /// <summary>
+    /// This is the alternative way of shooting bullets written by Ivan.
+    /// </summary>
+    public void Fire()
+    {
+        this.rangedWeapon.SendMessage("AimAtTarget", this.target);
+        this.rangedWeapon.SendMessage("LaunchAll");
     }
 
     // Instantiate and and chase the target

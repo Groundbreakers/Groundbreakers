@@ -1,12 +1,12 @@
 ﻿namespace Assets.Scripts
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     using Sirenix.OdinInspector;
 
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     /// Ideally, equip this launcher to character objects when in Ranged attack mode.
     /// Disable this component when switched to Melee Mode.
@@ -33,7 +33,15 @@
         {
             this.InstantiateBullets();
 
-            this.buffer.ForEach(bullet => bullet.Launch(new Vector3(1, 1, 0)));
+            // Subject to change
+            var direction = this.transform.forward;
+
+            this.buffer.ForEach(bullet => bullet.Launch(direction));
+        }
+
+        public void AimAtTarget(Transform target)
+        {
+            this.transform.LookAt(target);
         }
 
         #endregion
@@ -56,7 +64,8 @@
         {
             // Currently using native Instantiation method. Will switch to Object pool.
             // Should also trigger event
-            var go = GameObject.Instantiate(this.bulletPrefab, this.transform);
+            var pos = this.transform.position;
+            var go = GameObject.Instantiate(this.bulletPrefab, pos, Quaternion.identity);
 
             this.buffer.Add(go.GetComponent<BulletMovement>());
         }
