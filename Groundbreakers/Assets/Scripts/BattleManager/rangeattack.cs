@@ -86,13 +86,12 @@ public class rangeattack : MonoBehaviour
         // prioritize armor breaking and purge 
         if (this._break == true)
         {
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().attributes.Remove("Armored");
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().breakEnemyArmor();
         }
 
-        if (this.purge == true)
+        if (this.purge == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsPurged() == false)
         {
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().attributes.Remove("Aura");
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().attributes.Remove("Revenge");
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().purgeEnemy();
         }
 
         if (this.mark != true)

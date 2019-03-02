@@ -164,14 +164,16 @@ public class characterAttack : MonoBehaviour
         {
             rangeattack.speed = 10f;
             rangeAttack_object.GetComponent<SpriteRenderer>().enabled = false;
-        }else
+        }
+        else
         {
             rangeattack.speed = 3f;
         }
+
         if (rangeattack != null)
         {
             this.setProjectileStatusAttributes(rangeattack);
-            rangeattack.updateStats(trickster.POW, trickster.AMP);
+            rangeattack.updateStats(this.trickster.POW, this.trickster.AMP);
 
             rangeattack.chase(this.target);
         }

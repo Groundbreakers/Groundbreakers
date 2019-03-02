@@ -58,6 +58,8 @@
 
         private bool isEnraged = false;
 
+        private bool isPurged = true;
+
         private bool isSlowed = false;
 
         private bool isStunned = false;
@@ -90,7 +92,15 @@
             if (!this.isBlighted)
             {
                 this.isBlighted = true;
-                if (this.isBurned)
+                if (!this.isPurged && this.isBurned)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                }
+                else if (!this.isPurged)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                }
+                else if (this.isBurned)
                 {
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 }
@@ -99,7 +109,13 @@
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
                 }
             }
+
             this.blightStacks += 1;
+        }
+
+        public void breakEnemyArmor()
+        {
+            this.attributes.Remove("Armored");
         }
 
         // Burn handlers
@@ -107,13 +123,17 @@
         {
             if (!this.isBurned)
             {
-              this.isBurned = true;
+                this.isBurned = true;
                 if (this.isBlighted)
                 {
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 }
+                else if (!this.isPurged)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+                }
                 else
-                {Debug.Log("burn");
+                {
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 }
             }
@@ -176,6 +196,11 @@
             return this.isBurned;
         }
 
+        public bool getIsPurged()
+        {
+            return this.isPurged;
+        }
+
         public bool getIsSlowed()
         {
             return this.isSlowed;
@@ -184,6 +209,14 @@
         public bool getIsStunned()
         {
             return this.isStunned;
+        }
+
+        public void purgeEnemy()
+        {
+            this.attributes.Remove("Aura");
+            this.attributes.Remove("Revenge");
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+            this.isPurged = true;
         }
 
         // Slow handler. Takes a float for slow strength (0.2 = 20% slow, 0.05 = 5% slow, etc)
@@ -259,16 +292,6 @@
              }
              */
 
-            // Placeholder for aura and revenge
-            if (this.attributes.Contains("Aura") && this.attributes.Contains("Revenge"))
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
-            }
-            else
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-            }
-
             // Do fade-in if not opaque yet
             if (this.fadingIn)
             {
@@ -297,9 +320,12 @@
             // Check health, die if health <= 0.
             if (this.health <= 0)
             {
-                GameObject effect = (GameObject)Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
+                GameObject effect = (GameObject)Instantiate(
+                    this.deathEffect,
+                    this.transform.position,
+                    Quaternion.identity);
                 Enemy_Death death = effect.GetComponent<Enemy_Death>();
-                death.setDirection(animator.GetInteger("Direction"));
+                death.setDirection(this.animator.GetInteger("Direction"));
                 Destroy(effect, 0.25f);
                 Destroy(this.gameObject);
             }
@@ -483,6 +509,13 @@
 
             // Get first waypoint
             this.GetNextWaypoint();
+
+            // Placeholder for aura and revenge
+            if (this.attributes.Contains("Aura") && this.attributes.Contains("Revenge"))
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
+                this.isPurged = false;
+            }
         }
 
         void StunTick()
