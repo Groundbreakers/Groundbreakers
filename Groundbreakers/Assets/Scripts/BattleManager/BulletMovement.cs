@@ -33,7 +33,7 @@
         public void HandleBulletHit(GameObject other)
         {
             Debug.Log("hit");
-            GameObject.Destroy(this);
+            GameObject.Destroy(this.gameObject);
         }
 
         #endregion
@@ -42,26 +42,26 @@
 
         private void FixedUpdate()
         {
-            const float Speed = 0.1f;
+            const float Speed = 0.5f;
 
             var pos = this.transform.position;
 
             this.transform.Translate(this.linearDirection * Speed);
 
             // should update with speed factor, but eventually with more complicated equation
-            if (pos.x < -1 || pos.x > 10 || pos.y < -1 || pos.y > 10)
+            if (pos.x < -1.0f || pos.x > 10.0f || pos.y < -1.0f || pos.y > 10.0f)
             {
                 GameObject.Destroy(this.gameObject);
             }
         }
 
         /// <summary>
-        /// The on collision enter 2 d.
+        /// This method is triggered only if the collider is checked with "isTriggered"
         /// </summary>
         /// <param name="other">
         /// The other.
         /// </param>
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             var go = other.gameObject;
 
