@@ -166,6 +166,7 @@
             }
         }
 
+        // access functions
         public bool getIsBlighted()
         {
             return this.isBlighted;
@@ -181,7 +182,6 @@
             return this.isSlowed;
         }
 
-        // access functions
         public bool getIsStunned()
         {
             return this.isStunned;
@@ -394,22 +394,26 @@
             {
                 this.animator.SetInteger("Direction", 0);
             }
- // Up
+
+            // Up
             else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0)
             {
                 this.animator.SetInteger("Direction", 1);
             }
- // Right
+
+            // Right
             else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0)
             {
                 this.animator.SetInteger("Direction", 2);
             }
- // Down
+
+            // Down
             else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0)
             {
                 this.animator.SetInteger("Direction", 3);
             }
- // Left
+
+            // Left
         }
 
         void InitializeAttributes()
