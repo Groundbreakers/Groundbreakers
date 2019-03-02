@@ -61,7 +61,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         this.tooltip = this.transform.GetChild(0).gameObject;
         this.button.onClick.AddListener(this.HandleTooltip);
         this.parent = this.transform.parent;
-     }
+    }
 
     public void HandleTooltip()
     {
