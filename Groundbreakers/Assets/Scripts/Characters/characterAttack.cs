@@ -179,7 +179,7 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", true);
             // this.shoot();
-            this.Fire();
+            this.PerformAttack();
 
             this.fireCountdown = 1f / this.fireRate;
         }
@@ -187,13 +187,32 @@ public class characterAttack : MonoBehaviour
         this.fireCountdown -= Time.deltaTime;
     }
 
+    public void PerformAttack()
+    {
+        if (this.stance.Equals("Melee"))
+        {
+            this.MeleeAttack();
+        }
+        else
+        {
+            this.RangedAttack();
+        }
+    }
+
     /// <summary>
     /// This is the alternative way of shooting bullets written by Ivan.
     /// </summary>
-    public void Fire()
+    public void RangedAttack()
     {
         this.rangedWeapon.SendMessage("AimAtTarget", this.target);
         this.rangedWeapon.SendMessage("LaunchAll");
+    }
+
+    public void MeleeAttack()
+    {
+        // should use a melee attack module here. This is temp solution :(
+
+        this.rangedWeapon.SendMessage("Melee", this.target);
     }
 
     // Instantiate and and chase the target

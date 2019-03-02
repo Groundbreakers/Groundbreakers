@@ -47,6 +47,19 @@
             this.transform.LookAt(target);
         }
 
+        // Warning, this is temporary solution, should use a proper external damage handler
+        public void Melee(Transform target)
+        {
+            var pos = this.transform.position;
+            var go = GameObject.Instantiate(this.bulletPrefab, pos, Quaternion.identity);
+
+            go.GetComponent<SpriteRenderer>().enabled = false;
+            var bullet = go.GetComponent<BulletMovement>();
+            bullet.SetCharacterAttribute(this.attributes);
+
+            bullet.HandleBulletHit(target.gameObject);
+        }
+
         #endregion
 
         #region Unity Callbacks
