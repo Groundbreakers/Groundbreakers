@@ -170,7 +170,7 @@ public class characterAttack : MonoBehaviour
         }
         if (rangeattack != null)
         {
-            //this.setProjectileStatusAttributes(rangeattack);
+            this.setProjectileStatusAttributes(rangeattack);
             rangeattack.updateStats(trickster.POW, trickster.AMP);
 
             rangeattack.chase(this.target);

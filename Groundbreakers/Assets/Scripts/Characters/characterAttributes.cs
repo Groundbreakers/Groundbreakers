@@ -6,17 +6,14 @@ public class characterAttributes : MonoBehaviour
 
     public int AMP = 1;
 
-    /*
-     * public bool blightSE = false;
+    public bool blightSE = false;
 
-public bool breakSE = false;
+    public bool breakSE = false;
 
-public bool burnSE = false;
+    public bool burnSE = false;
 
-public bool disabled = false;
-     *
-     */
-
+    public bool disabled = false;
+    
     public bool laserAE = false;
 
     public bool markSE = false;
