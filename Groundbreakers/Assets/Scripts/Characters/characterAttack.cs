@@ -166,7 +166,7 @@ public class characterAttack : MonoBehaviour
             rangeAttack_object.GetComponent<SpriteRenderer>().enabled = false;
         }else
         {
-            rangeattack.speed = 70f;
+            rangeattack.speed = 3f;
         }
         if (rangeattack != null)
         {

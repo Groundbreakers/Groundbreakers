@@ -99,7 +99,6 @@
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
                 }
             }
-
             this.blightStacks += 1;
         }
 
@@ -108,13 +107,13 @@
         {
             if (!this.isBurned)
             {
-                this.isBurned = true;
+              this.isBurned = true;
                 if (this.isBlighted)
                 {
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 }
                 else
-                {
+                {Debug.Log("burn");
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 }
             }

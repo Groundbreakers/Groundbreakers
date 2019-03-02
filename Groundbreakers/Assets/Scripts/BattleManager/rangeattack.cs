@@ -10,7 +10,7 @@ public class rangeattack : MonoBehaviour
 
     public bool hit;
 
-    public float speed = 70f;
+    public float speed = 3f;
 
     public Transform target;
 

@@ -10,7 +10,7 @@ public class characterAttributes : MonoBehaviour
 
     public bool breakSE = false;
 
-    public bool burnSE = false;
+    public bool burnSE;
 
     public bool disabled = false;
     
@@ -150,13 +150,13 @@ public class characterAttributes : MonoBehaviour
         }
 
         // update effects
-        this.burstAE = temp[0];
+        //this.burstAE = temp[0];
         this.ricochetAE = temp[1];
         this.laserAE = temp[2];
         this.splashAE = temp[3];
         this.pierceAE = temp[4];
         this.traceAE = temp[5];
-        this.cleaveAE = temp[6];
+        //this.cleaveAE = temp[6];
         this.whirwindAE = temp[7];
         this.reachAE = temp[8];
         this.slowSE = temp[9];
