@@ -191,6 +191,7 @@ public class characterAttack : MonoBehaviour
             if (this.trickster.slowSE == true) rangeattack.setSlow();
             if (this.trickster.stunSE == true) rangeattack.setStun();
             if (this.trickster.markSE== true) rangeattack.setMark();
+            if (this.trickster.breakSE == true) rangeattack.setBreak();
 
 
             rangeattack.updateStats(trickster.POW, trickster.AMP);

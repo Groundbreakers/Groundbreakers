@@ -20,7 +20,7 @@
         public float powerMultiplier = 1;
         public float evasion = 0;
         public int regen = 0;
-
+        
         // Attributes and related flags
         public List<String> attributes = new List<string>();
         private bool isEnraged = false;
@@ -223,7 +223,7 @@
                 if (isMarked == true)
                 {
                     damagevalue = (int) (damagevalue * 1.25);
-                    Debug.Log("Marked Damage = " + damagevalue);
+                   // Debug.Log("Marked Damage = " + damagevalue);
                     this.health -= damagevalue;
                     GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
                 }
@@ -231,7 +231,7 @@
                 {
                     this.health -= damagevalue;
                     GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
-                    Debug.Log("Un Marked Damage = " + damagevalue);
+                   // Debug.Log("Un Marked Damage = " + damagevalue);
                 }
             }
             else

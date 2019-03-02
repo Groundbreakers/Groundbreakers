@@ -12,17 +12,19 @@ public class rangeattack : MonoBehaviour
 
     public int armorpen;
 
-    public Boolean hit;
+    public bool hit;
 
-    private Boolean burn;
+    private bool burn;
 
-    private Boolean blight;
+    private bool blight;
 
-    private Boolean slow;
+    private bool slow;
 
-    private Boolean stun;
+    private bool stun;
 
-    private Boolean mark;
+    private bool mark;
+
+    private bool _break;
 
     // private Boolean mark;
 
@@ -63,6 +65,11 @@ public class rangeattack : MonoBehaviour
         this.stun = true;
     }
 
+    public void setBreak()
+    {
+        this._break = true;
+    }
+
     public void updateStats(int pow, int amp)
     {
         this.damage = Mathf.RoundToInt(pow * 50 * UnityEngine.Random.Range(1.0f - this.FLOATING_DAMAGE, 1.0f + this.FLOATING_DAMAGE));
@@ -92,6 +99,13 @@ public class rangeattack : MonoBehaviour
         {
             if (!this.hit)
             {
+                // prioritize armor breaking
+                if (this._break == true)
+                {
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().attributes.Remove("Armored");
+                   
+                }
+
                 if(this.mark != true)
                 { 
                     hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, false);
