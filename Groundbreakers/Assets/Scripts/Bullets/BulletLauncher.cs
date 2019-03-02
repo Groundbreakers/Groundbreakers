@@ -11,6 +11,7 @@
     /// Ideally, equip this launcher to character objects when in Ranged attack mode.
     /// Disable this component when switched to Melee Mode.
     /// </summary>
+    [RequireComponent(typeof(BulletMovement))]
     public class BulletLauncher : MonoBehaviour
     {
         #region Inspector
@@ -23,6 +24,8 @@
         #region Internal Fields
 
         private List<BulletMovement> buffer = new List<BulletMovement>();
+
+        private characterAttributes attributes;
 
         #endregion
 
@@ -50,7 +53,7 @@
 
         private void OnEnable()
         {
-            //this.InstantiateBullets();
+            this.attributes = this.transform.parent.GetComponent<characterAttributes>();
         }
 
         #endregion
@@ -67,7 +70,10 @@
             var pos = this.transform.position;
             var go = GameObject.Instantiate(this.bulletPrefab, pos, Quaternion.identity);
 
-            this.buffer.Add(go.GetComponent<BulletMovement>());
+            var bullet = go.GetComponent<BulletMovement>();
+            bullet.SetCharacterAttribute(this.attributes);
+
+            this.buffer.Add(bullet);
         }
 
         #endregion
