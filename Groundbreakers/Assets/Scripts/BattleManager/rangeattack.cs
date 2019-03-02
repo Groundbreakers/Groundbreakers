@@ -14,7 +14,7 @@ public class rangeattack : MonoBehaviour
 
     public Boolean hit;
 
-    public Boolean burn;
+    private Boolean burn;
 
     public Boolean blight;
 
@@ -29,6 +29,21 @@ public class rangeattack : MonoBehaviour
     public void chase(Transform _target)
     {
         this.target = _target;
+    }
+
+    public void setBurn()
+    {
+        this.burn = true;
+    }
+
+    public void setBlight()
+    {
+        this.blight = true;
+    }
+
+    public void setSlow()
+    {
+        this.slow = true;
     }
 
     public void updateStats(int pow, int amp)
