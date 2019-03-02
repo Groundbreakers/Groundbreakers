@@ -6,35 +6,16 @@ public class characterAttributes : MonoBehaviour
 
     public int AMP = 1;
 
-    public bool anticipate = false;
+    /*
+     * public bool blightSE = false;
 
-    public bool blightSE = false;
+public bool breakSE = false;
 
-    public bool breakSE = false;
+public bool burnSE = false;
 
-    public bool burnSE = false;
-
-    // Attack Effects
-    public bool burstAE = false;
-
-    public bool chaos = false;
-
-    public bool chemicals = false;
-
-    public bool cleaveAE = false;
-
-    public bool corrode = false;
-
-    // Abilities
-    public bool criticalDraw = false;
-
-    public bool disabled = false;
-
-    public bool exit = false;
-
-    public bool fleetFeet = false;
-
-    public bool juggling = false;
+public bool disabled = false;
+     *
+     */
 
     public bool laserAE = false;
 

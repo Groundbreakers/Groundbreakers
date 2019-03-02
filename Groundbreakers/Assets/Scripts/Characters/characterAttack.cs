@@ -162,13 +162,17 @@ public class characterAttack : MonoBehaviour
         rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
         if (this.stance.Equals("Melee"))
         {
+            rangeattack.speed = 10f;
             rangeAttack_object.GetComponent<SpriteRenderer>().enabled = false;
+        }else
+        {
+            rangeattack.speed = 70f;
         }
-
         if (rangeattack != null)
         {
-            this.setProjectileStatusAttributes(rangeattack);
-            rangeattack.updateStats(this.trickster.POW, this.trickster.AMP);
+            //this.setProjectileStatusAttributes(rangeattack);
+            rangeattack.updateStats(trickster.POW, trickster.AMP);
+
             rangeattack.chase(this.target);
         }
     }

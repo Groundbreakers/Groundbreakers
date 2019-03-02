@@ -298,10 +298,9 @@
             // Check health, die if health <= 0.
             if (this.health <= 0)
             {
-                GameObject effect = (GameObject)Instantiate(
-                    this.deathEffect,
-                    this.transform.position,
-                    Quaternion.identity);
+                GameObject effect = (GameObject)Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
+                Enemy_Death death = effect.GetComponent<Enemy_Death>();
+                death.setDirection(animator.GetInteger("Direction"));
                 Destroy(effect, 0.25f);
                 Destroy(this.gameObject);
             }
