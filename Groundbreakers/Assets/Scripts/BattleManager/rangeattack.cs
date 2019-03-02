@@ -16,16 +16,23 @@ public class rangeattack : MonoBehaviour
 
     private Boolean burn;
 
-    public Boolean blight;
+    private Boolean blight;
 
-    public Boolean slow;
+    private Boolean slow;
+
+    private Boolean stun;
+
+    private Boolean mark;
+
+    // private Boolean mark;
 
     private Vector3 direction;
 
     //private Enemy_Generic enemyGeneric;
 
     private float FLOATING_DAMAGE = 0.2f;
-
+    
+    // access functions
     public void chase(Transform _target)
     {
         this.target = _target;
@@ -44,6 +51,16 @@ public class rangeattack : MonoBehaviour
     public void setSlow()
     {
         this.slow = true;
+    }
+
+    public void setMark()
+    {
+        this.mark = true;
+    }
+
+    public void setStun()
+    {
+        this.stun = true;
     }
 
     public void updateStats(int pow, int amp)
@@ -75,22 +92,35 @@ public class rangeattack : MonoBehaviour
         {
             if (!this.hit)
             {
-                hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
-               
-                if (this.burn == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isBurned == false)
+                if(this.mark != true)
+                { 
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, false);
+                }
+                else
+                {
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, true);
+                }
+
+                if (this.burn == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsBurned() == false)
                 {
                     hitTarget.gameObject.GetComponent<Enemy_Generic>().BurnEnemy();
                 }
 
-                if (this.blight == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isBlighted == false)
+                if (this.blight == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsBlighted() == false)
                 {
                     hitTarget.gameObject.GetComponent<Enemy_Generic>().BlightEnemy();
                 }
 
-                if (this.slow == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().isSlowed == false)
+                if (this.slow == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsSlowed() == false)
                 {
                     hitTarget.gameObject.GetComponent<Enemy_Generic>().SlowEnemy(0.5f);
                 }
+
+                if (this.stun == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsStunned() == false)
+                {
+                    hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy(0.5f);
+                }
+                
             }
             this.hit = true;
             Destroy(this.gameObject);

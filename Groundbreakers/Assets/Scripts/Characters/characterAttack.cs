@@ -188,7 +188,10 @@ public class characterAttack : MonoBehaviour
         {
             if (this.trickster.burnSE == true) rangeattack.setBurn();
             if (this.trickster.blightSE == true) rangeattack.setBlight();
-            if (this.trickster.slowSE== true) rangeattack.setSlow();
+            if (this.trickster.slowSE == true) rangeattack.setSlow();
+            if (this.trickster.stunSE == true) rangeattack.setStun();
+            if (this.trickster.markSE== true) rangeattack.setMark();
+
 
             rangeattack.updateStats(trickster.POW, trickster.AMP);
             rangeattack.chase(this.target);

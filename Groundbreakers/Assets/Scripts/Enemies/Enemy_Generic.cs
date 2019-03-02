@@ -46,10 +46,10 @@
         // Status flags
         private float statusMultiplier = 1;
         private bool isStunned = false;
-        public bool isBlighted = false;
+        private bool isBlighted = false;
         private int blightStacks = 0;
-        public bool isBurned = false;
-        public bool isSlowed = false;
+        private bool isBurned = false;
+        private bool isSlowed = false;
         private float strongestSlow = 0;
 
         // Timers
@@ -75,6 +75,26 @@
             this.transform.Translate(new Vector3(Random.Range(-0.2f,0.3f),Random.Range(-0.2f,0.3f),0));
             // Get first waypoint
             this.GetNextWaypoint();
+        }
+
+        public Boolean getIsStunned()
+        {
+            return this.isStunned;
+        }
+
+        public Boolean getIsSlowed()
+        {
+            return this.isSlowed;
+        }
+
+        public Boolean getIsBurned()
+        {
+            return this.isBurned;
+        }
+
+        public Boolean getIsBlighted()
+        {
+            return this.isBlighted;
         }
 
         void FixedUpdate()
@@ -176,7 +196,7 @@
         }
 
         // Damage handler
-        public void DamageEnemy(int damage, int armorpen, float accuracy, bool isMelee)
+        public void DamageEnemy(int damage, int armorpen, float accuracy, bool isMelee, bool isMarked)
         {
             // Check if the attack missed, or was dodged. If it hits, do damage calculation
             float accuracyroll = Random.Range(0.0f, 1.0f);
@@ -192,14 +212,27 @@
                 if (this.attributes.Contains("Armored"))
                 {
                     damagevalue = (int) (damage * armorpen * .25f);
+                  
                 }
                 else
                 {
                     damagevalue = damage;
                 }
 
-                this.health -= damagevalue;
-                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+               
+                if (isMarked == true)
+                {
+                    damagevalue = (int) (damagevalue * 1.25);
+                    Debug.Log("Marked Damage = " + damagevalue);
+                    this.health -= damagevalue;
+                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                }
+                else
+                {
+                    this.health -= damagevalue;
+                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                    Debug.Log("Un Marked Damage = " + damagevalue);
+                }
             }
             else
             {
@@ -208,7 +241,7 @@
         }
 
         #region Status Handlers
-
+        
         // Stun handlers
         public void StunEnemy(float time)
         {
@@ -344,7 +377,7 @@
         {
             GameObject counter = GameObject.Find("HPCounter");
             HP hp = counter.GetComponent<HP>();
-            Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
+           // Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
             hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
             Destroy(this.gameObject);
         }
