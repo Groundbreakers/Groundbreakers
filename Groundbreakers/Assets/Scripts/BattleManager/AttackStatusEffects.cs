@@ -110,4 +110,41 @@
         /// </summary>
         Trap,
     }
+
+    /// <summary>
+    /// Same as all above. I assume this is handled in Character's code.
+    /// </summary>
+    [Flags]
+    public enum MonsterEffects
+    {
+        /// <summary>
+        /// Cannot perform any action.
+        /// </summary>
+        Stun,
+
+        /// <summary>
+        /// 50% chance to miss attacks.
+        /// </summary>
+        Blind,
+
+        /// <summary>
+        /// Disable all abilities.
+        /// </summary>
+        Plague,
+
+        /// <summary>
+        /// Halve POW.
+        /// </summary>
+        Interfere,
+
+        /// <summary>
+        /// Cannot Retreat or Deploy.
+        /// </summary>
+        Shackle,
+
+        /// <summary>
+        /// Movement + 50%.
+        /// </summary>
+        HasteAura,
+    }
 }
