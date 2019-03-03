@@ -19,6 +19,9 @@
         /// <param name="other">
         /// The other.
         /// </param>
-        void HandleBulletHit(GameObject other);
+        /// <param name="isMelee">
+        /// The is Melee.
+        /// </param>
+        void HandleBulletHit(GameObject other, bool isMelee);
     }
 }

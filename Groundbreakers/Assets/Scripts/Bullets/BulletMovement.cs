@@ -66,7 +66,10 @@
         /// <param name="other">
         /// The other.
         /// </param>
-        public void HandleBulletHit(GameObject other)
+        /// <param name="isMelee">
+        /// The is Melee.
+        /// </param>
+        public void HandleBulletHit(GameObject other, bool isMelee = false)
         {
             GameObject.Destroy(this.gameObject);
 
@@ -76,7 +79,8 @@
             other.GetComponent<Enemy_Generic>().DamageEnemy(
                 damage.Pow, 
                 damage.Amp, 
-                1.0f, 
+                1.0f,
+                isMelee,
                 false);
         }
 
