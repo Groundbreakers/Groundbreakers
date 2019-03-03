@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// I assume the attack effects are handled in 'CharacterAttack' Class in the following ways:
+    /// I assume the attack effects are handled in 'CharacterAttributes' Class in the following ways:
     /// 1. Having a field of type 'AttackEffects' that store attack effects.
     /// 2. since this is a flag, which means you should use 'AttackEffects.HasFlag() Method'
     /// to check if one has the desired effects. 
