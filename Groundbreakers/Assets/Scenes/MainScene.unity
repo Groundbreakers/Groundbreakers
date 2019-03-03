@@ -219,6 +219,16 @@ PrefabInstance:
       propertyPath: stance
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: pierceAE
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: ricochetAE
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798988b7145208f43b913596a74551c8, type: 3}
 --- !u!4 &238084780 stripped
@@ -1203,6 +1213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 5175779971120556010, guid: e0bedfb5d4c35664ab9df9617868f003,
     type: 3}
+  type: 0
+  offSet: {x: 0, y: 0, z: 0}
 --- !u!1 &1983138502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,6 +1758,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217686435854685775, guid: 6fd2af10ce4afe744bd7d966362f0484,
+        type: 3}
+      propertyPath: positions.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fd2af10ce4afe744bd7d966362f0484, type: 3}
