@@ -221,13 +221,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
-      propertyPath: pierceAE
+      propertyPath: stunSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: whirwindAE
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
-      propertyPath: ricochetAE
-      value: 0
+      propertyPath: burnSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: blightSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: slowSE
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798988b7145208f43b913596a74551c8, type: 3}
@@ -313,6 +328,26 @@ PrefabInstance:
         type: 3}
       propertyPath: stance
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: stunSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: burnSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: blightSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: slowSE
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798988b7145208f43b913596a74551c8, type: 3}
@@ -462,6 +497,11 @@ PrefabInstance:
     - target: {fileID: 5623790536386699595, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623790536386699595, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2679509969350117839, guid: 4fb14a2bb4791934bb6b635d45b7653e,
@@ -722,6 +762,26 @@ PrefabInstance:
       propertyPath: stance
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: stunSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: burnSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: blightSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: slowSE
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798988b7145208f43b913596a74551c8, type: 3}
 --- !u!4 &772711478 stripped
@@ -963,6 +1023,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4052667241824737859, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113917, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113916, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113919, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113918, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113913, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397003527070113912, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8347014516364276597, guid: d8eda1dfd9427164f8bcde070631194d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8eda1dfd9427164f8bcde070631194d, type: 3}
 --- !u!1001 &1207186387
@@ -1184,6 +1284,31 @@ PrefabInstance:
         type: 3}
       propertyPath: ROF
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: stunSE
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: burnSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: blightSE
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: slowSE
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: markSE
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798988b7145208f43b913596a74551c8, type: 3}
@@ -1500,6 +1625,26 @@ PrefabInstance:
         type: 3}
       propertyPath: ROF
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: stunSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: burnSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: blightSE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1143237542542456168, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: slowSE
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798988b7145208f43b913596a74551c8, type: 3}
@@ -1832,6 +1977,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251953317771056962, guid: c1ae0ce6f501a784593b8ea84a99fbf9,
+        type: 3}
+      propertyPath: totalWaves
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1ae0ce6f501a784593b8ea84a99fbf9, type: 3}
