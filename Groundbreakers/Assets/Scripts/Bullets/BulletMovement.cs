@@ -1,10 +1,6 @@
 ﻿namespace Assets.Scripts
 {
-    using Assets.Enemies.Scripts;
-
     using UnityEngine;
-
-    using Random = UnityEngine.Random;
 
     /// <inheritdoc cref="IBullet"/>
     /// <summary>
@@ -25,24 +21,7 @@
         /// </summary>
         private Vector3 linearDirection;
 
-        // temp
-        private characterAttributes attributes;
-
-        #endregion
-
-        #region Public Functions
-
-        /// <summary>
-        /// This method should be called with associated character attribute components when the
-        /// bullet object is instantiated.
-        /// </summary>
-        /// <param name="characterAttributes">
-        /// The character attributes.
-        /// </param>
-        public void SetCharacterAttribute(characterAttributes characterAttributes)
-        {
-            this.attributes = characterAttributes;
-        }
+        private DamageHandler damageHandler;
 
         #endregion
 
@@ -55,63 +34,19 @@
         /// <param name="direction">
         /// The direction shooting towards.
         /// </param>
-        public void Launch(Vector3 direction)
+        /// <param name="handler">
+        /// The Damage handler component that you wish to use in this bullet.
+        /// </param>
+        public void Launch(Vector3 direction, DamageHandler handler)
         {
             this.linearDirection = direction.normalized;
-        }
-
-        /// <summary>
-        /// Triggered when hit the target we wanted.
-        /// </summary>
-        /// <param name="other">
-        /// The other.
-        /// </param>
-        /// <param name="isMelee">
-        /// The is Melee.
-        /// </param>
-        public void HandleBulletHit(GameObject other, bool isMelee = false)
-        {
-            GameObject.Destroy(this.gameObject);
-
-            var damage = this.GetDamage();
-
-            // temp solution
-            other.GetComponent<Enemy_Generic>().DamageEnemy(
-                damage.Pow, 
-                damage.Amp, 
-                1.0f,
-                isMelee,
-                false);
+            this.damageHandler = handler;
         }
 
         #endregion
 
         #region Internal Static Helpers
 
-        /// <summary>
-        /// In probability theory, the normal(or Gaussian or Gauss or Laplace–Gauss) distribution
-        /// is a very common continuous probability distribution.
-        /// See also
-        /// <seealso cref="https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule"/>
-        /// </summary>
-        /// <param name="mu">
-        /// The Mean of the random variable.
-        /// </param>
-        /// <param name="sigma">
-        /// The Standard deviation of the random variable.
-        /// </param>
-        /// <returns>
-        /// The <see cref="float"/> standard normal(Gaussian) distribution.
-        /// </returns>
-        private static float GetGaussianRand(float mu, float sigma)
-        {
-            var rand1 = Random.Range(0.0f, 1.0f);
-            var rand2 = Random.Range(0.0f, 1.0f);
-
-            var n = Mathf.Sqrt(-2.0f * Mathf.Log(rand1)) * Mathf.Cos((2.0f * Mathf.PI) * rand2);
-
-            return (mu + sigma * n);
-        }
 
         private static bool CheckOutOfBounds(Vector3 position)
         {
@@ -148,49 +83,12 @@
 
             if (go.CompareTag("Enemy"))
             {
-                this.HandleBulletHit(go);
+                this.damageHandler.DeliverDamageTo(go);
+                GameObject.Destroy(this.gameObject);
             }
         }
 
         #endregion
 
-        #region Internal Functions
-
-        /// <summary>
-        /// Using this value to compute the actual damage *that is going to be delivered onto the
-        /// enemies*. Note this is not necessary the final damage.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="Damage"/>.
-        /// </returns>
-        private Damage GetDamage()
-        {
-            const float FloatingDamage = 3.0f;
-            var pow = this.attributes.POW;
-            var amp = this.attributes.AMP;
-
-            var damage = new Damage(
-                Mathf.RoundToInt(pow * GetGaussianRand(50.0f, FloatingDamage)),
-                amp);
-
-            return damage;
-        }
-
-        /// <summary>
-        /// A temporary structure that holds damage data in a nice way.
-        /// </summary>
-        private struct Damage
-        {
-            public readonly int Pow;
-
-            public readonly int Amp;
-
-            public Damage(int pow, int amp)
-            {
-                this.Pow = pow;
-                this.Amp = amp;
-            }
-        }
-        #endregion
     }
 }

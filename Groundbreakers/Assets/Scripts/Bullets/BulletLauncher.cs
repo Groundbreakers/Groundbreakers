@@ -13,6 +13,7 @@
     /// Disable this component when switched to Melee Mode.
     /// </summary>
     [RequireComponent(typeof(BulletMovement))]
+    [RequireComponent(typeof(DamageHandler))]
     public class BulletLauncher : MonoBehaviour
     {
         #region Inspector
@@ -30,8 +31,7 @@
 
         #region Internal Fields
 
-        // private List<BulletMovement> buffer = new List<BulletMovement>();
-        private characterAttributes attributes;
+        private DamageHandler damageHandler;
 
         #endregion
 
@@ -70,14 +70,7 @@
         // Warning, this is temporary solution, should use a proper external damage handler
         public void Melee(Transform target)
         {
-            var pos = this.transform.position;
-            var go = Instantiate(this.bulletPrefab, pos, Quaternion.identity);
-
-            go.GetComponent<SpriteRenderer>().enabled = false;
-            var bullet = go.GetComponent<BulletMovement>();
-            bullet.SetCharacterAttribute(this.attributes);
-
-            bullet.HandleBulletHit(target.gameObject);
+            this.damageHandler.DeliverDamageTo(target.gameObject, true);
         }
 
         #endregion
@@ -86,7 +79,10 @@
 
         private void OnEnable()
         {
-            this.attributes = this.transform.parent.GetComponent<characterAttributes>();
+            this.damageHandler = this.GetComponent<DamageHandler>();
+
+            var attributes = this.transform.parent.GetComponent<characterAttributes>();
+            this.damageHandler.SetCharacterAttribute(attributes);
         }
 
         private void Update()
@@ -121,7 +117,6 @@
             var go = Instantiate(this.bulletPrefab, pos, Quaternion.identity);
 
             var bullet = go.GetComponent<BulletMovement>();
-            bullet.SetCharacterAttribute(this.attributes);
 
             // this.buffer.Add(bullet);
             return bullet;
@@ -132,7 +127,7 @@
         {
             var bullet = this.InstantiateBullet();
             var direction = this.transform.forward;
-            bullet.Launch(direction);
+            bullet.Launch(direction, this.damageHandler);
         }
 
         // Subject to change
@@ -147,9 +142,9 @@
             var directionB = Quaternion.AngleAxis(-45, Vector3.up) * directionA;
             var directionC = Quaternion.AngleAxis(45, Vector3.up) * directionA;
 
-            bulletA.Launch(directionA);
-            bulletB.Launch(directionB);
-            bulletC.Launch(directionC);
+            bulletA.Launch(directionA, this.damageHandler);
+            bulletB.Launch(directionB, this.damageHandler);
+            bulletC.Launch(directionC, this.damageHandler);
         }
 
         #endregion

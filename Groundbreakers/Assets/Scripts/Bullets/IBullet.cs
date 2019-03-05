@@ -11,17 +11,9 @@
         /// <param name="direction">
         /// The direction shooting towards.
         /// </param>
-        void Launch(Vector3 direction);
-
-        /// <summary>
-        /// Triggered when hit the target we wanted.
-        /// </summary>
-        /// <param name="other">
-        /// The other.
+        /// <param name="handler">
+        /// The Damage handler component that you wish to use in this bullet.
         /// </param>
-        /// <param name="isMelee">
-        /// The is Melee.
-        /// </param>
-        void HandleBulletHit(GameObject other, bool isMelee);
+        void Launch(Vector3 direction, DamageHandler handler);
     }
 }
