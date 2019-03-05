@@ -1,6 +1,6 @@
 ﻿namespace Characters
 {
-    using BattleManager;
+    using Assets.Scripts;
 
     using Sirenix.OdinInspector;
 

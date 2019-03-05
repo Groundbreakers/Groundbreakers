@@ -1,4 +1,4 @@
-﻿namespace BattleManager
+﻿namespace Assets.Scripts
 {
     using System;
 
