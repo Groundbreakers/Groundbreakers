@@ -187,7 +187,7 @@
         {
             Debug.Log("Ding");
 
-            // GameObject.Find("DeployPanel").GetComponent<Deploy>().InstantRetreatAllCharacter();
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().InstantRetreatAllCharacter();
         }
 
         #endregion
@@ -218,7 +218,6 @@
 
         public void OnBattleVictory()
         {
-            // Clear existing mobs
             this.KillAllEnemies();
 
             // Temp, call the loot 

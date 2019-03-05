@@ -388,7 +388,14 @@ public class Deploy : MonoBehaviour
     /// </param>
     private void DeactivateCharacter(int index)
     {
-        this.character[index].SetActive(false);
+        var character = this.character[index];
+
+        if (!character)
+        {
+            return;
+        }
+
+        character.SetActive(false);
 
         // Set the node's character on top to null (-1)
         this.characterPos[index].GetComponent<SelectNode>().SetCharacterIndex(-1);

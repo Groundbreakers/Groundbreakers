@@ -76,15 +76,6 @@
         private void OnEnable()
         {
             this.damageHandler = this.GetComponent<DamageHandler>();
-
-            var attributes = this.transform.parent.GetComponent<characterAttributes>();
-
-            if (!attributes)
-            {
-                Debug.LogWarning("characterAttributes does not exist");
-                return;
-            }
-            this.damageHandler.SetCharacterAttribute(attributes);
         }
 
         private void Update()
@@ -124,9 +115,29 @@
             return bullet;
         }
 
+        private void SetHandlerAttributeIfNot()
+        {
+            if (this.damageHandler.IsValid())
+            {
+                return;
+            }
+
+            var attributes = this.transform.parent.GetComponent<characterAttributes>();
+
+            if (!attributes)
+            {
+                Debug.LogWarning("characterAttributes does not exist");
+                return;
+            }
+
+            this.damageHandler.SetCharacterAttribute(attributes);
+        }
+
         // Subject to change
         private void SingleShot()
         {
+            this.SetHandlerAttributeIfNot();
+
             var bullet = this.InstantiateBullet();
             var direction = this.transform.forward;
             bullet.Launch(direction, this.damageHandler);
@@ -135,6 +146,8 @@
         // Subject to change
         private void MultiShot()
         {
+            this.SetHandlerAttributeIfNot();
+
             var bulletA = this.InstantiateBullet();
             var bulletB = this.InstantiateBullet();
             var bulletC = this.InstantiateBullet();

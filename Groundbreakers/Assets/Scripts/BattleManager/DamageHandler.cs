@@ -47,6 +47,11 @@
             this.attributes = characterAttributes;
         }
 
+        public bool IsValid()
+        {
+            return this.attributes;
+        }
+
         #endregion
 
         #region Internal Functions
