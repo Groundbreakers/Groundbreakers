@@ -5,47 +5,30 @@
 
     public class ShakeBehavior : MonoBehaviour
     {
-        #region Inspector Field
-
-        [SerializeField]
-        private float shakeDuration = 0f;
-
-        [SerializeField]
-        private float shakeMagnitude = 0.7f;
-
         [SerializeField]
         private float dampingSpeed = 1.0f;
+
+        private Vector3 initialPosition;
 
         [SerializeField]
         private UnityEvent invokeMethod;
 
-        #endregion  
+        [SerializeField]
+        private float shakeDuration;
 
-        private Vector3 initialPosition;
-
-        public void TriggerShake()
-        {
-            this.shakeDuration = 2.0f;
-        }
-
-        #region Unity Callbacks
+        [SerializeField]
+        private float shakeMagnitude = 0.7f;
 
         public void Awake()
         {
             this.invokeMethod.Invoke();
         }
 
-        public void OnEnable()
-        {
-            this.initialPosition = this.transform.localPosition;
-        }
-
         public void FixedUpdate()
         {
             if (this.shakeDuration > 0)
             {
-                this.transform.localPosition = this.initialPosition
-                                               + (Random.insideUnitSphere * this.shakeMagnitude);
+                this.transform.localPosition = this.initialPosition + Random.insideUnitSphere * this.shakeMagnitude;
 
                 this.shakeDuration -= Time.deltaTime * this.dampingSpeed;
             }
@@ -56,6 +39,14 @@
             }
         }
 
-        #endregion
+        public void OnEnable()
+        {
+            this.initialPosition = this.transform.localPosition;
+        }
+
+        public void TriggerShake()
+        {
+            this.shakeDuration = 2.0f;
+        }
     }
 }

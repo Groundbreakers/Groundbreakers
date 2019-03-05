@@ -3,7 +3,6 @@
     using Sirenix.OdinInspector;
 
     using UnityEngine;
-    using Random = UnityEngine.Random;
 
     [RequireComponent(typeof(SpriteRenderer))]
     public class RandomSprite : MonoBehaviour

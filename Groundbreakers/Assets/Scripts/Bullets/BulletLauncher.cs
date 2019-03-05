@@ -9,7 +9,6 @@
     /// Ideally, equip this launcher to character objects when in Ranged attack mode.
     /// Disable this component when switched to Melee Mode.
     /// </summary>
-    [RequireComponent(typeof(BulletMovement))]
     [RequireComponent(typeof(DamageHandler))]
     public class BulletLauncher : MonoBehaviour
     {
@@ -110,16 +109,16 @@
         /// Create Instance from bullet prefab.
         /// </summary>
         /// <returns>
-        /// The <see cref="BulletMovement"/>.
+        /// The <see cref="IBullet"/>.
         /// </returns>
-        private BulletMovement InstantiateBullet()
+        private IBullet InstantiateBullet()
         {
             // Currently using native Instantiation method. Will switch to Object pool.
             // Should also trigger event
             var pos = this.transform.position;
             var go = Instantiate(this.bulletPrefab, pos, Quaternion.identity);
 
-            var bullet = go.GetComponent<BulletMovement>();
+            var bullet = go.GetComponent<IBullet>();
 
             // this.buffer.Add(bullet);
             return bullet;

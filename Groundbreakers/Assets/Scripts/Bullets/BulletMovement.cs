@@ -2,36 +2,28 @@
 {
     using UnityEngine;
 
-    /// <inheritdoc cref="IBullet"/>
+    /// <inheritdoc cref="IBullet" />
     /// <summary>
-    /// The most basic bullet movement pattern: move toward one direction in Linear Motion.
+    ///     The most basic bullet movement pattern: move toward one direction in Linear Motion.
     /// </summary>
     [RequireComponent(typeof(OffScreenHandler))]
-    public class BulletMovement : MonoBehaviour, IBullet
+    public class BulletLinearMovement : MonoBehaviour, IBullet
     {
-        #region Internal Fields
+        private DamageHandler damageHandler;
 
         /// <summary>
-        /// The linear direction of the movement of the bullet. 
+        ///     The linear direction of the movement of the bullet.
         /// </summary>
         private Vector3 linearDirection;
 
-        private DamageHandler damageHandler;
-
-        #endregion
-
         #region IBullet
 
-        /// <summary>
-        /// The main entry method. Basically this gives an signal when the bullet is ready to be
-        /// released. (Linear/Laser) 
-        /// </summary>
-        /// <param name="direction">
-        /// The direction shooting towards.
-        /// </param>
-        /// <param name="handler">
-        /// The Damage handler component that you wish to use in this bullet.
-        /// </param>
+        public void Launch(Transform target, DamageHandler handler)
+        {
+            var direction = target.position - this.transform.position;
+            this.Launch(direction, handler);
+        }
+
         public void Launch(Vector3 direction, DamageHandler handler)
         {
             this.linearDirection = direction.normalized;
@@ -39,12 +31,6 @@
         }
 
         #endregion
-
-        #region Internal Static Helpers
-
-        #endregion
-
-        #region Unity Callbacks
 
         private void FixedUpdate()
         {
@@ -54,10 +40,10 @@
         }
 
         /// <summary>
-        /// This method is triggered only if the collider is checked with "isTriggered"
+        ///     This method is triggered only if the collider is checked with "isTriggered"
         /// </summary>
         /// <param name="other">
-        /// The other.
+        ///     The other.
         /// </param>
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -69,8 +55,5 @@
                 GameObject.Destroy(this.gameObject);
             }
         }
-
-        #endregion
-
     }
 }

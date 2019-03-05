@@ -3,15 +3,14 @@
     using UnityEngine;
 
     /// <summary>
-    /// A simple component that automatically kills the GameObject that goes out of screen. 
+    ///     A simple component that automatically kills the GameObject that goes out of screen.
     /// </summary>
     public class OffScreenHandler : MonoBehaviour
     {
         /// <summary>
-        /// Using this native structure to determine if the bullet should be killed.
+        ///     Using this native structure to determine if the bullet should be killed.
         /// </summary>
-        private static readonly Bounds ValidBounds = new Bounds(
-            new Vector3(4.0f, 4.0f), new Vector3(10.0f, 10.0f));
+        private static readonly Bounds ValidBounds = new Bounds(new Vector3(4.0f, 4.0f), new Vector3(10.0f, 10.0f));
 
         private static bool CheckOutOfBounds(Vector3 position)
         {
@@ -25,7 +24,7 @@
             if (CheckOutOfBounds(this.transform.position))
             {
                 // should trigger some event here, if we want dangerous factors later in the game.
-                GameObject.Destroy(this.gameObject);
+                Destroy(this.gameObject);
             }
         }
     }
