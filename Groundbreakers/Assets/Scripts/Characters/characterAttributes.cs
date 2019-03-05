@@ -86,6 +86,33 @@ public class characterAttributes : MonoBehaviour
         MOB += inventory[3];
         AMP += inventory[4];
 
+        if(POW > 10)
+        {
+            POW = 10;
+        }
+
+        if (ROF > 10)
+        {
+            ROF = 10;
+        }
+
+        if (RNG > 10)
+        {
+            RNG = 10;
+        }
+
+        if (MOB > 10)
+        {
+            MOB = 10;
+        }
+
+        if (AMP > 10)
+        {
+            AMP = 10;
+        }
+
+
+
         bool[] temp = new bool[17];
         for(int i = 5; i < inventory.Length; i++)
         {
