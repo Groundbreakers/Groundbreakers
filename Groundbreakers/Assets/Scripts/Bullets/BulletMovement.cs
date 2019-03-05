@@ -6,15 +6,10 @@
     /// <summary>
     /// The most basic bullet movement pattern: move toward one direction in Linear Motion.
     /// </summary>
+    [RequireComponent(typeof(OffScreenHandler))]
     public class BulletMovement : MonoBehaviour, IBullet
     {
         #region Internal Fields
-
-        /// <summary>
-        /// Using this native structure to determine if the bullet should be killed.
-        /// </summary>
-        private static readonly Bounds ValidBounds = new Bounds(
-            new Vector3(4.0f, 4.0f), new Vector3(10.0f, 10.0f));
 
         /// <summary>
         /// The linear direction of the movement of the bullet. 
@@ -47,14 +42,6 @@
 
         #region Internal Static Helpers
 
-
-        private static bool CheckOutOfBounds(Vector3 position)
-        {
-            var xy = new Vector3(position.x, position.y, 0.0f);
-
-            return !ValidBounds.Contains(xy);
-        }
-
         #endregion
 
         #region Unity Callbacks
@@ -64,11 +51,6 @@
             const float Speed = 0.5f;
 
             this.transform.Translate(this.linearDirection * Speed);
-
-            if (CheckOutOfBounds(this.transform.position))
-            {
-                GameObject.Destroy(this.gameObject);
-            }
         }
 
         /// <summary>

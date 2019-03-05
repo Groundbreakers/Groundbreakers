@@ -1,8 +1,5 @@
 ﻿namespace Assets.Scripts
 {
-    using System;
-    using System.Collections.Generic;
-
     using Sirenix.OdinInspector;
 
     using UnityEngine;
@@ -82,6 +79,12 @@
             this.damageHandler = this.GetComponent<DamageHandler>();
 
             var attributes = this.transform.parent.GetComponent<characterAttributes>();
+
+            if (!attributes)
+            {
+                Debug.LogWarning("characterAttributes does not exist");
+                return;
+            }
             this.damageHandler.SetCharacterAttribute(attributes);
         }
 
