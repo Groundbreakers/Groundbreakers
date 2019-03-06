@@ -33,6 +33,8 @@
         public void Launch(Vector3 direction, DamageHandler handler)
         {
             this.lastDirection = direction;
+
+            this.damageHandler = handler;
         }
 
         #endregion

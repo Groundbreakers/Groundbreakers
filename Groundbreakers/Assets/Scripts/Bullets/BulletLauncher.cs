@@ -61,6 +61,8 @@
         // Warning, this is temporary solution, should use a proper external damage handler
         public void Melee(Transform target)
         {
+            this.SetHandlerAttributeIfNot();
+
             this.damageHandler.DeliverDamageTo(target.gameObject, true);
         }
 
