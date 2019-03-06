@@ -122,6 +122,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void NewParent(Transform transform)
     {
+        this.tooltip.SetActive(false);
         this.transform.SetParent(transform);
         this.parent = transform;
         this.GetComponent<RectTransform>().offsetMax = Vector2.zero;
