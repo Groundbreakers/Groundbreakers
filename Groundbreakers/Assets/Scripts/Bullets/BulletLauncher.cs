@@ -45,22 +45,17 @@
         #region Public Functions    
 
         [Button("Test Launch All")]
-        public void LaunchAll()
+        public void FireAt(Transform target)
         {
             // temp solution
             if (this.type == Type.SingleShot)
             {
-                this.SingleShot();
+                this.SingleShot(target);
             }
             else
             {
-                this.MultiShot();
+                this.MultiShot(target);
             }
-        }
-
-        public void AimAtTarget(Transform target)
-        {
-            this.transform.LookAt(target);
         }
 
         // Warning, this is temporary solution, should use a proper external damage handler
@@ -134,17 +129,17 @@
         }
 
         // Subject to change
-        private void SingleShot()
+        private void SingleShot(Transform target)
         {
             this.SetHandlerAttributeIfNot();
 
             var bullet = this.InstantiateBullet();
-            var direction = this.transform.forward;
-            bullet.Launch(direction, this.damageHandler);
+
+            bullet.Launch(target, this.damageHandler);
         }
 
         // Subject to change
-        private void MultiShot()
+        private void MultiShot(Transform target)
         {
             this.SetHandlerAttributeIfNot();
 
@@ -153,11 +148,12 @@
             var bulletC = this.InstantiateBullet();
 
             // Subject to change
+            this.transform.LookAt(target.position);
             var directionA = this.transform.forward;
             var directionB = Quaternion.AngleAxis(-45, Vector3.up) * directionA;
             var directionC = Quaternion.AngleAxis(45, Vector3.up) * directionA;
 
-            bulletA.Launch(directionA, this.damageHandler);
+            bulletA.Launch(target, this.damageHandler);
             bulletB.Launch(directionB, this.damageHandler);
             bulletC.Launch(directionC, this.damageHandler);
         }

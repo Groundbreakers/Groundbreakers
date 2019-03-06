@@ -209,8 +209,8 @@ public class characterAttack : MonoBehaviour
     /// </summary>
     public void RangedAttack()
     {
-        this.rangedWeapon.SendMessage("AimAtTarget", this.target);
-        this.rangedWeapon.SendMessage("LaunchAll");
+        // this.rangedWeapon.SendMessage("AimAtTarget", this.target);
+        this.rangedWeapon.SendMessage("FireAt", this.target);
     }
 
     public void MeleeAttack()

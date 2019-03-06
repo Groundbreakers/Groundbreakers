@@ -1132,6 +1132,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4217686435854685775, guid: 6fd2af10ce4afe744bd7d966362f0484,
+        type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 1243017522193101186, guid: f65c717356a07004c8579ff60a9186b9,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fd2af10ce4afe744bd7d966362f0484, type: 3}
 --- !u!1001 &1207186387
@@ -1525,8 +1531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9351497f638c6734a9813016ddefc5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDuration: 0
-  shakeMagnitude: 0.35
   dampingSpeed: 0.85
   invokeMethod:
     m_PersistentCalls:
@@ -1544,6 +1548,8 @@ MonoBehaviour:
         m_CallState: 1
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  shakeDuration: 0
+  shakeMagnitude: 0.35
 --- !u!1001 &1989879939
 PrefabInstance:
   m_ObjectHideFlags: 0
