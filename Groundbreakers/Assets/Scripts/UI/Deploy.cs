@@ -398,7 +398,14 @@ public class Deploy : MonoBehaviour
         character.SetActive(false);
 
         // Set the node's character on top to null (-1)
-        this.characterPos[index].GetComponent<SelectNode>().SetCharacterIndex(-1);
+        var node = this.characterPos[index];
+
+        if (!node)
+        {
+            return;
+        }
+
+        node.GetComponent<SelectNode>().SetCharacterIndex(-1);
 
         // Reset the character's position
         this.characterPos[index] = null;
