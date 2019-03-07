@@ -88,6 +88,10 @@ public class Inventory : MonoBehaviour, IDropHandler
                     .NewParent(eventData.pointerCurrentRaycast.gameObject.transform);
                 Debug.Log("On top of: " + eventData.pointerCurrentRaycast.gameObject);
             }
+            else if (eventData.pointerCurrentRaycast.gameObject.tag == "Recycle")
+            {
+                Destroy(eventData.pointerDrag);
+            }
         }
     }
 }

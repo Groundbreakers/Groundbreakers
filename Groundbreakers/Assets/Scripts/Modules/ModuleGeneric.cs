@@ -11,8 +11,10 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Button button;
     public string title;
     public int rarity;
-    public int slot;
-    public String description;
+    public String[] description = new string[4];
+    public Text titleText;
+    public Text rarityText;
+    public Text[] descriptionText = new Text[4];
 
     // Basic Attributes
     public int POW;
@@ -29,7 +31,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Boolean pierceAE;
     public Boolean traceAE;
     public Boolean cleaveAE;
-    public Boolean whirwindAE;
+    public Boolean whirlwindAE;
     public Boolean reachAE;
 
     // Status Effects
@@ -58,46 +60,66 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         this.canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         this.characterManager = GameObject.Find("CharactersPanel").GetComponent<CharacterManager>();
         this.inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
-        this.tooltip = this.transform.GetChild(0).gameObject;
-        this.button.onClick.AddListener(this.HandleTooltip);
-        this.parent = this.transform.parent;
-     }
 
-    public void HandleTooltip()
-    {
-        // Reference the character tooltip
-        GameObject tooltipTitle = this.tooltip.transform.GetChild(0).gameObject;
-        Text titleText = tooltipTitle.GetComponent<Text>();
-        titleText.text = this.title;
+        // Update the title
+        this.titleText.text = this.title;
 
-        // Rarity affects text color
+        // Update the rarity text
         switch (this.rarity)
         {
             case 0:
-                titleText.color = Color.black;
+                this.rarityText.text = "Common";
+                this.rarityText.color = Color.black;
                 break;
             case 1:
-                titleText.color = new Color(0.0f, 0.4f, 1.0f);
+                this.rarityText.text = "Modified";
+                this.rarityText.color = new Color(0.0f, 0.4f, 1.0f);
                 break;
             case 2:
-                titleText.color = new Color(1.0f, 0.5f, 0.0f);
+                this.rarityText.text = "Ideal";
+                this.rarityText.color = new Color(0.5f, 0.0f, 0.5f);
+                break;
+            case 3:
+                this.rarityText.text = "Groundbreaking";
+                this.rarityText.color = new Color(1.0f, 0.5f, 0.0f);
                 break;
             default:
-                titleText.color = Color.black;
+                this.rarityText.color = Color.black;
                 break;
         }
 
-        // Update the descriptionText
-        GameObject tooltipDescription = this.tooltip.transform.GetChild(1).gameObject;
-        Text descriptionText = tooltipDescription.GetComponent<Text>();
-        descriptionText.text = this.description;
+        // Update the descriptionText 1-4
+        this.descriptionText[0].text = this.description[0];
+        if (this.description[1] != "")
+        {
+            this.descriptionText[1].text = this.description[1];
+            this.descriptionText[1].gameObject.SetActive(true);
+        }
+        if (this.description[2] != "")
+        {
+            this.descriptionText[2].text = this.description[2];
+            this.descriptionText[2].gameObject.SetActive(true);
+        }
+        if (this.description[3] != "")
+        {
+            this.descriptionText[3].text = this.description[3];
+            this.descriptionText[3].gameObject.SetActive(true);
+        }
 
+        this.button.onClick.AddListener(this.ToggleTooltip);
+        this.parent = this.transform.parent;
+     }
+
+    public void ToggleTooltip()
+    {
         this.tooltip.SetActive(!this.tooltip.activeSelf);
     }
 
     public int[] GetModuleAttributes()
     {
-        int[] attributes = { this.POW, this.ROF, this.RNG, this.MOB, this.AMP,
+        int[] attributes = 
+            {
+                               this.POW, this.ROF, this.RNG, this.MOB, this.AMP,
                                Convert.ToInt32(this.burstAE),
                                Convert.ToInt32(this.ricochetAE),
                                Convert.ToInt32(this.laserAE),
@@ -105,7 +127,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                                Convert.ToInt32(this.pierceAE),
                                Convert.ToInt32(this.traceAE),
                                Convert.ToInt32(this.cleaveAE),
-                               Convert.ToInt32(this.whirwindAE),
+                               Convert.ToInt32(this.whirlwindAE),
                                Convert.ToInt32(this.reachAE),
 
                                Convert.ToInt32(this.slowSE),
@@ -116,7 +138,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                                Convert.ToInt32(this.breakSE),
                                Convert.ToInt32(this.blightSE),
                                Convert.ToInt32(this.netSE)
-                           };
+            };
         return attributes;
     }
 
