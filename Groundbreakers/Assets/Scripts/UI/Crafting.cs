@@ -30,7 +30,6 @@ public class Crafting : MonoBehaviour
         this.moduleGeneric.splashAE = false;
         this.moduleGeneric.pierceAE = false;
         this.moduleGeneric.traceAE = false;
-        this.moduleGeneric.cleaveAE = false;
         this.moduleGeneric.whirlwindAE = false;
         this.moduleGeneric.reachAE = false;
 
@@ -113,12 +112,6 @@ public class Crafting : MonoBehaviour
         if (this.moduleGeneric.traceAE)
         {
             this.moduleGeneric.description[index] = "Trace";
-            index++;
-        }
-
-        if (this.moduleGeneric.cleaveAE)
-        {
-            this.moduleGeneric.description[index] = "Cleave";
             index++;
         }
 
@@ -288,65 +281,61 @@ public class Crafting : MonoBehaviour
             {
                 this.moduleGeneric.AMP += 1;
             }
-            else if (attributeIndex > 47)
+            else if (attributeIndex > 44)
             {
                 this.moduleGeneric.slowSE = true;
             }
-            else if (attributeIndex > 44)
+            else if (attributeIndex > 41)
             {
                 this.moduleGeneric.stunSE = true;
             }
-            else if (attributeIndex > 41)
+            else if (attributeIndex > 38)
             {
                 this.moduleGeneric.burnSE = true;
             }
-            else if (attributeIndex > 38)
+            else if (attributeIndex > 35)
             {
                 this.moduleGeneric.markSE = true;
             }
-            else if (attributeIndex > 35)
+            else if (attributeIndex > 32)
             {
                 this.moduleGeneric.purgeSE = true;
             }
-            else if (attributeIndex > 32)
+            else if (attributeIndex > 29)
             {
                 this.moduleGeneric.breakSE = true;
             }
-            else if (attributeIndex > 29)
+            else if (attributeIndex > 26)
             {
                 this.moduleGeneric.blightSE = true;
             }
-            else if (attributeIndex > 26)
+            else if (attributeIndex > 23)
             {
                 this.moduleGeneric.netSE = true;
             }
-            else if (attributeIndex > 23)
+            else if (attributeIndex > 20)
             {
                 this.moduleGeneric.burstAE = true;
             }
-            else if (attributeIndex > 20)
+            else if (attributeIndex > 17)
             {
                 this.moduleGeneric.ricochetAE = true;
             }
-            else if (attributeIndex > 17)
+            else if (attributeIndex > 14)
             {
                 this.moduleGeneric.laserAE = true;
             }
-            else if (attributeIndex > 14)
+            else if (attributeIndex > 11)
             {
                 this.moduleGeneric.splashAE = true;
             }
-            else if (attributeIndex > 11)
+            else if (attributeIndex > 8)
             {
                 this.moduleGeneric.pierceAE = true;
             }
-            else if (attributeIndex > 8)
-            {
-                this.moduleGeneric.traceAE = true;
-            }
             else if (attributeIndex > 5)
             {
-                this.moduleGeneric.cleaveAE = true;
+                this.moduleGeneric.traceAE = true;
             }
             else if (attributeIndex > 2)
             {

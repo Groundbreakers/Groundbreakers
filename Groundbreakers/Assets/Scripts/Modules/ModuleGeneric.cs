@@ -30,7 +30,6 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Boolean splashAE;
     public Boolean pierceAE;
     public Boolean traceAE;
-    public Boolean cleaveAE;
     public Boolean whirlwindAE;
     public Boolean reachAE;
 
@@ -126,7 +125,6 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                                Convert.ToInt32(this.splashAE),
                                Convert.ToInt32(this.pierceAE),
                                Convert.ToInt32(this.traceAE),
-                               Convert.ToInt32(this.cleaveAE),
                                Convert.ToInt32(this.whirlwindAE),
                                Convert.ToInt32(this.reachAE),
 
