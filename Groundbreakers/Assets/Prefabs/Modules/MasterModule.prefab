@@ -1,5 +1,79 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &535441567622070642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180647048068832126}
+  - component: {fileID: 931318665747937690}
+  - component: {fileID: 7519306073791697174}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &180647048068832126
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535441567622070642}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6317623791551399255}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &931318665747937690
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535441567622070642}
+  m_CullTransparentMesh: 0
+--- !u!114 &7519306073791697174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535441567622070642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1 &4175333432208563121
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +107,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2467211263204625495}
+  - {fileID: 180647048068832126}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -135,7 +210,11 @@ MonoBehaviour:
   button: {fileID: 9010221980344839721}
   title: Dummy
   rarity: 0
-  description: []
+  description:
+  - 
+  - 
+  - 
+  - 
   titleText: {fileID: 2402229742884481258}
   rarityText: {fileID: 488415706214923785}
   descriptionText:
@@ -154,8 +233,7 @@ MonoBehaviour:
   splashAE: 0
   pierceAE: 0
   traceAE: 0
-  cleaveAE: 0
-  whirwindAE: 0
+  whirlwindAE: 0
   reachAE: 0
   slowSE: 0
   stunSE: 0
@@ -165,6 +243,8 @@ MonoBehaviour:
   breakSE: 0
   blightSE: 0
   netSE: 0
+  tooltip: {fileID: 2106979245159088137}
+  icon: {fileID: 7519306073791697174}
   isDragable: 1
 --- !u!225 &3657122530066585706
 CanvasGroup:
@@ -297,6 +377,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5642ff3180f2f34b8ffb29ec53cec84, type: 3}
+--- !u!1 &2106979245159088137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2177030005047864538, guid: f5642ff3180f2f34b8ffb29ec53cec84,
+    type: 3}
+  m_PrefabInstance: {fileID: 219307715332844755}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2467211263204625495 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2393215318291718276, guid: f5642ff3180f2f34b8ffb29ec53cec84,

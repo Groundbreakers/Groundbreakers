@@ -48,15 +48,34 @@ public class Inventory : MonoBehaviour, IDropHandler
         {
             if (child.childCount == 0)
             {
-                GameObject.Instantiate(module, child);
+                module.transform.SetParent(child);
+                module.transform.localPosition = Vector3.zero;
+                module.transform.localScale = Vector3.one;
+                module.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+                module.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+                this.UpdateInventory();
                 break;
             }
         }
     }
 
+    public int GetAvailableSlots()
+    {
+        int amount = 0;
+        foreach (Transform child in this.modules.transform)
+        {
+            if (child.childCount == 0)
+            {
+                amount++;
+            }
+        }
+
+        return amount;
+    }
+
     public int[] GetCharacterInventory(int index)
     {
-        int[] sumAttributes = new int[22];
+        int[] sumAttributes = new int[21];
         for (int i = 0; i < 5; i++)
         {
             if (this.transform.GetChild(index).GetChild(i).childCount != 0)
@@ -66,7 +85,7 @@ public class Inventory : MonoBehaviour, IDropHandler
                 int[] moduleAttributes = script.GetModuleAttributes();
                 if (sumAttributes.Length == moduleAttributes.Length)
                 {
-                    for (int j = 0; j < 22; j++)
+                    for (int j = 0; j < 21; j++)
                     {
                         sumAttributes[j] = sumAttributes[j] + moduleAttributes[j];
                     }
@@ -91,6 +110,7 @@ public class Inventory : MonoBehaviour, IDropHandler
             else if (eventData.pointerCurrentRaycast.gameObject.tag == "Recycle")
             {
                 Destroy(eventData.pointerDrag);
+                GameObject.Find("CrystalCounter").GetComponent<CrystalCounter>().SetCrystals(100);
             }
         }
     }

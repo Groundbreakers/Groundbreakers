@@ -46,7 +46,8 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private Canvas canvas;
     private CharacterManager characterManager;
     private Inventory inventory;
-    private GameObject tooltip;
+    public GameObject tooltip;
+    public Image icon;
     private Transform parent;
 
     private Boolean isEquipped;
@@ -57,8 +58,8 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     void Start()
     {
         this.canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        this.characterManager = GameObject.Find("CharactersPanel").GetComponent<CharacterManager>();
-        this.inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+        this.characterManager = Resources.FindObjectsOfTypeAll<CharacterManager>()[0];
+        this.inventory = Resources.FindObjectsOfTypeAll<Inventory>()[0];
 
         // Update the title
         this.titleText.text = this.title;

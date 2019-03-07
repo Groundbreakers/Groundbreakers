@@ -4,228 +4,221 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Crafting : MonoBehaviour
 {
+    public GameObject ui;
     public GameObject ModulePrefab;
-    private ModuleGeneric moduleGeneric;
+    public GameObject button;
+    public Text buttonText;
+    public GameObject crystalCounter;
+    public GameObject inventory;
 
-    void Start()
+    void Update()
     {
-        GameObject masterModule = GameObject.Instantiate(this.ModulePrefab, this.transform);
-        this.moduleGeneric = masterModule.GetComponent<ModuleGeneric>();
+        if (this.crystalCounter.GetComponent<CrystalCounter>().GetCrystals() < 1000)
+        {
+            this.button.GetComponent<Button>().interactable = false;
+            this.buttonText.text = "Not enough crystals";
+        }
+        else if (this.inventory.GetComponent<Inventory>().GetAvailableSlots() < 1)
+        {
+            this.button.GetComponent<Button>().interactable = false;
+            this.buttonText.text = "Not enough slots";
+        }
+        else
+        {
+            this.button.GetComponent<Button>().interactable = true;
+            this.buttonText.text = "Craft";
+        }
     }
 
-    private void Reset()
-    {
-        this.moduleGeneric.POW = 0;
-        this.moduleGeneric.ROF = 0;
-        this.moduleGeneric.RNG = 0;
-        this.moduleGeneric.MOB = 0;
-        this.moduleGeneric.AMP = 0;
-
-        this.moduleGeneric.burstAE = false;
-        this.moduleGeneric.ricochetAE = false;
-        this.moduleGeneric.laserAE = false;
-        this.moduleGeneric.splashAE = false;
-        this.moduleGeneric.pierceAE = false;
-        this.moduleGeneric.traceAE = false;
-        this.moduleGeneric.whirlwindAE = false;
-        this.moduleGeneric.reachAE = false;
-
-        this.moduleGeneric.slowSE = false;
-        this.moduleGeneric.stunSE = false;
-        this.moduleGeneric.burnSE = false;
-        this.moduleGeneric.markSE = false;
-        this.moduleGeneric.purgeSE = false;
-        this.moduleGeneric.breakSE = false;
-        this.moduleGeneric.blightSE = false;
-        this.moduleGeneric.netSE = false;
-
-        this.moduleGeneric.rarity = 0;
-    }
-
-    private void SetupDescription()
+    private void SetupDescription(ModuleGeneric moduleGeneric)
     {
         int index = 0;
 
-        if (this.moduleGeneric.POW != 0)
+        if (moduleGeneric.POW != 0)
         {
-            this.moduleGeneric.description[index] = "POW +" + this.moduleGeneric.POW;
+            moduleGeneric.description[index] = "POW +" + moduleGeneric.POW;
             index++;
         }
 
-        if (this.moduleGeneric.ROF != 0)
+        if (moduleGeneric.ROF != 0)
         {
-            this.moduleGeneric.description[index] = "ROF +" + this.moduleGeneric.ROF;
+            moduleGeneric.description[index] = "ROF +" + moduleGeneric.ROF;
             index++;
         }
 
-        if (this.moduleGeneric.RNG != 0)
+        if (moduleGeneric.RNG != 0)
         {
-            this.moduleGeneric.description[index] = "RNG +" + this.moduleGeneric.RNG;
+            moduleGeneric.description[index] = "RNG +" + moduleGeneric.RNG;
             index++;
         }
 
-        if (this.moduleGeneric.MOB != 0)
+        if (moduleGeneric.MOB != 0)
         {
-            this.moduleGeneric.description[index] = "MOB +" + this.moduleGeneric.MOB;
+            moduleGeneric.description[index] = "MOB +" + moduleGeneric.MOB;
             index++;
         }
 
-        if (this.moduleGeneric.AMP != 0)
+        if (moduleGeneric.AMP != 0)
         {
-            this.moduleGeneric.description[index] = "AMP +" + this.moduleGeneric.AMP;
+            moduleGeneric.description[index] = "AMP +" + moduleGeneric.AMP;
             index++;
         }
 
-        if (this.moduleGeneric.burstAE)
+        if (moduleGeneric.burstAE)
         {
-            this.moduleGeneric.description[index] = "Burst";
+            moduleGeneric.description[index] = "Burst";
             index++;
         }
 
-        if (this.moduleGeneric.ricochetAE)
+        if (moduleGeneric.ricochetAE)
         {
-            this.moduleGeneric.description[index] = "Ricochet";
+            moduleGeneric.description[index] = "Ricochet";
             index++;
         }
 
-        if (this.moduleGeneric.laserAE)
+        if (moduleGeneric.laserAE)
         {
-            this.moduleGeneric.description[index] = "Laser";
+            moduleGeneric.description[index] = "Laser";
             index++;
         }
 
-        if (this.moduleGeneric.splashAE)
+        if (moduleGeneric.splashAE)
         {
-            this.moduleGeneric.description[index] = "Splash";
+            moduleGeneric.description[index] = "Splash";
             index++;
         }
 
-        if (this.moduleGeneric.pierceAE)
+        if (moduleGeneric.pierceAE)
         {
-            this.moduleGeneric.description[index] = "Pierce";
+            moduleGeneric.description[index] = "Pierce";
             index++;
         }
 
-        if (this.moduleGeneric.traceAE)
+        if (moduleGeneric.traceAE)
         {
-            this.moduleGeneric.description[index] = "Trace";
+            moduleGeneric.description[index] = "Trace";
             index++;
         }
 
-        if (this.moduleGeneric.whirlwindAE)
+        if (moduleGeneric.whirlwindAE)
         {
-            this.moduleGeneric.description[index] = "Whirlwind";
+            moduleGeneric.description[index] = "Whirlwind";
             index++;
         }
 
-        if (this.moduleGeneric.reachAE)
+        if (moduleGeneric.reachAE)
         {
-            this.moduleGeneric.description[index] = "Reach";
+            moduleGeneric.description[index] = "Reach";
             index++;
         }
 
-        if (this.moduleGeneric.slowSE)
+        if (moduleGeneric.slowSE)
         {
-            this.moduleGeneric.description[index] = "Slow";
+            moduleGeneric.description[index] = "Slow";
             index++;
         }
 
-        if (this.moduleGeneric.stunSE)
+        if (moduleGeneric.stunSE)
         {
-            this.moduleGeneric.description[index] = "Stun";
+            moduleGeneric.description[index] = "Stun";
             index++;
         }
 
-        if (this.moduleGeneric.burnSE)
+        if (moduleGeneric.burnSE)
         {
-            this.moduleGeneric.description[index] = "Burn";
+            moduleGeneric.description[index] = "Burn";
             index++;
         }
 
-        if (this.moduleGeneric.markSE)
+        if (moduleGeneric.markSE)
         {
-            this.moduleGeneric.description[index] = "Mark";
+            moduleGeneric.description[index] = "Mark";
             index++;
         }
 
-        if (this.moduleGeneric.purgeSE)
+        if (moduleGeneric.purgeSE)
         {
-            this.moduleGeneric.description[index] = "Purge";
+            moduleGeneric.description[index] = "Purge";
             index++;
         }
 
-        if (this.moduleGeneric.breakSE)
+        if (moduleGeneric.breakSE)
         {
-            this.moduleGeneric.description[index] = "Break";
+            moduleGeneric.description[index] = "Break";
             index++;
         }
 
-        if (this.moduleGeneric.blightSE)
+        if (moduleGeneric.blightSE)
         {
-            this.moduleGeneric.description[index] = "Blight";
+            moduleGeneric.description[index] = "Blight";
             index++;
         }
 
-        if (this.moduleGeneric.netSE)
+        if (moduleGeneric.netSE)
         {
-            this.moduleGeneric.description[index] = "Net";
+            moduleGeneric.description[index] = "Net";
             index++;
         }
     }
 
     public void Craft(String baseAttribute)
     {
-        this.Reset();
+        this.crystalCounter.GetComponent<CrystalCounter>().SetCrystals(-1000);
+
+        GameObject masterModule = GameObject.Instantiate(this.ModulePrefab);
+        masterModule.transform.localScale = Vector3.zero;
+        ModuleGeneric moduleGeneric = masterModule.GetComponent<ModuleGeneric>();
 
         switch (baseAttribute)
         {
             case "POW I":
-                this.moduleGeneric.POW = 1;
+                moduleGeneric.POW = 1;
                 break;
             case "POW II":
-                this.moduleGeneric.POW = 2;
+                moduleGeneric.POW = 2;
                 break;
             case "POW III":
-                this.moduleGeneric.POW = 3;
+                moduleGeneric.POW = 3;
                 break;
             case "ROF I":
-                this.moduleGeneric.ROF = 1;
+                moduleGeneric.ROF = 1;
                 break;
             case "ROF II":
-                this.moduleGeneric.ROF = 2;
+                moduleGeneric.ROF = 2;
                 break;
             case "ROF III":
-                this.moduleGeneric.ROF = 3;
+                moduleGeneric.ROF = 3;
                 break;
             case "RNG I":
-                this.moduleGeneric.RNG = 1;
+                moduleGeneric.RNG = 1;
                 break;
             case "RNG II":
-                this.moduleGeneric.RNG = 2;
+                moduleGeneric.RNG = 2;
                 break;
             case "RNG III":
-                this.moduleGeneric.RNG = 3;
+                moduleGeneric.RNG = 3;
                 break;
             case "MOB I":
-                this.moduleGeneric.MOB = 1;
+                moduleGeneric.MOB = 1;
                 break;
             case "MOB II":
-                this.moduleGeneric.MOB = 2;
+                moduleGeneric.MOB = 2;
                 break;
             case "MOB III":
-                this.moduleGeneric.MOB = 3;
+                moduleGeneric.MOB = 3;
                 break;
             case "AMP I":
-                this.moduleGeneric.AMP = 1;
+                moduleGeneric.AMP = 1;
                 break;
             case "AMP II":
-                this.moduleGeneric.AMP = 2;
+                moduleGeneric.AMP = 2;
                 break;
             case "AMP III":
-                this.moduleGeneric.AMP = 3;
+                moduleGeneric.AMP = 3;
                 break;
         }
 
@@ -240,117 +233,122 @@ public class Crafting : MonoBehaviour
         // 50% chance to get a Common
         if (rarityIndex > 94)
         {
-            this.moduleGeneric.rarity = 3;
+            moduleGeneric.rarity = 3;
         }
         else if (rarityIndex > 79)
         {
-            this.moduleGeneric.rarity = 2;
+            moduleGeneric.rarity = 2;
         }
         else if (rarityIndex > 49)
         {
-            this.moduleGeneric.rarity = 1;
+            moduleGeneric.rarity = 1;
         }
         else
         {
-            this.moduleGeneric.rarity = 0;
+            moduleGeneric.rarity = 0;
         }
 
         // Generate extra attributes based on rarity
-        for (int i = 0; i < this.moduleGeneric.rarity; i++)
+        for (int i = 0; i < moduleGeneric.rarity; i++)
         {
             // Generate a number between 0-100
             int attributeIndex = rnd.Next(101);
 
             if (attributeIndex > 90)
             {
-                this.moduleGeneric.POW += 1;
+                moduleGeneric.POW += 1;
             }
             else if (attributeIndex > 80)
             {
-                this.moduleGeneric.ROF += 1;
+                moduleGeneric.ROF += 1;
             }
             else if (attributeIndex > 70)
             {
-                this.moduleGeneric.RNG += 1;
+                moduleGeneric.RNG += 1;
             }
             else if (attributeIndex > 60)
             {
-                this.moduleGeneric.MOB += 1;
+                moduleGeneric.MOB += 1;
             }
             else if (attributeIndex > 50)
             {
-                this.moduleGeneric.AMP += 1;
+                moduleGeneric.AMP += 1;
             }
             else if (attributeIndex > 44)
             {
-                this.moduleGeneric.slowSE = true;
+                moduleGeneric.slowSE = true;
             }
             else if (attributeIndex > 41)
             {
-                this.moduleGeneric.stunSE = true;
+                moduleGeneric.stunSE = true;
             }
             else if (attributeIndex > 38)
             {
-                this.moduleGeneric.burnSE = true;
+                moduleGeneric.burnSE = true;
             }
             else if (attributeIndex > 35)
             {
-                this.moduleGeneric.markSE = true;
+                moduleGeneric.markSE = true;
             }
             else if (attributeIndex > 32)
             {
-                this.moduleGeneric.purgeSE = true;
+                moduleGeneric.purgeSE = true;
             }
             else if (attributeIndex > 29)
             {
-                this.moduleGeneric.breakSE = true;
+                moduleGeneric.breakSE = true;
             }
             else if (attributeIndex > 26)
             {
-                this.moduleGeneric.blightSE = true;
+                moduleGeneric.blightSE = true;
             }
             else if (attributeIndex > 23)
             {
-                this.moduleGeneric.netSE = true;
+                moduleGeneric.netSE = true;
             }
             else if (attributeIndex > 20)
             {
-                this.moduleGeneric.burstAE = true;
+                moduleGeneric.burstAE = true;
             }
             else if (attributeIndex > 17)
             {
-                this.moduleGeneric.ricochetAE = true;
+                moduleGeneric.ricochetAE = true;
             }
             else if (attributeIndex > 14)
             {
-                this.moduleGeneric.laserAE = true;
+                moduleGeneric.laserAE = true;
             }
             else if (attributeIndex > 11)
             {
-                this.moduleGeneric.splashAE = true;
+                moduleGeneric.splashAE = true;
             }
             else if (attributeIndex > 8)
             {
-                this.moduleGeneric.pierceAE = true;
+                moduleGeneric.pierceAE = true;
             }
             else if (attributeIndex > 5)
             {
-                this.moduleGeneric.traceAE = true;
+                moduleGeneric.traceAE = true;
             }
             else if (attributeIndex > 2)
             {
-                this.moduleGeneric.whirlwindAE = true;
+                moduleGeneric.whirlwindAE = true;
             }
             else
             {
-                this.moduleGeneric.reachAE = true;
+                moduleGeneric.reachAE = true;
             }
         }
 
-        this.SetupDescription();
+        moduleGeneric.title = baseAttribute;
+        this.SetupDescription(moduleGeneric);
 
         // Create a child clone under the parent Inventory
-        Inventory inventory = Resources.FindObjectsOfTypeAll<Inventory>()[0];
-        inventory.addModules(this.transform.GetChild(0).gameObject);
+        this.inventory.GetComponent<Inventory>().addModules(masterModule);
+    }
+
+    public void Toggle()
+    {
+        this.ui.SetActive(!this.ui.activeSelf);
     }
 }
