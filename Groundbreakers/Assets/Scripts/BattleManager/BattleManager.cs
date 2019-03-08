@@ -198,7 +198,9 @@
         {
             GameState = Stages.Combating;
 
+
             // Toggle UI
+            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
             GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", true);
         }
 
@@ -218,12 +220,13 @@
 
         public void OnBattleVictory()
         {
-            // Clear existing mobs
             this.KillAllEnemies();
 
-            // Temp, call the loot 
-            var lootUI = FindObjectOfType<LootGenerator>();
-            lootUI.Toggle();
+            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
+
+            var canvas = GameObject.Find("Canvas");
+            var routes = canvas.GetComponent<RoutesGenerator>();
+            routes.Toggle();
 
             this.timer.ResetTimer();
             GameState = Stages.Null;

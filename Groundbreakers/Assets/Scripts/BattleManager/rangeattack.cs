@@ -1,45 +1,149 @@
-﻿using System;
-using Assets.Enemies.Scripts;
+﻿using Assets.Enemies.Scripts;
+
 using UnityEngine;
 
 public class rangeattack : MonoBehaviour
 {
-    public float speed = 70f;
-
-    public Transform target;
-    
-    public int damage;
-
     public int armorpen;
 
-    public Boolean hit;
+    public int damage;
 
+    public bool hit;
+
+    public float speed = 3f;
+
+    public Transform target;
+
+    private bool _break;
+
+    private bool blight;
+
+    private bool burn;
+
+    private Vector3 direction;
+
+    // private Enemy_Generic enemyGeneric;
     private float FLOATING_DAMAGE = 0.2f;
 
+    private bool mark;
+
+    private bool net;
+
+    private bool purge;
+
+    private bool slow;
+
+    private bool stun;
+
+    // access functions
     public void chase(Transform _target)
     {
         this.target = _target;
     }
 
+    public void setBlight()
+    {
+        this.blight = true;
+    }
+
+    public void setBreak()
+    {
+        this._break = true;
+    }
+
+    public void setBurn()
+    {
+        this.burn = true;
+    }
+
+    public void setMark()
+    {
+        this.mark = true;
+    }
+
+    public void setNet()
+    {
+        this.net = true;
+    }
+
+    public void setPurge()
+    {
+        this.purge = true;
+    }
+
+    public void setSlow()
+    {
+        this.slow = true;
+    }
+
+    public void setStun()
+    {
+        this.stun = true;
+    }
+
+    public void statusEffectHandler(Collider2D hitTarget)
+    {
+        // prioritize armor breaking and purge 
+        if (this._break == true)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().breakEnemyArmor();
+        }
+
+        if (this.purge == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsPurged() == false)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().purgeEnemy();
+        }
+
+        if (this.mark != true)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, false);
+        }
+        else
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, true);
+        }
+
+        if (this.burn == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsBurned() == false)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().BurnEnemy();
+        }
+
+        if (this.blight == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsBlighted() == false)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().BlightEnemy();
+        }
+
+        if (this.slow == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsSlowed() == false)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().SlowEnemy(0.5f);
+        }
+
+        if (this.stun == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsStunned() == false)
+        {
+            hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy(0.5f);
+        }
+    }
+
     public void updateStats(int pow, int amp)
     {
-        this.damage = Mathf.RoundToInt(pow * 50 * UnityEngine.Random.Range(1.0f - this.FLOATING_DAMAGE, 1.0f + this.FLOATING_DAMAGE));
+        this.damage = Mathf.RoundToInt(
+            pow * 50 * UnityEngine.Random.Range(1.0f - this.FLOATING_DAMAGE, 1.0f + this.FLOATING_DAMAGE));
         this.armorpen = amp;
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (this.target == null)
         {
             Destroy(this.gameObject);
             return;
         }
 
-        Vector3 direction = this.target.position - this.transform.position;
         float distancePerFrame = this.speed * Time.deltaTime;
-
-        this.transform.Translate(direction.normalized * distancePerFrame, Space.World);
+        if (this.net == true) this.direction = this.target.position - this.transform.position;
+        this.transform.Translate(this.direction.normalized * distancePerFrame, Space.World);
     }
-      
+
     // Deals damage to the enemies
     void OnTriggerEnter2D(Collider2D hitTarget)
     {
@@ -47,20 +151,27 @@ public class rangeattack : MonoBehaviour
         {
             if (!this.hit)
             {
-                hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false);
-                //hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy((float)0.2);
+                this.statusEffectHandler(hitTarget);
             }
+
             this.hit = true;
             Destroy(this.gameObject);
         }
+
         if (hitTarget.gameObject.tag == "Boss")
         {
             if (!this.hit)
             {
                 hitTarget.gameObject.GetComponent<Cetus_Script>().DamageCetus(this.damage, this.armorpen, 1);
             }
+
             this.hit = true;
             Destroy(this.gameObject);
         }
+    }
+
+    void Start()
+    {
+        if (this.net == false) this.direction = this.target.position - this.transform.position;
     }
 }

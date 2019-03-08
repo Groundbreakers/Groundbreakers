@@ -11,7 +11,7 @@ public class characterAttributes : MonoBehaviour
     public int MOB = 2;
     public int AMP = 1;
 
-   
+
 
     //Attack Effects
     public bool burstAE = false;
@@ -74,7 +74,7 @@ public class characterAttributes : MonoBehaviour
     {
         disabled = false;
     }
-    
+
 
     public void updateAttributes(int[] inventory)
     {
@@ -114,15 +114,15 @@ public class characterAttributes : MonoBehaviour
 
 
         bool[] temp = new bool[17];
-        for(int i = 5; i < inventory.Length; i++)
+        for (int i = 5; i < inventory.Length; i++)
         {
             if (i > 0)
             {
-                temp[i-5] = true;
+                temp[i - 5] = true;
             }
             else
             {
-                temp[i-5] = false;
+                temp[i - 5] = false;
             }
         }
 
@@ -148,7 +148,7 @@ public class characterAttributes : MonoBehaviour
 
     public void resetStats()
     {
-        if(stance == "gun")
+        if (stance == "gun")
         {
             POW = 2;
             ROF = 2;

@@ -10,14 +10,14 @@ public class characterAttack : MonoBehaviour
     public float range = 15f;
 
     public Transform rangeAttackFirepoint;
-    
+
     public GameObject rangeAttackPrefab;
 
     public Animator animator;
-    
+
     public string stance = "Gun";
 
-    private characterAttributes trickster; 
+    private characterAttributes trickster;
     private bool isChanging = false;
     private Vector3 firePoint;
     private float fireCountdown = 0f;
@@ -30,6 +30,20 @@ public class characterAttack : MonoBehaviour
     // draw the attack range of the character selected
 
     private CircleCollider2D myCollider;
+
+    /// <summary>
+    /// Ivan: we keep a reference to the weapon GameObject here. Note the second child of Character
+    /// GameObject must be Weapons
+    /// </summary>
+    private GameObject rangedWeapon;
+
+    /// <summary>
+    /// Written by Ivan
+    /// </summary>
+    private void OnEnable()
+    {
+        this.rangedWeapon = this.transform.GetChild(1).gameObject; // should check error
+    }
 
     void Awake()
     {
@@ -46,8 +60,9 @@ public class characterAttack : MonoBehaviour
         animator.SetFloat("FireRate", fireRate);
         myCollider.radius = trickster.RNG + .5f;
     }
-    
-    void Update() {
+
+    void Update()
+    {
         if (target != null && !isChanging)
         {
             //calculate angle
@@ -60,7 +75,7 @@ public class characterAttack : MonoBehaviour
             }
 
             //check if it's pointing right
-            if(!trickster.disabled)
+            if (!trickster.disabled)
             {
                 if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
                 {
@@ -104,7 +119,7 @@ public class characterAttack : MonoBehaviour
             this.fireCount();
         }
 
-        if(trickster.disabled)
+        if (trickster.disabled)
         {
             myCollider.radius = 0;
             target = null;
@@ -113,7 +128,7 @@ public class characterAttack : MonoBehaviour
         if (!animator.GetBool("Transition"))
         {
             isChanging = false;
-            
+
         }
     }
 
@@ -137,23 +152,27 @@ public class characterAttack : MonoBehaviour
     }
 
     // update the closest target in range
-    void updateTarget() {
+    void updateTarget()
+    {
         if (this.attackMode == "default") defaultMode();
     }
 
     void OnMouseOver()
     {
-        if (Input.GetKeyDown("r")) {
+        if (Input.GetKeyDown("r"))
+        {
             this.attackMode = "multi-shot";
             //Debug.Log(this.attackMode);
         }
-        else if (Input.GetKeyDown("n")) {
+        else if (Input.GetKeyDown("n"))
+        {
             this.attackMode = "default";
             //Debug.Log(this.attackMode);
         }
     }
 
-    void fireCount() {
+    void fireCount()
+    {
         myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)
         {
@@ -164,12 +183,41 @@ public class characterAttack : MonoBehaviour
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
-            this.shoot();
+            // this.shoot();
+            this.PerformAttack();
 
             this.fireCountdown = 1f / this.fireRate;
         }
 
         this.fireCountdown -= Time.deltaTime;
+    }
+
+    public void PerformAttack()
+    {
+        if (this.stance.Equals("Melee"))
+        {
+            this.MeleeAttack();
+        }
+        else
+        {
+            this.RangedAttack();
+        }
+    }
+
+    /// <summary>
+    /// This is the alternative way of shooting bullets written by Ivan.
+    /// </summary>
+    public void RangedAttack()
+    {
+        // this.rangedWeapon.SendMessage("AimAtTarget", this.target);
+        this.rangedWeapon.SendMessage("FireAt", this.target);
+    }
+
+    public void MeleeAttack()
+    {
+        // should use a melee attack module here. This is temp solution :(
+
+        this.rangedWeapon.SendMessage("Melee", this.target);
     }
 
     // Instantiate and and chase the target
@@ -179,27 +227,28 @@ public class characterAttack : MonoBehaviour
             this.rangeAttackPrefab,
             firePoint,
             this.rangeAttackFirepoint.rotation);
-       
+
         rangeattack rangeattack = rangeAttack_object.GetComponent<rangeattack>();
-        if(stance.Equals("Melee"))
+        if (stance.Equals("Melee"))
         {
             rangeattack.speed = 10f;
             rangeAttack_object.GetComponent<SpriteRenderer>().enabled = false;
         }
         else
         {
-            rangeattack.speed = 70f;
+            rangeattack.speed = 3f;
         }
         if (rangeattack != null)
         {
-            
+            this.setProjectileStatusAttributes(rangeattack);
             rangeattack.updateStats(trickster.POW, trickster.AMP);
             rangeattack.chase(this.target);
         }
     }
 
-    void defaultMode() {
-        if(targetedEnemies.Count != 0)
+    void defaultMode()
+    {
+        if (targetedEnemies.Count != 0)
         {
             target = targetedEnemies[0].transform;
         }
@@ -207,7 +256,7 @@ public class characterAttack : MonoBehaviour
         {
             target = null;
         }
-        
+
     }
 
     public void change()
@@ -237,5 +286,17 @@ public class characterAttack : MonoBehaviour
             trickster.melee();
             myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         }
+    }
+
+    private void setProjectileStatusAttributes(rangeattack rangeattack)
+    {
+        if (this.trickster.burnSE == true) rangeattack.setBurn();
+        if (this.trickster.blightSE == true) rangeattack.setBlight();
+        if (this.trickster.slowSE == true) rangeattack.setSlow();
+        if (this.trickster.stunSE == true) rangeattack.setStun();
+        if (this.trickster.markSE == true) rangeattack.setMark();
+        if (this.trickster.breakSE == true) rangeattack.setBreak();
+        if (this.trickster.netSE == true) rangeattack.setNet();
+        if (this.trickster.purgeSE == true) rangeattack.setPurge();
     }
 }
