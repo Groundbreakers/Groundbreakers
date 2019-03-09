@@ -22,6 +22,17 @@ public class CharacterManager : MonoBehaviour
         this.UpdatePanel();
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tooltip"))
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void Select(int index)
     {
         this.characterIndex = index;

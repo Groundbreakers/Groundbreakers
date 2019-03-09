@@ -15,6 +15,45 @@ public class Crafting : MonoBehaviour
     public GameObject crystalCounter;
     public GameObject inventory;
 
+    public Sprite common;
+    public Sprite modified;
+    public Sprite ideal;
+    public Sprite groundbreaking;
+
+    public Sprite pow1;
+    public Sprite pow2;
+    public Sprite pow3;
+    public Sprite rof1;
+    public Sprite rof2;
+    public Sprite rof3;
+    public Sprite rng1;
+    public Sprite rng2;
+    public Sprite rng3;
+    public Sprite mob1;
+    public Sprite mob2;
+    public Sprite mob3;
+    public Sprite amp1;
+    public Sprite amp2;
+    public Sprite amp3;
+
+    public Sprite burstAE;
+    public Sprite ricochetAE;
+    public Sprite laserAE;
+    public Sprite splashAE;
+    public Sprite pierceAE;
+    public Sprite traceAE;
+    public Sprite whirlwindAE;
+    public Sprite reachAE;
+
+    public Sprite slowSE;
+    public Sprite stunSE;
+    public Sprite burnSE;
+    public Sprite markSE;
+    public Sprite purgeSE;
+    public Sprite breakSE;
+    public Sprite blightSE;
+    public Sprite netSE;
+
     void Update()
     {
         if (this.crystalCounter.GetComponent<CrystalCounter>().GetCrystals() < 1000)
@@ -177,48 +216,127 @@ public class Crafting : MonoBehaviour
         {
             case "POW I":
                 moduleGeneric.POW = 1;
+                moduleGeneric.icon.sprite = this.pow1;
                 break;
             case "POW II":
                 moduleGeneric.POW = 2;
+                moduleGeneric.icon.sprite = this.pow2;
                 break;
             case "POW III":
                 moduleGeneric.POW = 3;
+                moduleGeneric.icon.sprite = this.pow3;
                 break;
             case "ROF I":
                 moduleGeneric.ROF = 1;
+                moduleGeneric.icon.sprite = this.rof1;
                 break;
             case "ROF II":
                 moduleGeneric.ROF = 2;
+                moduleGeneric.icon.sprite = this.rof2;
                 break;
             case "ROF III":
                 moduleGeneric.ROF = 3;
+                moduleGeneric.icon.sprite = this.rof3;
                 break;
             case "RNG I":
                 moduleGeneric.RNG = 1;
+                moduleGeneric.icon.sprite = this.rng1;
                 break;
             case "RNG II":
                 moduleGeneric.RNG = 2;
+                moduleGeneric.icon.sprite = this.rng2;
                 break;
             case "RNG III":
                 moduleGeneric.RNG = 3;
+                moduleGeneric.icon.sprite = this.rng3;
                 break;
             case "MOB I":
                 moduleGeneric.MOB = 1;
+                moduleGeneric.icon.sprite = this.mob1;
                 break;
             case "MOB II":
                 moduleGeneric.MOB = 2;
+                moduleGeneric.icon.sprite = this.mob2;
                 break;
             case "MOB III":
                 moduleGeneric.MOB = 3;
+                moduleGeneric.icon.sprite = this.mob3;
                 break;
             case "AMP I":
                 moduleGeneric.AMP = 1;
+                moduleGeneric.icon.sprite = this.amp1;
                 break;
             case "AMP II":
                 moduleGeneric.AMP = 2;
+                moduleGeneric.icon.sprite = this.amp2;
                 break;
             case "AMP III":
                 moduleGeneric.AMP = 3;
+                moduleGeneric.icon.sprite = this.amp3;
+                break;
+            case "BURST":
+                moduleGeneric.burstAE = true;
+                moduleGeneric.icon.sprite = this.burstAE;
+                break;
+            case "RICOCHET":
+                moduleGeneric.ricochetAE = true;
+                moduleGeneric.icon.sprite = this.ricochetAE;
+                break;
+            case "LASER":
+                moduleGeneric.laserAE = true;
+                moduleGeneric.icon.sprite = this.laserAE;
+                break;
+            case "SPLASH":
+                moduleGeneric.splashAE = true;
+                moduleGeneric.icon.sprite = this.splashAE;
+                break;
+            case "PIERCE":
+                moduleGeneric.pierceAE = true;
+                moduleGeneric.icon.sprite = this.pierceAE;
+                break;
+            case "TRACE":
+                moduleGeneric.traceAE = true;
+                moduleGeneric.icon.sprite = this.traceAE;
+                break;
+            case "WHIRLWIND":
+                moduleGeneric.whirlwindAE = true;
+                moduleGeneric.icon.sprite = this.whirlwindAE;
+                break;
+            case "REACH":
+                moduleGeneric.reachAE = true;
+                moduleGeneric.icon.sprite = this.reachAE;
+                break;
+            case "SLOW":
+                moduleGeneric.slowSE = true;
+                moduleGeneric.icon.sprite = this.slowSE;
+                break;
+            case "STUN":
+                moduleGeneric.stunSE = true;
+                moduleGeneric.icon.sprite = this.stunSE;
+                break;
+            case "BURN":
+                moduleGeneric.burnSE = true;
+                moduleGeneric.icon.sprite = this.burnSE;
+                break;
+            case "MARK":
+                moduleGeneric.markSE = true;
+                moduleGeneric.icon.sprite = this.markSE;
+                break;
+            case "PURGE":
+                moduleGeneric.purgeSE = true;
+                moduleGeneric.icon.sprite = this.purgeSE;
+                break;
+            case "BREAK":
+                moduleGeneric.breakSE = true;
+                moduleGeneric.icon.sprite = this.breakSE;
+                break;
+            case "BLIGHT":
+                moduleGeneric.blightSE = true;
+                moduleGeneric.icon.sprite = this.blightSE;
+                break;
+            case "NET":
+                moduleGeneric.netSE = true;
+                moduleGeneric.icon.sprite = this.netSE;
                 break;
         }
 
@@ -234,18 +352,22 @@ public class Crafting : MonoBehaviour
         if (rarityIndex > 94)
         {
             moduleGeneric.rarity = 3;
+            moduleGeneric.background.sprite = this.groundbreaking;
         }
         else if (rarityIndex > 79)
         {
             moduleGeneric.rarity = 2;
+            moduleGeneric.background.sprite = this.ideal;
         }
         else if (rarityIndex > 49)
         {
             moduleGeneric.rarity = 1;
+            moduleGeneric.background.sprite = this.modified;
         }
         else
         {
             moduleGeneric.rarity = 0;
+            moduleGeneric.background.sprite = this.common;
         }
 
         // Generate extra attributes based on rarity

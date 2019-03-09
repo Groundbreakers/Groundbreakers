@@ -15,6 +15,9 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Text titleText;
     public Text rarityText;
     public Text[] descriptionText = new Text[4];
+    public GameObject tooltip;
+    public Image icon;
+    public Image background;
 
     // Basic Attributes
     public int POW;
@@ -46,8 +49,6 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private Canvas canvas;
     private CharacterManager characterManager;
     private Inventory inventory;
-    public GameObject tooltip;
-    public Image icon;
     private Transform parent;
 
     private Boolean isEquipped;
@@ -112,7 +113,21 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void ToggleTooltip()
     {
-        this.tooltip.SetActive(!this.tooltip.activeSelf);
+        if (!this.tooltip.activeSelf)
+        {
+            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tooltip"))
+            {
+                gameObject.SetActive(false);
+            }
+            this.tooltip.SetActive(true);
+        }
+        else
+        {
+            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tooltip"))
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     public int[] GetModuleAttributes()

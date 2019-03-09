@@ -15,6 +15,17 @@ public class Inventory : MonoBehaviour, IDropHandler
 
     private int characterIndex;
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tooltip"))
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
     public void UpdateInventory()
     {
         // Disable all character inventories
@@ -103,8 +114,11 @@ public class Inventory : MonoBehaviour, IDropHandler
             Debug.Log("Dropped object was: " + eventData.pointerDrag);
             if (eventData.pointerCurrentRaycast.gameObject.tag == "Slot")
             {
-                eventData.pointerDrag.GetComponent<ModuleGeneric>()
-                    .NewParent(eventData.pointerCurrentRaycast.gameObject.transform);
+                if (eventData.pointerCurrentRaycast.gameObject.transform.childCount == 0)
+                {
+                    eventData.pointerDrag.GetComponent<ModuleGeneric>()
+                        .NewParent(eventData.pointerCurrentRaycast.gameObject.transform);
+                }
                 Debug.Log("On top of: " + eventData.pointerCurrentRaycast.gameObject);
             }
             else if (eventData.pointerCurrentRaycast.gameObject.tag == "Recycle")

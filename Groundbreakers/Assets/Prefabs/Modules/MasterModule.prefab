@@ -144,7 +144,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 434c48fe0c5e62a4ab29d1466284b8fb, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -222,6 +222,9 @@ MonoBehaviour:
   - {fileID: 5358084146812860801}
   - {fileID: 8048015022907412082}
   - {fileID: 7330390185226482530}
+  tooltip: {fileID: 2106979245159088137}
+  icon: {fileID: 7519306073791697174}
+  background: {fileID: 1403846855661865091}
   POW: 0
   ROF: 0
   RNG: 0
@@ -243,8 +246,6 @@ MonoBehaviour:
   breakSE: 0
   blightSE: 0
   netSE: 0
-  tooltip: {fileID: 2106979245159088137}
-  icon: {fileID: 7519306073791697174}
   isDragable: 1
 --- !u!225 &3657122530066585706
 CanvasGroup:
@@ -328,22 +329,22 @@ PrefabInstance:
     - target: {fileID: 2393215318291718276, guid: f5642ff3180f2f34b8ffb29ec53cec84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 2393215318291718276, guid: f5642ff3180f2f34b8ffb29ec53cec84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2393215318291718276, guid: f5642ff3180f2f34b8ffb29ec53cec84,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 128
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2393215318291718276, guid: f5642ff3180f2f34b8ffb29ec53cec84,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 128
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2393215318291718276, guid: f5642ff3180f2f34b8ffb29ec53cec84,
         type: 3}
