@@ -53,7 +53,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 60
+  spritePixelsToUnits: 40
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,8 +97,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -106,7 +106,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e689b1cc8fec2c4d8ec241983d86bc5
+      spriteID: 9df9c9fdbfa6d8d4f840dcb708b2506d
       vertices: []
       indices: 
       edges: []
@@ -115,10 +115,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_1
       rect:
         serializedVersion: 2
-        x: 45
+        x: 30
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -126,7 +126,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98506472d5297ce40abf0f34b9009cca
+      spriteID: f325dc16f48769545b98b699a074f1c5
       vertices: []
       indices: 
       edges: []
@@ -135,10 +135,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_2
       rect:
         serializedVersion: 2
-        x: 90
+        x: 60
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,7 +146,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0ac65699763e404c965e0de21c370d3
+      spriteID: 5f61c37f96ca4714ba44fb250a9d5c54
       vertices: []
       indices: 
       edges: []
@@ -155,10 +155,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_3
       rect:
         serializedVersion: 2
-        x: 135
+        x: 90
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,7 +166,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67598c01ffeff6349a31ff2939cbe447
+      spriteID: 6b01ebd394e001543a6ec9b6704f78a5
       vertices: []
       indices: 
       edges: []
@@ -175,10 +175,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_4
       rect:
         serializedVersion: 2
-        x: 180
+        x: 120
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,7 +186,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a94547123550e4d49ad076c86e89aa2d
+      spriteID: 0f17fdac3dfa1ae489bea3cdb32af435
       vertices: []
       indices: 
       edges: []
@@ -195,10 +195,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_5
       rect:
         serializedVersion: 2
-        x: 225
+        x: 150
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,7 +206,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 152bc7b917ddf0546a3126f21ff16273
+      spriteID: 62e2f15a5dba3104cba4d142b3a857da
       vertices: []
       indices: 
       edges: []
@@ -215,10 +215,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_6
       rect:
         serializedVersion: 2
-        x: 270
+        x: 180
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,7 +226,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7775465e0f5b5ce42afeadd56c86434c
+      spriteID: 285d5be1c5f519a48b3d1025f869e85f
       vertices: []
       indices: 
       edges: []
@@ -235,10 +235,10 @@ TextureImporter:
       name: 02_Manis_Right_Stun_v01_7
       rect:
         serializedVersion: 2
-        x: 315
+        x: 210
         y: 0
-        width: 45
-        height: 45
+        width: 30
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,7 +246,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5019628ed3b4970478f9110cec9a4c68
+      spriteID: 56d6e5b356b2afb43aecf08d998c463a
       vertices: []
       indices: 
       edges: []
