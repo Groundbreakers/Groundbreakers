@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Assets.Scripts;
+
     using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
@@ -56,7 +58,7 @@
             Easy,
             Medium,
             Hard,
-            Elite,
+            Boss,
         }
 
         #endregion
@@ -120,7 +122,7 @@
         public void ResetPack()
         {
             // Fast and dirty way to do
-            var level = GameObject.Find("Canvas").GetComponent<CurrentLevel>().GetDifficulty();
+            var level = GameObject.Find("LevelManager").GetComponent<LevelManager>().GetDifficulty();
 
             this.bufferA.Clear();
             this.bufferB.Clear();
