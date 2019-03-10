@@ -45,7 +45,7 @@
                                                                          { 5, Difficulty.Medium },
                                                                          { 6, Difficulty.Medium },
                                                                          { 7, Difficulty.Hard },
-                                                                         { 8, Difficulty.Hard }
+                                                                         { 8, Difficulty.Boss }
                                                                      };
 
         #endregion
