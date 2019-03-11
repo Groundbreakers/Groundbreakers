@@ -18,6 +18,8 @@
 
         #region Private Fields
 
+        private LevelManager levelManager;
+
         private Dictionary<string, UnityEvent> eventDictionary;
 
         private GameTimer timer;
@@ -198,7 +200,6 @@
         {
             GameState = Stages.Combating;
 
-
             // Toggle UI
             Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
             GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", true);
@@ -210,11 +211,11 @@
 
             GameState = Stages.Exiting;
 
-            // Toggle UI
+            // Toggle UI (dirty way)
             GameObject.Find("DeployPanel").GetComponent<Deploy>().Clear();
             GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", false);
 
-            // Reset Timer
+            // Reset Timer (dirty way)
             GameObject.Find("1xButton").GetComponent<Button>().onClick.Invoke();
         }
 
@@ -222,13 +223,13 @@
         {
             this.KillAllEnemies();
 
-            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
-
-            var canvas = GameObject.Find("Canvas");
-            var routes = canvas.GetComponent<RoutesGenerator>();
-            routes.Toggle();
+            this.levelManager.StartLevel();
 
             this.timer.ResetTimer();
+
+            // Dirty way to not show GameSpeed
+            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
+
             GameState = Stages.Null;
         }
 
@@ -245,6 +246,7 @@
 
         private void OnEnable()
         {
+            this.levelManager = FindObjectOfType<LevelManager>();
             this.timer = this.GetComponent<GameTimer>();
 
             StartListening("block ready", this.OnBattleBegin);

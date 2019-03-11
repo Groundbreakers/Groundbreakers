@@ -1,73 +1,53 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+
+using Random = System.Random;
 
 public class RoutesGenerator : MonoBehaviour
 {
-    public GameObject ui;
-    public GameObject prefab;
-
     // Icons for choices
-    public Sprite battleIcon;
-    public Sprite lowLightIcon;
-    public Sprite lowOxygenIcon;
     public Sprite aftershockIcon;
-    public Sprite radiativeIcon;
-    public Sprite swarmIcon;
+
+    public Sprite battleIcon;
+
     public Sprite eliteIcon;
-    public Sprite repairStationIcon;
+
     public Sprite freeLootIcon;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Instantiate 3 choice buttons
-        GameObject newChoicesButton1 = (GameObject)GameObject.Instantiate(this.prefab, this.ui.transform);
-        GameObject newChoicesButton2 = (GameObject)GameObject.Instantiate(this.prefab, this.ui.transform);
-        GameObject newChoicesButton3 = (GameObject)GameObject.Instantiate(this.prefab, this.ui.transform);
+    public Sprite lowLightIcon;
 
-        // Set them all to inactive
-        newChoicesButton1.SetActive(false);
-        newChoicesButton2.SetActive(false);
-        newChoicesButton3.SetActive(false);
-    }
+    public Sprite lowOxygenIcon;
 
-    public void Toggle()
-    {
-        // Generate choices before opening the panel
-        // else, hide previous choices before closing the panel
-        if (!ui.activeSelf)
-        {
-            GenerateChoices();
-        }
-        else
-        {
-            // Set all choice buttons to inactive
-            this.ui.transform.GetChild(0).gameObject.SetActive(false);
-            this.ui.transform.GetChild(1).gameObject.SetActive(false);
-            this.ui.transform.GetChild(2).gameObject.SetActive(false);
-        }
-        ui.SetActive(!ui.activeSelf);
-    }
+    public Sprite radiativeIcon;
+
+    public Sprite repairStationIcon;
+
+    public Sprite swarmIcon;
+
+    /// <summary>
+    /// The new Choices Button prefab.
+    /// </summary>
+    public GameObject prefab;
+
+    public GameObject ui;
 
     public void GenerateChoices()
     {
-        System.Random rnd = new System.Random();
+        var rnd = new Random();
 
         // Get a number between 1-3
-        int choicesNumber = rnd.Next(1, 4);
-        for (int i = 0; i < choicesNumber; i++)
+        var choicesNumber = rnd.Next(1, 4);
+        for (var i = 0; i < choicesNumber; i++)
         {
             // Active the choice button
-            GameObject newButton = this.ui.transform.GetChild(i).gameObject;
+            var newButton = this.ui.transform.GetChild(i).gameObject;
             newButton.SetActive(true);
 
             // Setup the component of the button
-            RoutesButton button = newButton.GetComponent<RoutesButton>();
-            int battleModifier = rnd.Next(100);
+            var button = newButton.GetComponent<RoutesButton>();
+            var battleModifier = rnd.Next(100);
 
             button.Setup(this.battleIcon, "Battle", "Are you ready for the challenge?");
+
             // Generate options randomly
             /*if (battleModifier < 50)
             {
@@ -106,5 +86,38 @@ public class RoutesGenerator : MonoBehaviour
                 button.Setup(this.freeLootIcon, "Free Loot", "No enemies.");
             }*/
         }
+    }
+
+    public void Toggle()
+    {
+        // Generate choices before opening the panel
+        // else, hide previous choices before closing the panel
+        if (!this.ui.activeSelf)
+        {
+            this.GenerateChoices();
+        }
+        else
+        {
+            // Set all choice buttons to inactive
+            this.ui.transform.GetChild(0).gameObject.SetActive(false);
+            this.ui.transform.GetChild(1).gameObject.SetActive(false);
+            this.ui.transform.GetChild(2).gameObject.SetActive(false);
+        }
+
+        this.ui.SetActive(!this.ui.activeSelf);
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        // Instantiate 3 choice buttons
+        var newChoicesButton1 = Instantiate(this.prefab, this.ui.transform);
+        var newChoicesButton2 = Instantiate(this.prefab, this.ui.transform);
+        var newChoicesButton3 = Instantiate(this.prefab, this.ui.transform);
+
+        // Set them all to inactive
+        newChoicesButton1.SetActive(false);
+        newChoicesButton2.SetActive(false);
+        newChoicesButton3.SetActive(false);
     }
 }

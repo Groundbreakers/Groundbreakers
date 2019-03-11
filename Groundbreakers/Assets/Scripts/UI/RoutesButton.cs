@@ -40,7 +40,7 @@ public class RoutesButton : MonoBehaviour
 
         // Update Current Level
         CurrentLevel currentLevel = canvas.GetComponent<CurrentLevel>();
-        currentLevel.UpdateLevel();
+        currentLevel.UpdateLevelInfo();
 
         Debug.Log(title.text);
     }

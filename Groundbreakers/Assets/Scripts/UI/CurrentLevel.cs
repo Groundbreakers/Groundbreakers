@@ -1,47 +1,28 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+
+using Assets.Scripts;
 
 using UnityEngine;
 using UnityEngine.UI;
 
-using Difficulty = Asset.Script.EnemyGroups.Difficulty;
 
 public class CurrentLevel : MonoBehaviour
 {
-    #region Inspector Properties
+    [SerializeField]
+    private GameObject titleScreen;
 
-    public GameObject titleScreen;
+    [SerializeField]
+    private Text ui;
 
-    public Text ui;
+    [SerializeField]
+    private Text ui2;
 
-    public Text ui2;
+    /// <summary>
+    /// Keep a reference to the manager class.
+    /// </summary>
+    private LevelManager levelManager;
 
-    #endregion
-
-    #region Internal Fields
-
-    private int level;
-
-    private int region;
-
-    private Dictionary<int, Difficulty> levelDifficultyMap =
-        new Dictionary<int, Difficulty>
-            {
-                { 1, Difficulty.Easy },
-                { 2, Difficulty.Easy },
-                { 3, Difficulty.Easy },
-                { 4, Difficulty.Medium },
-                { 5, Difficulty.Medium },
-                { 6, Difficulty.Hard },
-                { 7, Difficulty.Hard },
-                { 8, Difficulty.Hard },
-            };
-
-    #endregion
-
-    #region Public Functions
-
-    public void ChangeRegion()
+    public void OnRegionChanged()
     {
         // Get a new BGM if the region is changed
         var bgm = GameObject.Find("BGM Manager");
@@ -57,55 +38,25 @@ public class CurrentLevel : MonoBehaviour
         background.UpdateBackground();
     }
 
-    public int GetLevel()
+    public void UpdateLevelInfo()
     {
-        return this.level;
+        this.ui.text = "Region " + this.levelManager.Region;
+        this.ui2.text = "Level " + this.levelManager.Level + "/8";
     }
-
-    public int GetRegion()
-    {
-        return this.region;
-    }
-
-    /// <summary>
-    /// Called by BattleManager (or directly called by spawn) I think
-    /// </summary>
-    /// <returns>
-    /// The <see cref="Difficulty"/>.
-    /// </returns>
-    public Difficulty GetDifficulty()
-    {
-        return this.level == 0 ? Difficulty.Easy : this.levelDifficultyMap[this.level];
-    }
-
-    public void UpdateLevel()
-    {
-        if (this.level == 8)
-        {
-            this.region += 1;
-            this.level = 1;
-            this.ChangeRegion();
-        }
-        else
-        {
-            this.level += 1;
-        }
-
-        this.ui.text = "Region " + this.region;
-        this.ui2.text = "Level " + this.level + "/8";
-    }
-
-    #endregion
 
     #region Unity Callbacks
 
-    private void Start()
+    private void OnEnable()
     {
-        this.region = 1;
-        this.level = 1;
-        this.ui.text = "Region " + this.region;
-        this.ui2.text = "Level " + this.level + "/8";
-        this.ChangeRegion();
+        this.levelManager = FindObjectOfType<LevelManager>();
+
+        if (!this.levelManager)
+        {
+            Debug.LogError("There needs to be one active LevelManager script on a GameObject in your scene.");
+        }
+
+        this.UpdateLevelInfo();
+        this.OnRegionChanged();
     }
 
     #endregion

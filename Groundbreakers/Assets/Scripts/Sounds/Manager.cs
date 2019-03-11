@@ -57,22 +57,21 @@ public class Manager : MonoBehaviour
         }
 
         // Get to know what is the current region
-        GameObject canvas = GameObject.Find("Canvas");
-        CurrentLevel currentLevel = canvas.GetComponent<CurrentLevel>();
-        this.region = currentLevel.GetRegion();
+        var lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        this.region = lm.Region;
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
-        if (region == 1)
+        if (this.region == 1)
         {
             peaceTheme = audioSources[1];
             battleTheme = audioSources[2];
         }
-        else if (region == 2)
+        else if (this.region == 2)
         {
             peaceTheme = audioSources[3];
             battleTheme = audioSources[4];
         }
-        else if (region == 3)
+        else if (this.region == 3)
         {
             peaceTheme = audioSources[5];
             battleTheme = audioSources[6];
