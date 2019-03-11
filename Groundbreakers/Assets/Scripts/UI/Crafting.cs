@@ -15,6 +15,10 @@ public class Crafting : MonoBehaviour
     public GameObject crystalCounter;
     public GameObject inventory;
 
+    public Image tooltipImage;
+    public Text tooltipTitle;
+    public Text tooltipDescription;
+
     public Sprite common;
     public Sprite modified;
     public Sprite ideal;
@@ -54,9 +58,20 @@ public class Crafting : MonoBehaviour
     public Sprite blightSE;
     public Sprite netSE;
 
+    public Sprite slot;
+
+    private String baseAttribute;
+    private int cost;
+
+    void Start()
+    {
+        this.baseAttribute = "none";
+        this.cost = 0;
+    }
+
     void Update()
     {
-        if (this.crystalCounter.GetComponent<CrystalCounter>().GetCrystals() < 1000)
+        if (this.crystalCounter.GetComponent<CrystalCounter>().GetCrystals() < this.cost)
         {
             this.button.GetComponent<Button>().interactable = false;
             this.buttonText.text = "Not enough crystals";
@@ -70,6 +85,176 @@ public class Crafting : MonoBehaviour
         {
             this.button.GetComponent<Button>().interactable = true;
             this.buttonText.text = "Craft";
+        }
+    }
+
+    public void Select(String text)
+    {
+        this.baseAttribute = text;
+        this.tooltipTitle.text = this.baseAttribute;
+        switch (this.baseAttribute)
+        {
+            case "POW I":
+                this.cost = 500;
+                this.tooltipImage.sprite = this.pow1;
+                this.tooltipDescription.text = "POW (Power) affects the damage you do to enemies.";
+                break;
+            case "POW II":
+                this.cost = 1000;
+                this.tooltipImage.sprite = this.pow2;
+                this.tooltipDescription.text = "POW (Power) affects the damage you do to enemies.";
+                break;
+            case "POW III":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.pow3;
+                this.tooltipDescription.text = "POW (Power) affects the damage you do to enemies.";
+                break;
+            case "ROF I":
+                this.cost = 500;
+                this.tooltipImage.sprite = this.rof1;
+                this.tooltipDescription.text = "ROF (Rate of Fire affects) affects how often you attack.";
+                break;
+            case "ROF II":
+                this.cost = 1000;
+                this.tooltipImage.sprite = this.rof2;
+                this.tooltipDescription.text = "ROF (Rate of Fire affects) affects how often you attack.";
+                break;
+            case "ROF III":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.rof3;
+                this.tooltipDescription.text = "ROF (Rate of Fire affects) affects how often you attack.";
+                break;
+            case "RNG I":
+                this.cost = 500;
+                this.tooltipImage.sprite = this.rng1;
+                this.tooltipDescription.text = "RNG (Range) affects how far your attacks can go.";
+                break;
+            case "RNG II":
+                this.cost = 1000;
+                this.tooltipImage.sprite = this.rng2;
+                this.tooltipDescription.text = "RNG (Range) affects how far your attacks can go.";
+                break;
+            case "RNG III":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.rng3;
+                this.tooltipDescription.text = "RNG (Range) affects how far your attacks can go.";
+                break;
+            case "MOB I":
+                this.cost = 500;
+                this.tooltipImage.sprite = this.mob1;
+                this.tooltipDescription.text = "MOB (Mobility) affects how fast you can deploy.";
+                break;
+            case "MOB II":
+                this.cost = 1000;
+                this.tooltipImage.sprite = this.mob2;
+                this.tooltipDescription.text = "MOB (Mobility) affects how fast you can deploy.";
+                break;
+            case "MOB III":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.mob3;
+                this.tooltipDescription.text = "MOB (Mobility) affects how fast you can deploy.";
+                break;
+            case "AMP I":
+                this.cost = 500;
+                this.tooltipImage.sprite = this.amp1;
+                this.tooltipDescription.text = "AMP (Armor Penetration) affects the damage you do to armored enemies.";
+                break;
+            case "AMP II":
+                this.cost = 1000;
+                this.tooltipImage.sprite = this.amp2;
+                this.tooltipDescription.text = "AMP (Armor Penetration) affects the damage you do to armored enemies.";
+                break;
+            case "AMP III":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.amp3;
+                this.tooltipDescription.text = "AMP (Armor Penetration) affects the damage you do to armored enemies.";
+                break;
+            case "BURST":
+                this.cost = 2500;
+                this.tooltipImage.sprite = this.burstAE;
+                this.tooltipDescription.text = "BURST allows you to shoot 3 bullet at a time.";
+                break;
+            case "RICOCHET":
+                this.cost = 2500;
+                this.tooltipImage.sprite = this.ricochetAE;
+                this.tooltipDescription.text = "RICOCHET allows your bullets to bounce to nearby enemies.";
+                break;
+            case "LASER":
+                this.cost = 2500;
+                this.tooltipImage.sprite = this.laserAE;
+                this.tooltipDescription.text = "LASER multiplies your rate of fire but decrease your damage.";
+                break;
+            case "SPLASH":
+                this.cost = 2500;
+                this.tooltipImage.sprite = this.splashAE;
+                this.tooltipDescription.text = "SPLASH allows your attacks to do damage to all nearby enemies.";
+                break;
+            case "PIERCE":
+                this.cost = 2500;
+                this.tooltipImage.sprite = this.pierceAE;
+                this.tooltipDescription.text = "PIERCE allows your attacks to do damage to all nearby enemies.";
+                break;
+            case "TRACE":
+                this.cost = 2500;
+                this.tooltipImage.sprite = this.traceAE;
+                this.tooltipDescription.text = "TRACE allows your bullets to chase after enemies.";
+                break;
+            case "WHIRLWIND":
+                this.cost = 3000;
+                this.tooltipImage.sprite = this.whirlwindAE;
+                this.tooltipDescription.text = "WHIRLWIND allows you to do spin attacks (melee only).";
+                break;
+            case "REACH":
+                this.cost = 3000;
+                this.tooltipImage.sprite = this.reachAE;
+                this.tooltipDescription.text = "REACH allows you to do range attacks in melee mode (melee only).";
+                break;
+            case "SLOW":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.slowSE;
+                this.tooltipDescription.text = "Attacks decrease enemies movement speed.";
+                break;
+            case "STUN":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.stunSE;
+                this.tooltipDescription.text = "Attacks stop enemies for a short period of time.";
+                break;
+            case "BURN":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.burnSE;
+                this.tooltipDescription.text = "Enemies take damage over time.";
+                break;
+            case "MARK":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.markSE;
+                this.tooltipDescription.text = "Enemies take extra damage from attacks.";
+                break;
+            case "PURGE":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.purgeSE;
+                this.tooltipDescription.text = "Disable enemy's Aura and Revenge.";
+                break;
+            case "BREAK":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.breakSE;
+                this.tooltipDescription.text = "Disable enemy's Armor.";
+                break;
+            case "BLIGHT":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.blightSE;
+                this.tooltipDescription.text = "Enemies take damage over time. Stacks.";
+                break;
+            case "NET":
+                this.cost = 1500;
+                this.tooltipImage.sprite = this.netSE;
+                this.tooltipDescription.text = "Enemies cannot evade.";
+                break;
+            default:
+                this.cost = 0;
+                this.tooltipImage.sprite = this.slot;
+                this.tooltipTitle.text = "module";
+                this.tooltipDescription.text = "description";
+                break;
         }
     }
 
@@ -204,15 +389,15 @@ public class Crafting : MonoBehaviour
         }
     }
 
-    public void Craft(String baseAttribute)
+    public void Craft()
     {
-        this.crystalCounter.GetComponent<CrystalCounter>().SetCrystals(-1000);
+        this.crystalCounter.GetComponent<CrystalCounter>().SetCrystals(-this.cost);
 
         GameObject masterModule = GameObject.Instantiate(this.ModulePrefab);
         masterModule.transform.localScale = Vector3.zero;
         ModuleGeneric moduleGeneric = masterModule.GetComponent<ModuleGeneric>();
 
-        switch (baseAttribute)
+        switch (this.baseAttribute)
         {
             case "POW I":
                 moduleGeneric.POW = 1;
@@ -462,7 +647,7 @@ public class Crafting : MonoBehaviour
             }
         }
 
-        moduleGeneric.title = baseAttribute;
+        moduleGeneric.title = this.baseAttribute;
         this.SetupDescription(moduleGeneric);
 
         // Create a child clone under the parent Inventory
