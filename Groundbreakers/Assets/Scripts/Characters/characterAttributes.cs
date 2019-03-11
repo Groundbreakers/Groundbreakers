@@ -20,7 +20,6 @@ public class characterAttributes : MonoBehaviour
     public bool splashAE = false;
     public bool pierceAE = false;
     public bool traceAE = false;
-    public bool cleaveAE = false;
     public bool whirwindAE = false;
     public bool reachAE = false;
 
@@ -133,17 +132,16 @@ public class characterAttributes : MonoBehaviour
         splashAE = temp[3];
         pierceAE = temp[4];
         traceAE = temp[5];
-        cleaveAE = temp[6];
-        whirwindAE = temp[7];
-        reachAE = temp[8];
-        slowSE = temp[9];
-        stunSE = temp[10];
-        burnSE = temp[11];
-        markSE = temp[12];
-        purgeSE = temp[13];
-        breakSE = temp[14];
-        blightSE = temp[15];
-        netSE = temp[16];
+        whirwindAE = temp[6];
+        reachAE = temp[7];
+        slowSE = temp[8];
+        stunSE = temp[9];
+        burnSE = temp[10];
+        markSE = temp[11];
+        purgeSE = temp[12];
+        breakSE = temp[13];
+        blightSE = temp[14];
+        netSE = temp[15];
     }
 
     public void resetStats()
