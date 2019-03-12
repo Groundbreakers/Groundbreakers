@@ -100,6 +100,10 @@ public class Deploy : MonoBehaviour
         {
             Debug.Log("The character is transforming, do nothing instead...");
         }
+        else if(character[index].GetComponent<StatusManager>().isShackled)
+        {
+            Debug.Log("Shackled");
+        }
         else if (this.character[index].activeSelf && this.running[index] != "Spawn" && this.running[index] != "Retreating")
         {
             // If the character is already activated, redeploy instead of deploy
@@ -423,6 +427,7 @@ public class Deploy : MonoBehaviour
         if (this.running[index] == "Done")
         {
             this.DeployCharacter(index);
+            character[index].GetComponent<characterAttributes>().keepStance();
         }
     }
 

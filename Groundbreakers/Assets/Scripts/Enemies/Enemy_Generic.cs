@@ -60,7 +60,7 @@
         private float regenTimer = 1;
 
         #endregion
-
+        private GameObject crystalCounter;
         public int time = 0;
         void Start()
         {
@@ -82,6 +82,8 @@
                 this.gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
                 this.isPurged = false;
             }
+
+            crystalCounter = GameObject.Find("CrystalCounter");
         }
 
         void FixedUpdate()
@@ -129,8 +131,11 @@
                 GameObject effect = (GameObject)Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
                 Enemy_Death death = effect.GetComponent<Enemy_Death>();
                 death.setDirection(animator.GetInteger("Direction"));
-                Destroy(effect, 0.25f);
+                CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
+                temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
+                Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
+                
             }
 
             // Check for "Rage" attribute and HP < 50%

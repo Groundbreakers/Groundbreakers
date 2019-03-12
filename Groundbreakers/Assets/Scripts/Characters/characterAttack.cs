@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Collections;
 
 public class characterAttack : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class characterAttack : MonoBehaviour
     private bool isChanging = false;
     private Vector3 firePoint;
     private float fireCountdown = 0f;
+    private bool isStunned = false;
 
     private Transform target;
 
@@ -75,7 +78,7 @@ public class characterAttack : MonoBehaviour
             }
 
             //check if it's pointing right
-            if (!trickster.disabled)
+            if (!trickster.disabled && !isStunned)
             {
                 if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
                 {
@@ -114,7 +117,7 @@ public class characterAttack : MonoBehaviour
 
         }
 
-        if (!isChanging && !trickster.disabled)
+        if (!isChanging && !trickster.disabled && !isStunned)
         {
             this.fireCount();
         }
@@ -123,6 +126,11 @@ public class characterAttack : MonoBehaviour
         {
             myCollider.radius = 0;
             target = null;
+        }
+
+        if (isStunned)
+        {
+            animator.SetBool("Firing", false);
         }
 
         if (!animator.GetBool("Transition"))
@@ -298,5 +306,33 @@ public class characterAttack : MonoBehaviour
         if (this.trickster.breakSE == true) rangeattack.setBreak();
         if (this.trickster.netSE == true) rangeattack.setNet();
         if (this.trickster.purgeSE == true) rangeattack.setPurge();
+    }
+
+    public void stun(int time)
+    {
+        isStunned = true;
+        StartCoroutine(stunDuration(time));
+
+    }
+
+    private IEnumerator stunDuration(int time)
+    {
+        yield return new WaitForSeconds(time);
+        isStunned = false;
+    }
+
+    public void setStance()
+    {
+        if(stance == "Melee")
+        {
+            animator.SetBool("Sitting", false);
+            animator.SetBool("Standing", true);
+        }
+        else
+        {
+            animator.SetBool("Sitting", true);
+            animator.SetBool("Standing", false);
+        }
+        
     }
 }

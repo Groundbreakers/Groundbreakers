@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 4230535042426805468}
   - component: {fileID: 7543013341955019752}
   - component: {fileID: 609067372233172761}
+  - component: {fileID: 5908830486360006541}
   - component: {fileID: 5170317579557245721}
   - component: {fileID: 1143237542542456168}
+  - component: {fileID: 1181517269323186452}
   m_Layer: 2
   m_Name: Trickster
   m_TagString: Player
@@ -119,6 +121,30 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
+--- !u!114 &5908830486360006541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31445b28d6b351d4ea702737fe1b3bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  criticalDraw: 0
+  reaper: 0
+  alchemy: 0
+  anticipate: 0
+  chemicals: 0
+  corrode: 0
+  fleetFeet: 0
+  nullify: 0
+  chaos: 0
+  swiftness: 0
+  juggling: 0
+  exit: 0
 --- !u!114 &5170317579557245721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +188,6 @@ MonoBehaviour:
   splashAE: 0
   pierceAE: 0
   traceAE: 0
-  cleaveAE: 0
   whirwindAE: 0
   reachAE: 0
   slowSE: 0
@@ -181,6 +206,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &1181517269323186452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d89003f72b5d8d4b87eb9612a992065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnemy: 0
 --- !u!114 &7361350732008019827
 MonoBehaviour:
   m_ObjectHideFlags: 0
