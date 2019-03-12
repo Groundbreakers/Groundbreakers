@@ -320,4 +320,19 @@ public class characterAttack : MonoBehaviour
         yield return new WaitForSeconds(time);
         isStunned = false;
     }
+
+    public void setStance()
+    {
+        if(stance == "Melee")
+        {
+            animator.SetBool("Sitting", false);
+            animator.SetBool("Standing", true);
+        }
+        else
+        {
+            animator.SetBool("Sitting", true);
+            animator.SetBool("Standing", false);
+        }
+        
+    }
 }

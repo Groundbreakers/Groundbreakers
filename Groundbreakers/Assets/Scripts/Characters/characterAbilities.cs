@@ -17,6 +17,7 @@ public class characterAbilities : MonoBehaviour
     public bool swiftness = false;
     public bool juggling = false;
     public bool exit = false;
+    public bool disabled = false;
 
     // Start is called before the first frame update
     void Start()

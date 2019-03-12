@@ -35,7 +35,7 @@ public class characterAttributes : MonoBehaviour
     public bool disabled = false;
 
     //Scripts
-    characterAttack attack;
+    private characterAttack attack;
 
     //stance
     private string stance = "gun";
@@ -178,5 +178,10 @@ public class characterAttributes : MonoBehaviour
             RNG += 1;
             AMP -= 1;
         }
+    }
+
+    public void keepStance()
+    {
+        attack.setStance();
     }
 }
