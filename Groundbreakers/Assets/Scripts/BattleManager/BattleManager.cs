@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using Assets.Script;
+
     using DG.Tweening;
 
     using UnityEngine;
@@ -271,6 +273,7 @@
 
             // Some setting
             DOTween.Init(true, true);
+            BattleUtility.Initialize();
         }
 
         #endregion

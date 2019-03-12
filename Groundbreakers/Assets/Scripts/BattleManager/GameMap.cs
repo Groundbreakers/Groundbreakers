@@ -102,16 +102,18 @@
 
         #region Public Functions
 
-        public void SetupNewLevel()
+        public Transform GetTileAt(Vector3 position)
         {
-            // Generate new map data
-            this.generator.Initialize();
+            var x = (int)position.x;
+            var y = (int)position.y;
 
-            // Instantiate tiles from data
-            this.InstantiateTiles();
-            this.SetupPathSprite();
-            this.SetupMobSpawner();
-            this.InstantiateEnvironments();
+            return this.GetTileAt(x, y);
+        }
+
+        public Transform GetTileAt(int x, int y)
+        {
+            Debug.Log(x + " " + y);
+            return this.tileBlocks[x, y];
         }
 
         #endregion
@@ -137,6 +139,21 @@
         #endregion
 
         #region Internal Functions
+
+        /// <summary>
+        /// Procedural generate a new map
+        /// </summary>
+        private void SetupNewLevel()
+        {
+            // Generate new map data
+            this.generator.Initialize();
+
+            // Instantiate tiles from data
+            this.InstantiateTiles();
+            this.SetupPathSprite();
+            this.SetupMobSpawner();
+            this.InstantiateEnvironments();
+        }
 
         /// <summary>
         /// We need to manually determine what each type of the path is.
@@ -329,12 +346,13 @@
                 }
                 while (duplicate);
 
+                Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
                 var mush = Instantiate(this.mushroom, block);
                 mush.transform.localPosition = Vector3.zero;
                 this.mushrooms.Add(mush);
 
                 // Manually set these tile to undeployable
-                block.GetComponent<SelectNode>().SetCanDeploy(false);
+                // block.GetComponent<SelectNode>().SetCanDeploy(false);
             }
         }
 
