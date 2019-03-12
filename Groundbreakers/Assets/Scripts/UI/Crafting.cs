@@ -665,86 +665,86 @@ public class Crafting : MonoBehaviour
         // Generate extra attributes based on rarity
         for (int i = 0; i < moduleGeneric.rarity; i++)
         {
-            // Generate a number between 0-100
-            int attributeIndex = rnd.Next(101);
+            // Generate a number between 0-99
+            int attributeIndex = rnd.Next(100);
 
-            if (attributeIndex > 90)
+            if (attributeIndex > 88)
             {
                 moduleGeneric.POW += 1;
             }
-            else if (attributeIndex > 80)
+            else if (attributeIndex > 76)
             {
                 moduleGeneric.ROF += 1;
             }
-            else if (attributeIndex > 70)
+            else if (attributeIndex > 64)
             {
                 moduleGeneric.RNG += 1;
             }
-            else if (attributeIndex > 60)
+            else if (attributeIndex > 52)
             {
                 moduleGeneric.MOB += 1;
             }
-            else if (attributeIndex > 50)
+            else if (attributeIndex > 40)
             {
                 moduleGeneric.AMP += 1;
             }
-            else if (attributeIndex > 44)
+            else if (attributeIndex > 36)
             {
                 moduleGeneric.slowSE = true;
             }
-            else if (attributeIndex > 41)
+            else if (attributeIndex > 33)
             {
                 moduleGeneric.stunSE = true;
             }
-            else if (attributeIndex > 38)
+            else if (attributeIndex > 30)
             {
                 moduleGeneric.burnSE = true;
             }
-            else if (attributeIndex > 35)
+            else if (attributeIndex > 27)
             {
                 moduleGeneric.markSE = true;
             }
-            else if (attributeIndex > 32)
+            else if (attributeIndex > 24)
             {
                 moduleGeneric.purgeSE = true;
             }
-            else if (attributeIndex > 29)
+            else if (attributeIndex > 21)
             {
                 moduleGeneric.breakSE = true;
             }
-            else if (attributeIndex > 26)
+            else if (attributeIndex > 18)
             {
                 moduleGeneric.blightSE = true;
             }
-            else if (attributeIndex > 23)
+            else if (attributeIndex > 15)
             {
                 moduleGeneric.netSE = true;
             }
-            else if (attributeIndex > 20)
+            else if (attributeIndex > 13)
             {
                 moduleGeneric.burstAE = true;
             }
-            else if (attributeIndex > 17)
+            else if (attributeIndex > 11)
             {
                 moduleGeneric.ricochetAE = true;
             }
-            else if (attributeIndex > 14)
+            else if (attributeIndex > 9)
             {
                 moduleGeneric.laserAE = true;
             }
-            else if (attributeIndex > 11)
+            else if (attributeIndex > 7)
             {
                 moduleGeneric.splashAE = true;
             }
-            else if (attributeIndex > 8)
+            else if (attributeIndex > 5)
             {
                 moduleGeneric.pierceAE = true;
             }
-            else if (attributeIndex > 5)
+            else if (attributeIndex > 3)
             {
                 moduleGeneric.traceAE = true;
             }
-            else if (attributeIndex > 2)
+            else if (attributeIndex > 1)
             {
                 moduleGeneric.whirlwindAE = true;
             }
@@ -762,6 +762,7 @@ public class Crafting : MonoBehaviour
         this.inventory.GetComponent<Inventory>().addModules(masterModule);
 
         // Show the module to the player
+        this.popupPanel.transform.SetAsLastSibling();
         this.popupPanel.SetActive(true);
     }
 

@@ -112,10 +112,10 @@ public class characterAttributes : MonoBehaviour
 
 
 
-        bool[] temp = new bool[17];
+        bool[] temp = new bool[16];
         for (int i = 5; i < inventory.Length; i++)
         {
-            if (i > 0)
+            if (inventory[i] > 0)
             {
                 temp[i - 5] = true;
             }

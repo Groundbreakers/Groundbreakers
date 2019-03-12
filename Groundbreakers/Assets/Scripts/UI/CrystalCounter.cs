@@ -11,7 +11,7 @@ public class CrystalCounter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.crystals = 0;
+        this.crystals = 99999;
     }
 
     // Update is called once per frame
