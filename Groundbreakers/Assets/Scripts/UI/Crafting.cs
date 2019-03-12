@@ -19,6 +19,13 @@ public class Crafting : MonoBehaviour
     public Text tooltipTitle;
     public Text tooltipDescription;
 
+    public GameObject popupPanel;
+    public Image popupBackground;
+    public Image popupIcon;
+    public Text popupTitle;
+    public Text popupRarity;
+    public Text[] popupDescription;
+
     public Sprite common;
     public Sprite modified;
     public Sprite ideal;
@@ -71,7 +78,12 @@ public class Crafting : MonoBehaviour
 
     void Update()
     {
-        if (this.crystalCounter.GetComponent<CrystalCounter>().GetCrystals() < this.cost)
+        if (this.baseAttribute == "none")
+        {
+            this.button.GetComponent<Button>().interactable = false;
+            this.buttonText.text = "Select type";
+        }
+        else if (this.crystalCounter.GetComponent<CrystalCounter>().GetCrystals() < this.cost)
         {
             this.button.GetComponent<Button>().interactable = false;
             this.buttonText.text = "Not enough crystals";
@@ -85,6 +97,14 @@ public class Crafting : MonoBehaviour
         {
             this.button.GetComponent<Button>().interactable = true;
             this.buttonText.text = "Craft";
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Tooltip"))
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -260,131 +280,179 @@ public class Crafting : MonoBehaviour
 
     private void SetupDescription(ModuleGeneric moduleGeneric)
     {
+        // Disable all description at first
+        for (int i = 0; i < 4; i++)
+        {
+            this.popupDescription[i].gameObject.SetActive(false);
+        }
+
         int index = 0;
 
         if (moduleGeneric.POW != 0)
         {
             moduleGeneric.description[index] = "POW +" + moduleGeneric.POW;
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.ROF != 0)
         {
             moduleGeneric.description[index] = "ROF +" + moduleGeneric.ROF;
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.RNG != 0)
         {
             moduleGeneric.description[index] = "RNG +" + moduleGeneric.RNG;
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.MOB != 0)
         {
             moduleGeneric.description[index] = "MOB +" + moduleGeneric.MOB;
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.AMP != 0)
         {
             moduleGeneric.description[index] = "AMP +" + moduleGeneric.AMP;
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.burstAE)
         {
             moduleGeneric.description[index] = "Burst";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.ricochetAE)
         {
             moduleGeneric.description[index] = "Ricochet";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.laserAE)
         {
             moduleGeneric.description[index] = "Laser";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.splashAE)
         {
             moduleGeneric.description[index] = "Splash";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.pierceAE)
         {
             moduleGeneric.description[index] = "Pierce";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.traceAE)
         {
             moduleGeneric.description[index] = "Trace";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.whirlwindAE)
         {
             moduleGeneric.description[index] = "Whirlwind";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.reachAE)
         {
             moduleGeneric.description[index] = "Reach";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.slowSE)
         {
             moduleGeneric.description[index] = "Slow";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.stunSE)
         {
             moduleGeneric.description[index] = "Stun";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.burnSE)
         {
             moduleGeneric.description[index] = "Burn";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.markSE)
         {
             moduleGeneric.description[index] = "Mark";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.purgeSE)
         {
             moduleGeneric.description[index] = "Purge";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.breakSE)
         {
             moduleGeneric.description[index] = "Break";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.blightSE)
         {
             moduleGeneric.description[index] = "Blight";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
 
         if (moduleGeneric.netSE)
         {
             moduleGeneric.description[index] = "Net";
+            this.popupDescription[index].text = moduleGeneric.description[index];
+            this.popupDescription[index].gameObject.SetActive(true);
             index++;
         }
     }
@@ -402,126 +470,157 @@ public class Crafting : MonoBehaviour
             case "POW I":
                 moduleGeneric.POW = 1;
                 moduleGeneric.icon.sprite = this.pow1;
+                this.popupIcon.sprite = this.pow1;
                 break;
             case "POW II":
                 moduleGeneric.POW = 2;
                 moduleGeneric.icon.sprite = this.pow2;
+                this.popupIcon.sprite = this.pow2;
                 break;
             case "POW III":
                 moduleGeneric.POW = 3;
                 moduleGeneric.icon.sprite = this.pow3;
+                this.popupIcon.sprite = this.pow3;
                 break;
             case "ROF I":
                 moduleGeneric.ROF = 1;
                 moduleGeneric.icon.sprite = this.rof1;
+                this.popupIcon.sprite = this.rof1;
                 break;
             case "ROF II":
                 moduleGeneric.ROF = 2;
                 moduleGeneric.icon.sprite = this.rof2;
+                this.popupIcon.sprite = this.rof2;
                 break;
             case "ROF III":
                 moduleGeneric.ROF = 3;
                 moduleGeneric.icon.sprite = this.rof3;
+                this.popupIcon.sprite = this.rof3;
                 break;
             case "RNG I":
                 moduleGeneric.RNG = 1;
                 moduleGeneric.icon.sprite = this.rng1;
+                this.popupIcon.sprite = this.rng1;
                 break;
             case "RNG II":
                 moduleGeneric.RNG = 2;
                 moduleGeneric.icon.sprite = this.rng2;
+                this.popupIcon.sprite = this.rng2;
                 break;
             case "RNG III":
                 moduleGeneric.RNG = 3;
                 moduleGeneric.icon.sprite = this.rng3;
+                this.popupIcon.sprite = this.rng3;
                 break;
             case "MOB I":
                 moduleGeneric.MOB = 1;
                 moduleGeneric.icon.sprite = this.mob1;
+                this.popupIcon.sprite = this.mob1;
                 break;
             case "MOB II":
                 moduleGeneric.MOB = 2;
                 moduleGeneric.icon.sprite = this.mob2;
+                this.popupIcon.sprite = this.mob2;
                 break;
             case "MOB III":
                 moduleGeneric.MOB = 3;
                 moduleGeneric.icon.sprite = this.mob3;
+                this.popupIcon.sprite = this.mob3;
                 break;
             case "AMP I":
                 moduleGeneric.AMP = 1;
                 moduleGeneric.icon.sprite = this.amp1;
+                this.popupIcon.sprite = this.amp1;
                 break;
             case "AMP II":
                 moduleGeneric.AMP = 2;
                 moduleGeneric.icon.sprite = this.amp2;
+                this.popupIcon.sprite = this.amp2;
                 break;
             case "AMP III":
                 moduleGeneric.AMP = 3;
                 moduleGeneric.icon.sprite = this.amp3;
+                this.popupIcon.sprite = this.amp3;
                 break;
             case "BURST":
                 moduleGeneric.burstAE = true;
                 moduleGeneric.icon.sprite = this.burstAE;
+                this.popupIcon.sprite = this.burstAE;
                 break;
             case "RICOCHET":
                 moduleGeneric.ricochetAE = true;
                 moduleGeneric.icon.sprite = this.ricochetAE;
+                this.popupIcon.sprite = this.ricochetAE;
                 break;
             case "LASER":
                 moduleGeneric.laserAE = true;
                 moduleGeneric.icon.sprite = this.laserAE;
+                this.popupIcon.sprite = this.laserAE;
                 break;
             case "SPLASH":
                 moduleGeneric.splashAE = true;
                 moduleGeneric.icon.sprite = this.splashAE;
+                this.popupIcon.sprite = this.splashAE;
                 break;
             case "PIERCE":
                 moduleGeneric.pierceAE = true;
                 moduleGeneric.icon.sprite = this.pierceAE;
+                this.popupIcon.sprite = this.pierceAE;
                 break;
             case "TRACE":
                 moduleGeneric.traceAE = true;
                 moduleGeneric.icon.sprite = this.traceAE;
+                this.popupIcon.sprite = this.traceAE;
                 break;
             case "WHIRLWIND":
                 moduleGeneric.whirlwindAE = true;
                 moduleGeneric.icon.sprite = this.whirlwindAE;
+                this.popupIcon.sprite = this.whirlwindAE;
                 break;
             case "REACH":
                 moduleGeneric.reachAE = true;
                 moduleGeneric.icon.sprite = this.reachAE;
+                this.popupIcon.sprite = this.reachAE;
                 break;
             case "SLOW":
                 moduleGeneric.slowSE = true;
                 moduleGeneric.icon.sprite = this.slowSE;
+                this.popupIcon.sprite = this.slowSE;
                 break;
             case "STUN":
                 moduleGeneric.stunSE = true;
                 moduleGeneric.icon.sprite = this.stunSE;
+                this.popupIcon.sprite = this.stunSE;
                 break;
             case "BURN":
                 moduleGeneric.burnSE = true;
                 moduleGeneric.icon.sprite = this.burnSE;
+                this.popupIcon.sprite = this.burnSE;
                 break;
             case "MARK":
                 moduleGeneric.markSE = true;
                 moduleGeneric.icon.sprite = this.markSE;
+                this.popupIcon.sprite = this.markSE;
                 break;
             case "PURGE":
                 moduleGeneric.purgeSE = true;
                 moduleGeneric.icon.sprite = this.purgeSE;
+                this.popupIcon.sprite = this.purgeSE;
                 break;
             case "BREAK":
                 moduleGeneric.breakSE = true;
                 moduleGeneric.icon.sprite = this.breakSE;
+                this.popupIcon.sprite = this.breakSE;
                 break;
             case "BLIGHT":
                 moduleGeneric.blightSE = true;
                 moduleGeneric.icon.sprite = this.blightSE;
+                this.popupIcon.sprite = this.blightSE;
                 break;
             case "NET":
                 moduleGeneric.netSE = true;
                 moduleGeneric.icon.sprite = this.netSE;
+                this.popupIcon.sprite = this.netSE;
                 break;
         }
 
@@ -537,22 +636,30 @@ public class Crafting : MonoBehaviour
         if (rarityIndex > 94)
         {
             moduleGeneric.rarity = 3;
+            this.popupRarity.text = "groundbreaking";
             moduleGeneric.background.sprite = this.groundbreaking;
+            this.popupBackground.sprite = this.groundbreaking;
         }
         else if (rarityIndex > 79)
         {
             moduleGeneric.rarity = 2;
+            this.popupRarity.text = "ideal";
             moduleGeneric.background.sprite = this.ideal;
+            this.popupBackground.sprite = this.ideal;
         }
         else if (rarityIndex > 49)
         {
             moduleGeneric.rarity = 1;
+            this.popupRarity.text = "modified";
             moduleGeneric.background.sprite = this.modified;
+            this.popupBackground.sprite = this.modified;
         }
         else
         {
             moduleGeneric.rarity = 0;
+            this.popupRarity.text = "common";
             moduleGeneric.background.sprite = this.common;
+            this.popupBackground.sprite = this.common;
         }
 
         // Generate extra attributes based on rarity
@@ -648,10 +755,14 @@ public class Crafting : MonoBehaviour
         }
 
         moduleGeneric.title = this.baseAttribute;
+        this.popupTitle.text = this.baseAttribute;
         this.SetupDescription(moduleGeneric);
 
         // Create a child clone under the parent Inventory
         this.inventory.GetComponent<Inventory>().addModules(masterModule);
+
+        // Show the module to the player
+        this.popupPanel.SetActive(true);
     }
 
     public void Toggle()

@@ -78,7 +78,7 @@ public class ModuleGeneric : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 break;
             case 2:
                 this.rarityText.text = "Ideal";
-                this.rarityText.color = new Color(0.5f, 0.0f, 0.5f);
+                this.rarityText.color = new Color(1.0f, 0.0f, 1.0f);
                 break;
             case 3:
                 this.rarityText.text = "Groundbreaking";

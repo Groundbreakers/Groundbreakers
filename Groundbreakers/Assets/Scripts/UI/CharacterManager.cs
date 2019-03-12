@@ -10,6 +10,8 @@ public class CharacterManager : MonoBehaviour
     public GameObject[] inventory = new GameObject[5];
     public GameObject[] attributes = new GameObject[5];
     public Sprite[] bars = new Sprite[11];
+    public Text[] AE = new Text[8];
+    public Text[] SE = new Text[8];
 
     public Sprite frame;
     public GameObject moduleButton;
@@ -71,6 +73,151 @@ public class CharacterManager : MonoBehaviour
                     Destroy(this.slots[i].transform.GetChild(0).gameObject);
                 }
             }
+        }
+
+        // Show enabled AE and SE
+        if (characterAttributes.burstAE)
+        {
+            this.AE[0].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[0].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.ricochetAE)
+        {
+            this.AE[1].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[1].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.laserAE)
+        {
+            this.AE[2].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[2].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.splashAE)
+        {
+            this.AE[3].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[3].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.pierceAE)
+        {
+            this.AE[4].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[4].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.traceAE)
+        {
+            this.AE[5].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[5].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.whirwindAE)
+        {
+            this.AE[6].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[6].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.reachAE)
+        {
+            this.AE[7].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.AE[7].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.slowSE)
+        {
+            this.SE[0].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[0].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.stunSE)
+        {
+            this.SE[1].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[1].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.burnSE)
+        {
+            this.SE[2].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[2].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.markSE)
+        {
+            this.SE[3].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[3].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.purgeSE)
+        {
+            this.SE[4].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[4].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.breakSE)
+        {
+            this.SE[5].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[5].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.blightSE)
+        {
+            this.SE[6].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[6].color = new Color(0.25f, 0.25f, 0.25f);
+        }
+
+        if (characterAttributes.netSE)
+        {
+            this.SE[7].color = new Color(1.0f, 0.0f, 1.0f);
+        }
+        else
+        {
+            this.SE[7].color = new Color(0.25f, 0.25f, 0.25f);
         }
     }
 
