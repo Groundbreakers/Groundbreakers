@@ -31,8 +31,13 @@
             var damage = this.GetDamage();
 
             // temp solution
-            other.GetComponent<Enemy_Generic>().DamageEnemy(
-                damage.Pow, damage.Amp, 1.0f, isMelee, false);
+            var enemyGeneric = other.GetComponent<Enemy_Generic>();
+
+            if (enemyGeneric)
+            {
+                enemyGeneric.DamageEnemy(
+                    damage.Pow, damage.Amp, 1.0f, isMelee, false);
+            }
         }
 
         /// <summary>

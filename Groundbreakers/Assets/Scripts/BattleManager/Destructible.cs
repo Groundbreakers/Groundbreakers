@@ -1,7 +1,5 @@
 ﻿namespace Assets.Scripts
 {
-    using Assets.Script;
-
     using DG.Tweening;
 
     using UnityEngine;

@@ -111,7 +111,7 @@ public class SelectNode : MonoBehaviour
 
     private void Update()
     {
-        if (BattleManager.GameState != BattleManager.Stages.Combating)
+        if (BattleManager.GameState != GameStates.Combating)
         {
             return;
         }
@@ -137,7 +137,7 @@ public class SelectNode : MonoBehaviour
     private void OnMouseOver()
     {
         // Clearly, do nothing when the battleManager is not in the battle state
-        if (BattleManager.GameState != BattleManager.Stages.Combating)
+        if (BattleManager.GameState != GameStates.Combating)
         {
             return;
         }

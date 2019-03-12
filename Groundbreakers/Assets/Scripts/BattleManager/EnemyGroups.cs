@@ -1,4 +1,4 @@
-﻿namespace Asset.Script
+﻿namespace Assets.Scripts
 {
     using System;
     using System.Collections.Generic;

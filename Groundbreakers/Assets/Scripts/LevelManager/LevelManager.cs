@@ -1,9 +1,8 @@
 ﻿namespace Assets.Scripts
 {
     using System.Collections.Generic;
-    using UnityEngine;
 
-    using static Asset.Script.EnemyGroups;
+    using UnityEngine;
 
     public class LevelManager : MonoBehaviour
     {
@@ -36,16 +35,16 @@
 
         #region Internal Fields
 
-        private Dictionary<int, Difficulty> levelDifficultyMap = new Dictionary<int, Difficulty>
+        private Dictionary<int, EnemyGroups.Difficulty> levelDifficultyMap = new Dictionary<int, EnemyGroups.Difficulty>
                                                                      {
-                                                                         { 1, Difficulty.Easy },
-                                                                         { 2, Difficulty.Easy },
-                                                                         { 3, Difficulty.Easy },
-                                                                         { 4, Difficulty.Medium },
-                                                                         { 5, Difficulty.Medium },
-                                                                         { 6, Difficulty.Medium },
-                                                                         { 7, Difficulty.Hard },
-                                                                         { 8, Difficulty.Boss }
+                                                                         { 1, EnemyGroups.Difficulty.Easy },
+                                                                         { 2, EnemyGroups.Difficulty.Easy },
+                                                                         { 3, EnemyGroups.Difficulty.Easy },
+                                                                         { 4, EnemyGroups.Difficulty.Medium },
+                                                                         { 5, EnemyGroups.Difficulty.Medium },
+                                                                         { 6, EnemyGroups.Difficulty.Medium },
+                                                                         { 7, EnemyGroups.Difficulty.Hard },
+                                                                         { 8, EnemyGroups.Difficulty.Hard }
                                                                      };
 
         #endregion
@@ -58,9 +57,9 @@
         public int Region { get; private set; } = 1;
 
         /// <summary>
-        /// Gets the current game level of the progress.
+        /// Gets the current game level of the progress. The range is currently [1, 8].
         /// </summary>
-        public int Level { get; private set; } = 0;
+        public int Level { get; private set; }
 
         #endregion
 
@@ -72,7 +71,7 @@
 
             this.routesGenerator.Toggle();
         }
-
+        
         /// <summary>
         /// I assume this is called by Battle manager when battle ends
         /// </summary>
@@ -97,11 +96,11 @@
         ///     Called by BattleManager (or directly called by spawn) I think
         /// </summary>
         /// <returns>
-        ///     The current <see cref="Difficulty" /> of the level.
+        ///     The current <see cref="EnemyGroups.Difficulty" /> of the level.
         /// </returns>
-        public Difficulty GetDifficulty()
+        public EnemyGroups.Difficulty GetDifficulty()
         {
-            return this.Level == 0 ? Difficulty.Easy : this.levelDifficultyMap[this.Level];
+            return this.Level == 0 ? EnemyGroups.Difficulty.Easy : this.levelDifficultyMap[this.Level];
         }
 
         #endregion
@@ -141,7 +140,7 @@
         {
             if (Input.GetKeyDown("space"))
             {
-                this.StartLevel();
+                this.GotoTempBossBattle();
             }
         }
 
@@ -149,7 +148,10 @@
 
         #region Internal Functions
 
+        private void GotoTempBossBattle()
+        {
 
+        }
 
         #endregion
     }

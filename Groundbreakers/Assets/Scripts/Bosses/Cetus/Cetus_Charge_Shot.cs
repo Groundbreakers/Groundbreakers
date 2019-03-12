@@ -1,29 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 public class Cetus_Charge_Shot : MonoBehaviour
 {
-    private Vector3 dir;
     public float shotSpeed;
 
-    // Start is called before the first frame update
-    void Start()
+    private Vector3 dir;
+
+    // Destroy after going offscreen, and do damage
+    private void OnBecameInvisible()
     {
-        PickDirection();
+        var canvas = GameObject.Find("HPCounter");
+        var hp = canvas.GetComponent<HP>();
+        Debug.Log(3);
+        hp.UpdateHealth(-3);
+        Destroy(this.gameObject);
     }
 
-    void Update()
+    // Stun characters for 3 seconds on collision.
+    private void OnTriggerEnter2D(Collider2D hitTarget)
     {
-        this.transform.Translate(this.dir.normalized * this.shotSpeed * Time.deltaTime, Space.World);
-        transform.Rotate(Vector3.forward, 720 * Time.deltaTime);
+        if (hitTarget.gameObject.tag == "Player")
+        {
+            // hitTarget.gameObject.GetComponent<characterAttack>().StunCharacter(3);
+        }
     }
 
     private void PickDirection()
     {
-        int diceroll = Random.Range(0, 3);
+        var diceroll = Random.Range(0, 3);
         if (diceroll == 0)
         {
             this.dir = Vector3.right;
@@ -38,22 +42,15 @@ public class Cetus_Charge_Shot : MonoBehaviour
         }
     }
 
-    // Stun characters for 3 seconds on collision.
-    void OnTriggerEnter2D(Collider2D hitTarget)
+    // Start is called before the first frame update
+    private void Start()
     {
-        if (hitTarget.gameObject.tag == "Player")
-        {
-            //hitTarget.gameObject.GetComponent<characterAttack>().StunCharacter(3);
-        }
+        this.PickDirection();
     }
 
-    // Destroy after going offscreen, and do damage
-    void OnBecameInvisible()
+    private void Update()
     {
-        GameObject canvas = GameObject.Find("Canvas");
-        HP hp = canvas.GetComponent<HP>();
-        Debug.Log(3);
-        hp.UpdateHealth(-3);
-        Destroy(gameObject);
+        this.transform.Translate(this.dir.normalized * this.shotSpeed * Time.deltaTime, Space.World);
+        this.transform.Rotate(Vector3.forward, 720 * Time.deltaTime);
     }
 }

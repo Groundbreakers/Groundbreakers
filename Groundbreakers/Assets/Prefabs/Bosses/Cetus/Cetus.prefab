@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8519304357723558555}
   m_Layer: 0
   m_Name: Cetus
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2099931279
-  m_SortingLayer: 1
+  m_SortingLayerID: -798880211
+  m_SortingLayer: 2
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 1a44a0a73a4614a4f8eb5dbf26a9a9d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -151,3 +151,6 @@ MonoBehaviour:
     type: 3}
   chargeShot: {fileID: 1707023657865167692, guid: 072a16dd30da4684fa1f1c4783dd4fdf,
     type: 3}
+  waterStrikeTimer: 6
+  splashTimer: 24
+  chargeShotTimer: 36

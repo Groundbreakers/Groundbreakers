@@ -1,20 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HP : MonoBehaviour
 {
-    public Image image;
-    private int healthPoint = 20;
-    public GameObject ui;
     public Sprite[] hpFrames;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.image.sprite = this.hpFrames[this.healthPoint];
-    }
+    public Image image;
+
+    public GameObject ui;
+
+    private int healthPoint = 20;
 
     public void UpdateHealth(int amount)
     {
@@ -27,6 +24,7 @@ public class HP : MonoBehaviour
         {
             this.healthPoint = 20;
         }
+
         this.image.sprite = this.hpFrames[this.healthPoint];
         if (this.healthPoint <= 0)
         {
@@ -35,9 +33,24 @@ public class HP : MonoBehaviour
             Time.timeScale = 0.0F;
 
             // Switch the bgm
-            GameObject bgmManager = GameObject.Find("BGM Manager");
-            Manager manager = bgmManager.GetComponent<Manager>();
+            var bgmManager = GameObject.Find("BGM Manager");
+            var manager = bgmManager.GetComponent<Manager>();
             manager.GameOver();
+        }
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        this.image.sprite = this.hpFrames[this.healthPoint];
+    }
+
+    private void Update()
+    {
+        // For debug only - developer cheat
+        if (Input.GetKeyDown("p"))
+        {
+            this.UpdateHealth(20);
         }
     }
 }
