@@ -6,7 +6,7 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-public class Cetus_Script : MonoBehaviour
+public class CetusScript : MonoBehaviour
 {
     public GameObject chargeParticle;
 

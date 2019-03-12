@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Cetus_Charge_Particle : MonoBehaviour
+public class CetusChargeParticle : MonoBehaviour
 {
     public float acceleration = 0.2f;
 

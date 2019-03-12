@@ -24,6 +24,7 @@
         /// <inheritdoc />
         /// <summary>
         ///     The get tile type at.
+        /// </summary>
         /// <param name="x">
         ///     The x coordinate of the data. Range: [0, 7]
         /// </param>

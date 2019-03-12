@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Cetus_Charge_Shot : MonoBehaviour
+public class CetusChargeShot : MonoBehaviour
 {
     public float shotSpeed;
 
