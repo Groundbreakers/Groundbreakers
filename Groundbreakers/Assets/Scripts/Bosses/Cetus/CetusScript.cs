@@ -17,7 +17,7 @@ public class CetusScript : MonoBehaviour
     // Stored objects
     public GameObject deathEffect;
 
-    public int health = 1;
+    public int health = 2000;
 
     // Stats
     public int maxHealth = 1;
@@ -102,16 +102,10 @@ public class CetusScript : MonoBehaviour
     }
 
     // Damage function. Takes armorpen, but I don't know if it'll be used in the calculation or not.
-    public void DamageCetus(int damage, int armorpen, float accuracy)
+    public void DamageCetus(int damage)
     {
-        // Check if the attack missed (Low-accuracy attacks?). If it hits, do damage calculation
-        var accuracyroll = Random.Range(0.0f, 1.0f);
-        if (accuracyroll <= accuracy)
-        {
-            int damagevalue;
-            damagevalue = damage;
-            this.health -= damagevalue;
-        }
+        this.health -= damage;
+        GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damage, this.transform);
     }
 
     // Stun handlers

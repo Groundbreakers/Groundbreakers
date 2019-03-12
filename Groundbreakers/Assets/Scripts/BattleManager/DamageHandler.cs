@@ -30,13 +30,19 @@
         {
             var damage = this.GetDamage();
 
-            // temp solution
+            // Temp, do a quick test mob or boss?
             var enemyGeneric = other.GetComponent<Enemy_Generic>();
 
             if (enemyGeneric)
             {
+                // Mob
                 enemyGeneric.DamageEnemy(
                     damage.Pow, damage.Amp, 1.0f, isMelee, false);
+            }
+            else
+            {
+                // Boss
+                other.GetComponent<CetusScript>().DamageCetus(damage.Pow);
             }
         }
 

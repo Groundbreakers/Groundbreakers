@@ -19,9 +19,9 @@ public class CetusChargeShot : MonoBehaviour
     // Stun characters for 3 seconds on collision.
     private void OnTriggerEnter2D(Collider2D hitTarget)
     {
-        if (hitTarget.gameObject.tag == "Player")
+        if (hitTarget.gameObject.CompareTag("Player"))
         {
-            // hitTarget.gameObject.GetComponent<characterAttack>().StunCharacter(3);
+            //hitTarget.gameObject.GetComponent<characterAttack>().StunCharacter(3);
         }
     }
 
