@@ -107,7 +107,7 @@
             var go = Instantiate(this.bulletPrefab, pos, Quaternion.identity);
 
             var bullet = go.GetComponent<IBullet>();
-
+            
             // this.buffer.Add(bullet);
             return bullet;
         }

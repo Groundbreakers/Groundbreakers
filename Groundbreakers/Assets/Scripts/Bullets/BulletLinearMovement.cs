@@ -1,5 +1,7 @@
 ﻿namespace Assets.Scripts
 {
+    using DG.Tweening;
+
     using UnityEngine;
 
     /// <inheritdoc cref="IBullet" />
@@ -53,6 +55,20 @@
             {
                 this.damageHandler.DeliverDamageTo(go);
                 GameObject.Destroy(this.gameObject);
+            }
+
+            if (go.CompareTag("Player"))
+            {
+                var character = this.damageHandler.Source;
+
+                if (GameObject.ReferenceEquals(go, character))
+                {
+                    return;
+                }
+
+                //character.GetComponent<characterAttack>().stun(2);
+                //character.transform.DOShakeRotation(2);
+                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(-1, go.transform);
             }
         }
     }

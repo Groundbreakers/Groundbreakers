@@ -330,7 +330,8 @@
         /// </summary>
         private void InstantiateEnvironments()
         {
-            int num = Random.Range(2, 5);
+            //int num = Random.Range(2, 5);
+            int num = 28;
             this.mushrooms.Clear();
 
             // We use naive approach here

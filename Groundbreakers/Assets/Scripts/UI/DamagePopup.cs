@@ -16,6 +16,7 @@ public class DamagePopup : MonoBehaviour
         popUpList = new List<GameObject>();
     }
 
+
     public void ProduceText(int damage, Transform transform)
     {
         //Create Instance Of Popup
@@ -23,9 +24,24 @@ public class DamagePopup : MonoBehaviour
         clone = Instantiate(popUpObject, new Vector3(transform.position.x, transform.position.y + .3f, transform.position.z), Quaternion.identity);
 
         //Set Text And Color Of Popup
-        clone.transform.GetComponent<TextMeshProUGUI>().text = "-" + damage;
-        clone.transform.GetComponent<TextMeshProUGUI>().color = Color.red;
-        clone.transform.GetComponent<TextMeshProUGUI>().fontSize = .3f;
+        if (damage > 0)
+        {
+            clone.transform.GetComponent<TextMeshProUGUI>().text = "-" + damage;
+            clone.transform.GetComponent<TextMeshProUGUI>().color = Color.red;
+            clone.transform.GetComponent<TextMeshProUGUI>().fontSize = .3f;
+        }
+        else if (damage == 0)
+        {
+            clone.transform.GetComponent<TextMeshProUGUI>().text = "miss";
+            clone.transform.GetComponent<TextMeshProUGUI>().color = Color.white;
+            clone.transform.GetComponent<TextMeshProUGUI>().fontSize = .3f;
+        }
+        else
+        {
+            clone.transform.GetComponent<TextMeshProUGUI>().text = "ouch";
+            clone.transform.GetComponent<TextMeshProUGUI>().color = Color.yellow;
+            clone.transform.GetComponent<TextMeshProUGUI>().fontSize = .3f;
+        }
 
         //Randomly Choose If Text Appears Center, Left, Or Right Of Character
         int rand = Random.Range(0, 3);

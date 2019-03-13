@@ -13,6 +13,8 @@
 
         private characterAttributes attributes;
 
+        public GameObject Source { get; private set; }
+
         #endregion
 
         #region Public APIs
@@ -45,6 +47,7 @@
         public void SetCharacterAttribute(characterAttributes characterAttributes)
         {
             this.attributes = characterAttributes;
+            this.Source = characterAttributes.gameObject;
         }
 
         public bool IsValid()
