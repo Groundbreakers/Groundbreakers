@@ -1,4 +1,5 @@
-﻿namespace Assets.Scripts
+﻿
+namespace Assets.Scripts
 {
     using System;
     using System.Collections.Generic;
@@ -76,7 +77,7 @@
         {
             Debug.Log("Starting level " + BattleManager.GameLevel.Level);
             // dirty way
-            if (BattleManager.GameLevel.Level == 1)
+            if (BattleManager.GameLevel.Level == 8)
             {
                 this.SetupCustomLevel();
             }

@@ -17,7 +17,7 @@ public class CetusScript : MonoBehaviour
     // Stored objects
     public GameObject deathEffect;
 
-    public int health = 2000;
+    public int health = 20000;
 
     // Stats
     public int maxHealth = 1;
