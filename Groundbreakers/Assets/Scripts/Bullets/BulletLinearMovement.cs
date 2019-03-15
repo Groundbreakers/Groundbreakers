@@ -59,8 +59,6 @@
 
             if (go.CompareTag("Player"))
             {
-                Debug.Log(this.damageHandler.Source.name + " ---> " + go.name);
-
                 var character = this.damageHandler.Source;
 
                 if (GameObject.ReferenceEquals(go, character))
@@ -68,9 +66,17 @@
                     return;
                 }
 
+                // Need to further check the distance (sorry run out of time to refactor this)
+                var delta = Vector2.Distance(go.transform.position, character.transform.position);
+                Debug.Log(delta);
+                if (delta > 1.0f)
+                {
+                    return;
+                }
+
                 // Stun the target character
-                go.GetComponent<characterAttack>().stun(2);
-                go.transform.DOShakePosition(2.0f, 0.2f);
+                go.GetComponent<characterAttack>().stun(3);
+                go.transform.DOShakePosition(2.0f, 0.1f);
                 GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(-1, go.transform);
             }
         }

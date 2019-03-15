@@ -166,10 +166,12 @@
         /// </returns>
         private IBullet InstantiateBullet()
         {
+            var offset = new Vector3(0.0f, 0.5f, 0.0f);
+
             // Currently using native Instantiation method. Will switch to Object pool.
             // Should also trigger event
             var pos = this.transform.position;
-            var go = Instantiate(this.bulletPrefab, pos, Quaternion.identity);
+            var go = Instantiate(this.bulletPrefab, pos + offset, Quaternion.identity);
 
             var bullet = go.GetComponent<IBullet>();
             
