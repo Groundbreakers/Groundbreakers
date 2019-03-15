@@ -33,7 +33,7 @@
 
         private Transform potentialTarget;
 
-        private LineRenderer laserBeam;
+        //private LineRenderer laserBeam;
 
         // tmp
         private int laserDelay = 10;
@@ -92,16 +92,16 @@
         private void OnEnable()
         {
             this.damageHandler = this.GetComponent<DamageHandler>();
-            this.laserBeam = this.GetComponent<LineRenderer>();
+            //this.laserBeam = this.GetComponent<LineRenderer>();
 
-            var points = new Vector3[2];
-            var t = Time.time;
-            for (int i = 0; i < 2; i++)
-            {
-                points[i] = new Vector3(i * 0.5f, Mathf.Sin(i + t), 0.0f);
-            }
+            //var points = new Vector3[2];
+            //var t = Time.time;
+            //for (int i = 0; i < 2; i++)
+            //{
+            //    points[i] = new Vector3(i * 0.5f, Mathf.Sin(i + t), 0.0f);
+            //}
 
-            this.laserBeam.SetPositions(points);
+            //this.laserBeam.SetPositions(points);
         }
 
         private void Update()
@@ -122,23 +122,23 @@
                 this.type = Type.Laser;
             }
 
-            // For laser effect only
-            if (this.type == Type.Laser)
-            {
-                if (!this.potentialTarget)
-                {
-                    return;
-                }
+            //// For laser effect only
+            //if (this.type == Type.Laser)
+            //{
+            //    if (!this.potentialTarget)
+            //    {
+            //        return;
+            //    }
 
-                this.LockOnTarget();
+            //    this.LockOnTarget();
 
-                this.counter++;
-                if (this.counter == this.laserDelay)
-                {
-                    this.counter = 0;
-                    this.damageHandler.DeliverDamageTo(this.potentialTarget.gameObject, false);
-                }
-            }
+            //    this.counter++;
+            //    if (this.counter == this.laserDelay)
+            //    {
+            //        this.counter = 0;
+            //        this.damageHandler.DeliverDamageTo(this.potentialTarget.gameObject, false);
+            //    }
+            //}
         }
 
         #endregion
@@ -148,14 +148,14 @@
         // temp solution
         private void LockOnTarget()
         {
-            const float MaxRange = 5;
+            //const float MaxRange = 5;
 
-            var from = this.transform.position;
-            var to = this.potentialTarget.position;
-            var direction = to - from;
+            //var from = this.transform.position;
+            //var to = this.potentialTarget.position;
+            //var direction = to - from;
 
-            this.laserBeam.SetPosition(0, from);
-            this.laserBeam.SetPosition(1, to);
+            //this.laserBeam.SetPosition(0, from);
+            //this.laserBeam.SetPosition(1, to);
         }
 
         /// <summary>

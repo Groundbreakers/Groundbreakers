@@ -59,6 +59,8 @@
 
             if (go.CompareTag("Player"))
             {
+                Debug.Log(this.damageHandler.Source.name + " ---> " + go.name);
+
                 var character = this.damageHandler.Source;
 
                 if (GameObject.ReferenceEquals(go, character))
@@ -66,8 +68,9 @@
                     return;
                 }
 
-                //character.GetComponent<characterAttack>().stun(2);
-                //character.transform.DOShakeRotation(2);
+                // Stun the target character
+                go.GetComponent<characterAttack>().stun(2);
+                go.transform.DOShakePosition(2.0f, 0.2f);
                 GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(-1, go.transform);
             }
         }
