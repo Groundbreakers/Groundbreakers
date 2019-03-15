@@ -162,7 +162,7 @@ public class rangeattack : MonoBehaviour
         {
             if (!this.hit)
             {
-                hitTarget.gameObject.GetComponent<Cetus_Script>().DamageCetus(this.damage, this.armorpen, 1);
+                //hitTarget.gameObject.GetComponent<CetusScript>().DamageCetus(this.damage, this.armorpen, 1);
             }
 
             this.hit = true;

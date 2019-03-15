@@ -1,4 +1,5 @@
-﻿namespace Assets.Scripts
+﻿
+namespace Assets.Scripts
 {
     using System;
     using System.Collections.Generic;
@@ -8,8 +9,8 @@
 
     using Random = UnityEngine.Random;
     using TG = TerrainGenerator;
-    using Tiles = TerrainGenerator.Tiles;
 
+    /// <inheritdoc cref="IBattlePhaseHandler" />
     /// <summary>
     /// This function should be attached to the GameMap Object in the MainScene. This class handles
     /// All tile block related features. For example, at each level, it construct a new tile map
@@ -57,6 +58,11 @@
         private MobSpawner mobSpawner;
 
         /// <summary>
+        /// The Saving a reference to the tile custom level information.
+        /// </summary>
+        private CustomTerrain customData;
+
+        /// <summary>
         /// The Saving a reference to the tile generator component.
         /// </summary>
         private TG generator;
@@ -69,24 +75,23 @@
 
         public void OnBattleBegin()
         {
-            // Create a new level
-            this.SetupNewLevel();
-
-            var children = this.GetComponentsInChildren<EnterBehavior>();
-            foreach (var behavior in children)
+            Debug.Log("Starting level " + BattleManager.GameLevel.Level);
+            // dirty way
+            if (BattleManager.GameLevel.Level == 8)
             {
-                behavior.StartEntering();
+                this.SetupCustomLevel();
             }
+            else
+            {
+                this.SetupNewLevel();
+            }
+
+            this.StartTilesEntering();
         }
 
         public void OnBattleEnd()
         {
-            var children = this.GetComponentsInChildren<EnterBehavior>();
-
-            foreach (var behavior in children)
-            {
-                behavior.StartExiting();
-            }
+            this.StartTilesExiting();
         }
 
         public void OnBattleVictory()
@@ -128,6 +133,7 @@
 
             this.mobSpawner = BattleManager.Instance.GetComponent<MobSpawner>();
             this.generator = this.GetComponent<TG>();
+            this.customData = this.GetComponent<CustomTerrain>();
         }
 
         private void OnDisable()
@@ -140,6 +146,24 @@
 
         #region Internal Functions
 
+        private void StartTilesEntering()
+        {
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+            foreach (var behavior in children)
+            {
+                behavior.StartEntering();
+            }
+        }
+
+        private void StartTilesExiting()
+        {
+            var children = this.GetComponentsInChildren<EnterBehavior>();
+            foreach (var behavior in children)
+            {
+                behavior.StartExiting();
+            }
+        }
+
         /// <summary>
         /// Procedural generate a new map
         /// </summary>
@@ -149,15 +173,25 @@
             this.generator.Initialize();
 
             // Instantiate tiles from data
-            this.InstantiateTiles();
+            this.InstantiateTiles(this.generator);
             this.SetupPathSprite();
             this.SetupMobSpawner();
-            this.InstantiateEnvironments();
+            this.InstantiateEnvironments(this.generator);
+        }
+
+        private void SetupCustomLevel()
+        {
+            this.customData.Initialize();
+
+            // Suppose to load information about the boss.
+            this.InstantiateTiles(this.customData);
+            this.InstantiateEnvironments(this.customData);
         }
 
         /// <summary>
         /// We need to manually determine what each type of the path is.
         /// Note this solution is very ugly but works :)
+        /// [Generator Only]
         /// </summary>
         private void SetupPathSprite()
         {
@@ -213,7 +247,8 @@
         }
 
         /// <summary>
-        /// Heritage from Austin. Adding vector3 points to the spawn. 
+        /// Heritage from Austin. Adding vector3 points to the spawn.
+        /// [Generator Only]
         /// </summary>
         private void SetupMobSpawner()
         {
@@ -232,35 +267,21 @@
             }
         }
 
-        private void SetupFromChildren()
-        {
-            var index = 0;
-            foreach (Transform child in this.transform)
-            {
-                if (child.CompareTag("Tile"))
-                {
-                    var x = index % TG.Dimension;
-                    var y = index / TG.Dimension;
-
-                    this.tileBlocks[x, y] = child;
-
-                    index++;
-                }
-            }
-        }
-
         /// <summary>
         /// Instantiate all tiles. Must call generator.Initialize before using this function.
         /// This function will destroy any existing tileBlock GameObjects. 
         /// </summary>
-        private void InstantiateTiles()
+        /// <param name="sourceData">
+        /// The source Data.
+        /// </param>
+        private void InstantiateTiles(ITerrainData sourceData)
         {
             // Re instantiate all tiles
             for (var x = 0; x < TG.Dimension; x++)
             {
                 for (var y = 0; y < TG.Dimension; y++)
                 {
-                    Tiles tileType = this.generator.GetTileTypeAt(x, y);
+                    Tiles tileType = sourceData.GetTileTypeAt(x, y);
 
                     var instance = this.InstantiateTileAt(tileType, x, y);
 
@@ -328,7 +349,10 @@
         /// <summary>
         /// Instantiating fast and dirty but works fine environmental objects. 
         /// </summary>
-        private void InstantiateEnvironments()
+        /// <param name="sourceData">
+        /// The source Data.
+        /// </param>
+        private void InstantiateEnvironments(ITerrainData sourceData)
         {
             //int num = Random.Range(2, 5);
             int num = 28;
@@ -341,7 +365,7 @@
                 Transform block;
                 do
                 {
-                    block = this.PickNonOcuppiedBlock();
+                    block = this.PickNonOcuppiedBlock(sourceData);
                     duplicate = this.mushrooms.Any(
                         go => go.transform.position.Equals(block.position));
                 }
@@ -357,7 +381,7 @@
             }
         }
 
-        private Transform PickNonOcuppiedBlock()
+        private Transform PickNonOcuppiedBlock(ITerrainData sourceData)
         {
             int x;
             int y;
@@ -366,8 +390,8 @@
                 x = Random.Range(0, 8);
                 y = Random.Range(0, 8);
             }
-            while (this.generator.GetTileTypeAt(x, y) == Tiles.Path ||
-                    this.generator.GetTileTypeAt(x, y) == Tiles.Water);
+            while (sourceData.GetTileTypeAt(x, y) == Tiles.Path ||
+                   sourceData.GetTileTypeAt(x, y) == Tiles.Water);
 
             return this.tileBlocks[x, y];
         }

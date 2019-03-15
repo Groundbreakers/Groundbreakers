@@ -3,8 +3,6 @@ namespace Assets.Scripts
     using System.Collections;
     using System.Collections.Generic;
 
-    using Asset.Script;
-
     using Assets.Enemies.Scripts;
 
     using Sirenix.OdinInspector;
@@ -114,8 +112,24 @@ namespace Assets.Scripts
 
         #region Internal Functions
 
+        /// <summary>
+        /// The has path.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        private bool PathExists()
+        {
+            return this.pathA.Count != 0 && this.pathB.Count != 0;
+        }
+
         private void CreateIndicators()
         {
+            if (!this.PathExists())
+            {
+                return;
+            }
+
             this.activeIndicators = new[] { new GameObject(), new GameObject(), new GameObject(), new GameObject() };
 
             var map = GameObject.Find("TileMap");
@@ -143,7 +157,14 @@ namespace Assets.Scripts
 
         private void ClearIndicators()
         {
-            foreach (var go in this.activeIndicators)
+            var gameObjects = this.activeIndicators;
+
+            if (gameObjects == null)
+            {
+                return;
+            }
+
+            foreach (var go in gameObjects)
             {
                 GameObject.Destroy(go);
             }
@@ -163,6 +184,11 @@ namespace Assets.Scripts
 
         private void ShouldSpawnWave()
         {
+            if (!this.PathExists())
+            {
+                return;
+            }
+
             this.pack.ResetPack();
             this.StopAllCoroutines();
             this.StartCoroutine(this.SpawnWave(1));

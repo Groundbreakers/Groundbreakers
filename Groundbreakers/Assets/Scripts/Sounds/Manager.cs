@@ -5,8 +5,6 @@ using Assets.Scripts;
 
 using UnityEngine;
 
-using static Assets.Scripts.BattleManager;
-
 public class Manager : MonoBehaviour
 {
     private AudioSource peaceTheme;
@@ -26,7 +24,7 @@ public class Manager : MonoBehaviour
     void Update()
     {
         // Fade in & out effects
-        if (BattleManager.GameState != Stages.Null)
+        if (BattleManager.GameState != GameStates.Null)
         {
             if (peaceTheme.volume != 0.0F)
             {

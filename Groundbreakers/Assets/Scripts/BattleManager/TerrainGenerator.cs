@@ -3,19 +3,18 @@
     using System;
     using System.Collections.Generic;
 
-    using Sirenix.OdinInspector;
-
     using UnityEngine;
 
     using Random = UnityEngine.Random;
 
+    /// <inheritdoc />
     /// <summary>
     ///     The terrain generator class handles all biome/path generation algorithm. Note the class
     ///     only generate pure data(i.e. a 2D Array for map data, and List of Vector3 for paths).
     ///     The user, namely, the GameMap should instantiate the GameObjects using the data from
     ///     this class. This class is purely data oriented, no instances of Tile prefab.
     /// </summary>
-    public class TerrainGenerator : MonoBehaviour
+    public class TerrainGenerator : MonoBehaviour, ITerrainData
     {
         #region Inspector Properties
 
@@ -49,16 +48,6 @@
 
         #region Public Properties
 
-        public enum Tiles
-        {
-            OutOfBound,
-            Path,
-            Grass,
-            Stone,
-            Wall,
-            Water,
-        }
-
         [Flags]
         private enum Direction
         {
@@ -73,6 +62,7 @@
 
         #region Public functions
 
+        /// <inheritdoc />
         /// <summary>
         /// This function should be called by GameMap. A new sets of data is generated each time
         /// you call this Initialize Function.
@@ -84,6 +74,7 @@
             this.GeneratePaths();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// The get tile type at.
         /// </summary>
@@ -94,7 +85,7 @@
         /// The y coordinate of the data. Range: [0, 7]
         /// </param>
         /// <returns>
-        /// The <see cref="Tiles"/>. The enumeration that represent the tile's type. 
+        /// The <see cref="T:Assets.Scripts.Tiles" />. The enumeration that represent the tile's type. 
         /// </returns>
         public Tiles GetTileTypeAt(float x, float y)
         {

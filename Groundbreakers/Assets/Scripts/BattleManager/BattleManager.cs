@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using Assets.Script;
-
     using DG.Tweening;
 
     using UnityEngine;
@@ -20,7 +18,6 @@
 
         #region Private Fields
 
-        private LevelManager levelManager;
 
         private Dictionary<string, UnityEvent> eventDictionary;
 
@@ -29,32 +26,6 @@
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        /// The stages of the game phases. 
-        /// </summary>
-        public enum Stages
-        {
-            /// <summary>
-            /// The Initial State
-            /// </summary>
-            Null,
-
-            /// <summary>
-            /// The state when all tiles should enter.
-            /// </summary>
-            Entering,
-
-            /// <summary>
-            /// The state when combat should be resolved.
-            /// </summary>
-            Combating,
-
-            /// <summary>
-            /// The state when all tiles should leave the map.
-            /// </summary>
-            Exiting,
-        }
 
         /// <summary>
         /// Gets the only battle manager in the scene. Whenever referring the battle manager, please call 'BattleManager.Instance'. 
@@ -81,7 +52,9 @@
             }
         }
 
-        public static Stages GameState { get; private set; } = Stages.Null;
+        public static GameStates GameState { get; private set; } = GameStates.Null;
+
+        public static LevelManager GameLevel { get; private set; }
 
         #endregion
 
@@ -156,7 +129,7 @@
         /// </summary>
         public void ShouldStartBattle()
         {
-            if (GameState != Stages.Null)
+            if (GameState != GameStates.Null)
             {
                 Debug.LogWarning("Attemp To Start a battle when battle is already started.");
 
@@ -164,7 +137,7 @@
             }
 
             // Changing state
-            GameState = Stages.Entering;
+            GameState = GameStates.Entering;
 
             this.timer.StartLevel();
         }
@@ -200,7 +173,7 @@
 
         public void OnBattleBegin()
         {
-            GameState = Stages.Combating;
+            GameState = GameStates.Combating;
 
             // Toggle UI
             Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
@@ -211,7 +184,7 @@
         {
             this.RetreatAllCharacters();
 
-            GameState = Stages.Exiting;
+            GameState = GameStates.Exiting;
 
             // Toggle UI (dirty way)
             GameObject.Find("DeployPanel").GetComponent<Deploy>().Clear();
@@ -225,14 +198,14 @@
         {
             this.KillAllEnemies();
 
-            this.levelManager.StartLevel();
+            GameLevel.StartLevel();
 
             this.timer.ResetTimer();
 
             // Dirty way to not show GameSpeed
             Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
 
-            GameState = Stages.Null;
+            GameState = GameStates.Null;
         }
 
         #endregion
@@ -241,14 +214,14 @@
 
         private void Reset()
         {
-            GameState = Stages.Null;
+            GameState = GameStates.Null;
 
             Debug.Log("BattleManager.Reset() is called");
         }
 
         private void OnEnable()
         {
-            this.levelManager = FindObjectOfType<LevelManager>();
+            GameLevel = FindObjectOfType<LevelManager>();
             this.timer = this.GetComponent<GameTimer>();
 
             StartListening("block ready", this.OnBattleBegin);

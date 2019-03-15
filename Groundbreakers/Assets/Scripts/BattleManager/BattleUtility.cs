@@ -1,7 +1,5 @@
-﻿namespace Assets.Script
+﻿namespace Assets.Scripts
 {
-    using Assets.Scripts;
-
     using UnityEngine;
 
     public static class BattleUtility

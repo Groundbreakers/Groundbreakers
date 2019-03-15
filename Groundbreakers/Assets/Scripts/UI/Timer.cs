@@ -3,8 +3,6 @@
     using UnityEngine;
     using UnityEngine.UI;
 
-    using static BattleManager;
-
     public class Timer : MonoBehaviour, IBattlePhaseHandler
     {
         #region Inspector values
@@ -58,7 +56,7 @@
         // Update is called once per frame
         private void Update()
         {
-            if (BattleManager.GameState != Stages.Null)
+            if (BattleManager.GameState != GameStates.Null)
             {
                 if (this.countdown <= 0F)
                 {
