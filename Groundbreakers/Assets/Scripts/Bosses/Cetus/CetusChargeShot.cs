@@ -21,7 +21,7 @@ public class CetusChargeShot : MonoBehaviour
     {
         if (hitTarget.gameObject.CompareTag("Player"))
         {
-            //hitTarget.gameObject.GetComponent<characterAttack>().StunCharacter(3);
+            hitTarget.gameObject.GetComponent<characterAttack>().stun(5);
         }
     }
 

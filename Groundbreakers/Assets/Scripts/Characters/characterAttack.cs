@@ -318,13 +318,16 @@ public class characterAttack : MonoBehaviour
 
     private IEnumerator stunDuration(int time)
     {
+        yield return new WaitForSeconds(1);
+        gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
         yield return new WaitForSeconds(time);
-        isStunned = false;
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        this.isStunned = false;
     }
 
     public void setStance()
     {
-        if(stance == "Melee")
+        if (stance == "Melee")
         {
             animator.SetBool("Sitting", false);
             animator.SetBool("Standing", true);
@@ -334,6 +337,6 @@ public class characterAttack : MonoBehaviour
             animator.SetBool("Sitting", true);
             animator.SetBool("Standing", false);
         }
-        
+
     }
 }

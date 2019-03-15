@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Linq;
 
+using Assets.Scripts;
+
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -55,7 +57,7 @@ public class CetusScript : MonoBehaviour
 
     private bool isStunned;
 
-    private Transform[] splashTiles = new Transform[20];
+    private Transform[] splashTiles;
 
     // Status flags
     private float statusMultiplier = 1;
@@ -63,7 +65,15 @@ public class CetusScript : MonoBehaviour
     // Timers
     private float stunTime;
 
-    private Transform[] waterStrikeTiles = new Transform[8];
+    private Transform[] waterStrikeTiles;
+
+    private Transform TileHolder;
+
+    private int waterStrikeTilesNum = 12;
+
+    private int splashTilesNum = 20;
+
+    private GameMap gamemap;
 
     // Blight handlers
     public void BlightEnemy()
@@ -232,28 +242,27 @@ public class CetusScript : MonoBehaviour
 
     private void GetWaterStrikeTiles()
     {
-        var TileHolder = GameObject.Find("TileMap").transform;
-        var tiles = new int[8];
+        int[] tiles = new int[this.waterStrikeTilesNum];
         int tmp;
+        int count = 0;
 
         // Get 8 random tile numbers. Tiles cannot be in the middle 4x4, or already be a chosen tile.
-        for (var j = 0; j < 8; j++)
+        while (count < this.waterStrikeTilesNum)
         {
-            tmp = Random.Range(0, 64);
-            while (new[] { 18, 19, 20, 21, 26, 27, 28, 29, 34, 35, 36, 37, 42, 43, 44, 45 }.Contains(tmp)
-                   || tiles.Contains(tmp))
+            tmp = Random.Range(0, this.gamemap.CetusWaterStrikeList.Count);
+            if (tiles.Contains(tmp) == false)
             {
-                tmp = Random.Range(0, 64);
+                tiles[count] = tmp;
+                count += 1;
             }
-
-            tiles[j] = tmp;
         }
 
         // Get the tile objects from the tile numbers.
-        for (var i = 0; i < 8; i++)
+        for (int i = 0; i < this.waterStrikeTilesNum; i++)
         {
-            this.waterStrikeTiles[i] = TileHolder.GetChild(tiles[i]);
+            this.waterStrikeTiles[i] = this.gamemap.CetusWaterStrikeList[tiles[i]];
         }
+
     }
 
     // Used in Cleanse()
@@ -291,9 +300,9 @@ public class CetusScript : MonoBehaviour
         for (var i = 0; i < 20; i++)
         {
             var tmpchar = this.splashTiles[i].GetComponent<SelectNode>().GetCharacterIndex();
-            if (tmpchar != 0)
+            if (tmpchar != -1)
             {
-                // characterlist.GetChild(tmpchar-1).GetComponent<characterAttack>().StunCharacter(3);
+                characterlist.GetChild(tmpchar).GetComponent<characterAttack>().stun(5);
             }
         }
 
@@ -316,7 +325,13 @@ public class CetusScript : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        this.StartCoroutine(this.Entrance());
+        waterStrikeTiles = new Transform[this.waterStrikeTilesNum];
+        splashTiles = new Transform[this.splashTilesNum];
+        this.gamemap = GameObject.Find("TileMap").GetComponent<GameMap>();
+        TileHolder = GameObject.Find("TileMap").transform;
+        Random.seed = System.Environment.TickCount;
+
+        StartCoroutine(Entrance());
     }
 
     // Start combat
@@ -442,7 +457,7 @@ public class CetusScript : MonoBehaviour
         while (tmpcolor.r > 0)
         {
             tmpcolor.r -= 0.02f;
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < this.waterStrikeTilesNum; i++)
             {
                 this.waterStrikeTiles[i].GetComponent<SpriteRenderer>().color = tmpcolor;
             }
@@ -451,12 +466,12 @@ public class CetusScript : MonoBehaviour
         }
 
         // Stun characters on affected tiles
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < this.waterStrikeTilesNum; i++)
         {
             var tmpchar = this.waterStrikeTiles[i].GetComponent<SelectNode>().GetCharacterIndex();
-            if (tmpchar != 0)
+            if (tmpchar != -1)
             {
-                // characterlist.GetChild(tmpchar-1).GetComponent<characterAttack>().StunCharacter(3);
+                characterlist.GetChild(tmpchar).GetComponent<characterAttack>().stun(5);
             }
         }
 
@@ -464,7 +479,7 @@ public class CetusScript : MonoBehaviour
         while (tmpcolor.r < 1)
         {
             tmpcolor.r += 0.02f;
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < this.waterStrikeTilesNum; i++)
             {
                 this.waterStrikeTiles[i].GetComponent<SpriteRenderer>().color = tmpcolor;
             }

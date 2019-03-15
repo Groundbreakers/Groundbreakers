@@ -49,6 +49,8 @@ namespace Assets.Scripts
         [SerializeField]
         private GameObject water;
 
+        public List<Transform> CetusWaterStrikeList = new List<Transform>();
+
         #endregion
 
         #region Internal Variables
@@ -75,6 +77,8 @@ namespace Assets.Scripts
 
         public void OnBattleBegin()
         {
+            this.CetusWaterStrikeList.Clear();
+
             Debug.Log("Starting level " + BattleManager.GameLevel.Level);
             // dirty way
             if (BattleManager.GameLevel.Level == 8)
@@ -169,6 +173,8 @@ namespace Assets.Scripts
         /// </summary>
         private void SetupNewLevel()
         {
+            this.CetusWaterStrikeList.Clear();
+
             // Generate new map data
             this.generator.Initialize();
 
@@ -343,6 +349,13 @@ namespace Assets.Scripts
 
             // Setting order and parent
             instance.transform.SetParent(this.transform);
+
+            if (tile == this.tileA || tile == this.tileB || tile == this.tileC)
+            {
+                this.CetusWaterStrikeList.Add(instance.transform);
+
+            }
+
             return instance;
         }
 
