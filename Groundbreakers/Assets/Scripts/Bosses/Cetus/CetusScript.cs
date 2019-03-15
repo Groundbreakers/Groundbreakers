@@ -74,7 +74,7 @@ public class CetusScript : MonoBehaviour
     private int splashTilesNum = 20;
 
     private GameMap gamemap;
-
+    
     // Blight handlers
     public void BlightEnemy()
     {
@@ -153,6 +153,8 @@ public class CetusScript : MonoBehaviour
         GameObject tmp;
         float randomX;
         float randomY;
+
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeIt(0.05f, 2f);
         for (var i = 0; i < 30; i++)
         {
             tmp = Instantiate(this.chargeParticle, this.transform);
@@ -202,6 +204,8 @@ public class CetusScript : MonoBehaviour
         // (3.5, 2) -> (3.5, 3.5)
         this.transform.position = new Vector3(3.5f, 1f, -1f);
         yield return new WaitForSeconds(10);
+
+        GameObject.Find("Main Camera").GetComponent<CameraShake>().ShakeIt(0.03f, 4.5f);
         for (var i = this.entranceTimer; i >= 0; i -= Time.deltaTime)
         {
             this.transform.Translate(Vector3.up / 90, Space.World);
@@ -451,7 +455,7 @@ public class CetusScript : MonoBehaviour
     {
         this.GetWaterStrikeTiles();
         var characterlist = GameObject.Find("CharacterList").transform;
-
+        
         // Affected tiles flash blue
         var tmpcolor = Color.white;
         while (tmpcolor.r > 0)
@@ -490,4 +494,5 @@ public class CetusScript : MonoBehaviour
         this.doingAttack = false;
         yield return 0;
     }
+
 }

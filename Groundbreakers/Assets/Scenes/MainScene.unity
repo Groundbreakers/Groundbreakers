@@ -4130,6 +4130,7 @@ GameObject:
   - component: {fileID: 1983138504}
   - component: {fileID: 1983138503}
   - component: {fileID: 1983138507}
+  - component: {fileID: 1983138508}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4252,6 +4253,20 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   shakeDuration: 0
   shakeMagnitude: 0.35
+--- !u!114 &1983138508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983138502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98736869b1347d841a4b06f38f0d7872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeMagnetude: 0.05
+  shakeTime: 0.5
 --- !u!1001 &1996242927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4611,6 +4626,21 @@ PrefabInstance:
         type: 3}
       propertyPath: totalWaves
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251953317771056963, guid: c1ae0ce6f501a784593b8ea84a99fbf9,
+        type: 3}
+      propertyPath: regionAGroup.Array.data[0].packs.Array.data[0].amount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251953317771056963, guid: c1ae0ce6f501a784593b8ea84a99fbf9,
+        type: 3}
+      propertyPath: regionAGroup.Array.data[1].packs.Array.data[0].amount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251953317771056963, guid: c1ae0ce6f501a784593b8ea84a99fbf9,
+        type: 3}
+      propertyPath: regionAGroup.Array.data[2].packs.Array.data[0].amount
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1ae0ce6f501a784593b8ea84a99fbf9, type: 3}
