@@ -355,7 +355,7 @@ namespace Assets.Scripts
         private void InstantiateEnvironments(ITerrainData sourceData)
         {
             //int num = Random.Range(2, 5);
-            int num = 28;
+            int num = 12;
             this.mushrooms.Clear();
 
             // We use naive approach here
@@ -371,7 +371,7 @@ namespace Assets.Scripts
                 }
                 while (duplicate);
 
-                Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
+                // Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
                 var mush = Instantiate(this.mushroom, block);
                 mush.transform.localPosition = Vector3.zero;
                 this.mushrooms.Add(mush);

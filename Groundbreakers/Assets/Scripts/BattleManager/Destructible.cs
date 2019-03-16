@@ -13,7 +13,6 @@
 
         private void OnDisable()
         {
-            Debug.Log("OnDisable");
             var parent = this.transform.parent.gameObject;
 
             BattleUtility.SetTileCanDeploy(parent, true);

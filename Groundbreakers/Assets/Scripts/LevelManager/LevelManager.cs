@@ -59,7 +59,7 @@
         /// <summary>
         /// Gets the current game level of the progress. The range is currently [1, 8].
         /// </summary>
-        public int Level { get; private set; }
+        public int Level { get; private set; } = 1;
 
         #endregion
 
@@ -67,6 +67,9 @@
 
         public void StartLevel()
         {
+            Debug.Log(this.Level);
+            Debug.Log(this.GetDifficulty());
+
             this.GotoNextLevel();
 
             this.routesGenerator.Toggle();
