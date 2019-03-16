@@ -73,6 +73,8 @@
                 Destroy(this.gameObject);
             }
 
+            return;
+
             if (go.CompareTag("Player"))
             {
                 var character = this.damageHandler.Source;
