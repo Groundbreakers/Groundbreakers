@@ -50,6 +50,7 @@
         private int blightStacks = 0;
         private bool isBurned = false;
         private bool isSlowed = false;
+        private bool isPurged = true;
         private float strongestSlow = 0;
 
         // Timers
@@ -59,7 +60,7 @@
         private float regenTimer = 1;
 
         #endregion
-
+        private GameObject crystalCounter;
         public int time = 0;
         void Start()
         {
@@ -72,12 +73,20 @@
             this.animator = this.GetComponent<Animator>();
             InitializeAttributes();
             // Randomize position and waypoint accuracy
-            this.transform.Translate(new Vector3(Random.Range(-0.2f,0.3f),Random.Range(-0.2f,0.3f),0));
+            this.transform.Translate(new Vector3(Random.Range(-0.2f, 0.3f), Random.Range(-0.2f, 0.3f), 0));
             // Get first waypoint
             this.GetNextWaypoint();
+
+            if (this.attributes.Contains("Aura") && this.attributes.Contains("Revenge"))
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
+                this.isPurged = false;
+            }
+
+            crystalCounter = GameObject.Find("CrystalCounter");
         }
 
-        void Update()
+        void FixedUpdate()
         {
             // Testing functions
             if (!this.isBlighted && Input.GetKeyDown("b"))
@@ -120,8 +129,13 @@
             if (this.health <= 0)
             {
                 GameObject effect = (GameObject)Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
-                Destroy(effect, 0.25f);
+                Enemy_Death death = effect.GetComponent<Enemy_Death>();
+                death.setDirection(animator.GetInteger("Direction"));
+                CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
+                temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
+                Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
+                
             }
 
             // Check for "Rage" attribute and HP < 50%
@@ -175,7 +189,7 @@
         }
 
         // Damage handler
-        public void DamageEnemy(int damage, int armorpen, float accuracy, bool isMelee)
+          public void DamageEnemy(int damage, int armorpen, float accuracy, bool isMelee, bool isMarked)
         {
             // Check if the attack missed, or was dodged. If it hits, do damage calculation
             float accuracyroll = Random.Range(0.0f, 1.0f);
@@ -185,22 +199,38 @@
             {
                 flyingMod = 0.75f;
             }
-            if (accuracyroll <= accuracy && dodgeroll > this.evasion + flyingMod )
+
+            if (accuracyroll <= accuracy && dodgeroll > this.evasion + flyingMod)
             {
                 int damagevalue;
                 if (this.attributes.Contains("Armored"))
                 {
-                    damagevalue = armorpen;
+                    damagevalue = (int)(damage * armorpen * .25f);
                 }
                 else
                 {
                     damagevalue = damage;
                 }
 
-                this.health -= damagevalue;
+                if (isMarked == true)
+                {
+                    damagevalue = (int)(damagevalue * 1.25);
+
+                    // Debug.Log("Marked Damage = " + damagevalue);
+                    this.health -= damagevalue;
+                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                }
+                else
+                {
+                    this.health -= damagevalue;
+                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+
+                    // Debug.Log("Un Marked Damage = " + damagevalue);
+                }
             }
             else
             {
+                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(0, this.transform);
                 return;
             }
         }
@@ -232,7 +262,15 @@
             if (!this.isBlighted)
             {
                 this.isBlighted = true;
-                if (this.isBurned)
+                if (!this.isPurged && this.isBurned)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().color = Color.black;
+                }
+                else if (!this.isPurged)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                }
+                else if (this.isBurned)
                 {
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 }
@@ -241,7 +279,21 @@
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
                 }
             }
+
             this.blightStacks += 1;
+        }
+
+        public void breakEnemyArmor()
+        {
+            this.attributes.Remove("Armored");
+        }
+
+        public void purgeEnemy()
+        {
+            this.attributes.Remove("Aura");
+            this.attributes.Remove("Revenge");
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+            this.isPurged = true;
         }
 
         void BlightTick()
@@ -260,6 +312,10 @@
                 if (this.isBlighted)
                 {
                     this.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                }
+                else if (!this.isPurged)
+                {
+                    this.gameObject.GetComponent<SpriteRenderer>().color = Color.magenta;
                 }
                 else
                 {
@@ -282,7 +338,7 @@
             if (strength > this.strongestSlow)
             {
                 this.strongestSlow = strength;
-                this.speedMultiplier = 1 - strongestSlow;
+                this.speedMultiplier = 1 - this.strongestSlow;
             }
         }
 
@@ -326,21 +382,23 @@
                 this.waypointWaitTime = 0;
             }
             this.waiting = false;
-            /* Direction animations
-            Vector2 dir = this.target.position - this.transform.position; // Change animation to fit the angle
+
+            Vector2 dir;
+            dir.x = this.target.x - this.transform.position.x; // Change animation to fit the angle
+            dir.y = this.target.y - this.transform.position.y; // Change animation to fit the angle
             if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0) { this.animator.SetInteger("Direction", 0); } // Up
             else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0) { this.animator.SetInteger("Direction", 1); } // Right
             else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0) { this.animator.SetInteger("Direction", 2); } // Down
             else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0) { this.animator.SetInteger("Direction", 3); } // Left
-            */
+
         }
 
         // When the enemy reaches the end of its path
         void EndPath()
         {
-            GameObject canvas = GameObject.Find("Canvas");
-            HP hp = canvas.GetComponent<HP>();
-            Debug.Log((int)Math.Ceiling(this.power * this.powerMultiplier));
+            GameObject counter = GameObject.Find("HPCounter");
+            HP hp = counter.GetComponent<HP>();
+            Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
             hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
             Destroy(this.gameObject);
         }
@@ -388,6 +446,32 @@
                 GameObject thisClone = Instantiate(this.gameObject, this.startingPosition, Quaternion.identity);
                 thisClone.GetComponent<Enemy_Generic>().isClone = true;
             }
+        }
+
+        // access functions
+        public bool getIsBlighted()
+        {
+            return this.isBlighted;
+        }
+
+        public bool getIsBurned()
+        {
+            return this.isBurned;
+        }
+
+        public bool getIsPurged()
+        {
+            return this.isPurged;
+        }
+
+        public bool getIsSlowed()
+        {
+            return this.isSlowed;
+        }
+
+        public bool getIsStunned()
+        {
+            return this.isStunned;
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿namespace Assets.Scripts
 {
-    using System;
     using System.Collections.Generic;
+
+    using DG.Tweening;
 
     using UnityEngine;
     using UnityEngine.Events;
+    using UnityEngine.UI;
 
-    using Random = UnityEngine.Random;
-
-    [RequireComponent(typeof(GameMap))]
-    public class BattleManager : MonoBehaviour
+    public class BattleManager : MonoBehaviour, IBattlePhaseHandler
     {
         #region Singleton
 
@@ -19,42 +18,14 @@
 
         #region Private Fields
 
+
         private Dictionary<string, UnityEvent> eventDictionary;
 
-        /// <summary>
-        /// This stores the HUD game object (bad solution)
-        /// </summary>
-        private GameObject uiCanvas;
+        private GameTimer timer;
 
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        /// The stages of the game phases. 
-        /// </summary>
-        public enum Stages
-        {
-            /// <summary>
-            /// The Initial State
-            /// </summary>
-            Null,
-
-            /// <summary>
-            /// The state when all tiles should enter.
-            /// </summary>
-            Entering,
-
-            /// <summary>
-            /// The state when combat should be resolved.
-            /// </summary>
-            Combating,
-
-            /// <summary>
-            /// The state when all tiles should leave the map.
-            /// </summary>
-            Exiting,
-        }
 
         /// <summary>
         /// Gets the only battle manager in the scene. Whenever referring the battle manager, please call 'BattleManager.Instance'. 
@@ -81,7 +52,9 @@
             }
         }
 
-        public static Stages GameState { get; private set; } = Stages.Null;
+        public static GameStates GameState { get; private set; } = GameStates.Null;
+
+        public static LevelManager GameLevel { get; private set; }
 
         #endregion
 
@@ -149,50 +122,117 @@
 
         #endregion
 
-        #region Unity Callbacks
+        #region Public Utility Functions
 
-        public void OnEnable()
+        /// <summary>
+        /// The main entry function call to start the battle.
+        /// </summary>
+        public void ShouldStartBattle()
         {
-            this.uiCanvas = GameObject.Find("Canvas"); // should do a safe check
+            if (GameState != GameStates.Null)
+            {
+                Debug.LogWarning("Attemp To Start a battle when battle is already started.");
 
-            StartListening(
-                "block ready",
-                () => GameState = Stages.Combating);
+                return;
+            }
+
+            // Changing state
+            GameState = GameStates.Entering;
+
+            this.timer.StartLevel();
         }
 
-        public void Update()
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void KillAllEnemies()
         {
-            // This is for debugging purpose
-            if (Input.GetKeyDown("space"))
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
             {
-                TriggerEvent("test");
+                GameObject.Destroy(enemy);
             }
+        }
+
+        /// <summary>
+        /// Instantly destroy all existing enemies on the scene. You might use this for some other
+        /// interesting purposes. I am using during resetting the game map.
+        /// </summary>
+        public void RetreatAllCharacters()
+        {
+            Debug.Log("Ding");
+
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().InstantRetreatAllCharacter();
         }
 
         #endregion
 
-        #region Public Functions
+        #region IBattlePhaseHandler
 
-        [Obsolete("TBD")]
-        public void OnWaveUpdate(int currentWave)
+        public void OnBattleBegin()
         {
-            // Should update the UI. *NOT Final*
-            var timer = this.uiCanvas.GetComponent<Timer>();
-            //timer.UpdateWave(currentWave);
+            GameState = GameStates.Combating;
+
+            // Toggle UI
+            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
+            GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", true);
         }
 
-        public void OnLevelFinished()
+        public void OnBattleEnd()
         {
-            GameState = Stages.Exiting;
-            TriggerEvent("battle finished");
+            this.RetreatAllCharacters();
+
+            GameState = GameStates.Exiting;
+
+            // Toggle UI (dirty way)
+            GameObject.Find("DeployPanel").GetComponent<Deploy>().Clear();
+            GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", false);
+
+            // Reset Timer (dirty way)
+            GameObject.Find("1xButton").GetComponent<Button>().onClick.Invoke();
         }
 
-        [Obsolete("TBD")]
-        public void SetCurrentSelectedTile(Transform currentGrid)
+        public void OnBattleVictory()
         {
-            throw new NotImplementedException();
+            this.KillAllEnemies();
+
+            GameLevel.StartLevel();
+
+            this.timer.ResetTimer();
+
+            // Dirty way to not show GameSpeed
+            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
+
+            GameState = GameStates.Null;
         }
 
+        #endregion
+
+        #region Unity Callbacks
+
+        private void Reset()
+        {
+            GameState = GameStates.Null;
+
+            Debug.Log("BattleManager.Reset() is called");
+        }
+
+        private void OnEnable()
+        {
+            GameLevel = FindObjectOfType<LevelManager>();
+            this.timer = this.GetComponent<GameTimer>();
+
+            StartListening("block ready", this.OnBattleBegin);
+
+            StartListening("end", this.OnBattleEnd);
+
+            StartListening("victory", this.OnBattleVictory);
+
+            StartListening("reset", this.Reset);
+        }
+        
         #endregion
 
         #region Internal functions  
@@ -203,6 +243,10 @@
             {
                 this.eventDictionary = new Dictionary<string, UnityEvent>();
             }
+
+            // Some setting
+            DOTween.Init(true, true);
+            BattleUtility.Initialize();
         }
 
         #endregion

@@ -1,62 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using Assets.Scripts;
+
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CurrentLevel : MonoBehaviour
 {
-    public Text ui;
-    public Text ui2;
-    private int region;
-    private int level;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.region = 1;
-        this.level = 1;
-        this.ui.text = "Region " + this.region;
-        this.ui2.text = "Level " + this.level + "/8";
-        this.ChangeRegion();
-    }
+    [SerializeField]
+    private GameObject titleScreen;
 
-    public void ChangeRegion()
+    [SerializeField]
+    private Text ui;
+
+    [SerializeField]
+    private Text ui2;
+
+    /// <summary>
+    /// Keep a reference to the manager class.
+    /// </summary>
+    private LevelManager levelManager;
+
+    public void OnRegionChanged()
     {
         // Get a new BGM if the region is changed
-        GameObject bgm = GameObject.Find("BGM Manager");
-        Manager manager = bgm.GetComponent<Manager>();
-        manager.UpdateBGM();
+        var bgm = GameObject.Find("BGM Manager");
+        var manager = bgm.GetComponent<Manager>();
+        if (!this.titleScreen.activeSelf)
+        {
+            manager.UpdateBGM();
+        }
 
         // Get a new background image if the region is changed
-        GameObject canvas = GameObject.Find("Canvas");
-        Background background = canvas.GetComponent<Background>();
+        var canvas = GameObject.Find("Canvas");
+        var background = canvas.GetComponent<Background>();
         background.UpdateBackground();
     }
 
-    public void UpdateLevel()
+    public void UpdateLevelInfo()
     {
-        if (this.level == 8)
+        this.ui.text = "Region " + this.levelManager.Region;
+        this.ui2.text = "Level " + this.levelManager.Level + "/8";
+    }
+
+    #region Unity Callbacks
+
+    private void OnEnable()
+    {
+        this.levelManager = FindObjectOfType<LevelManager>();
+
+        if (!this.levelManager)
         {
-            this.region += 1;
-            this.level = 1;
-            this.ChangeRegion();
-        }
-        else
-        {
-            this.level += 1;
+            Debug.LogError("There needs to be one active LevelManager script on a GameObject in your scene.");
         }
 
-        this.ui.text = "Region " + this.region;
-        this.ui2.text = "Level " + this.level + "/8";
+        this.UpdateLevelInfo();
+        this.OnRegionChanged();
     }
 
-    public int GetRegion()
-    {
-        return this.region;
-    }
-
-    public int GetLevel()
-    {
-        return this.level;
-    }
+    #endregion
 }

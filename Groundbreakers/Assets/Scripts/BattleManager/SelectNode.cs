@@ -2,18 +2,42 @@
 
 using Assets.Scripts;
 
+#if UNITY_EDITOR
+using UnityEditor.Animations;
+#endif
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(TileBlock))]
 [RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class SelectNode : MonoBehaviour
 {
-    public int characterOnTop;
+    #region Inspector Values
 
-    #region Inspector values
+    [SerializeField]
+    private int characterOnTop;
 
+    [SerializeField]
+    private bool canDeploy;
 
+    [SerializeField]
+    private bool deploying;
+
+    [SerializeField]
+    private int deployingCharacter = -1;
+
+    [SerializeField]
+    private Sprite canDeployIcon;
+
+    [SerializeField]
+    private Sprite canNotDeployIcon;
+
+    [SerializeField]
+    private Sprite occupiedIcon;
+
+    [SerializeField]
+    private Deploy deploy;
 
     #endregion
 
@@ -28,16 +52,9 @@ public class SelectNode : MonoBehaviour
     /// Making this canvas a field then we don't need to call the expensive function
     /// 'GameObject.Find' every time.
     /// </summary>
-    private GameObject canvas;
-
-    /// <summary>
-    /// Keeps a reference to the TileBlock script in this game object.
-    /// </summary>
-    private TileBlock tileBlock;
+    //private GameObject deployPanel;
 
     private LineRenderer lineRenderer;
-
-    private bool canDeploy = true;
 
     #endregion
 
@@ -50,32 +67,53 @@ public class SelectNode : MonoBehaviour
 
     #endregion
 
+    #region Public Function
+
+    public void SetCharacterIndex(int id)
+    {
+        this.characterOnTop = id;
+    }
+
+    public int GetCharacterIndex()
+    {
+        return this.characterOnTop;
+    }
+
+    public void EnableDeploy(int index)
+    {
+        this.deploying = true;
+        this.deployingCharacter = index;
+    }
+
+    public void DisableDeploy()
+    {
+        this.deploying = false;
+        this.deployingCharacter = -1;
+    }
+
+    #endregion
+
     #region Unity Callbacks
 
-    public void Start()
+    private void Start()
     {
-        this.canvas = GameObject.Find("Canvas");
-        this.tileBlock = this.GetComponent<TileBlock>();
+        this.deploy = GameObject.Find("DeployPanel").GetComponent<Deploy>();
+        this.lineRenderer = this.GetComponent<LineRenderer>();
+        this.lineRenderer.enabled = false;
 
         var components = this.GetComponentsInChildren<SpriteRenderer>();
         this.rend = components[1];
 
-        this.characterOnTop = 0;
-        this.rend.sprite = this.tileBlock.CanDeployIcon;
+        this.characterOnTop = -1;
+        this.rend.sprite = this.canDeployIcon;
         this.rend.enabled = false;
-
-        this.lineRenderer = this.GetComponent<LineRenderer>();
-        this.InitializeLineRenderer();
     }
 
-    public void Update()
+    private void Update()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (BattleManager.GameState != GameStates.Combating)
         {
-            Deploy deploy = this.canvas.GetComponent<Deploy>();
-            Status status = this.canvas.GetComponent<Status>();
-            deploy.Close();
-            status.Close();
+            return;
         }
     }
 
@@ -87,13 +125,19 @@ public class SelectNode : MonoBehaviour
             return;
         }
 
+        if (this.IsOccupied() && this.deploying)
+        {
+            this.rend.transform.rotation = Quaternion.identity;
+            return;
+        }
+
         this.rend.transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f));
     }
 
-    public void OnMouseOver()
+    private void OnMouseOver()
     {
         // Clearly, do nothing when the battleManager is not in the battle state
-        if (BattleManager.GameState != BattleManager.Stages.Combating)
+        if (BattleManager.GameState != GameStates.Combating)
         {
             return;
         }
@@ -105,7 +149,7 @@ public class SelectNode : MonoBehaviour
 
         if (!this.canDeploy)
         {
-            this.rend.sprite = this.tileBlock.CanNotDeployIcon;
+            this.rend.sprite = this.canNotDeployIcon;
             this.rend.enabled = true;
             return;
         }
@@ -114,35 +158,58 @@ public class SelectNode : MonoBehaviour
 
         if (this.IsOccupied())
         {
-            this.rend.sprite = this.tileBlock.OccupiedIcon;
-            this.rend.enabled = true;
+            this.ResetLineRenderer();
             this.lineRenderer.enabled = true;
-            return;
         }
 
+        if (this.deploying)
+        {
+            if (this.IsOccupied())
+            {
+                this.rend.sprite = this.canNotDeployIcon;
+                this.rend.enabled = true;
+                return;
+            }
+            else
+            {
+                this.rend.sprite = this.canDeployIcon;
+                this.rend.enabled = true;
+                return;
+            }
+        }
 
-        this.rend.sprite = this.rend.sprite = this.tileBlock.CanDeployIcon;
+        if (this.characterOnTop != -1)
+        {
+            this.deploy.Highlight(this.characterOnTop);
+        }
+
+        this.rend.sprite = this.occupiedIcon;
         this.rend.enabled = true;
     }
 
-    public void MouseInput()
+    private void MouseInput()
     {
-        if (Input.GetMouseButtonUp(0) && this.characterOnTop == 0)
+        if (Input.GetMouseButtonUp(0))
         {
-            Deploy deploy = this.canvas.GetComponent<Deploy>();
-            deploy.Toggle(this.gameObject);
-        }
-        else if (Input.GetMouseButtonUp(0) && this.characterOnTop != 0)
-        {
-            Status status = this.canvas.GetComponent<Status>();
-            status.Toggle(this.gameObject);
+            if (this.IsOccupied())
+            {
+                return;
+            }
+            if (this.deploying && this.deployingCharacter != -1)
+            {
+                this.deploy.SetTargetPos(this.deployingCharacter, this.gameObject);
+                this.deploy.DeployCharacter(this.deployingCharacter);
+                this.deploy.DisableDeploy(this.deployingCharacter);
+            }
         }
     }
 
-    public void OnMouseExit()
+    private void OnMouseExit()
     {
         this.rend.enabled = false;
         this.lineRenderer.enabled = false;
+
+        this.deploy.DisableHighlight();
     }
 
     #endregion
@@ -151,23 +218,25 @@ public class SelectNode : MonoBehaviour
 
     private bool IsOccupied()
     {
-        return this.characterOnTop != 0;
+        return this.characterOnTop != -1;
     }
 
-    private void InitializeLineRenderer()
+    private void ResetLineRenderer()
     {
-        int segments = 25;
-        this.lineRenderer.positionCount = segments + 1;
+        this.lineRenderer.positionCount = 0;
+
+        const int Segments = 50;
+        this.lineRenderer.positionCount = Segments + 1;
         this.lineRenderer.useWorldSpace = false;
         this.lineRenderer.enabled = false;
 
         // Trying to get the radius of the collider box
         // To be honest, I don't like this solution, but it works, and it does not break
         // others code.
-        var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop + 1);
+        var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop);
         var radius = character.GetComponent<CircleCollider2D>().radius;
 
-        this.CreatePoints(radius, radius, segments);
+        this.CreatePoints(radius, radius, Segments);
     }
 
     private void CreatePoints(float xradius, float yradius, int segments)
