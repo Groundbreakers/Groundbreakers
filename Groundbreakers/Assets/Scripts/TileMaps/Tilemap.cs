@@ -34,29 +34,6 @@
         }
 
         /// <summary>
-        ///     Instantiate all tiles. Must call generator.Initialize before using this function.
-        ///     This function will destroy any existing tileBlock GameObjects.
-        /// </summary>
-        /// <param name="sourceData">
-        ///     The source Data.
-        /// </param>
-        private void InstantiateTiles(ITerrainData sourceData)
-        {
-            // Re instantiate all tiles
-            for (var x = 0; x < TileData.Dimension; x++)
-            {
-                for (var y = 0; y < TileData.Dimension; y++)
-                {
-                    var tileType = sourceData.GetTileTypeAt(x, y);
-
-                    var instance = this.InstantiateTileAt(tileType, x, y);
-
-                    this.blocks[x, y] = instance.transform;
-                }
-            }
-        }
-
-        /// <summary>
         ///     Given the tile type, instantiate a GameObject from corresponding prefab at the
         ///     location (x,y).
         /// </summary>
@@ -104,6 +81,29 @@
             // Setting order and parent
             instance.transform.SetParent(this.transform);
             return instance;
+        }
+
+        /// <summary>
+        ///     Instantiate all tiles. Must call generator.Initialize before using this function.
+        ///     This function will destroy any existing tileBlock GameObjects.
+        /// </summary>
+        /// <param name="sourceData">
+        ///     The source Data.
+        /// </param>
+        private void InstantiateTiles(ITerrainData sourceData)
+        {
+            // Re instantiate all tiles
+            for (var x = 0; x < TileData.Dimension; x++)
+            {
+                for (var y = 0; y < TileData.Dimension; y++)
+                {
+                    var tileType = sourceData.GetTileTypeAt(x, y);
+
+                    var instance = this.InstantiateTileAt(tileType, x, y);
+
+                    this.blocks[x, y] = instance.transform;
+                }
+            }
         }
     }
 }
