@@ -4,14 +4,11 @@
 
     using UnityEngine;
 
+    [ExecuteInEditMode]
     [RequireComponent(typeof(CustomTerrain))]
     [RequireComponent(typeof(TileData))]
     public class Tilemap : MonoBehaviour
     {
-        private const float CellSize = 1.0f;
-
-        private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
-
         // below are all temp
         [SerializeField]
         private GameObject tileA;
@@ -25,12 +22,33 @@
         [SerializeField]
         private GameObject water;
 
+        private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
+
         private void Awake()
         {
+            // temp
             var sourceData = this.GetComponent<CustomTerrain>();
             sourceData.Initialize();
 
+            this.ClearAllTiles();
             this.InstantiateTiles(sourceData);
+        }
+
+        private void ClearAllTiles()
+        {
+            var tiles = GameObject.FindGameObjectsWithTag("Tile");
+
+            foreach (var go in tiles)
+            {
+                if (Application.isEditor)
+                {
+                    GameObject.DestroyImmediate(go);
+                }
+                else
+                {
+                    GameObject.Destroy(go);
+                }
+            }
         }
 
         /// <summary>
@@ -76,7 +94,10 @@
             }
 
             // Finally Instantiate it.
-            var instance = Instantiate(tile, new Vector3(x * CellSize, y * CellSize, 0.0f), Quaternion.identity);
+            var instance = Instantiate(
+                tile, 
+                new Vector3(x, y, 0.0f), 
+                Quaternion.identity);
 
             // Setting order and parent
             instance.transform.SetParent(this.transform);
