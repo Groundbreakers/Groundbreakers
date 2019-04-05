@@ -1,12 +1,6 @@
-﻿namespace Assets.Scripts
+﻿namespace TileMaps
 {
-    using System;
-
-    using Sirenix.OdinInspector;
-
     using UnityEngine;
-
-    using Random = UnityEngine.Random;
 
     /// <inheritdoc cref="ITerrainData" />
     /// <summary>
@@ -53,18 +47,42 @@
             // This is temp
             this.data = new[,]
                             {
-                                { Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, },
-                                { Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
+                                    Tiles.Grass, Tiles.Grass
+                                },
+                                {
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
+                                    Tiles.Grass, Tiles.Grass
+                                }
                             };
 
+            // this.GenerateBoss();
             this.GenerateEnviroment();
-            this.GenerateBoss();
         }
 
         private void GenerateBoss()

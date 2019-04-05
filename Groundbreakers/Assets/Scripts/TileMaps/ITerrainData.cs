@@ -1,14 +1,7 @@
-﻿namespace Assets.Scripts
+﻿namespace TileMaps
 {
     public interface ITerrainData
     {
-        /// <summary>
-        /// This function should be called by GameMap.
-        /// For generators: A new sets of data is generated each time you call this Function.
-        /// For custom Terrains: Should Load the right level from our database.
-        /// </summary>
-        void Initialize();
-
         /// <summary>
         ///     The get tile type at this position.
         /// </summary>
@@ -22,5 +15,12 @@
         ///     The <see cref="Tiles" />. The enumeration that represent the tile's type.
         /// </returns>
         Tiles GetTileTypeAt(float x, float y);
+
+        /// <summary>
+        ///     This function should be called by GameMap.
+        ///     For generators: A new sets of data is generated each time you call this Function.
+        ///     For custom Terrains: Should Load the right level from our database.
+        /// </summary>
+        void Initialize();
     }
 }
