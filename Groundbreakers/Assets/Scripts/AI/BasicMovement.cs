@@ -1,7 +1,5 @@
 ﻿namespace AI
 {
-    using System.Collections.Generic;
-
     using UnityEngine;
 
     public class BasicMovement : MonoBehaviour
@@ -86,7 +84,7 @@
         {
             this.direction = dir;
 
-            // Update animator
+            // Update animator direction
             if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0)
             {
                 this.animator.SetInteger(Direction, 0); // Up

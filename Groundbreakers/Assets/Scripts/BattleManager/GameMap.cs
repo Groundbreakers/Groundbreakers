@@ -35,10 +35,14 @@
 
         private MobSpawner mobSpawner;
 
+        private List<GameObject> mushrooms = new List<GameObject>();
+
+        private Transform[,] tileBlocks = new Transform[TG.Dimension, TG.Dimension];
+
+        #region Inspector Fields
+
         [SerializeField]
         private GameObject mushroom;
-
-        private List<GameObject> mushrooms = new List<GameObject>();
 
         [SerializeField]
         private GameObject plants;
@@ -49,8 +53,6 @@
         [SerializeField]
         private GameObject tileB;
 
-        private Transform[,] tileBlocks = new Transform[TG.Dimension, TG.Dimension];
-
         [SerializeField]
         private GameObject tileC;
 
@@ -59,6 +61,8 @@
 
         [SerializeField]
         private GameObject water;
+
+        #endregion
 
         public Transform GetTileAt(Vector3 position)
         {

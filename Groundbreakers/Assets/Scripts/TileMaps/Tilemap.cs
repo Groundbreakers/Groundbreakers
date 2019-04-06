@@ -3,6 +3,7 @@
     using System;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
 
     [ExecuteInEditMode]
     [RequireComponent(typeof(CustomTerrain))]
@@ -23,6 +24,45 @@
         private GameObject water;
 
         private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
+
+        /// <summary>
+        /// Contains the map data, which is an abstract data type.
+        /// </summary>
+        private TileData mapData;
+
+        #region Public API
+
+        /// <summary>
+        /// Check if the map is passable at position grid.
+        /// </summary>
+        /// <param name="grid">
+        /// The grid vector, the range should be within the bound of the map.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>. True if the position can pass.
+        /// </returns>
+        public bool IsMapPassable(Vector3 grid)
+        {
+            var type = this.mapData.GetTileTypeAt(grid.x, grid.y);
+
+            // temp, currently only water/high ground is not passable.
+            if (type == Tiles.Water)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public GameObject GetTileBlockAt(Vector3 position)
+        {
+            var x = (int)position.x;
+            var y = (int)position.y;
+
+            return this.blocks[x, y].gameObject;
+        }
+
+        #endregion
 
         private void Awake()
         {
