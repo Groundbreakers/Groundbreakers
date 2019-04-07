@@ -64,11 +64,17 @@
         {
             var origin = tile.transform.position;
             var liftHeight = new Vector3(0.0f, 1.0f, 1.0f);
+
             var path = new[] { origin + liftHeight, destination + liftHeight, destination };
+            var durations = new[] { 0.3f, 2.0f, 0.3f };
 
-            var duration = 5.0f;
+            var sequence = DOTween.Sequence();
+            for (var i = 0; i < 3; i++)
+            {
+                sequence.Append(tile.transform.DOLocalMove(path[i], durations[i]).SetEase(Ease.OutBack));
+            }
 
-            tile.transform.DOPath(path, duration).SetEase(Ease.OutBack);
+            sequence.OnComplete(() => Debug.Log("Done"));
         }
 
         #endregion

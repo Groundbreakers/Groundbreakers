@@ -74,6 +74,8 @@
 
         private void Awake()
         {
+            this.mapData = this.GetComponent<TileData>();
+
             // temp
             var sourceData = this.GetComponent<CustomTerrain>();
             sourceData.Initialize();
