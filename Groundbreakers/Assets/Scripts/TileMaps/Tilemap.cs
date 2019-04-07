@@ -151,6 +151,9 @@
 
             // Setting order and parent
             instance.transform.SetParent(this.transform);
+
+            instance.GetComponent<TileStatus>().UpdateTileType(tileType);
+
             return instance;
         }
 
