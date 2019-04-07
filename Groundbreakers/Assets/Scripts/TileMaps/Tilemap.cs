@@ -62,6 +62,14 @@
             return this.blocks[x, y].gameObject;
         }
 
+        public void SetTileBlock(Vector3 position, Transform block)
+        {
+            var x = (int)position.x;
+            var y = (int)position.y;
+
+            this.blocks[x, y] = block;
+        }
+
         #endregion
 
         private void Awake()

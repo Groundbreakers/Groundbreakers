@@ -39,8 +39,12 @@
             var tileA = this.tilemap.GetTileBlockAt(first);
             var tileB = this.tilemap.GetTileBlockAt(second);
 
-            this.StartCoroutine(this.MoveBlockTo(tileA, second));
-            this.StartCoroutine(this.MoveBlockTo(tileB, first));
+            // Resetting the reference
+            this.tilemap.SetTileBlock(first, tileB.transform);
+            this.tilemap.SetTileBlock(second, tileA.transform);
+
+            this.MoveBlockTo(tileA, second);
+            this.MoveBlockTo(tileB, first);
         }
 
         #endregion
@@ -56,14 +60,15 @@
 
         #region Internal Functions
 
-        private IEnumerator MoveBlockTo(GameObject tile, Vector3 destination)
+        private void MoveBlockTo(GameObject tile, Vector3 destination)
         {
-            var duration = 0.35f;
-            var newPos = tile.transform.position + new Vector3(0.0f, 1.0f);
+            var origin = tile.transform.position;
+            var liftHeight = new Vector3(0.0f, 1.0f, 1.0f);
+            var path = new[] { origin + liftHeight, destination + liftHeight, destination };
 
-            tile.transform.DOMove(destination, duration).SetEase(Ease.OutBack);
+            var duration = 5.0f;
 
-            yield return null;
+            tile.transform.DOPath(path, duration).SetEase(Ease.OutBack);
         }
 
         #endregion
