@@ -1,6 +1,8 @@
 ﻿namespace TileMaps
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Sirenix.OdinInspector;
 
@@ -42,6 +44,80 @@
             this.InstantiateTiles(this.mapData);
         }
 
+        private struct TempNode
+        {
+            public Vector3 Pos;
+            public float F;
+            public float G;
+
+            public TempNode(Vector3 pos, float f = 0.0f, float g = 0.0f)
+            {
+                this.Pos = pos;
+                this.F = f;
+                this.G = g;
+            } 
+        }
+
+        /// <summary>
+        /// TODO: Improve Performance and clearness
+        /// </summary>
+        [Button]
+        [InfoBox("Using A* to find the shortest path from Spawn A to Defend A")]
+        public void DebugCalculatePath()
+        {
+            var start = GameObject.Find("Spawn Point A").transform.position;
+            var end = GameObject.Find("Defend Point A").transform.position;
+
+            var open = new List<TempNode> { new TempNode(start) };
+            var closed = new List<TempNode>();
+            var g = 0;
+
+            TempNode current;
+            while (open.Count > 0)
+            {
+                var lowest = open.Min(node => node.F);
+                current = open.First(l => Math.Abs(l.F - lowest) < float.Epsilon);
+
+                closed.Add(current);
+                open.Remove(current);
+
+                // check if is destination
+                if (current.Pos == end)
+                {
+                    break;
+                }
+
+                var x = current.Pos.x;
+                var y = current.Pos.y;
+
+                var proposedLocations = new List<Vector3>
+                                            {
+                                                new Vector3(x + 1, y),
+                                                new Vector3(x - 1, y),
+                                                new Vector3(x, y + 1),
+                                                new Vector3(x, y - 1)
+                                            };
+
+                // performance critical
+                var adjacentTiles = proposedLocations.Where(
+                    pos =>
+                        {
+                            var block = this.GetTileBlockAt(pos);
+                            return block && block.GetComponent<TileStatus>().CanPass();
+                        }).ToList();
+
+                foreach (var tile in adjacentTiles)
+                {
+                    var a = closed.FirstOrDefault(node => node.Pos == tile);
+
+                    var b = open.FirstOrDefault(node => node.Pos == tile);
+
+                }
+            }
+
+            this.GetTileBlockAt(start);
+        }
+
         /// <summary>
         /// Check if the map is passable at position grid.
         /// </summary>
@@ -69,6 +145,11 @@
             var x = (int)position.x;
             var y = (int)position.y;
 
+            return this.GetTileBlockAt(x, y);
+        }
+
+        public GameObject GetTileBlockAt(int x, int y)
+        {
             return this.blocks[x, y].gameObject;
         }
 

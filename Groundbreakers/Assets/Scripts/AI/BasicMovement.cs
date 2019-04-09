@@ -40,14 +40,16 @@
 
         #region Unity callbacks
 
-        private void Awake()
+        private void OnEnable()
         {
             this.animator = this.GetComponent<Animator>();
         }
 
         private void Start()
         {
-            this.target = this.transform.position + new Vector3(1, -1);
+            // this.target = this.transform.position + new Vector3(1, -1);
+            var goal = GameObject.Find("Defend Point A").transform.position;
+            this.MoveStraight(goal - this.transform.position);
         }
 
         private void FixedUpdate()
