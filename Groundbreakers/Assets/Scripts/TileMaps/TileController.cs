@@ -1,5 +1,6 @@
 ﻿namespace TileMaps
 {
+    using System;
     using System.Collections.Generic;
 
     using DG.Tweening;
@@ -7,6 +8,8 @@
     using Sirenix.OdinInspector;
 
     using UnityEngine;
+
+    using Random = UnityEngine.Random;
 
     /// <summary>
     ///     This component provide APIs to modify any tiles: swap, destruct, or construct.
@@ -49,14 +52,6 @@
             this.MoveBlockTo(tileB, first);
         }
 
-        public void SwapSelectedTiles()
-        {
-            var first = this.selected[0];
-            var second = this.selected[1];
-
-            this.SwapTiles(first.transform.position, second.transform.position);
-        }
-
         public void SelectTile(GameObject tile)
         {
             this.selected.Add(tile);
@@ -68,6 +63,7 @@
             }
         }
 
+        [Button]
         public void ClearSelected()
         {
             foreach (var go in this.selected)
@@ -87,9 +83,26 @@
             this.tilemap = this.GetComponent<Tilemap>();
         }
 
+        private void Update()
+        {
+            // temp
+            if (Input.GetMouseButtonDown(1))
+            {
+                this.ClearSelected();
+            }
+        }
+
         #endregion
 
         #region Internal Functions
+
+        private void SwapSelectedTiles()
+        {
+            var first = this.selected[0];
+            var second = this.selected[1];
+
+            this.SwapTiles(first.transform.position, second.transform.position);
+        }
 
         private void MoveBlockTo(GameObject tile, Vector3 destination)
         {

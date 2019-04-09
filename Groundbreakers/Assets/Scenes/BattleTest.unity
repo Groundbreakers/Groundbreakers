@@ -627,7 +627,6 @@ GameObject:
   m_Component:
   - component: {fileID: 120820391}
   - component: {fileID: 120820390}
-  - component: {fileID: 120820389}
   - component: {fileID: 120820388}
   - component: {fileID: 120820392}
   m_Layer: 0
@@ -653,18 +652,6 @@ MonoBehaviour:
   tileB: {fileID: 5890712410309033143, guid: 60370c669cd5e9e47afda8e5c8ba3751, type: 3}
   tileC: {fileID: 3812301382797932396, guid: 32b050950fbf1334b8ba07ee7cc1294a, type: 3}
   water: {fileID: 3992318074888028234, guid: fa3b53a0c3264414da7a04c938569891, type: 3}
---- !u!114 &120820389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120820387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1233b8a90e8123e4287a93e976c8b7e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &120820390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1558,6 +1545,8 @@ Transform:
   m_Children:
   - {fileID: 120820391}
   - {fileID: 1145570824}
+  - {fileID: 1806250428}
+  - {fileID: 1740093744}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4048,6 +4037,7 @@ GameObject:
   m_Component:
   - component: {fileID: 927998141}
   - component: {fileID: 927998142}
+  - component: {fileID: 927998143}
   m_Layer: 0
   m_Name: Spawn Point B
   m_TagString: Respawn
@@ -4117,6 +4107,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &927998143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927998140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1371f06a571ac6944905072608fa5619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 25
+  debugMinion: {fileID: 0}
 --- !u!1 &988687473
 GameObject:
   m_ObjectHideFlags: 0
@@ -4932,6 +4936,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1121164771}
   - component: {fileID: 1121164772}
+  - component: {fileID: 1121164773}
+  - component: {fileID: 1121164774}
   m_Layer: 0
   m_Name: Spawn Point A
   m_TagString: Respawn
@@ -5001,6 +5007,209 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1121164773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121164770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1371f06a571ac6944905072608fa5619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 25
+  debugMinion: {fileID: 6679816888479633086}
+--- !u!114 &1121164774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121164770}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66bde5a4daf4d69a3717fcf11438a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regionAGroup:
+  - title: rats
+    level: 0
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+  - title: mantis
+    level: 0
+    packs:
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: firebats
+    level: 0
+    packs:
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: both
+    level: 1
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: 
+    level: 1
+    packs:
+    - amount: 50
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+  - title: 
+    level: 1
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+--- !u!1 &1130316154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1130316155}
+  - component: {fileID: 1130316156}
+  m_Layer: 0
+  m_Name: Enemy Groups
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1130316155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130316154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1931310454}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1130316156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130316154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66bde5a4daf4d69a3717fcf11438a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regionAGroup:
+  - title: rats
+    level: 0
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+  - title: mantis
+    level: 0
+    packs:
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: firebats
+    level: 0
+    packs:
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: both
+    level: 1
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: 
+    level: 1
+    packs:
+    - amount: 50
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+  - title: 
+    level: 1
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
+  - title: 
+    level: 2
+    packs:
+    - amount: 25
+      prefab: {fileID: 3171230714936546568, guid: 5f7b2ad4804478b4ba44493a68e6cd98,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 2b9f99ca70e554d4a81e80cec0ee035a,
+        type: 3}
+    - amount: 10
+      prefab: {fileID: 3171230714936546568, guid: 1c7d6f17ccf0c0e4cb0e18646f35092d,
+        type: 3}
 --- !u!1 &1145570823
 GameObject:
   m_ObjectHideFlags: 0
@@ -7961,6 +8170,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1740093743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1740093744}
+  m_Layer: 0
+  m_Name: Nevigation Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1740093744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740093743}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 367632177}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1772383866
 GameObject:
   m_ObjectHideFlags: 0
@@ -8401,15 +8640,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806250427}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1967827378}
   - {fileID: 1119421889}
   - {fileID: 1290521137}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 367632177}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1806250429
 MonoBehaviour:
@@ -8997,7 +9236,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1130316155}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

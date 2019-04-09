@@ -5,6 +5,8 @@
 
     using DG.Tweening;
 
+    using Sirenix.OdinInspector;
+
     using TileMaps;
 
     using UnityEngine;
@@ -15,6 +17,7 @@
     /// </summary>
     public class SpawnCharacters : MonoBehaviour
     {
+        [ShowInInspector]
         private List<Transform> availableBlocks = new List<Transform>();
 
         public void Initialize()
@@ -45,8 +48,7 @@
 
         private void StartDeployCharacters()
         {
-            var sequence = DOTween.Sequence();
-
+            // var sequence = DOTween.Sequence();
             foreach (Transform child in this.transform)
             {
                 var tile = this.GetNextTransform();
@@ -55,12 +57,11 @@
 
                 child.SetPositionAndRotation(target + offset, Quaternion.identity);
 
-                child.GetComponent<FollowTile>().AffiliateTile(tile);
-
-                sequence.Join(child.DOMove(target, 4.0f).SetEase(Ease.OutCubic));
+                child.DOMove(target, 4.0f).SetEase(Ease.OutCubic).OnComplete(
+                    () => { child.GetComponent<FollowTile>().AffiliateTile(tile); });
             }
 
-            sequence.OnComplete(() => Debug.Log("Done Deploying"));
+            // sequence.OnComplete(() => Debug.Log("Done Deploying"));
         }
     }
 }
