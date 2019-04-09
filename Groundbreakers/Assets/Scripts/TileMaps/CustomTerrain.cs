@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using System.Collections.Generic;
+
     using UnityEngine;
 
     /// <inheritdoc cref="ITerrainData" />
@@ -12,6 +14,8 @@
 
         [SerializeField]
         private Tiles[,] data = new Tiles[8, 8];
+
+        private List<Vector3> spawnLocations = new List<Vector3>();
 
         private static int Dimension { get; } = 8;
 
@@ -36,6 +40,25 @@
             }
 
             return this.data[(int)x, (int)y];
+        }
+
+        /// <summary>
+        /// Evaluate and return the spawn locations.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        public List<Vector3> GetSpawnLocations()
+        {
+            this.spawnLocations.Clear();
+
+            this.spawnLocations.Add(new Vector3(3, 3));
+            this.spawnLocations.Add(new Vector3(3, 4));
+            this.spawnLocations.Add(new Vector3(4, 3));
+            this.spawnLocations.Add(new Vector3(4, 4));
+            this.spawnLocations.Add(new Vector3(2, 4));
+
+            return this.spawnLocations;
         }
 
         /// <summary>

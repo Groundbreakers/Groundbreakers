@@ -82,7 +82,7 @@
 
         #region Unity Callbacks
 
-        private void Awake()
+        private void OnEnable()
         {
             this.tilemap = this.GetComponent<Tilemap>();
         }

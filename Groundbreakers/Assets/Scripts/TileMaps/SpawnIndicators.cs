@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Sirenix.OdinInspector;
+
     using UnityEngine;
 
     /// <inheritdoc />
@@ -12,9 +14,29 @@
     /// </summary>
     public class SpawnIndicators : MonoBehaviour
     {
+        /// <summary>
+        /// Caching the list of defending points.
+        /// </summary>
         private readonly List<Transform> defendPoints = new List<Transform>();
 
+        /// <summary>
+        /// Caching the list of attacking points (i.e. The enemy spawn points).
+        /// </summary>
         private readonly List<Transform> spawnPoints = new List<Transform>();
+
+        /// <summary>
+        ///     Should be called by the CombatManager's setup script.
+        /// </summary>
+        [Button]
+        public void Initialize()
+        {
+            this.spawnPoints.Clear();
+            this.spawnPoints.Clear();
+
+            this.InitializeIndicators();
+            RearrangeObjects(this.spawnPoints, TileData.Dimension - 1);
+            RearrangeObjects(this.defendPoints, 0);
+        }
 
         /// <summary>
         ///     Re-positioning the list of transforms. Pick one column in the row.
@@ -37,6 +59,9 @@
             }
         }
 
+        /// <summary>
+        /// Preprocess the list of indicators. 
+        /// </summary>
         private void InitializeIndicators()
         {
             var atkNames = new[] { "Spawn Point A", "Spawn Point B" };
@@ -55,16 +80,6 @@
 
                 this.defendPoints.Add(go);
             }
-        }
-
-        private void OnEnable()
-        {
-            this.spawnPoints.Clear();
-            this.spawnPoints.Clear();
-
-            this.InitializeIndicators();
-            RearrangeObjects(this.spawnPoints, TileData.Dimension - 1);
-            RearrangeObjects(this.defendPoints, 0);
         }
     }
 }

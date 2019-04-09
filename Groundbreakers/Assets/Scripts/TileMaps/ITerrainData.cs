@@ -1,5 +1,9 @@
 ﻿namespace TileMaps
 {
+    using System.Collections.Generic;
+
+    using UnityEngine;
+
     public interface ITerrainData
     {
         /// <summary>
@@ -22,5 +26,13 @@
         ///     For custom Terrains: Should Load the right level from our database.
         /// </summary>
         void Initialize();
+
+        /// <summary>
+        /// Evaluate and return the spawn locations.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="List"/>.
+        /// </returns>
+        List<Vector3> GetSpawnLocations();
     }
 }

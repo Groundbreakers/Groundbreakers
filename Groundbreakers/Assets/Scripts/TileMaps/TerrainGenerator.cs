@@ -95,6 +95,11 @@
             return this.data[(int)x, (int)y];
         }
 
+        public List<Vector3> GetSpawnLocations()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc />
         /// <summary>
         ///     This function should be called by GameMap. A new sets of data is generated each time

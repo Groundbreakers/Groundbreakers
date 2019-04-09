@@ -2,12 +2,12 @@
 {
     using System;
 
+    using Sirenix.OdinInspector;
+
     using UnityEngine;
-    using UnityEngine.Assertions;
 
     [ExecuteInEditMode]
     [RequireComponent(typeof(CustomTerrain))]
-    [RequireComponent(typeof(TileData))]
     public class Tilemap : MonoBehaviour
     {
         // below are all temp
@@ -25,12 +25,22 @@
 
         private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
 
-        /// <summary>
-        /// Contains the map data, which is an abstract data type.
-        /// </summary>
-        private TileData mapData;
+        private ITerrainData mapData;
 
         #region Public API
+
+        /// <summary>
+        /// The setup map.
+        /// </summary>
+        [Button]
+        public void SetupMap()
+        {
+            this.mapData = this.GetComponent<CustomTerrain>();
+            this.mapData.Initialize();
+
+            this.ClearAllTiles();
+            this.InstantiateTiles(this.mapData);
+        }
 
         /// <summary>
         /// Check if the map is passable at position grid.
@@ -71,18 +81,6 @@
         }
 
         #endregion
-
-        private void Awake()
-        {
-            this.mapData = this.GetComponent<TileData>();
-
-            // temp
-            var sourceData = this.GetComponent<CustomTerrain>();
-            sourceData.Initialize();
-
-            this.ClearAllTiles();
-            this.InstantiateTiles(sourceData);
-        }
 
         private void ClearAllTiles()
         {
