@@ -5,6 +5,7 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     ///     A behavior class that should be attached to the "Indicators" Prefab Only. Randomly
     ///     rearrange indicators when created.
