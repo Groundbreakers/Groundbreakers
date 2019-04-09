@@ -1,28 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Enemy_Death : MonoBehaviour
 {
     public Animator anim;
-    public GameObject loot;
+    private lootDrop lootDrop;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        lootDrop = GameObject.Find("loot").GetComponent<lootDrop>();
     }
 
     public void setDirection(int i)
     {
         anim.SetInteger("Direction", i);
-        dropLoot();
+        lootDrop.createLoot();
     }
 
-    // drop loot when an enemy is killed
-    public void dropLoot() {
+ 
 
-        GameObject temp = Instantiate(loot, transform.position, transform.rotation);
-         if(temp != null) Debug.Log("yes");
-         else Debug.Log("no");
-    }
+   
 }
