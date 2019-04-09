@@ -27,6 +27,11 @@
             return this.canDeploy && !this.IsMoving;
         }
 
+        public bool CanPass()
+        {
+            return this.canDeploy && !this.IsMoving;
+        }
+
         /// <summary>
         /// This function is called when instantiate or on tile type has been changed. Should
         /// update the status such as if can deploy.

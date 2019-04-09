@@ -16,8 +16,6 @@
 
         private bool hovered;
 
-        private bool needRefresh;
-
         private void OnEnable()
         {
             var tilemap = GameObject.Find("Tilemap");
@@ -32,32 +30,23 @@
         private void OnMouseOver()
         {
             this.hovered = true;
-            this.needRefresh = true;
         }
 
         private void OnMouseExit()
         {
             this.hovered = false;
-            this.needRefresh = true;
         }
 
         private void OnMouseUpAsButton()
         {
             this.status.IsSelected = true;
-            this.needRefresh = true;
 
             this.controller.SelectTile(this.gameObject);
         }
 
         private void Update()
         {
-            if (!this.needRefresh)
-            {
-                return;
-            }
-
-            this.needRefresh = false;
-
+            // Performance critical
             if (this.hovered || this.status.IsSelected)
             {
                 this.SetAlpha(0.5f);
