@@ -25,7 +25,9 @@
 
         private NavigationMap navigation;
 
-        private IEnumerable<List<Vector3>> paths;
+        // TODO: FIX THIS
+        public List<Vector3> pathA;
+        public List<Vector3> pathB;
 
         private void OnEnable()
         {
@@ -38,16 +40,20 @@
             this.indicators.Initialize();
             this.characters.Initialize();
 
+            var tmp = new List<List<Vector3>>();
             foreach (var (spawn, end) in this.indicators.GetPairs())
             {
                 var path = this.navigation.Search(spawn.position, end.position);
-
+                tmp.Add(path.ToList());
                 foreach (var pos in path)
                 {
                     var block = this.tilemap.GetTileBlockAt(pos);
                     block.GetComponent<SpriteRenderer>().color = Color.red;
                 }
             }
+
+            this.pathA = tmp[0];
+            this.pathB = tmp[1];
         }
     }
 }

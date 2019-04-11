@@ -2,7 +2,10 @@
 {
     using System.Collections;
 
+    using Assets.Enemies.Scripts;
     using Assets.Scripts;
+
+    using CombatManager;
 
     using Sirenix.OdinInspector;
 
@@ -18,6 +21,9 @@
         private float duration = 25.0f;
 
         private EnemyGroups pack;
+
+        [SerializeField]
+        private bool A; //temp
 
         [Button]
         public void ShouldSpawnWave()
@@ -53,9 +59,10 @@
             var startingPoint = this.transform.position;
             var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
-            // Set enemies path, ~Heritage from Austin
-            // instance.GetComponent<Enemy_Generic>().waypointList = path;
-            // instance.transform.SetParent(this.transform);
+            // TODO: FIX THIS
+            var path = GameObject.Find("Battle Field").GetComponent<SetupBattleField>();
+            instance.GetComponent<Enemy_Generic>().waypointList = this.A ? path.pathA : path.pathB;
+            instance.transform.SetParent(this.transform);
         }
 
         private void OnEnable()
