@@ -12,27 +12,47 @@
     {
         private const int Dimension = 8;
 
-        private Tilemap tilemap;
-
         private Node[,] map = new Node[Dimension, Dimension];
 
+        private Tilemap tilemap;
+
         [Button]
-        public void Search()
+        public void DebugSearch()
+        {
+            var finalPath = this.Search(new Vector3(0, 0), new Vector3(7, 7));
+
+            foreach (var pos in finalPath)
+            {
+                var block = this.tilemap.GetTileBlockAt(pos);
+                block.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+        }
+
+        /// <summary>
+        /// The main A star search algorithm API.
+        /// </summary>
+        /// <param name="start">
+        /// The starting point.
+        /// </param>
+        /// <param name="end">
+        /// The ending(goal) point.
+        /// </param>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
+        [InfoBox("Perform an A star algorithm")]
+        public IEnumerable<Vector3> Search(Vector3 start, Vector3 end)
         {
             this.InitializeMap();
-
-            var start = new Vector3(0, 0);
-            var end = new Vector3(7, 7);
 
             var open = new List<Node>();
             var closed = new List<Node>();
 
             open.Add(this.GetNodeAt(start));
 
-            var current = open[0];
             while (open.Count > 0)
             {
-                current = open[0];
+                var current = open[0];
 
                 for (var i = 1; i < open.Count; i++)
                 {
@@ -48,7 +68,7 @@
 
                 if (current.Pos == end)
                 {
-                    break;
+                    return this.ConstructFinalPath(current, start);
                 }
 
                 var adjacentPos = GetAdjacentPos(current);
@@ -56,7 +76,7 @@
                 foreach (var pos in adjacentPos)
                 {
                     var node = this.GetNodeAt(pos);
-                    if (!node.CanPass) 
+                    if (!node.CanPass)
                     {
                         // temp solution
                         continue;
@@ -86,13 +106,7 @@
                 }
             }
 
-            var finalPath = this.ConstructFinalPath(current, start);
-
-            foreach (var pos in finalPath)
-            {
-                var block = this.tilemap.GetTileBlockAt(pos);
-                block.GetComponent<SpriteRenderer>().color = Color.red;
-            }
+            return new List<Vector3>();
         }
 
         private static IEnumerable<Vector3> GetAdjacentPos(Node node)
@@ -112,17 +126,17 @@
         }
 
         /// <summary>
-        /// Here defines the Heuristic function. Originally I was using Manhattan Distance 
-        /// (i.e. Math.Abs(pos.x - goal.x) + Math.Abs(pos.y - goal.y);).
+        ///     Here defines the Heuristic function. Originally I was using Manhattan Distance
+        ///     (i.e. Math.Abs(pos.x - goal.x) + Math.Abs(pos.y - goal.y);).
         /// </summary>
         /// <param name="pos">
-        /// The current position.
+        ///     The current position.
         /// </param>
         /// <param name="goal">
-        /// The end position.
+        ///     The end position.
         /// </param>
         /// <returns>
-        /// The <see cref="float"/> euclidean distance from pos to goal.
+        ///     The <see cref="float" /> euclidean distance from pos to goal.
         /// </returns>
         private static float GetHeuristic(Vector3 pos, Vector3 goal)
         {
@@ -135,21 +149,6 @@
             var y = position.y;
 
             return !(x < 0 || x >= Dimension || y < 0 || y >= Dimension);
-
-        }
-
-        private void InitializeMap()
-        {
-            for (var i = 0; i < Dimension; i++)
-            {
-                for (var j = 0; j < Dimension; j++)
-                {
-                    this.map[i, j] = new Node(i, j);
-
-                    var status = this.tilemap.GetTileStatusAt(i, j);
-                    this.map[i, j].CanPass = status.CanPass();
-                }
-            }
         }
 
         private IEnumerable<Vector3> ConstructFinalPath(Node current, Vector3 startPoint)
@@ -168,11 +167,6 @@
             return finalPath;
         }
 
-        private void OnEnable()
-        {
-            this.tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
-        }
-
         private Node GetNodeAt(Vector3 pos)
         {
             var x = (int)pos.x;
@@ -181,18 +175,37 @@
             return this.map[x, y];
         }
 
+        private void InitializeMap()
+        {
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                    this.map[i, j] = new Node(i, j);
+
+                    var status = this.tilemap.GetTileStatusAt(i, j);
+                    this.map[i, j].CanPass = status.CanPass();
+                }
+            }
+        }
+
+        private void OnEnable()
+        {
+            this.tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+        }
+
         /// <summary>
-        /// Internal Node class that holds f and g values.
+        ///     Internal Node class that holds f and g values.
         /// </summary>
         private class Node : IComparable<Node>
         {
+            public bool CanPass;
+
             public float F;
 
             public float G;
 
             public Node Parent;
-
-            public bool CanPass;
 
             public Vector3 Pos;
 
@@ -204,11 +217,6 @@
             public int CompareTo(Node other)
             {
                 return this.F.CompareTo(other.F);
-            }
-
-            public override string ToString()
-            {
-                return $"{this.Pos}: {this.F}\n";
             }
         }
     }

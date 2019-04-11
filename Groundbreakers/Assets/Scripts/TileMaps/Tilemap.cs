@@ -1,8 +1,6 @@
 ﻿namespace TileMaps
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     using Sirenix.OdinInspector;
 
@@ -12,6 +10,12 @@
     [RequireComponent(typeof(CustomTerrain))]
     public class Tilemap : MonoBehaviour
     {
+        private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
+
+        private TileStatus[,] cachedStatus = new TileStatus[TileData.Dimension, TileData.Dimension];
+
+        private ITerrainData mapData;
+
         // below are all temp
         [SerializeField]
         private GameObject tileA;
@@ -24,63 +28,6 @@
 
         [SerializeField]
         private GameObject water;
-
-        private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
-
-        private TileStatus[,] cachedStatus = new TileStatus[TileData.Dimension, TileData.Dimension];
-
-        private ITerrainData mapData;
-
-        #region Public API
-
-        /// <summary>
-        /// The setup map.
-        /// </summary>
-        [Button]
-        public void SetupMap()
-        {
-            this.mapData = this.GetComponent<CustomTerrain>();
-            this.mapData.Initialize();
-
-            this.ClearAllTiles();
-            this.InstantiateTiles(this.mapData);
-        }
-
-        private struct TempNode
-        {
-            public Vector3 Pos;
-            public float F;
-            public float G;
-
-            public TempNode(Vector3 pos, float f = 0.0f, float g = 0.0f)
-            {
-                this.Pos = pos;
-                this.F = f;
-                this.G = g;
-            }
-        }
-
-        /// <summary>
-        /// Check if the map is passable at position grid.
-        /// </summary>
-        /// <param name="grid">
-        /// The grid vector, the range should be within the bound of the map.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>. True if the position can pass.
-        /// </returns>
-        public bool IsMapPassable(Vector3 grid)
-        {
-            var type = this.mapData.GetTileTypeAt(grid.x, grid.y);
-
-            // temp, currently only water/high ground is not passable.
-            if (type == Tiles.Water)
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         public GameObject GetTileBlockAt(Vector3 position)
         {
@@ -103,6 +50,18 @@
             return this.GetTileStatusAt(x, y);
         }
 
+        /// <summary>
+        /// Get the cached tile status at position x, y.
+        /// </summary>
+        /// <param name="x">
+        /// The x.
+        /// </param>
+        /// <param name="y">
+        /// The y.
+        /// </param>
+        /// <returns>
+        /// The <see cref="TileStatus"/>.
+        /// </returns>
         public TileStatus GetTileStatusAt(int x, int y)
         {
             return this.cachedStatus[x, y];
@@ -117,7 +76,18 @@
             this.cachedStatus[x, y] = block.GetComponent<TileStatus>();
         }
 
-        #endregion
+        /// <summary>
+        ///     The setup map.
+        /// </summary>
+        [Button]
+        public void SetupMap()
+        {
+            this.mapData = this.GetComponent<CustomTerrain>();
+            this.mapData.Initialize();
+
+            this.ClearAllTiles();
+            this.InstantiateTiles(this.mapData);
+        }
 
         private void ClearAllTiles()
         {
@@ -127,11 +97,11 @@
             {
                 if (Application.isEditor)
                 {
-                    GameObject.DestroyImmediate(go);
+                    DestroyImmediate(go);
                 }
                 else
                 {
-                    GameObject.Destroy(go);
+                    Destroy(go);
                 }
             }
         }
@@ -179,10 +149,7 @@
             }
 
             // Finally Instantiate it.
-            var instance = Instantiate(
-                tile, 
-                new Vector3(x, y, 0.0f), 
-                Quaternion.identity);
+            var instance = Instantiate(tile, new Vector3(x, y, 0.0f), Quaternion.identity);
 
             // Setting order and parent
             instance.transform.SetParent(this.transform);
