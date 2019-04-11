@@ -11,11 +11,11 @@
     public class Spanwer : MonoBehaviour
     {
         [SerializeField]
-        [Range(10.0f, 25.0f)]
-        private float duration = 25.0f;
+        private GameObject debugMinion;
 
         [SerializeField]
-        private GameObject debugMinion;
+        [Range(10.0f, 25.0f)]
+        private float duration = 25.0f;
 
         private EnemyGroups pack;
 
@@ -48,12 +48,6 @@
             }
         }
 
-        private void OnEnable()
-        {
-            var db = GameObject.Find("Enemy Groups");
-            this.pack = db.GetComponent<EnemyGroups>();
-        }
-
         private void InstantiateEnemyAtSpawnPoint(GameObject minion)
         {
             var startingPoint = this.transform.position;
@@ -62,6 +56,12 @@
             // Set enemies path, ~Heritage from Austin
             // instance.GetComponent<Enemy_Generic>().waypointList = path;
             // instance.transform.SetParent(this.transform);
+        }
+
+        private void OnEnable()
+        {
+            var db = GameObject.Find("Enemy Groups");
+            this.pack = db.GetComponent<EnemyGroups>();
         }
 
         private bool PathExists()

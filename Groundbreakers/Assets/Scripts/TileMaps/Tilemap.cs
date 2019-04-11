@@ -27,6 +27,8 @@
 
         private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
 
+        private TileStatus[,] cachedStatus = new TileStatus[TileData.Dimension, TileData.Dimension];
+
         private ITerrainData mapData;
 
         #region Public API
@@ -55,7 +57,7 @@
                 this.Pos = pos;
                 this.F = f;
                 this.G = g;
-            } 
+            }
         }
 
         /// <summary>
@@ -75,15 +77,18 @@
             TempNode current;
             while (open.Count > 0)
             {
+                // should be replaced with a ordered structure
                 var lowest = open.Min(node => node.F);
                 current = open.First(l => Math.Abs(l.F - lowest) < float.Epsilon);
 
+                // pop
                 closed.Add(current);
                 open.Remove(current);
 
                 // check if is destination
                 if (current.Pos == end)
                 {
+                    Debug.Log("Bingo");
                     break;
                 }
 
@@ -92,30 +97,38 @@
 
                 var proposedLocations = new List<Vector3>
                                             {
-                                                new Vector3(x + 1, y),
-                                                new Vector3(x - 1, y),
-                                                new Vector3(x, y + 1),
-                                                new Vector3(x, y - 1)
+                                                new Vector3(x + 1.0f, y),
+                                                new Vector3(x - 1.0f, y),
+                                                new Vector3(x, y + 1.0f),
+                                                new Vector3(x, y - 1.0f)
                                             };
 
                 // performance critical
                 var adjacentTiles = proposedLocations.Where(
-                    pos =>
-                        {
-                            var block = this.GetTileBlockAt(pos);
-                            return block && block.GetComponent<TileStatus>().CanPass();
-                        }).ToList();
+                    pos => this.IsValid(pos) && this.GetTileStatusAt(pos).CanPass()).ToList();
 
-                foreach (var tile in adjacentTiles)
+                foreach (var pos in adjacentTiles)
                 {
-                    var a = closed.FirstOrDefault(node => node.Pos == tile);
+                    this.GetTileBlockAt(pos).GetComponent<SpriteRenderer>().color = Color.red;
 
-                    var b = open.FirstOrDefault(node => node.Pos == tile);
+                    if (!closed.Exists(node => node.Pos == pos))
+                    {
+                        if (!open.Exists(node => node.Pos == pos))
+                        {
+                        }
+                    }
+
 
                 }
             }
+        }
 
-            this.GetTileBlockAt(start);
+        public bool IsValid(Vector3 position)
+        {
+            var x = position.x;
+            var y = position.y;
+
+            return !(x < 0 || x >= TileData.Dimension || y < 0 || y >= TileData.Dimension);
         }
 
         /// <summary>
@@ -153,12 +166,26 @@
             return this.blocks[x, y].gameObject;
         }
 
+        public TileStatus GetTileStatusAt(Vector3 position)
+        {
+            var x = (int)position.x;
+            var y = (int)position.y;
+
+            return this.GetTileStatusAt(x, y);
+        }
+
+        public TileStatus GetTileStatusAt(int x, int y)
+        {
+            return this.cachedStatus[x, y];
+        }
+
         public void SetTileBlock(Vector3 position, Transform block)
         {
             var x = (int)position.x;
             var y = (int)position.y;
 
             this.blocks[x, y] = block;
+            this.cachedStatus[x, y] = block.GetComponent<TileStatus>();
         }
 
         #endregion
@@ -255,6 +282,7 @@
                     var instance = this.InstantiateTileAt(tileType, x, y);
 
                     this.blocks[x, y] = instance.transform;
+                    this.cachedStatus[x, y] = instance.GetComponent<TileStatus>();
                 }
             }
         }
