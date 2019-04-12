@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1142201546134549502}
   m_Layer: 8
   m_Name: loot
-  m_TagString: zz
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1761005447
-  m_SortingLayer: 4
+  m_SortingLayerID: 2099931279
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.10234957, g: 0.8679245, b: 0.7667354, a: 1}
@@ -119,3 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf82f6d75f46cda428a84723ae3ad133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootValue: 10000
