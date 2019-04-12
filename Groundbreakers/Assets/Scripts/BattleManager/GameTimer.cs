@@ -1,6 +1,9 @@
 ﻿namespace Assets.Scripts
 {
     using System.Collections;
+
+    using Sirenix.OdinInspector;
+
     using UnityEngine;
 
     /// <summary>
@@ -44,6 +47,7 @@
         /// <summary>
         /// Should be called by Battle manager when battle start.
         /// </summary>
+        [Button]
         public void StartLevel()
         {
             this.StartCoroutine(this.StartLevelTimer());
@@ -52,6 +56,7 @@
         /// <summary>
         /// Should be called by Battle manager when battle end.
         /// </summary>
+        [Button]
         public void ResetTimer()
         {
             this.currentWave = 0;
