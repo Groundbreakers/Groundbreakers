@@ -45,7 +45,7 @@ public class characterAttack : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        this.rangedWeapon = this.transform.GetChild(1).gameObject; // should check error
+        this.rangedWeapon = this.transform.Find("RangedWeapon").gameObject; // should check error
     }
 
     void Awake()

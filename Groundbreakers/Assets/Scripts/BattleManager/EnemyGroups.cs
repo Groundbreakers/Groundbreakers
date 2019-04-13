@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Assets.Scripts;
-
     using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
@@ -122,7 +120,8 @@
         public void ResetPack()
         {
             // Fast and dirty way to do
-            var level = GameObject.Find("LevelManager").GetComponent<LevelManager>().GetDifficulty();
+            // var level = GameObject.Find("LevelManager").GetComponent<LevelManager>().GetDifficulty();
+            var level = Difficulty.Easy;
 
             this.bufferA.Clear();
             this.bufferB.Clear();
@@ -164,7 +163,7 @@
         /// <returns>
         /// The <see cref="List"/>.
         /// </returns>
-        private static List<GameObject> PickRandomPack(Group[] region, Difficulty level)
+        private static List<GameObject> PickRandomPack(IEnumerable<Group> region, Difficulty level)
         {
             // Pick a random pack, but has to be in the same level
             var bundle = region.Where(group => group.level == level).ToArray();
@@ -177,7 +176,7 @@
             var packs = bundle[rng.Next(bundle.Length)].packs;
 
             // Construct an buffer based on the selected buffer
-            List<GameObject> result = new List<GameObject>();
+            var result = new List<GameObject>();
             foreach (var pack in packs)
             {
                 for (var i = 0; i < pack.amount; i++)

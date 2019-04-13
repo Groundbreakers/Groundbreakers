@@ -4,10 +4,11 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     /// An external Damage Handler, Please refer to the 'Public APIs' regions to detailed usage.
     /// </summary>
-    public class DamageHandler: MonoBehaviour
+    public class DamageHandler : MonoBehaviour
     {
         #region Internal Fields
 
@@ -34,6 +35,7 @@
 
             // Temp, do a quick test mob or boss?
             var enemyGeneric = other.GetComponent<Enemy_Generic>();
+            var boos = other.GetComponent<CetusScript>();
 
             if (enemyGeneric)
             {
@@ -41,10 +43,14 @@
                 enemyGeneric.DamageEnemy(
                     damage.Pow, damage.Amp, 1.0f, isMelee, false);
             }
-            else
+            else if (boos)
             {
                 // Boss
-                other.GetComponent<CetusScript>().DamageCetus(damage.Pow);
+                boos.DamageCetus(damage.Pow);
+            }
+            else
+            {
+                // Do nothing
             }
         }
 
