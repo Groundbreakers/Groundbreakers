@@ -41,8 +41,14 @@
             this.characters.Initialize();
 
             var tmp = new List<List<Vector3>>();
-            foreach (var (spawn, end) in this.indicators.GetPairs())
+
+            foreach (var (spawn, _) in this.indicators.GetPairs())
             {
+                // find nearest end point
+                var targets = this.indicators.GetDefendPoints();
+                var end = targets.OrderBy(pos => Vector3.Distance(spawn.position, pos.position)).First();
+
+                // Temp
                 var path = this.navigation.Search(spawn.position, end.position);
                 tmp.Add(path.ToList());
                 foreach (var pos in path)

@@ -4,6 +4,10 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
+    /// <summary>
+    ///     Make the GameObject position copy of the specific tile.
+    /// </summary>
     public class FollowTile : MonoBehaviour
     {
         [ShowInInspector]

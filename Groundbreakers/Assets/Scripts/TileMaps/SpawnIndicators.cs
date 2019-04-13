@@ -44,6 +44,11 @@
             return this.spawnPoints.Zip(this.defendPoints, Tuple.Create);
         }
 
+        public IEnumerable<Transform> GetDefendPoints()
+        {
+            return this.defendPoints;
+        }
+
         /// <summary>
         ///     Should be called by the CombatManager's setup script.
         /// </summary>
