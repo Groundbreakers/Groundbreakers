@@ -15414,7 +15414,7 @@ RectTransform:
   m_GameObject: {fileID: 5623790535995462809}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.04897972, y: 0.04897972, z: 0.04897972}
   m_Children:
   - {fileID: 5623790536386699595}
   - {fileID: 5623790536706326661}
@@ -16426,8 +16426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0299909c412250946acfdac2b8165ee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 5623790536266909355}
-  ui: {fileID: 7648955762943712636}
   hpFrames:
   - {fileID: 21300000, guid: f72d1e58f3251f34594c9358cc250193, type: 3}
   - {fileID: 21300002, guid: f72d1e58f3251f34594c9358cc250193, type: 3}
@@ -16450,6 +16448,8 @@ MonoBehaviour:
   - {fileID: 21300036, guid: f72d1e58f3251f34594c9358cc250193, type: 3}
   - {fileID: 21300038, guid: f72d1e58f3251f34594c9358cc250193, type: 3}
   - {fileID: 21300040, guid: f72d1e58f3251f34594c9358cc250193, type: 3}
+  image: {fileID: 5623790536266909355}
+  ui: {fileID: 7648955762943712636}
 --- !u!1 &5623790536272369623
 GameObject:
   m_ObjectHideFlags: 0

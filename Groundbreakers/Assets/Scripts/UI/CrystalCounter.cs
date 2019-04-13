@@ -18,6 +18,7 @@ public class CrystalCounter : MonoBehaviour
     void Update()
     {
         this.crystalCounter.text = this.crystals.ToString();
+        
     }
 
     public int GetCrystals()

@@ -11,7 +11,7 @@ public class HP : MonoBehaviour
 
     public GameObject ui;
 
-    private int healthPoint = 20;
+    public int healthPoint = 20;
 
     public void UpdateHealth(int amount)
     {
