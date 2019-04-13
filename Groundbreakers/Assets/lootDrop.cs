@@ -51,11 +51,11 @@ public class lootDrop : MonoBehaviour
     /// </summary>
     private void OnMouseClick() {
         int layerMask = (LayerMask.GetMask("loot"));
-        
+      
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mousePos =
-                Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 45));
+            Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+            Vector3 mousePos = GetWorldPositionOnPlane(mouseScreenPos, Input.mousePosition.z);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero, 0f, layerMask);
 
@@ -65,6 +65,19 @@ public class lootDrop : MonoBehaviour
                 this.CrystalCounter.SetCrystals(this.lootValue);
             }
         }
+    }
+
+    /// <summary>
+    /// Convert screen position to world position (perspective main camera)
+    /// </summary>
+
+    private Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+        float distance;
+        xy.Raycast(ray, out distance);
+        return ray.GetPoint(distance);
     }
 
     // Start is called before the first frame update
@@ -83,4 +96,5 @@ public class lootDrop : MonoBehaviour
         this.dropLoot();
         this.freeLoot();
     }
+    
 }
