@@ -10,25 +10,31 @@
     using TileMaps;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
 
     /// <inheritdoc />
     /// <summary>
     ///     Should attached to "Player Party" game object.
+    ///     Call "Initialize" method to spawn all characters on to the map.
     /// </summary>
     public class SpawnCharacters : MonoBehaviour
     {
         [ShowInInspector]
         private List<Transform> availableBlocks = new List<Transform>();
 
+        /// <summary>
+        ///     Ask available character spawn slots, then deploy characters.
+        /// </summary>
         public void Initialize()
         {
             var tilemap = GameObject.Find("Tilemap");
+
+            Assert.IsNotNull(tilemap, "Need to have a Tilemap GameObject active in the scene.");
+
             var map = tilemap.GetComponent<CustomTerrain>();
-
-            var slots = map.GetSpawnLocations();
-
             var tm = tilemap.GetComponent<Tilemap>();
 
+            var slots = map.GetSpawnLocations();
             this.availableBlocks = slots.Select(x => tm.GetTileBlockAt(x).transform).ToList();
 
             this.StartDeployCharacters();
@@ -48,7 +54,7 @@
 
         private void StartDeployCharacters()
         {
-            // var sequence = DOTween.Sequence();
+            var sequence = DOTween.Sequence();
             foreach (Transform child in this.transform)
             {
                 var tile = this.GetNextTransform();
@@ -57,11 +63,13 @@
 
                 child.SetPositionAndRotation(target + offset, Quaternion.identity);
 
-                child.DOMove(target, 4.0f).SetEase(Ease.OutCubic).OnComplete(
+                var tween = child.DOMove(target, 4.0f).SetEase(Ease.OutCubic).OnComplete(
                     () => { child.GetComponent<FollowTile>().AffiliateTile(tile); });
+
+                sequence.Join(tween);
             }
 
-            // sequence.OnComplete(() => Debug.Log("Done Deploying"));
+            sequence.OnComplete(() => Debug.Log("Done Deploying"));
         }
     }
 }

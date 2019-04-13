@@ -17,6 +17,7 @@
         private Tilemap tilemap;
 
         [Button]
+        [InfoBox("Perform an A star algorithm")]
         public void DebugSearch()
         {
             var finalPath = this.Search(new Vector3(0, 0), new Vector3(7, 7));
@@ -40,7 +41,6 @@
         /// <returns>
         /// The <see cref="IEnumerable"/>.
         /// </returns>
-        [InfoBox("Perform an A star algorithm")]
         public IEnumerable<Vector3> Search(Vector3 start, Vector3 end)
         {
             this.InitializeMap();

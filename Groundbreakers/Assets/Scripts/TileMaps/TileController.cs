@@ -1,9 +1,10 @@
 ﻿namespace TileMaps
 {
-    using System;
     using System.Collections.Generic;
 
     using DG.Tweening;
+
+    using Enemies;
 
     using Sirenix.OdinInspector;
 
@@ -19,6 +20,11 @@
         private Tilemap tilemap;
 
         private List<GameObject> selected = new List<GameObject>();
+
+        /// <summary>
+        /// Busy if any tile is currently moving (because of swapping)
+        /// </summary>
+        private bool busy;
 
         #region Public APIs
 
@@ -41,6 +47,14 @@
 
         public void SwapTiles(Vector3 first, Vector3 second)
         {
+            if (this.busy)
+            {
+                return;
+            }
+
+            FreezeMotion.FreezeAll();
+            this.busy = true;
+
             var tileA = this.tilemap.GetTileBlockAt(first);
             var tileB = this.tilemap.GetTileBlockAt(second);
 
@@ -124,7 +138,13 @@
                 sequence.Append(tile.transform.DOLocalMove(path[i], durations[i]).SetEase(Ease.OutBack));
             }
 
-            sequence.OnComplete(() => tileStatus.IsMoving = false);
+            sequence.OnComplete(
+                () =>
+                    {
+                        tileStatus.IsMoving = false;
+                        this.busy = false;
+                        FreezeMotion.ResumeAll();
+                    });
         }
 
         #endregion
