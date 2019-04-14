@@ -3772,25 +3772,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fb14a2bb4791934bb6b635d45b7653e, type: 3}
---- !u!1 &567878813 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6251953317771056990, guid: c1ae0ce6f501a784593b8ea84a99fbf9,
-    type: 3}
-  m_PrefabInstance: {fileID: 6251953318888414290}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &567878814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567878813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 507558e62abab9f4ca5a14ed5c445335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lootValue: 0
 --- !u!1001 &772711477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4319,7 +4300,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 20
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
