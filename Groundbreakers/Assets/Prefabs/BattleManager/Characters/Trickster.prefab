@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: -798880211
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4eff904fdf6651c4aa93d3514d25724b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 347187518f18c744699ed8aef4aade90, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 0.17, y: 0.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -146,6 +146,7 @@ MonoBehaviour:
   swiftness: 0
   juggling: 0
   exit: 0
+  disabled: 0
 --- !u!114 &5170317579557245721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d89003f72b5d8d4b87eb9612a992065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemy: 0
+  isStunned: 0
+  isBlinded: 0
+  isPlagued: 0
+  isInterfered: 0
+  isShackled: 0
 --- !u!114 &7361350732008019827
 MonoBehaviour:
   m_ObjectHideFlags: 0

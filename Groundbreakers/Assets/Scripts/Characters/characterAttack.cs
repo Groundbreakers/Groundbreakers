@@ -80,38 +80,108 @@ public class characterAttack : MonoBehaviour
             //check if it's pointing right
             if (!trickster.disabled && !isStunned)
             {
-                if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
+                if ((angle <= 360 && angle >= 337.5) || (angle >= 0 && angle < 22.5))
                 {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", false);
                     animator.SetBool("FacingRight", true);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", false);
                     animator.SetBool("FacingLeft", false);
                     animator.SetBool("FacingUp", false);
                     animator.SetBool("FacingDown", false);
+                   
                     firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
                 }
-                else if (angle >= 45 && angle < 135) //check if it's pointing up
+                else if ((angle >= 22.5 && angle <= 67.5))//check if it's upper right
                 {
+                    animator.SetBool("FacingUpperRight", true);
+                    animator.SetBool("FacingLowerRight", false);
                     animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", false);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", false);
+
+                    firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                }
+                else if ((angle < 337.5 && angle >= 292.5)) //LowerRight
+                {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", true);
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", false);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", false);
+
+                    firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                }
+                else if (angle > 67.5 && angle < 112.5) //check if it's pointing up
+                {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", false);
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", false);
                     animator.SetBool("FacingLeft", false);
                     animator.SetBool("FacingUp", true);
                     animator.SetBool("FacingDown", false);
                     firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + .6f, gameObject.transform.position.z);
                 }
-                else if (angle >= 135 && angle < 225) //check if it's pointing left
+                else if (angle >= 157.5 && angle < 202.5) //check if it's pointing left
                 {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", false);
                     animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", false);
                     animator.SetBool("FacingLeft", true);
                     animator.SetBool("FacingUp", false);
                     animator.SetBool("FacingDown", false);
                     firePoint = new Vector3(gameObject.transform.position.x - .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
                 }
-                else if (angle >= 225 && angle < 315) //check if it's pointing down
+                else if ((angle >= 112.5 && angle < 157.5))//check if it's upper Left
                 {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", false);
                     animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", true);
+                    animator.SetBool("FacingLowerLeft", false);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", false);
+
+                    firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                }
+                else if ((angle >= 202.5 && angle < 247.5)) //LowerLeft
+                {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", false);
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", true);
+                    animator.SetBool("FacingLeft", false);
+                    animator.SetBool("FacingUp", false);
+                    animator.SetBool("FacingDown", false);
+
+                    firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                }
+                else if (angle >= 247.5 && angle < 292.5) //check if it's pointing down
+                {
+                    animator.SetBool("FacingUpperRight", false);
+                    animator.SetBool("FacingLowerRight", false);
+                    animator.SetBool("FacingRight", false);
+                    animator.SetBool("FacingUpperLeft", false);
+                    animator.SetBool("FacingLowerLeft", false);
                     animator.SetBool("FacingLeft", false);
                     animator.SetBool("FacingUp", false);
                     animator.SetBool("FacingDown", true);
                     firePoint = new Vector3(gameObject.transform.position.x - .05f, gameObject.transform.position.y - .05f, gameObject.transform.position.z);
                 }
+
                 //Debug.Log(angle);
             }
 

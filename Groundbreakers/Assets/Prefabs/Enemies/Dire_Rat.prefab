@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -798880211
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 83e77c3c43e6cd8448ab843e496a4ed5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ec3c8dad13b4e441a05a5f4a54b4b42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -141,11 +141,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.015, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.53333336, y: 0.53333336}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -186,11 +186,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HealthBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
@@ -250,12 +245,12 @@ PrefabInstance:
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.018
       objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.5
+      value: 0.437
       objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
@@ -296,16 +291,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140265078471180, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140264307637139, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4, type: 3}
