@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 4499857591035348143}
   - component: {fileID: 4820504546433748512}
   - component: {fileID: 4534209215401832226}
-  - component: {fileID: 5696700488450478276}
   m_Layer: 0
   m_Name: Fire_Bat
   m_TagString: Enemy
@@ -204,19 +203,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &5696700488450478276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3171230714936546568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1e683f9ff2670c4c88ac5b3a169806d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyInfo: {fileID: 0}
 --- !u!1001 &7269924141763991117
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,8 +14,9 @@ public class Enemy_Death : MonoBehaviour
         createLoot();  // drop loot
     }
 
-    public void createLoot()
-    {
+    private void createLoot()
+    {   
         GameObject temp = (GameObject) Instantiate(loot, transform.position, transform.rotation);
+        temp.transform.parent = GameObject.Find("Loot").transform;
     }
 }
