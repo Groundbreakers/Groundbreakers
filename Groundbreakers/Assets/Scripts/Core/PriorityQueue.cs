@@ -12,7 +12,7 @@
     public class PriorityQueue<T>
         where T : IComparable<T>
     {
-        private List<T> data;
+        private readonly List<T> data;
 
         public PriorityQueue()
         {

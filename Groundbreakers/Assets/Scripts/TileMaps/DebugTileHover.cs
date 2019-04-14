@@ -2,6 +2,7 @@
 {
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     /// Provide a temporary player interface to debug, interacting with tiles.
     /// </summary>
