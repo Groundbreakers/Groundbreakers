@@ -131,8 +131,8 @@
                 GameObject effect = (GameObject)Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
                 Enemy_Death death = effect.GetComponent<Enemy_Death>();
                 death.setDirection(animator.GetInteger("Direction"));
-                CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
-                temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
+                //CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
+                //temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
                 Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
                 
@@ -223,7 +223,7 @@
                 else
                 {
                     this.health -= damagevalue;
-                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                    // GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
 
                     // Debug.Log("Un Marked Damage = " + damagevalue);
                 }
@@ -396,10 +396,10 @@
         // When the enemy reaches the end of its path
         void EndPath()
         {
-            GameObject counter = GameObject.Find("HPCounter");
-            HP hp = counter.GetComponent<HP>();
-            Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
-            hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
+            //GameObject counter = GameObject.Find("HPCounter");
+            //HP hp = counter.GetComponent<HP>();
+            //Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
+            //hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
             Destroy(this.gameObject);
         }
 

@@ -1,7 +1,7 @@
-﻿namespace Assets.Scripts
+﻿namespace TileMaps
 {
     /// <summary>
-    /// All Tile Types
+    ///     All Tile Types
     /// </summary>
     public enum Tiles
     {
