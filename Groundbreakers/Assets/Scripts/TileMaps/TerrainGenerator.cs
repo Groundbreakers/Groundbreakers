@@ -95,7 +95,7 @@
             return this.data[(int)x, (int)y];
         }
 
-        public List<Vector3> GetSpawnLocations()
+        public IEnumerable<Vector3> GetSpawnLocations()
         {
             throw new NotImplementedException();
         }

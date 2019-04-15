@@ -10,23 +10,30 @@
 
     using UnityEngine;
 
-    using Random = UnityEngine.Random;
-
     /// <summary>
     ///     This component provide APIs to modify any tiles: swap, destruct, or construct.
     /// </summary>
     public class TileController : MonoBehaviour
     {
-        private Tilemap tilemap;
-
-        private List<GameObject> selected = new List<GameObject>();
-
         /// <summary>
-        /// Busy if any tile is currently moving (because of swapping)
+        ///     Busy if any tile is currently moving (because of swapping)
         /// </summary>
         private bool busy;
 
-        #region Public APIs
+        private List<GameObject> selected = new List<GameObject>();
+
+        private Tilemap tilemap;
+
+        [Button]
+        public void ClearSelected()
+        {
+            foreach (var go in this.selected)
+            {
+                go.GetComponent<TileStatus>().IsSelected = false;
+            }
+
+            this.selected.Clear();
+        }
 
         [Button]
         public void DebugSwapTiles()
@@ -43,6 +50,17 @@
             while (x1 == x2 && y1 == y2);
 
             this.SwapTiles(new Vector3(x1, y1), new Vector3(x2, y2));
+        }
+
+        public void SelectTile(GameObject tile)
+        {
+            this.selected.Add(tile);
+
+            if (this.selected.Count >= 2)
+            {
+                this.SwapSelectedTiles();
+                this.ClearSelected();
+            }
         }
 
         public void SwapTiles(Vector3 first, Vector3 second)
@@ -66,32 +84,6 @@
             this.MoveBlockTo(tileB, first);
         }
 
-        public void SelectTile(GameObject tile)
-        {
-            this.selected.Add(tile);
-
-            if (this.selected.Count >= 2)
-            {
-                this.SwapSelectedTiles();
-                this.ClearSelected();
-            }
-        }
-
-        [Button]
-        public void ClearSelected()
-        {
-            foreach (var go in this.selected)
-            {
-                go.GetComponent<TileStatus>().IsSelected = false;
-            }
-
-            this.selected.Clear();
-        }
-
-        #endregion
-
-        #region Unity Callbacks
-
         private void OnEnable()
         {
             this.tilemap = this.GetComponent<Tilemap>();
@@ -106,10 +98,6 @@
             }
         }
 
-        #endregion
-
-        #region Internal Functions
-
         private void SwapSelectedTiles()
         {
             var first = this.selected[0];
@@ -117,6 +105,7 @@
 
             this.SwapTiles(first.transform.position, second.transform.position);
         }
+
 
         private void MoveBlockTo(GameObject tile, Vector3 destination)
         {
@@ -146,7 +135,5 @@
                         FreezeMotion.ResumeAll();
                     });
         }
-
-        #endregion
     }
 }

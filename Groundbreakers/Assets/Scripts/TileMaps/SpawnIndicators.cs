@@ -33,7 +33,7 @@
         /// <example>
         ///     foreach (var x in numbers.Zip(words, Tuple.Create))
         ///     {
-        ///         Console.WriteLine(x.Item1 + x.Item2);
+        ///     Console.WriteLine(x.Item1 + x.Item2);
         ///     }
         /// </example>
         /// <returns>

@@ -8,6 +8,10 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
+    /// <summary>
+    ///     An abstract mesh class that holds information regarding the
+    /// </summary>
     public class NavigationMap : MonoBehaviour
     {
         private const int Dimension = 8;
@@ -30,16 +34,16 @@
         }
 
         /// <summary>
-        /// The main A star search algorithm API.
+        ///     The main A star search algorithm API.
         /// </summary>
         /// <param name="start">
-        /// The starting point.
+        ///     The starting point.
         /// </param>
         /// <param name="end">
-        /// The ending(goal) point.
+        ///     The ending(goal) point.
         /// </param>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        ///     The <see cref="IEnumerable" />.
         /// </returns>
         public IEnumerable<Vector3> Search(Vector3 start, Vector3 end)
         {
@@ -199,20 +203,20 @@
         /// </summary>
         private class Node : IComparable<Node>
         {
-            public bool CanPass;
-
-            public float F;
-
-            public float G;
-
-            public Node Parent;
-
-            public Vector3 Pos;
-
             public Node(int x, int y)
             {
                 this.Pos = new Vector3(x, y);
             }
+
+            public bool CanPass { get; set; }
+
+            public float F { get; set; }
+
+            public float G { get; set; }
+
+            public Node Parent { get; set; }
+
+            public Vector3 Pos { get; }
 
             public int CompareTo(Node other)
             {

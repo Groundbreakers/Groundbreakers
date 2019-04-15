@@ -21,6 +21,26 @@
 
         /// <inheritdoc />
         /// <summary>
+        ///     Evaluate and return the spawn locations.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="T:System.Collections.Generic.List`1" />.
+        /// </returns>
+        public IEnumerable<Vector3> GetSpawnLocations()
+        {
+            this.spawnLocations.Clear();
+
+            this.spawnLocations.Add(new Vector3(3, 3));
+            this.spawnLocations.Add(new Vector3(3, 4));
+            this.spawnLocations.Add(new Vector3(4, 3));
+            this.spawnLocations.Add(new Vector3(4, 4));
+            this.spawnLocations.Add(new Vector3(2, 4));
+
+            return this.spawnLocations;
+        }
+
+        /// <inheritdoc />
+        /// <summary>
         ///     The get tile type at.
         /// </summary>
         /// <param name="x">
@@ -40,25 +60,6 @@
             }
 
             return this.data[(int)x, (int)y];
-        }
-
-        /// <summary>
-        /// Evaluate and return the spawn locations.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="List"/>.
-        /// </returns>
-        public List<Vector3> GetSpawnLocations()
-        {
-            this.spawnLocations.Clear();
-
-            this.spawnLocations.Add(new Vector3(3, 3));
-            this.spawnLocations.Add(new Vector3(3, 4));
-            this.spawnLocations.Add(new Vector3(4, 3));
-            this.spawnLocations.Add(new Vector3(4, 4));
-            this.spawnLocations.Add(new Vector3(2, 4));
-
-            return this.spawnLocations;
         }
 
         /// <summary>
@@ -105,7 +106,7 @@
                             };
 
             // this.GenerateBoss();
-            this.GenerateEnviroment();
+            this.GenerateEnvironment();
         }
 
         private void GenerateBoss()
@@ -113,7 +114,7 @@
             Instantiate(this.bossPrefab, new Vector3(3.0f, 3.0f), Quaternion.identity);
         }
 
-        private void GenerateEnviroment()
+        private void GenerateEnvironment()
         {
             var num = Random.Range(1, 3);
             for (var i = 0; i < num; i++)

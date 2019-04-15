@@ -4,7 +4,7 @@
 
     /// <inheritdoc />
     /// <summary>
-    /// Provide a temporary player interface to debug, interacting with tiles.
+    ///     Provide a temporary player interface to debug, interacting with tiles.
     /// </summary>
     [RequireComponent(typeof(TileController))]
     public class DebugTileHover : MonoBehaviour
@@ -20,7 +20,7 @@
         private void OnEnable()
         {
             var tilemap = GameObject.Find("Tilemap");
-            
+
             this.rend = this.GetComponent<SpriteRenderer>();
             this.controller = tilemap.GetComponent<TileController>();
             this.status = this.GetComponent<TileStatus>();

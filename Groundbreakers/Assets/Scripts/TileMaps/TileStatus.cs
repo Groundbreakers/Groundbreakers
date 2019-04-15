@@ -4,8 +4,9 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
-    /// The passive data component that contains some status of this current map. 
+    ///     The passive data component that contains some status of this current map.
     /// </summary>
     public class TileStatus : MonoBehaviour
     {
@@ -16,7 +17,7 @@
 
         [field: ShowInInspector]
         [field: ReadOnly]
-        public bool IsMoving { get; set; }
+        public bool IsMoving { private get; set; }
 
         [field: ShowInInspector]
         [field: ReadOnly]
@@ -33,11 +34,11 @@
         }
 
         /// <summary>
-        /// This function is called when instantiate or on tile type has been changed. Should
-        /// update the status such as if can deploy.
+        ///     This function is called when instantiate or on tile type has been changed. Should
+        ///     update the status such as if can deploy.
         /// </summary>
         /// <param name="tileType">
-        /// The type.
+        ///     The type.
         /// </param>
         public void UpdateTileType(Tiles tileType)
         {

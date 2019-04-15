@@ -28,11 +28,11 @@
         void Initialize();
 
         /// <summary>
-        /// Evaluate and return the spawn locations.
+        ///     Evaluate and return the spawn locations.
         /// </summary>
         /// <returns>
-        /// The <see cref="List"/>.
+        ///     The <see cref="List" />.
         /// </returns>
-        List<Vector3> GetSpawnLocations();
+        IEnumerable<Vector3> GetSpawnLocations();
     }
 }
