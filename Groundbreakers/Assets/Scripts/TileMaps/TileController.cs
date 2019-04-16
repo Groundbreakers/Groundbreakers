@@ -10,6 +10,7 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     ///     This component provide APIs to modify any tiles: swap, destruct, or construct.
     /// </summary>
@@ -42,10 +43,10 @@
 
             do
             {
-                x1 = Random.Range(0, TileData.Dimension);
-                y1 = Random.Range(0, TileData.Dimension);
-                x2 = Random.Range(0, TileData.Dimension);
-                y2 = Random.Range(0, TileData.Dimension);
+                x1 = Random.Range(0, Tilemap.Dimension);
+                y1 = Random.Range(0, Tilemap.Dimension);
+                x2 = Random.Range(0, Tilemap.Dimension);
+                y2 = Random.Range(0, Tilemap.Dimension);
             }
             while (x1 == x2 && y1 == y2);
 
@@ -84,12 +85,12 @@
             this.MoveBlockTo(tileB, first);
         }
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             this.tilemap = this.GetComponent<Tilemap>();
         }
 
-        private void Update()
+        protected void Update()
         {
             // temp
             if (Input.GetMouseButtonDown(1))
@@ -97,15 +98,6 @@
                 this.ClearSelected();
             }
         }
-
-        private void SwapSelectedTiles()
-        {
-            var first = this.selected[0];
-            var second = this.selected[1];
-
-            this.SwapTiles(first.transform.position, second.transform.position);
-        }
-
 
         private void MoveBlockTo(GameObject tile, Vector3 destination)
         {
@@ -134,6 +126,14 @@
                         this.busy = false;
                         FreezeMotion.ResumeAll();
                     });
+        }
+
+        private void SwapSelectedTiles()
+        {
+            var first = this.selected[0];
+            var second = this.selected[1];
+
+            this.SwapTiles(first.transform.position, second.transform.position);
         }
     }
 }

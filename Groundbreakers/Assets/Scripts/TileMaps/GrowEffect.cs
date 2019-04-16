@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts
+﻿namespace TileMaps
 {
     using DG.Tweening;
 
@@ -11,7 +11,7 @@
 
         private void OnDisable()
         {
-            GameObject.Destroy(this);
+            Destroy(this);
         }
 
         private void OnEnable()

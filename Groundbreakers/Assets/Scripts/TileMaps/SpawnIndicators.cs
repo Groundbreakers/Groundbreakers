@@ -59,7 +59,7 @@
             this.defendPoints.Clear();
 
             this.InitializeIndicators();
-            RearrangeObjects(this.spawnPoints, TileData.Dimension - 1);
+            RearrangeObjects(this.spawnPoints, Tilemap.Dimension - 1);
             RearrangeObjects(this.defendPoints, 0);
         }
 
@@ -75,7 +75,7 @@
         private static void RearrangeObjects(List<Transform> objects, int row)
         {
             var n = objects.Count;
-            var xs = Enumerable.Range(0, TileData.Dimension).OrderBy(x => Random.value).Take(n).ToList();
+            var xs = Enumerable.Range(0, Tilemap.Dimension).OrderBy(x => Random.value).Take(n).ToList();
 
             xs.Sort();
 

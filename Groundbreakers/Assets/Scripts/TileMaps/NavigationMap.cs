@@ -16,7 +16,7 @@
     {
         private const int Dimension = 8;
 
-        private Node[,] map = new Node[Dimension, Dimension];
+        private readonly Node[,] map = new Node[Dimension, Dimension];
 
         private Tilemap tilemap;
 
@@ -43,7 +43,7 @@
         ///     The ending(goal) point.
         /// </param>
         /// <returns>
-        ///     The <see cref="IEnumerable" />.
+        ///     The <see cref="Vector3" />.
         /// </returns>
         public IEnumerable<Vector3> Search(Vector3 start, Vector3 end)
         {

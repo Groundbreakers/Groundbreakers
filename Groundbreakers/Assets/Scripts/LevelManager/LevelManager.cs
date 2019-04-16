@@ -1,31 +1,33 @@
-﻿namespace Assets.Scripts
+﻿namespace LevelManager
 {
-    using System.Collections.Generic;
+    using Assets.Scripts;
 
     using UnityEngine;
+
+    using DifficultyMap = System.Collections.Generic.Dictionary<int, Assets.Scripts.EnemyGroups.Difficulty>;
 
     public class LevelManager : MonoBehaviour
     {
         #region Internal References
 
         /// <summary>
-        /// This stores the HUD GameObject (bad solution)
+        ///     This stores the HUD GameObject (bad solution)
         /// </summary>
         private GameObject uiCanvas;
 
         /// <summary>
-        /// The reference to the CurrentLevel script attached to the UI.
+        ///     The reference to the CurrentLevel script attached to the UI.
         /// </summary>
         private CurrentLevel currentLevelUi;
 
         /// <summary>
-        /// The player party, currently we use the GameObject predefined in the scene to store
-        /// party information (Subject to change).
+        ///     The player party, currently we use the GameObject predefined in the scene to store
+        ///     party information (Subject to change).
         /// </summary>
         private GameObject playerParty;
 
         /// <summary>
-        /// The audio manager (BGM Manager).
+        ///     The audio manager (BGM Manager).
         /// </summary>
         private Manager audioManager;
 
@@ -35,29 +37,29 @@
 
         #region Internal Fields
 
-        private Dictionary<int, EnemyGroups.Difficulty> levelDifficultyMap = new Dictionary<int, EnemyGroups.Difficulty>
-                                                                     {
-                                                                         { 1, EnemyGroups.Difficulty.Easy },
-                                                                         { 2, EnemyGroups.Difficulty.Easy },
-                                                                         { 3, EnemyGroups.Difficulty.Easy },
-                                                                         { 4, EnemyGroups.Difficulty.Medium },
-                                                                         { 5, EnemyGroups.Difficulty.Medium },
-                                                                         { 6, EnemyGroups.Difficulty.Medium },
-                                                                         { 7, EnemyGroups.Difficulty.Hard },
-                                                                         { 8, EnemyGroups.Difficulty.Hard }
-                                                                     };
+        private DifficultyMap levelDifficultyMap = new DifficultyMap
+                                                       {
+                                                           { 1, EnemyGroups.Difficulty.Easy },
+                                                           { 2, EnemyGroups.Difficulty.Easy },
+                                                           { 3, EnemyGroups.Difficulty.Easy },
+                                                           { 4, EnemyGroups.Difficulty.Medium },
+                                                           { 5, EnemyGroups.Difficulty.Medium },
+                                                           { 6, EnemyGroups.Difficulty.Medium },
+                                                           { 7, EnemyGroups.Difficulty.Hard },
+                                                           { 8, EnemyGroups.Difficulty.Hard }
+                                                       };
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// Gets the current game region of the progress.
+        ///     Gets the current game region of the progress.
         /// </summary>
         public int Region { get; private set; } = 1;
 
         /// <summary>
-        /// Gets the current game level of the progress. The range is currently [1, 8].
+        ///     Gets the current game level of the progress. The range is currently [1, 8].
         /// </summary>
         public int Level { get; private set; } = 1;
 
@@ -74,9 +76,9 @@
 
             this.routesGenerator.Toggle();
         }
-        
+
         /// <summary>
-        /// I assume this is called by Battle manager when battle ends
+        ///     I assume this is called by Battle manager when battle ends
         /// </summary>
         public void GotoNextLevel()
         {
@@ -137,23 +139,6 @@
             // Other references
             this.currentLevelUi = this.uiCanvas.GetComponent<CurrentLevel>();
             this.routesGenerator = this.uiCanvas.GetComponent<RoutesGenerator>();
-        }
-
-        public void Update()
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                this.GotoTempBossBattle();
-            }
-        }
-
-        #endregion
-
-        #region Internal Functions
-
-        private void GotoTempBossBattle()
-        {
-
         }
 
         #endregion

@@ -6,7 +6,7 @@
 
     /// <inheritdoc />
     /// <summary>
-    ///     The passive data component that contains some status of this current map.
+    ///     The passive data component that contains some status of this current tile GameObject.
     /// </summary>
     public class TileStatus : MonoBehaviour
     {

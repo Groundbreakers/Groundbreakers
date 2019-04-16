@@ -7,17 +7,27 @@
     ///     Provide a temporary player interface to debug, interacting with tiles.
     /// </summary>
     [RequireComponent(typeof(TileController))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(TileStatus))]
     public class DebugTileHover : MonoBehaviour
     {
-        private SpriteRenderer rend;
-
         private TileController controller;
+
+        private SpriteRenderer rend;
 
         private TileStatus status;
 
+        /// <summary>
+        ///     Indicating if this tile is currently hovered.
+        /// </summary>
         private bool hovered;
 
-        private void OnEnable()
+        protected void OnDisable()
+        {
+            this.SetAlpha();
+        }
+
+        protected void OnEnable()
         {
             var tilemap = GameObject.Find("Tilemap");
 
@@ -28,24 +38,24 @@
             this.SetAlpha();
         }
 
-        private void OnMouseOver()
-        {
-            this.hovered = true;
-        }
-
-        private void OnMouseExit()
+        protected void OnMouseExit()
         {
             this.hovered = false;
         }
 
-        private void OnMouseUpAsButton()
+        protected void OnMouseOver()
+        {
+            this.hovered = true;
+        }
+
+        protected void OnMouseUpAsButton()
         {
             this.status.IsSelected = true;
 
             this.controller.SelectTile(this.gameObject);
         }
 
-        private void Update()
+        protected void Update()
         {
             // Performance critical
             if (this.hovered || this.status.IsSelected)
@@ -56,11 +66,6 @@
             {
                 this.SetAlpha();
             }
-        }
-
-        private void OnDisable()
-        {
-            this.SetAlpha();
         }
 
         private void SetAlpha(float alpha = 1.0f)

@@ -31,7 +31,7 @@
         ///     Evaluate and return the spawn locations.
         /// </summary>
         /// <returns>
-        ///     The <see cref="List" />.
+        ///     The <see cref="Vector3" />.
         /// </returns>
         IEnumerable<Vector3> GetSpawnLocations();
     }

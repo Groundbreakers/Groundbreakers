@@ -6,13 +6,17 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
+    /// <summary>
+    ///     Container for actual tile GameObjects. Provide API to construct tiles, modify tiles.
+    /// </summary>
     [ExecuteInEditMode]
     [RequireComponent(typeof(CustomTerrain))]
     public class Tilemap : MonoBehaviour
     {
-        private Transform[,] blocks = new Transform[TileData.Dimension, TileData.Dimension];
+        private Transform[,] blocks = new Transform[Tilemap.Dimension, Tilemap.Dimension];
 
-        private TileStatus[,] cachedStatus = new TileStatus[TileData.Dimension, TileData.Dimension];
+        private TileStatus[,] cachedStatus = new TileStatus[Tilemap.Dimension, Tilemap.Dimension];
 
         private ITerrainData mapData;
 
@@ -28,6 +32,11 @@
 
         [SerializeField]
         private GameObject water;
+
+        /// <summary>
+        ///     Gets the squared map's dimension
+        /// </summary>
+        public static int Dimension { get; } = 8;
 
         public GameObject GetTileBlockAt(Vector3 position)
         {
@@ -51,16 +60,16 @@
         }
 
         /// <summary>
-        /// Get the cached tile status at position x, y.
+        ///     Get the cached tile status at position x, y.
         /// </summary>
         /// <param name="x">
-        /// The x.
+        ///     The x.
         /// </param>
         /// <param name="y">
-        /// The y.
+        ///     The y.
         /// </param>
         /// <returns>
-        /// The <see cref="TileStatus"/>.
+        ///     The <see cref="TileStatus" />.
         /// </returns>
         public TileStatus GetTileStatusAt(int x, int y)
         {
@@ -169,9 +178,9 @@
         private void InstantiateTiles(ITerrainData sourceData)
         {
             // Re instantiate all tiles
-            for (var x = 0; x < TileData.Dimension; x++)
+            for (var x = 0; x < Tilemap.Dimension; x++)
             {
-                for (var y = 0; y < TileData.Dimension; y++)
+                for (var y = 0; y < Tilemap.Dimension; y++)
                 {
                     var tileType = sourceData.GetTileTypeAt(x, y);
 

@@ -4,6 +4,8 @@
 
     using DG.Tweening;
 
+    using LevelManager;
+
     using UnityEngine;
     using UnityEngine.Events;
     using UnityEngine.UI;
@@ -246,7 +248,6 @@
 
             // Some setting
             DOTween.Init(true, true);
-            BattleUtility.Initialize();
         }
 
         #endregion
