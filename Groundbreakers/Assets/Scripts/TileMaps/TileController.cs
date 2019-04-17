@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using AI;
+
     using DG.Tweening;
 
     using Enemies;
@@ -71,7 +73,9 @@
                 return;
             }
 
-            FreezeMotion.FreezeAll();
+            //FreezeMotion.FreezeAll();
+            this.OnTileChange(first);
+            this.OnTileChange(second);
             this.busy = true;
 
             var tileA = this.tilemap.GetTileBlockAt(first);
@@ -96,6 +100,17 @@
             if (Input.GetMouseButtonDown(1))
             {
                 this.ClearSelected();
+            }
+        }
+
+        private void OnTileChange(Vector3 pos)
+        {
+            // Refactor this shit
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                enemy.GetComponent<BasicMovement>().OnTileChange(pos);
             }
         }
 
@@ -124,7 +139,8 @@
                     {
                         tileStatus.IsMoving = false;
                         this.busy = false;
-                        FreezeMotion.ResumeAll();
+                        //FreezeMotion.ResumeAll();
+                        this.OnTileChange(destination);
                     });
         }
 

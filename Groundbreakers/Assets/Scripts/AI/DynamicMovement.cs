@@ -1,15 +1,8 @@
 ﻿namespace AI
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Sirenix.OdinInspector;
-
-    using TileMaps;
-
     using UnityEngine;
 
-    public class BasicMovement : MonoBehaviour
+    public class DynamicMovement : MonoBehaviour
     {
         private static readonly int Direction = Animator.StringToHash("Direction");
 
@@ -23,17 +16,10 @@
 
         private Animator animator;
 
-        private NavigationMap navigator;
-
-        [ShowInInspector]
-        private List<Vector3> pathBuffer;
-
-        private Vector3 goal;
-
         /// <summary>
         /// The target grid, usually the target should be adjacent grids of current.
         /// </summary>
-        private Vector3 nextGrid = Vector3.zero;
+        private Vector3 target = Vector3.zero;
 
         /// <summary>
         /// The current direction of the object, this is different from unity direction.
@@ -42,24 +28,12 @@
 
         #region Public Functions
 
-        public void MoveToward(Vector3 pos)
+        public void MoveStraight(Vector3 dir)
         {
-            var dir = pos - this.transform.position;
-
             this.SetDirection(dir);
 
             // Update the new target grid
-            this.nextGrid = pos;
-        }
-
-        public void OnTileChange(Vector3 pos)
-        {
-            // Check if we need to re calculate path
-            if (this.pathBuffer.Any(vec => vec == pos))
-            {
-                Debug.Log("Happy");
-                this.RecalculatePath();
-            }
+            this.target = this.transform.position + dir.normalized;
         }
 
         #endregion
@@ -69,14 +43,10 @@
         protected void OnEnable()
         {
             this.animator = this.GetComponent<Animator>();
-            this.navigator = GameObject.Find("Tilemap").GetComponent<NavigationMap>();
         }
 
         protected void Start()
         {
-            this.RecalculatePath();
-            var next = this.GetNextPoint();
-            this.MoveToward(next);
         }
 
         protected void FixedUpdate()
@@ -86,46 +56,17 @@
                 var step = Time.fixedDeltaTime * this.speed * this.speedMultiplier;
                 var position = this.transform.position;
 
-                this.transform.position = Vector3.MoveTowards(position, this.nextGrid, step);
+                this.transform.position = Vector3.MoveTowards(position, this.target, step);
             }
             else
             {
-                var next = this.GetNextPoint();
-                this.MoveToward(next);
-
-                if (this.pathBuffer.Count == 0)
-                {
-                    Destroy(this.gameObject);
-                }
+                // this.MoveStraight(new Vector3(Random.Range(-1.0f, 10.0f), Random.Range(-10.0f, 10.0f), 0));
             }
         }
 
         #endregion
 
         #region Internal Functions
-
-        private Vector3 GetNextPoint()
-        {
-            var point = Vector3.zero;
-
-            if (this.pathBuffer.Count > 0)
-            {
-                point = this.pathBuffer[0];
-                this.pathBuffer.RemoveAt(0);
-                return point;
-            }
-
-            return point;
-        }
-
-        private void RecalculatePath()
-        {
-            // TODO: Fucking refactor this shit.
-            var targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
-            var end = targets.OrderBy(pos => Vector3.Distance(this.transform.position, pos.position)).First();
-
-            this.pathBuffer = this.navigator.Search(this.transform.position, end.position).ToList();
-        }
 
         /// <summary>
         /// Check if the object is moving. 
@@ -135,7 +76,7 @@
         /// </returns>
         private bool IsMoving()
         {
-            return Vector3.Distance(this.transform.position, this.nextGrid) > Mathf.Epsilon;
+            return Vector3.Distance(this.transform.position, this.target) > Mathf.Epsilon;
         }
 
         private void SetDirection(Vector3 dir)

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using AI;
+
     using Characters;
 
     using TileMaps;
@@ -25,10 +27,6 @@
 
         private NavigationMap navigation;
 
-        // TODO: FIX THIS
-        public List<Vector3> pathA;
-        public List<Vector3> pathB;
-
         private void OnEnable()
         {
             this.tilemap = this.GetComponentInChildren<Tilemap>();
@@ -39,27 +37,6 @@
             this.tilemap.SetupMap();
             this.indicators.Initialize();
             this.characters.Initialize();
-
-            var tmp = new List<List<Vector3>>();
-
-            foreach (var (spawn, _) in this.indicators.GetPairs())
-            {
-                // find nearest end point
-                var targets = this.indicators.GetDefendPoints();
-                var end = targets.OrderBy(pos => Vector3.Distance(spawn.position, pos.position)).First();
-
-                // Temp
-                var path = this.navigation.Search(spawn.position, end.position);
-                tmp.Add(path.ToList());
-                foreach (var pos in path)
-                {
-                    var block = this.tilemap.GetTileBlockAt(pos);
-                    block.GetComponent<SpriteRenderer>().color = Color.red;
-                }
-            }
-
-            this.pathA = tmp[0];
-            this.pathB = tmp[1];
         }
     }
 }

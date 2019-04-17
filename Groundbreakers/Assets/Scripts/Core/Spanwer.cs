@@ -60,8 +60,8 @@
             var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
             // TODO: FIX THIS
-            var path = GameObject.Find("Battle Field").GetComponent<SetupBattleField>();
-            instance.GetComponent<Enemy_Generic>().waypointList = this.A ? path.pathA : path.pathB;
+            //var path = GameObject.Find("Battle Field").GetComponent<SetupBattleField>();
+            //instance.GetComponent<Enemy_Generic>().waypointList = this.A ? path.pathA : path.pathB;
             instance.transform.SetParent(this.transform);
         }
 
