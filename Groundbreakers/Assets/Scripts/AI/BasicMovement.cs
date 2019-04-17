@@ -90,13 +90,13 @@
             }
             else
             {
-                var next = this.GetNextPoint();
-                this.MoveToward(next);
-
                 if (this.pathBuffer.Count == 0)
                 {
                     Destroy(this.gameObject);
                 }
+
+                var next = this.GetNextPoint();
+                this.MoveToward(next);
             }
         }
 

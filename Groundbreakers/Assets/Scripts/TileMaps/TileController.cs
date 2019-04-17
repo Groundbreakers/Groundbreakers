@@ -140,7 +140,7 @@
                         tileStatus.IsMoving = false;
                         this.busy = false;
                         //FreezeMotion.ResumeAll();
-                        this.OnTileChange(destination);
+                        //this.OnTileChange(destination);
                     });
         }
 
