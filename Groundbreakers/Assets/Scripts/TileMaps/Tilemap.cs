@@ -83,9 +83,12 @@
         {
             var x = (int)position.x;
             var y = (int)position.y;
+            var index = (x * Dimension) + y;
 
             this.blocks[x, y] = block;
             this.cachedStatus[x, y] = block.GetComponent<TileStatus>();
+
+            block.SetSiblingIndex(index);
         }
 
         /// <summary>
@@ -102,6 +105,13 @@
 
         public void OnTileChanges()
         {
+        }
+
+        public void OnTileOccupied(Vector3 pos, bool status = true)
+        {
+            var block = this.GetTileStatusAt(pos);
+
+            block.IsOccupied = status;
         }
 
         protected void OnEnable()
@@ -190,9 +200,9 @@
         private void InstantiateTiles(ITerrainData sourceData)
         {
             // Re instantiate all tiles
-            for (var x = 0; x < Tilemap.Dimension; x++)
+            for (var x = 0; x < Dimension; x++)
             {
-                for (var y = 0; y < Tilemap.Dimension; y++)
+                for (var y = 0; y < Dimension; y++)
                 {
                     var tileType = sourceData.GetTileTypeAt(x, y);
 

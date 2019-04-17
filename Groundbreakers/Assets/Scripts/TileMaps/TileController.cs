@@ -6,8 +6,6 @@
 
     using DG.Tweening;
 
-    using Enemies;
-
     using Sirenix.OdinInspector;
 
     using UnityEngine;
@@ -19,14 +17,25 @@
     public class TileController : MonoBehaviour
     {
         /// <summary>
-        ///     Busy if any tile is currently moving (because of swapping)
+        ///     Contains a list of selected tiles. Should only have up to 2 elements.
         /// </summary>
-        private bool busy;
+        private readonly List<GameObject> selected = new List<GameObject>();
 
-        private List<GameObject> selected = new List<GameObject>();
-
+        /// <summary>
+        ///     Cached reference to the Tile map component.
+        /// </summary>
         private Tilemap tilemap;
 
+        private List<GameObject> swappingTiles = new List<GameObject>();
+
+        /// <summary>
+        ///     Gets a value indicating whether if any tile is currently swapping.
+        /// </summary>
+        public static bool Busy { get; private set; }
+
+        /// <summary>
+        ///     Clear the selected buffer.
+        /// </summary>
         [Button]
         public void ClearSelected()
         {
@@ -38,48 +47,42 @@
             this.selected.Clear();
         }
 
-        [Button]
-        public void DebugSwapTiles()
-        {
-            int x1, y1, x2, y2;
-
-            do
-            {
-                x1 = Random.Range(0, Tilemap.Dimension);
-                y1 = Random.Range(0, Tilemap.Dimension);
-                x2 = Random.Range(0, Tilemap.Dimension);
-                y2 = Random.Range(0, Tilemap.Dimension);
-            }
-            while (x1 == x2 && y1 == y2);
-
-            this.SwapTiles(new Vector3(x1, y1), new Vector3(x2, y2));
-        }
-
         public void SelectTile(GameObject tile)
         {
             this.selected.Add(tile);
 
-            if (this.selected.Count >= 2)
-            {
-                this.SwapSelectedTiles();
-                this.ClearSelected();
-            }
-        }
-
-        public void SwapTiles(Vector3 first, Vector3 second)
-        {
-            if (this.busy)
+            if (this.selected.Count < 2)
             {
                 return;
             }
 
-            //FreezeMotion.FreezeAll();
-            this.OnTileChange(first);
-            this.OnTileChange(second);
-            this.busy = true;
+            this.SwapSelectedTiles();
+            this.ClearSelected();
+        }
+
+        /// <summary>
+        ///     Perform an swapping of tiles. Do animation, and swap references.
+        /// </summary>
+        /// <param name="first">
+        ///     The first tile to swap.
+        /// </param>
+        /// <param name="second">
+        ///     The second tile to swap.
+        /// </param>
+        public void SwapTiles(Vector3 first, Vector3 second)
+        {
+            if (Busy)
+            {
+                return;
+            }
 
             var tileA = this.tilemap.GetTileBlockAt(first);
             var tileB = this.tilemap.GetTileBlockAt(second);
+
+            this.swappingTiles.Clear();
+
+            this.OnTilesChange(first, second);
+            Busy = true;
 
             // Resetting the reference, temp
             this.tilemap.SetTileBlock(first, tileB.transform);
@@ -103,14 +106,14 @@
             }
         }
 
-        private void OnTileChange(Vector3 pos)
+        private void OnTilesChange(Vector3 first, Vector3 second)
         {
             // Refactor this shit
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
             foreach (var enemy in enemies)
             {
-                enemy.GetComponent<BasicMovement>().OnTileChange(pos);
+                enemy.GetComponent<DynamicMovement>().OnTilesChange(first, second);
             }
         }
 
@@ -134,14 +137,25 @@
                 sequence.Append(tile.transform.DOLocalMove(path[i], durations[i]).SetEase(Ease.OutBack));
             }
 
-            sequence.OnComplete(
-                () =>
-                    {
-                        tileStatus.IsMoving = false;
-                        this.busy = false;
-                        //FreezeMotion.ResumeAll();
-                        //this.OnTileChange(destination);
-                    });
+            sequence.OnComplete(() => { this.OnSwapComplete(tile); });
+        }
+
+        private void OnSwapComplete(GameObject tile)
+        {
+            this.swappingTiles.Add(tile);
+
+            if (this.swappingTiles.Count >= 2)
+            {
+                Busy = false;
+
+                var first = this.swappingTiles[0];
+                var second = this.swappingTiles[1];
+
+                first.GetComponent<TileStatus>().IsMoving = false;
+                second.GetComponent<TileStatus>().IsMoving = false;
+
+                this.OnTilesChange(first.transform.position, second.transform.position);
+            }
         }
 
         private void SwapSelectedTiles()
@@ -150,6 +164,28 @@
             var second = this.selected[1];
 
             this.SwapTiles(first.transform.position, second.transform.position);
+        }
+
+        private void FreezeAll()
+        {
+            // Refactor this shit
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                enemy.GetComponent<BasicMovement>().Freeze();
+            }
+        }
+
+        private void UnfreezeAll()
+        {
+            // Refactor this shit
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                enemy.GetComponent<BasicMovement>().Unfreeze();
+            }
         }
     }
 }

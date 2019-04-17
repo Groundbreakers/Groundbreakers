@@ -131,13 +131,18 @@
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    if (this.tilemap.GetTileStatusAt(i, j).CanPass())
+                    var status = this.tilemap.GetTileStatusAt(i, j);
+                    if (status.IsOccupied)
                     {
-                        Gizmos.color = new Color(0f, 1f, 0.09f, 0.5f);
+                        Gizmos.color = new Color(1f, 1f, 0.0f, 0.2f);
+                    }
+                    else if (status.CanPass())
+                    {
+                        Gizmos.color = new Color(0f, 1f, 0.0f, 0.2f);
                     }
                     else
                     {
-                        Gizmos.color = new Color(1, 0, 0, 0.5f);
+                        Gizmos.color = new Color(1, 0, 0, 0.2f);
                     }
 
                     Gizmos.DrawCube(new Vector3(i, j), new Vector3(1.0f, 1.0f, 0.0f));

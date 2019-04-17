@@ -23,9 +23,11 @@
         [field: ReadOnly]
         public bool IsSelected { get; set; }
 
+        public bool IsOccupied { get; set; }
+
         public bool CanHover()
         {
-            return this.canDeploy && !this.IsMoving;
+            return !this.IsMoving && !this.IsOccupied;
         }
 
         public bool CanPass()

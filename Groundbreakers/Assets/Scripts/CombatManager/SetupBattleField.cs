@@ -1,11 +1,5 @@
 ﻿namespace CombatManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using AI;
-
     using Characters;
 
     using TileMaps;

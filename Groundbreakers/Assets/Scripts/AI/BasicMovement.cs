@@ -25,20 +25,24 @@
 
         private NavigationMap navigator;
 
+        private Tilemap map;
+
         [ShowInInspector]
         private List<Vector3> pathBuffer;
 
         private Vector3 goal;
 
         /// <summary>
-        /// The target grid, usually the target should be adjacent grids of current.
+        ///     The target grid, usually the target should be adjacent grids of current.
         /// </summary>
         private Vector3 nextGrid = Vector3.zero;
 
         /// <summary>
-        /// The current direction of the object, this is different from unity direction.
+        ///     The current direction of the object, this is different from unity direction.
         /// </summary>
         private Vector3 direction = Vector3.down;
+
+        private bool freezing;
 
         #region Public Functions
 
@@ -57,9 +61,20 @@
             // Check if we need to re calculate path
             if (this.pathBuffer.Any(vec => vec == pos))
             {
-                Debug.Log("Happy");
                 this.RecalculatePath();
+                var next = this.GetNextPoint();
+                this.MoveToward(next);
             }
+        }
+
+        public void Freeze()
+        {
+            this.freezing = true;
+        }
+
+        public void Unfreeze()
+        {
+            this.freezing = false;
         }
 
         #endregion
@@ -69,7 +84,10 @@
         protected void OnEnable()
         {
             this.animator = this.GetComponent<Animator>();
-            this.navigator = GameObject.Find("Tilemap").GetComponent<NavigationMap>();
+
+            var tilemap = GameObject.Find("Tilemap");
+            this.navigator = tilemap.GetComponent<NavigationMap>();
+            this.map = tilemap.GetComponent<Tilemap>();
         }
 
         protected void Start()
@@ -81,12 +99,20 @@
 
         protected void FixedUpdate()
         {
+            if (this.freezing)
+            {
+                return;
+            }
+
             if (this.IsMoving())
             {
                 var step = Time.fixedDeltaTime * this.speed * this.speedMultiplier;
                 var position = this.transform.position;
 
-                this.transform.position = Vector3.MoveTowards(position, this.nextGrid, step);
+                this.transform.position = Vector3.MoveTowards(
+                    position, 
+                    this.nextGrid, 
+                    step);
             }
             else
             {
@@ -97,6 +123,9 @@
 
                 var next = this.GetNextPoint();
                 this.MoveToward(next);
+
+                this.map.OnTileOccupied(this.transform.position, false);
+                this.map.OnTileOccupied(next);
             }
         }
 
@@ -108,12 +137,13 @@
         {
             var point = Vector3.zero;
 
-            if (this.pathBuffer.Count > 0)
+            if (this.pathBuffer.Count <= 0)
             {
-                point = this.pathBuffer[0];
-                this.pathBuffer.RemoveAt(0);
                 return point;
             }
+
+            point = this.pathBuffer[0];
+            this.pathBuffer.RemoveAt(0);
 
             return point;
         }
@@ -128,10 +158,10 @@
         }
 
         /// <summary>
-        /// Check if the object is moving. 
+        ///     Check if the object is moving.
         /// </summary>
         /// <returns>
-        /// The <see cref="bool"/> If this component is moving. 
+        ///     The <see cref="bool" /> If this component is moving.
         /// </returns>
         private bool IsMoving()
         {

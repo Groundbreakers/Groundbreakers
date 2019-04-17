@@ -45,11 +45,16 @@
 
         protected void OnMouseOver()
         {
-            this.hovered = true;
+            this.hovered = this.status.CanHover();
         }
 
         protected void OnMouseUpAsButton()
         {
+            if (!this.hovered)
+            {
+                return;
+            }
+
             this.status.IsSelected = true;
 
             this.controller.SelectTile(this.gameObject);
