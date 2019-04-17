@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 3155254873571137698}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -213,6 +213,7 @@ MonoBehaviour:
   UI: {fileID: 3155254874555713005}
   Prefab: {fileID: 3683073349284263855, guid: e1736d651a565034797129a6637908a9, type: 3}
   Dummy: {fileID: 8906855275323191982, guid: 5ece83f0393e8224d888aa09cd44554a, type: 3}
+  Base: {fileID: 1849600204679115008, guid: ba4f0fbab0c192c459f5f9f831073920, type: 3}
   Height: 8
 --- !u!1 &3155254874555713005
 GameObject:
