@@ -81,7 +81,7 @@
 
             this.swappingTiles.Clear();
 
-            this.OnTilesChange(first, second);
+            // this.OnTilesChange(first, second);
             Busy = true;
 
             // Resetting the reference, temp
