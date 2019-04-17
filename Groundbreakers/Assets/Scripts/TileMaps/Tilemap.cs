@@ -12,11 +12,14 @@
     /// </summary>
     [ExecuteInEditMode]
     [RequireComponent(typeof(CustomTerrain))]
+    [RequireComponent(typeof(NavigationMap))]
     public class Tilemap : MonoBehaviour
     {
         private Transform[,] blocks = new Transform[Tilemap.Dimension, Tilemap.Dimension];
 
         private TileStatus[,] cachedStatus = new TileStatus[Tilemap.Dimension, Tilemap.Dimension];
+
+        private NavigationMap navigationMap;
 
         private ITerrainData mapData;
 
@@ -91,11 +94,20 @@
         [Button]
         public void SetupMap()
         {
-            this.mapData = this.GetComponent<CustomTerrain>();
             this.mapData.Initialize();
 
             this.ClearAllTiles();
             this.InstantiateTiles(this.mapData);
+        }
+
+        public void OnTileChanges()
+        {
+        }
+
+        protected void OnEnable()
+        {
+            this.mapData = this.GetComponent<CustomTerrain>();
+            this.navigationMap = this.GetComponent<NavigationMap>();
         }
 
         private void ClearAllTiles()

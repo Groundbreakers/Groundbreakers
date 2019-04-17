@@ -37,7 +37,7 @@
         ///     }
         /// </example>
         /// <returns>
-        ///     The <see cref="IEnumerable" />.
+        ///     The <see cref="Tuple" />.
         /// </returns>
         public IEnumerable<Tuple<Transform, Transform>> GetPairs()
         {

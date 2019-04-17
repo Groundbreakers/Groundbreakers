@@ -72,7 +72,7 @@
 
                 if (current.Pos == end)
                 {
-                    return this.ConstructFinalPath(current, start);
+                    return ConstructFinalPath(current, start);
                 }
 
                 var adjacentPos = GetAdjacentPos(current);
@@ -155,7 +155,7 @@
             return !(x < 0 || x >= Dimension || y < 0 || y >= Dimension);
         }
 
-        private IEnumerable<Vector3> ConstructFinalPath(Node current, Vector3 startPoint)
+        private static IEnumerable<Vector3> ConstructFinalPath(Node current, Vector3 startPoint)
         {
             var finalPath = new List<Vector3>();
 
