@@ -10,14 +10,13 @@
     /// <summary>
     ///     Container for actual tile GameObjects. Provide API to construct tiles, modify tiles.
     /// </summary>
-    [ExecuteInEditMode]
     [RequireComponent(typeof(CustomTerrain))]
     [RequireComponent(typeof(NavigationMap))]
     public class Tilemap : MonoBehaviour
     {
-        private Transform[,] blocks = new Transform[Tilemap.Dimension, Tilemap.Dimension];
+        private Transform[,] blocks = new Transform[Dimension, Dimension];
 
-        private TileStatus[,] cachedStatus = new TileStatus[Tilemap.Dimension, Tilemap.Dimension];
+        private TileStatus[,] cachedStatus = new TileStatus[Dimension, Dimension];
 
         private NavigationMap navigationMap;
 

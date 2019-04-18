@@ -20,7 +20,6 @@
 
         #region Private Fields
 
-
         private Dictionary<string, UnityEvent> eventDictionary;
 
         private GameTimer timer;
@@ -30,7 +29,8 @@
         #region Public Properties
 
         /// <summary>
-        /// Gets the only battle manager in the scene. Whenever referring the battle manager, please call 'BattleManager.Instance'. 
+        ///     Gets the only battle manager in the scene. Whenever referring the battle manager, please call
+        ///     'BattleManager.Instance'.
         /// </summary>
         public static BattleManager Instance
         {
@@ -46,7 +46,8 @@
                     }
                     else
                     {
-                        Debug.LogError("There needs to be one active BattleManager script on a GameObject in your scene.");
+                        Debug.LogError(
+                            "There needs to be one active BattleManager script on a GameObject in your scene.");
                     }
                 }
 
@@ -63,19 +64,19 @@
         #region Event System Functions
 
         /// <summary>
-        /// The start listening.
+        ///     The start listening.
         /// </summary>
         /// <example>
-        /// public void OnEnable ()
-        /// {
-        ///    Battle.StartListening ("test", SomeFunction);
-        /// }
+        ///     public void OnEnable ()
+        ///     {
+        ///     Battle.StartListening ("test", SomeFunction);
+        ///     }
         /// </example>
         /// <param name="eventName">
-        /// The event name.
+        ///     The event name.
         /// </param>
         /// <param name="listener">
-        /// The listener.
+        ///     The listener.
         /// </param>
         public static void StartListening(string eventName, UnityAction listener)
         {
@@ -106,13 +107,13 @@
         }
 
         /// <summary>
-        /// Trigger an Event, all the functions registered under the eventName will be called.
+        ///     Trigger an Event, all the functions registered under the eventName will be called.
         /// </summary>
         /// <example>
-        /// BattleManager.TriggerEvent ("test");
+        ///     BattleManager.TriggerEvent ("test");
         /// </example>
         /// <param name="eventName">
-        /// The Name of an event that you wish to trigger/emit in string. 
+        ///     The Name of an event that you wish to trigger/emit in string.
         /// </param>
         public static void TriggerEvent(string eventName)
         {
@@ -127,13 +128,13 @@
         #region Public Utility Functions
 
         /// <summary>
-        /// The main entry function call to start the battle.
+        ///     The main entry function call to start the battle.
         /// </summary>
         public void ShouldStartBattle()
         {
             if (GameState != GameStates.Null)
             {
-                Debug.LogWarning("Attemp To Start a battle when battle is already started.");
+                Debug.LogWarning("Attempt To Start a battle when battle is already started.");
 
                 return;
             }
@@ -145,8 +146,8 @@
         }
 
         /// <summary>
-        /// Instantly destroy all existing enemies on the scene. You might use this for some other
-        /// interesting purposes. I am using during resetting the game map.
+        ///     Instantly destroy all existing enemies on the scene. You might use this for some other
+        ///     interesting purposes. I am using during resetting the game map.
         /// </summary>
         public void KillAllEnemies()
         {
@@ -154,19 +155,8 @@
 
             foreach (var enemy in enemies)
             {
-                GameObject.Destroy(enemy);
+                Destroy(enemy);
             }
-        }
-
-        /// <summary>
-        /// Instantly destroy all existing enemies on the scene. You might use this for some other
-        /// interesting purposes. I am using during resetting the game map.
-        /// </summary>
-        public void RetreatAllCharacters()
-        {
-            Debug.Log("Ding");
-
-            GameObject.Find("DeployPanel").GetComponent<Deploy>().InstantRetreatAllCharacter();
         }
 
         #endregion
@@ -177,23 +167,21 @@
         {
             GameState = GameStates.Combating;
 
-            // Toggle UI
-            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
-            GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", true);
+            //// Toggle UI
+            //Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
+            //GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", true);
         }
 
         public void OnBattleEnd()
         {
-            this.RetreatAllCharacters();
-
             GameState = GameStates.Exiting;
 
-            // Toggle UI (dirty way)
-            GameObject.Find("DeployPanel").GetComponent<Deploy>().Clear();
-            GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", false);
+            //// Toggle UI (dirty way)
+            //GameObject.Find("DeployPanel").GetComponent<Deploy>().Clear();
+            //GameObject.Find("DeployPanel").GetComponent<Animator>().SetBool("Open", false);
 
-            // Reset Timer (dirty way)
-            GameObject.Find("1xButton").GetComponent<Button>().onClick.Invoke();
+            //// Reset Timer (dirty way)
+            //GameObject.Find("1xButton").GetComponent<Button>().onClick.Invoke();
         }
 
         public void OnBattleVictory()
@@ -205,7 +193,7 @@
             this.timer.ResetTimer();
 
             // Dirty way to not show GameSpeed
-            Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
+            //Resources.FindObjectsOfTypeAll<GameSpeed>()[0].Toggle();
 
             GameState = GameStates.Null;
         }
@@ -227,11 +215,8 @@
             this.timer = this.GetComponent<GameTimer>();
 
             StartListening("block ready", this.OnBattleBegin);
-
             StartListening("end", this.OnBattleEnd);
-
             StartListening("victory", this.OnBattleVictory);
-
             StartListening("reset", this.Reset);
         }
         

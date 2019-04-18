@@ -4,6 +4,8 @@
 
     using Sirenix.OdinInspector;
 
+    using TileMaps;
+
     using UnityEngine;
 
     /// <summary>

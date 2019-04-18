@@ -178,7 +178,7 @@ namespace Assets.Scripts
             var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
             // Set enemies path, ~Heritage from Austin
-            instance.GetComponent<Enemy_Generic>().waypointList = path;
+            //instance.GetComponent<Enemy_Generic>().waypointList = path;
             instance.transform.SetParent(this.transform);
         }
 

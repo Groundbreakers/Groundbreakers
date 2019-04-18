@@ -1,6 +1,12 @@
 ﻿namespace CombatManager
 {
+    using System.Collections;
+
     using Characters;
+
+    using Core;
+
+    using Sirenix.OdinInspector;
 
     using TileMaps;
 
@@ -21,16 +27,48 @@
 
         private NavigationMap navigation;
 
-        private void OnEnable()
+        private TilemapEnter tileEnter;
+
+        [InfoBox("Setup the map and let battle begins")]
+        [Button]
+        public void Setup()
+        {
+            this.StartCoroutine(this.Begin());
+        }
+
+        protected void OnEnable()
         {
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
             this.characters = this.GetComponentInChildren<SpawnCharacters>();
             this.navigation = this.GetComponentInChildren<NavigationMap>();
+            this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
 
+            //this.spawners = ;
+        }
+
+        private IEnumerator Begin()
+        {
             this.tilemap.SetupMap();
-            this.indicators.Initialize();
+            this.tileEnter.Begin();
+
+            yield return new WaitForSeconds(3.0f);
+
             this.characters.Initialize();
+
+            yield return new WaitForSeconds(3.0f);
+
+            this.indicators.Initialize();
+
+            yield return new WaitForSeconds(0.1f);
+
+            var objs = FindObjectsOfType(typeof(Spanwer));
+
+            foreach (var o in objs)
+            {
+                ((Spanwer)o).ShouldSpawnWave();
+            }
+
         }
     }
 }

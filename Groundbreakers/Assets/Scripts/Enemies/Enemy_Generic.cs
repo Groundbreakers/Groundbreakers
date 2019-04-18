@@ -36,22 +36,14 @@
         private bool isClone;
 
         // Death effect object
-        public GameObject deathEffect;
-
-        // Positioning objects and variables
-        public List<Vector3> waypointList;
+        [SerializeField]
+        private GameObject deathEffect;
 
         private Vector3 target;
-
-        private int waypointIndex;
 
         private Vector3 startingPosition;
 
         private Vector2 dir;
-
-        private float waypointDetection;
-
-        private float waypointWaitTime;
 
         private bool waiting;
 

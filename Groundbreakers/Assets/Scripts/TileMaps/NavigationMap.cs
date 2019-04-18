@@ -132,6 +132,12 @@
                 for (var j = 0; j < 8; j++)
                 {
                     var status = this.tilemap.GetTileStatusAt(i, j);
+
+                    if (status == null)
+                    {
+                        return;
+                    }
+
                     if (status.IsOccupied)
                     {
                         Gizmos.color = new Color(1f, 1f, 0.0f, 0.2f);

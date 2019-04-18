@@ -114,31 +114,31 @@
 
         public void OnEnable()
         {
-            // Finding all the references. 
-            this.uiCanvas = GameObject.Find("Canvas");
+            //// Finding all the references. 
+            //this.uiCanvas = GameObject.Find("Canvas");
 
-            if (!this.uiCanvas)
-            {
-                Debug.LogError("There needs to be one active Canvas GameObject in your scene.");
-            }
+            //if (!this.uiCanvas)
+            //{
+            //    Debug.LogError("There needs to be one active Canvas GameObject in your scene.");
+            //}
 
-            this.playerParty = GameObject.Find("CharacterList");
+            //this.playerParty = GameObject.Find("CharacterList");
 
-            if (!this.uiCanvas)
-            {
-                Debug.LogError("There needs to be one active CharacterList GameObject in your scene.");
-            }
+            //if (!this.uiCanvas)
+            //{
+            //    Debug.LogError("There needs to be one active CharacterList GameObject in your scene.");
+            //}
 
-            this.audioManager = FindObjectOfType(typeof(Manager)) as Manager;
+            //this.audioManager = FindObjectOfType(typeof(Manager)) as Manager;
 
-            if (!this.uiCanvas)
-            {
-                Debug.LogError("There needs to be one active Manager script on a GameObject in your scene.");
-            }
+            //if (!this.uiCanvas)
+            //{
+            //    Debug.LogError("There needs to be one active Manager script on a GameObject in your scene.");
+            //}
 
-            // Other references
-            this.currentLevelUi = this.uiCanvas.GetComponent<CurrentLevel>();
-            this.routesGenerator = this.uiCanvas.GetComponent<RoutesGenerator>();
+            //// Other references
+            //this.currentLevelUi = this.uiCanvas.GetComponent<CurrentLevel>();
+            //this.routesGenerator = this.uiCanvas.GetComponent<RoutesGenerator>();
         }
 
         #endregion
