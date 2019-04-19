@@ -45,6 +45,14 @@
             this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown("space"))
+            {
+                this.Setup();
+            }
+        }
+
         private IEnumerator Begin()
         {
             this.tilemap.SetupMap();

@@ -149,25 +149,32 @@
         private bool IsMoving()
         {
             return Vector3.Distance(this.transform.position, this.nextGrid) > Mathf.Epsilon;
-            //return this.transform.position == this.nextGrid;
         }
 
+        /// <summary>
+        ///     Update animator's direction.
+        /// </summary>
+        /// <param name="dir">
+        ///     The direction vector
+        /// </param>
         private void SetDirection(Vector3 dir)
         {
-            // Update animator direction
-            if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0)
+            var yAbs = Mathf.Abs(dir.y);
+            var xAbs = Mathf.Abs(dir.x);
+
+            if (yAbs > xAbs && dir.y > 0)
             {
                 this.animator.SetInteger(Direction, 0); // Up
             }
-            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0)
+            else if (yAbs < xAbs && dir.x > 0)
             {
                 this.animator.SetInteger(Direction, 1); // Right
             }
-            else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0)
+            else if (yAbs > xAbs && dir.y < 0)
             {
                 this.animator.SetInteger(Direction, 2); // Down
             }
-            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0)
+            else if (yAbs < xAbs && dir.x < 0)
             {
                 this.animator.SetInteger(Direction, 3); // Left
             }

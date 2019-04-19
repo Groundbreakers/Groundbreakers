@@ -33,7 +33,7 @@
         /// <example>
         ///     foreach (var x in numbers.Zip(words, Tuple.Create))
         ///     {
-        ///     Console.WriteLine(x.Item1 + x.Item2);
+        ///         Console.WriteLine(x.Item1 + x.Item2);
         ///     }
         /// </example>
         /// <returns>
@@ -107,6 +107,17 @@
                 var go = this.transform.Find(str);
 
                 this.defendPoints.Add(go);
+            }
+
+            // Reveal all indicators
+            foreach (var go in this.spawnPoints)
+            {
+                go.GetComponent<SpriteRenderer>().enabled = true;
+            }
+
+            foreach (var go in this.defendPoints)
+            {
+                go.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
     }
