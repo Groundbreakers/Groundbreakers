@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using AI;
+
     using UnityEngine;
 
     /// <inheritdoc />
@@ -16,6 +18,9 @@
         private SpriteRenderer rend;
 
         private TileStatus status;
+
+        [SerializeField]
+        private GameObject tmpPrefab;
 
         /// <summary>
         ///     Indicating if this tile is currently hovered.
@@ -66,6 +71,23 @@
             if (this.hovered || this.status.IsSelected)
             {
                 this.SetAlpha(0.5f);
+
+                // TMP
+                // TODO: Fix this shit
+                if (Input.GetKeyDown("d"))
+                {
+                    var obj = Instantiate(this.tmpPrefab, this.transform);
+
+                    this.status.SetCanDeploy(false);
+
+                    // Refactor this shit
+                    var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                    foreach (var enemy in enemies)
+                    {
+                        enemy.GetComponent<DynamicMovement>().OnTileChange(this.transform.position);
+                    }
+                }
             }
             else
             {

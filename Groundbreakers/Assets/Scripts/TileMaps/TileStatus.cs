@@ -35,6 +35,11 @@
             return this.canDeploy && !this.IsMoving;
         }
 
+        public void SetCanDeploy(bool value)
+        {
+            this.canDeploy = value;
+        }
+
         /// <summary>
         ///     This function is called when instantiate or on tile type has been changed. Should
         ///     update the status such as if can deploy.

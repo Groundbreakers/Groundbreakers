@@ -370,6 +370,8 @@ MonoBehaviour:
   tileB: {fileID: 5890712410309033143, guid: 60370c669cd5e9e47afda8e5c8ba3751, type: 3}
   tileC: {fileID: 3812301382797932396, guid: 32b050950fbf1334b8ba07ee7cc1294a, type: 3}
   water: {fileID: 3992318074888028234, guid: fa3b53a0c3264414da7a04c938569891, type: 3}
+  mushroom: {fileID: 1520603410798911214, guid: 092fbaa8c700dcd4092bf527211f7809,
+    type: 3}
 --- !u!114 &120820389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,9 +435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e165ebf6408543b1b941690cb38c3f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: -4, z: 0}
-  duration: 1.2
-  maxDelay: 0.89
+  offset: {x: 0, y: -5, z: 0}
+  duration: 2.5
+  maxDelay: 0.5
 --- !u!1 &254913821
 GameObject:
   m_ObjectHideFlags: 0

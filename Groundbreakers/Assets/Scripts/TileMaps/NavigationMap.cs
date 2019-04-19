@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Sirenix.OdinInspector;
-
     using UnityEngine;
 
     /// <inheritdoc />
@@ -19,19 +17,6 @@
         private readonly Node[,] map = new Node[Dimension, Dimension];
 
         private Tilemap tilemap;
-
-        [Button]
-        [InfoBox("Perform an A star algorithm")]
-        public void DebugSearch()
-        {
-            var finalPath = this.Search(new Vector3(0, 0), new Vector3(7, 7));
-
-            foreach (var pos in finalPath)
-            {
-                var block = this.tilemap.GetTileBlockAt(pos);
-                block.GetComponent<SpriteRenderer>().color = Color.red;
-            }
-        }
 
         /// <summary>
         ///     The main A star search algorithm API.

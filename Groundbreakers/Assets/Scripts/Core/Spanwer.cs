@@ -2,10 +2,7 @@
 {
     using System.Collections;
 
-    using Assets.Enemies.Scripts;
     using Assets.Scripts;
-
-    using CombatManager;
 
     using Sirenix.OdinInspector;
 
@@ -27,11 +24,6 @@
         [Button]
         public void ShouldSpawnWave()
         {
-            if (!this.PathExists())
-            {
-                return;
-            }
-
             this.pack.ResetPack();
             this.StopAllCoroutines();
             this.StartCoroutine(this.SpawnWave());
@@ -71,11 +63,6 @@
 
             // TODO: FIX THIS
             instance.transform.SetParent(this.transform);
-        }
-
-        private bool PathExists()
-        {
-            return true;
         }
     }
 }

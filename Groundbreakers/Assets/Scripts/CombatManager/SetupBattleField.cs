@@ -43,8 +43,6 @@
             this.characters = this.GetComponentInChildren<SpawnCharacters>();
             this.navigation = this.GetComponentInChildren<NavigationMap>();
             this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
-
-            //this.spawners = ;
         }
 
         private IEnumerator Begin()
@@ -68,7 +66,6 @@
             {
                 ((Spanwer)o).ShouldSpawnWave();
             }
-
         }
     }
 }

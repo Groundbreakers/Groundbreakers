@@ -1,10 +1,14 @@
 ﻿namespace TileMaps
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Sirenix.OdinInspector;
 
     using UnityEngine;
+
+    using Random = UnityEngine.Random;
 
     /// <inheritdoc />
     /// <summary>
@@ -34,6 +38,11 @@
 
         [SerializeField]
         private GameObject water;
+
+        // Temp
+        [SerializeField]
+        private GameObject mushroom;
+        private List<GameObject> mushrooms = new List<GameObject>();
 
         /// <summary>
         ///     Gets the squared map's dimension
@@ -100,6 +109,7 @@
 
             this.ClearAllTiles();
             this.InstantiateTiles(this.mapData);
+            this.InstantiateEnvironments();
         }
 
         public void OnTileChanges()
@@ -211,6 +221,50 @@
                     this.cachedStatus[x, y] = instance.GetComponent<TileStatus>();
                 }
             }
+        }
+
+        /// <summary>
+        ///     Instantiating fast and dirty but works fine environmental objects.
+        /// </summary>
+        private void InstantiateEnvironments()
+        {
+            var num = 4;
+            this.mushrooms.Clear();
+
+            // We use naive approach here
+            for (var i = 0; i < num; i++)
+            {
+                bool duplicate;
+                Transform block;
+                do
+                {
+                    block = this.PickNonOcuppiedBlock(this.mapData);
+                    duplicate = this.mushrooms.Any(go => go.transform.position.Equals(block.position));
+                }
+                while (duplicate);
+
+                // Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
+                var mush = Instantiate(this.mushroom, block);
+                mush.transform.localPosition = Vector3.zero;
+                this.mushrooms.Add(mush);
+
+                // Manually set these tile to undeployable
+                // block.GetComponent<SelectNode>().SetCanDeploy(false);
+            }
+        }
+
+        private Transform PickNonOcuppiedBlock(ITerrainData sourceData)
+        {
+            int x;
+            int y;
+            do
+            {
+                x = Random.Range(0, 8);
+                y = Random.Range(0, 8);
+            }
+            while (sourceData.GetTileTypeAt(x, y) == Tiles.Water);
+
+            return this.blocks[x, y];
         }
     }
 }

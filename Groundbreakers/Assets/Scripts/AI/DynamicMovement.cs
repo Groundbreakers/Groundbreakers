@@ -52,6 +52,15 @@
             }
         }
 
+        public void OnTileChange(Vector3 first)
+        {
+            // Check if we need to re calculate path
+            if (this.pathBuffer.Any(vec => vec == first))
+            {
+                this.RecalculatePath();
+            }
+        }
+
         #endregion
 
         #region Unity callbacks
