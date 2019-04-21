@@ -112,7 +112,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3683073349284263853
 MonoBehaviour:
@@ -132,6 +132,8 @@ MonoBehaviour:
   Button: {fileID: 3683073350262316584}
   Type: 
   Depth: 0
+  Row: 0
+  Column: 0
 --- !u!1 &3683073350262316584
 GameObject:
   m_ObjectHideFlags: 0

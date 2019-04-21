@@ -13,7 +13,7 @@ public class SectorGenerator : MonoBehaviour
     public GameObject Base;
     public int Height;
 
-    private int heightMultiplier = 120;
+    private int heightMultiplier = 100;
     private int depthMultiplier = 50;
 
     private int[,] sectorBool;
