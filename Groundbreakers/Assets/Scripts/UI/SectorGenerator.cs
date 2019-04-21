@@ -19,11 +19,6 @@ public class SectorGenerator : MonoBehaviour
     private int[,] sectorBool;
     private GameObject[,] sectors;
 
-    void Start()
-    {
-        this.Initialize();
-    }
-
     public void Initialize()
     {
         this.sectorBool = new int[this.Height + 1, 5];

@@ -24,6 +24,7 @@ public class Settings : MonoBehaviour
         manager.UpdateBGM();
 
         // Gnenerate Sector Map here
+        GameObject.Find("SectorMap").GetComponent<SectorGenerator>().Initialize();
     }
 
     public void Reset()
