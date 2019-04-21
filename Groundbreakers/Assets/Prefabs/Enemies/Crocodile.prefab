@@ -69,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -798880211
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,6 +127,7 @@ MonoBehaviour:
   deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
     type: 3}
   waypointList: []
+  time: 0
 --- !u!61 &4820504546433748512
 BoxCollider2D:
   m_ObjectHideFlags: 0
