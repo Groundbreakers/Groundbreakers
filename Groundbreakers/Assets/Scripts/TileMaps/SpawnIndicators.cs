@@ -33,11 +33,11 @@
         /// <example>
         ///     foreach (var x in numbers.Zip(words, Tuple.Create))
         ///     {
-        ///     Console.WriteLine(x.Item1 + x.Item2);
+        ///         Console.WriteLine(x.Item1 + x.Item2);
         ///     }
         /// </example>
         /// <returns>
-        ///     The <see cref="IEnumerable" />.
+        ///     The <see cref="Tuple" />.
         /// </returns>
         public IEnumerable<Tuple<Transform, Transform>> GetPairs()
         {
@@ -59,7 +59,7 @@
             this.defendPoints.Clear();
 
             this.InitializeIndicators();
-            RearrangeObjects(this.spawnPoints, TileData.Dimension - 1);
+            RearrangeObjects(this.spawnPoints, Tilemap.Dimension - 1);
             RearrangeObjects(this.defendPoints, 0);
         }
 
@@ -75,7 +75,7 @@
         private static void RearrangeObjects(List<Transform> objects, int row)
         {
             var n = objects.Count;
-            var xs = Enumerable.Range(0, TileData.Dimension).OrderBy(x => Random.value).Take(n).ToList();
+            var xs = Enumerable.Range(0, Tilemap.Dimension).OrderBy(x => Random.value).Take(n).ToList();
 
             xs.Sort();
 
@@ -107,6 +107,17 @@
                 var go = this.transform.Find(str);
 
                 this.defendPoints.Add(go);
+            }
+
+            // Reveal all indicators
+            foreach (var go in this.spawnPoints)
+            {
+                go.GetComponent<SpriteRenderer>().enabled = true;
+            }
+
+            foreach (var go in this.defendPoints)
+            {
+                go.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
     }

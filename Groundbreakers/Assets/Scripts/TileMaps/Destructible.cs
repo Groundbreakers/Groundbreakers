@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts
+﻿namespace TileMaps
 {
     using DG.Tweening;
 
@@ -14,14 +14,11 @@
         private void OnDisable()
         {
             var parent = this.transform.parent.gameObject;
-
-            BattleUtility.SetTileCanDeploy(parent, true);
         }
 
         private void OnEnable()
         {
             var parent = this.transform.parent.gameObject;
-            BattleUtility.SetTileCanDeploy(parent, false);
         }
 
         private void OnTriggerEnter2D(Collider2D other)

@@ -6,7 +6,7 @@
 
     /// <inheritdoc />
     /// <summary>
-    ///     The passive data component that contains some status of this current map.
+    ///     The passive data component that contains some status of this current tile GameObject.
     /// </summary>
     public class TileStatus : MonoBehaviour
     {
@@ -23,14 +23,21 @@
         [field: ReadOnly]
         public bool IsSelected { get; set; }
 
+        public bool IsOccupied { get; set; }
+
         public bool CanHover()
         {
-            return this.canDeploy && !this.IsMoving;
+            return !this.IsMoving && !this.IsOccupied;
         }
 
         public bool CanPass()
         {
             return this.canDeploy && !this.IsMoving;
+        }
+
+        public void SetCanDeploy(bool value)
+        {
+            this.canDeploy = value;
         }
 
         /// <summary>

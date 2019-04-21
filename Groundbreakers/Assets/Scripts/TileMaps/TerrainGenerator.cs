@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     using UnityEngine;
 
@@ -14,9 +15,13 @@
     ///     The user, namely, the GameMap should instantiate the GameObjects using the data from
     ///     this class. This class is purely data oriented, no instances of Tile prefab.
     /// </summary>
+    [SuppressMessage("ReSharper", "StyleCop.SA1407", Justification = "Ok here")]
     public class TerrainGenerator : MonoBehaviour, ITerrainData
     {
-        private Tiles[,] data = new Tiles[Dimension, Dimension];
+        /// <summary>
+        ///     Pure map data stored as "Tiles" in native 2D array.
+        /// </summary>
+        private readonly Tiles[,] data = new Tiles[Tilemap.Dimension, Tilemap.Dimension];
 
         [SerializeField]
         [Range(0.0f, 10.0f)]
@@ -26,50 +31,13 @@
         [Range(0.0f, 1.0f)]
         private float grassMax = 0.65f;
 
-        private List<Vector3> pathA = new List<Vector3>();
-
-        private List<Vector3> pathB = new List<Vector3>();
-
         [SerializeField]
         [Range(0.0f, 1.0f)]
         private float sandMax = 0.45f;
 
-        [SerializeField]
-        [Range(0.0f, 1.0f)]
-        private float stoneMax = 1.0f;
-
-        [Flags]
-        private enum Direction
+        public IEnumerable<Vector3> GetSpawnLocations()
         {
-            Down = 1,
-
-            Left = 2,
-
-            Right = 4
-        }
-
-        public static int Dimension { get; } = 8;
-
-        /// <summary>
-        ///     Heritage from Austin. Get the left path.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="List" />. List of the positions in a path.
-        /// </returns>
-        public List<Vector3> GetPathA()
-        {
-            return this.pathA;
-        }
-
-        /// <summary>
-        ///     Heritage from Austin. Get the right path.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="List" />. List of the positions in a path.
-        /// </returns>
-        public List<Vector3> GetPathB()
-        {
-            return this.pathB;
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
@@ -87,17 +55,12 @@
         /// </returns>
         public Tiles GetTileTypeAt(float x, float y)
         {
-            if (x < 0 || x >= Dimension || y < 0 || y >= Dimension)
+            if (x < 0 || x >= Tilemap.Dimension || y < 0 || y >= Tilemap.Dimension)
             {
                 return Tiles.OutOfBound;
             }
 
             return this.data[(int)x, (int)y];
-        }
-
-        public IEnumerable<Vector3> GetSpawnLocations()
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
@@ -108,118 +71,10 @@
         public void Initialize()
         {
             this.GenerateTerrain();
-            this.GenerateEnviroment();
-            this.GeneratePaths();
+            this.GenerateEnvironment();
         }
 
-        /// <summary>
-        ///     Using very dummy approach (Random-Walk with constrains) to generate a path within
-        ///     the margins.
-        /// </summary>
-        /// <param name="leftMargin">
-        ///     The left margin in index [0,...7]
-        /// </param>
-        /// <param name="rightMargin">
-        ///     The right margin in index [0,...7]
-        /// </param>
-        /// <returns>
-        ///     The <see cref="List" />.
-        /// </returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///     should not happen.
-        /// </exception>
-        private List<Vector3> CreatePath(int leftMargin, int rightMargin)
-        {
-            var path = new List<Vector3>();
-
-            var currentX = Random.Range(leftMargin, rightMargin + 1);
-            var currentY = 7;
-
-            path.Add(new Vector3(currentX, currentY));
-
-            var currentAllowed = Direction.Down;
-            var lastDirection = Direction.Down;
-            while (currentY != 0)
-            {
-                var option = this.GetNewDirection(currentAllowed);
-
-                var newX = currentX;
-                var newY = currentY;
-
-                switch (option)
-                {
-                    case Direction.Down:
-                        if (lastDirection == Direction.Left)
-                        {
-                            currentAllowed = Direction.Left | Direction.Down;
-                        }
-                        else if (lastDirection == Direction.Right)
-                        {
-                            currentAllowed = Direction.Down | Direction.Right;
-                        }
-                        else
-                        {
-                            currentAllowed = Direction.Left | Direction.Down | Direction.Right;
-                        }
-
-                        newY--;
-                        break;
-                    case Direction.Left:
-                        currentAllowed = Direction.Left | Direction.Down;
-                        newX--;
-                        break;
-                    case Direction.Right:
-                        currentAllowed = Direction.Down | Direction.Right;
-                        newX++;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                newX = Mathf.Clamp(newX, leftMargin, rightMargin);
-
-                if (path.Contains(new Vector3(newX, newY)))
-                {
-                    continue;
-                }
-
-                lastDirection = option;
-                currentX = newX;
-                currentY = newY;
-                path.Add(new Vector3(currentX, currentY));
-            }
-
-            return path;
-        }
-
-        /// <summary>
-        ///     Using a very smart way to generate a path with Fixed length N.
-        /// </summary>
-        /// <param name="length">
-        ///     The length N, which should be greater that otherwise Infinite loop.
-        /// </param>
-        /// <param name="leftMargin">
-        ///     The left margin in index [0,...7]
-        /// </param>
-        /// <param name="rightMargin">
-        ///     The right margin in index [0,...7]
-        /// </param>
-        /// <returns>
-        ///     The <see cref="List" />.
-        /// </returns>
-        private List<Vector3> CreatePathSmart(int length, int leftMargin, int rightMargin)
-        {
-            List<Vector3> path;
-            do
-            {
-                path = this.CreatePath(leftMargin, rightMargin);
-            }
-            while (path.Count != length);
-
-            return path;
-        }
-
-        private void GenerateEnviroment()
+        private void GenerateEnvironment()
         {
             var num = Random.Range(1, 3);
             for (var i = 0; i < num; i++)
@@ -228,34 +83,12 @@
                 int y;
                 do
                 {
-                    x = Random.Range(0, Dimension);
-                    y = Random.Range(0, Dimension);
+                    x = Random.Range(0, Tilemap.Dimension);
+                    y = Random.Range(0, Tilemap.Dimension);
                 }
                 while (this.GetTileTypeAt(x, y) == Tiles.Path);
 
                 this.data[x, y] = Tiles.Water;
-            }
-        }
-
-        /// <summary>
-        ///     Generate two paths according to the design document. And store the path data into
-        ///     the fields.
-        /// </summary>
-        private void GeneratePaths()
-        {
-            const int Length = 12;
-
-            this.pathA = this.CreatePathSmart(Length, 0, 3);
-            this.pathB = this.CreatePathSmart(Length, 4, 7);
-
-            foreach (var pos in this.pathA)
-            {
-                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
-            }
-
-            foreach (var pos in this.pathB)
-            {
-                this.data[(int)pos.x, (int)pos.y] = Tiles.Path;
             }
         }
 
@@ -265,17 +98,19 @@
         /// </summary>
         private void GenerateTerrain()
         {
+            var n = Tilemap.Dimension;
+
             var freq = this.frequency;
-            var heightMap = new float[Dimension, Dimension];
-            var moisture = new float[Dimension, Dimension];
+            var heightMap = new float[n, n];
+            var moisture = new float[n, n];
 
             // Generating Noise
-            for (var i = 0; i < Dimension; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < Dimension; j++)
+                for (var j = 0; j < n; j++)
                 {
-                    var nx = i / (float)Dimension - 0.5f;
-                    var ny = j / (float)Dimension - 0.5f;
+                    var nx = i / (float)n - 0.5f;
+                    var ny = j / (float)n - 0.5f;
 
                     var a = Mathf.PerlinNoise(freq * nx, freq * ny);
                     var b = freq / 2 * Mathf.PerlinNoise(freq * 2 * nx, freq * 2 * ny);
@@ -287,9 +122,9 @@
             }
 
             // Generate Tile map
-            for (var i = 0; i < Dimension; i++)
+            for (var i = 0; i < n; i++)
             {
-                for (var j = 0; j < Dimension; j++)
+                for (var j = 0; j < n; j++)
                 {
                     var e = heightMap[i, j];
                     var m = moisture[i, j];
@@ -326,28 +161,6 @@
             }
 
             return Tiles.Stone;
-        }
-
-        /// <summary>
-        ///     Get a new direction given the constrain.
-        /// </summary>
-        /// <param name="allowed">
-        ///     The Bitmask that constrains your options
-        /// </param>
-        /// <returns>
-        ///     The <see cref="Direction" />.
-        /// </returns>
-        private Direction GetNewDirection(Direction allowed)
-        {
-            Direction newDir;
-            do
-            {
-                var values = Enum.GetValues(typeof(Direction));
-                newDir = (Direction)values.GetValue(Random.Range(0, values.Length));
-            }
-            while ((allowed & newDir) == 0);
-
-            return newDir;
         }
     }
 }

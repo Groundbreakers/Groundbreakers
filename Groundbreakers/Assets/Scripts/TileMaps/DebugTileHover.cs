@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using AI;
+
     using UnityEngine;
 
     /// <inheritdoc />
@@ -7,17 +9,30 @@
     ///     Provide a temporary player interface to debug, interacting with tiles.
     /// </summary>
     [RequireComponent(typeof(TileController))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(TileStatus))]
     public class DebugTileHover : MonoBehaviour
     {
-        private SpriteRenderer rend;
-
         private TileController controller;
+
+        private SpriteRenderer rend;
 
         private TileStatus status;
 
+        [SerializeField]
+        private GameObject tmpPrefab;
+
+        /// <summary>
+        ///     Indicating if this tile is currently hovered.
+        /// </summary>
         private bool hovered;
 
-        private void OnEnable()
+        protected void OnDisable()
+        {
+            this.SetAlpha();
+        }
+
+        protected void OnEnable()
         {
             var tilemap = GameObject.Find("Tilemap");
 
@@ -28,39 +43,56 @@
             this.SetAlpha();
         }
 
-        private void OnMouseOver()
-        {
-            this.hovered = true;
-        }
-
-        private void OnMouseExit()
+        protected void OnMouseExit()
         {
             this.hovered = false;
         }
 
-        private void OnMouseUpAsButton()
+        protected void OnMouseOver()
         {
+            this.hovered = this.status.CanHover();
+        }
+
+        protected void OnMouseUpAsButton()
+        {
+            if (!this.hovered)
+            {
+                return;
+            }
+
             this.status.IsSelected = true;
 
             this.controller.SelectTile(this.gameObject);
         }
 
-        private void Update()
+        protected void Update()
         {
             // Performance critical
             if (this.hovered || this.status.IsSelected)
             {
                 this.SetAlpha(0.5f);
+
+                // TMP
+                // TODO: Fix this shit
+                if (Input.GetKeyDown("d"))
+                {
+                    var obj = Instantiate(this.tmpPrefab, this.transform);
+
+                    this.status.SetCanDeploy(false);
+
+                    // Refactor this shit
+                    var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                    foreach (var enemy in enemies)
+                    {
+                        enemy.GetComponent<DynamicMovement>().OnTileChange(this.transform.position);
+                    }
+                }
             }
             else
             {
                 this.SetAlpha();
             }
-        }
-
-        private void OnDisable()
-        {
-            this.SetAlpha();
         }
 
         private void SetAlpha(float alpha = 1.0f)

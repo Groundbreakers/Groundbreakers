@@ -20,7 +20,7 @@ public class CurrentLevel : MonoBehaviour
     /// <summary>
     /// Keep a reference to the manager class.
     /// </summary>
-    private LevelManager levelManager;
+    private LevelManager.LevelManager levelManager;
 
     public void OnRegionChanged()
     {
@@ -48,7 +48,7 @@ public class CurrentLevel : MonoBehaviour
 
     private void OnEnable()
     {
-        this.levelManager = FindObjectOfType<LevelManager>();
+        this.levelManager = FindObjectOfType<LevelManager.LevelManager>();
 
         if (!this.levelManager)
         {

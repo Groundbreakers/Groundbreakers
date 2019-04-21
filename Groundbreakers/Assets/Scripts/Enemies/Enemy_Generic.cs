@@ -1,98 +1,124 @@
 ﻿namespace Assets.Enemies.Scripts
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
+
     using UnityEngine;
+
     using Random = UnityEngine.Random;
 
     public class Enemy_Generic : MonoBehaviour
     {
-
         #region Variable Declarations
 
         // Stats, some modified by enemy scripts
         public int maxHealth = 1;
+
         public int health = 1;
+
         public float speed = 1f;
+
         public float speedMultiplier = 1;
+
         public int power = 1;
+
         public float powerMultiplier = 1;
-        public float evasion = 0;
-        public int regen = 0;
+
+        public float evasion;
+
+        public int regen;
 
         // Attributes and related flags
-        public List<String> attributes = new List<string>();
-        private bool isEnraged = false;
-        private bool isClone = false;
+        public List<string> attributes = new List<string>();
+
+        private bool isEnraged;
+
+        private bool isClone;
 
         // Death effect object
-        public GameObject deathEffect;
+        [SerializeField]
+        private GameObject deathEffect;
 
-        // Positioning objects and variables
-        public List<Vector3> waypointList;
         private Vector3 target;
-        private int waypointIndex = 0;
+
         private Vector3 startingPosition;
+
         private Vector2 dir;
-        private float waypointDetection;
-        private float waypointWaitTime;
-        private bool waiting = false;
+
+        private bool waiting;
 
         // Animator & visuals
         private Animator animator;
+
         private bool fadingIn = true;
 
         // Status flags
         private float statusMultiplier = 1;
-        private bool isStunned = false;
-        private bool isBlighted = false;
-        private int blightStacks = 0;
-        private bool isBurned = false;
-        private bool isSlowed = false;
+
+        private bool isStunned;
+
+        private bool isBlighted;
+
+        private int blightStacks;
+
+        private bool isBurned;
+
+        private bool isSlowed;
+
         private bool isPurged = true;
-        private float strongestSlow = 0;
+
+        private float strongestSlow;
 
         // Timers
-        private float stunTime = 0;
+        private float stunTime;
+
         private float blightTimer = 1;
+
         private float burnTimer = 1;
+
         private float regenTimer = 1;
 
         #endregion
+
         private GameObject crystalCounter;
-        public int time = 0;
-        void Start()
+
+        public int time;
+
+        private void OnEnable()
         {
-            // Enemy fade-in
-            Color tmpcolor = this.gameObject.GetComponent<SpriteRenderer>().color;
-            tmpcolor.a = 0;
-            this.gameObject.GetComponent<SpriteRenderer>().color = tmpcolor;
-
-            this.startingPosition = this.gameObject.transform.position;
             this.animator = this.GetComponent<Animator>();
-            InitializeAttributes();
-            // Randomize position and waypoint accuracy
-            this.transform.Translate(new Vector3(Random.Range(-0.2f, 0.3f), Random.Range(-0.2f, 0.3f), 0));
-            // Get first waypoint
-            this.GetNextWaypoint();
+            GameObject o;
 
+            // Enemy fade-in
+            var tmpColor = this.gameObject.GetComponent<SpriteRenderer>().color;
+            tmpColor.a = 0;
+
+            (o = this.gameObject).GetComponent<SpriteRenderer>().color = tmpColor;
+
+            this.startingPosition = o.transform.position;
+
+            this.InitializeAttributes();
+        }
+
+        private void Start()
+        {
             if (this.attributes.Contains("Aura") && this.attributes.Contains("Revenge"))
             {
                 this.gameObject.GetComponent<SpriteRenderer>().color = Color.cyan;
                 this.isPurged = false;
             }
 
-            crystalCounter = GameObject.Find("CrystalCounter");
+            this.crystalCounter = GameObject.Find("CrystalCounter");
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             // Testing functions
             if (!this.isBlighted && Input.GetKeyDown("b"))
             {
                 this.BlightEnemy();
             }
+
             if (!this.isBurned && Input.GetKeyDown("u"))
             {
                 this.BurnEnemy();
@@ -102,11 +128,13 @@
             {
                 this.SlowEnemy(0.5f);
             }
+
             // Do fade-in if not opaque yet
-            if (fadingIn)
+            if (this.fadingIn)
             {
-                FadeIn();
+                this.FadeIn();
             }
+
             // Do Blight & Burn damage
             if (this.isBlighted)
             {
@@ -116,6 +144,7 @@
                     this.BlightTick();
                 }
             }
+
             if (this.isBurned)
             {
                 this.burnTimer -= Time.deltaTime;
@@ -128,14 +157,13 @@
             // Check health, die if health <= 0.
             if (this.health <= 0)
             {
-                GameObject effect = (GameObject)Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
-                Enemy_Death death = effect.GetComponent<Enemy_Death>();
-                death.setDirection(animator.GetInteger("Direction"));
+                var effect = Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
+                var death = effect.GetComponent<Enemy_Death>();
+                death.setDirection(this.animator.GetInteger("Direction"));
                 //CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
                 //temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
                 Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
-                
             }
 
             // Check for "Rage" attribute and HP < 50%
@@ -159,43 +187,46 @@
             // Move if not stunned, otherwise reduce stun time
             if (!this.isStunned)
             {
-                // Move the enemy towards the target waypoint
-                this.transform.Translate(this.dir.normalized * this.speed * this.speedMultiplier * Time.deltaTime, Space.World);
+                //// Move the enemy towards the target waypoint
+                //this.transform.Translate(
+                //    this.dir.normalized * this.speed * this.speedMultiplier * Time.deltaTime,
+                //    Space.World);
 
-                // Check if the waypoint has been reached
-                if (Vector2.Distance(this.transform.position, this.target) <= this.waypointDetection)
-                {
-                    this.waiting = true;
-                }
-                // Do random 'wait time' if applicable
-                if (this.waiting == true)
-                {
-                    if (this.waypointWaitTime > 0)
-                    {
-                        this.waypointWaitTime -= Time.deltaTime;
-                    }
-                    else
-                    {
-                        this.GetNextWaypoint();
-                    }
-                }
+                //// Check if the waypoint has been reached
+                //if (Vector2.Distance(this.transform.position, this.target) <= this.waypointDetection)
+                //{
+                //    this.waiting = true;
+                //}
+
+                //// Do random 'wait time' if applicable
+                //if (this.waiting)
+                //{
+                //    if (this.waypointWaitTime > 0)
+                //    {
+                //        this.waypointWaitTime -= Time.deltaTime;
+                //    }
+                //    else
+                //    {
+                //        this.GetNextWaypoint();
+                //    }
+                //}
             }
             else
             {
                 this.StunTick();
             }
 
-            time++;
+            this.time++;
         }
 
         // Damage handler
-          public void DamageEnemy(int damage, int armorpen, float accuracy, bool isMelee, bool isMarked)
+        public void DamageEnemy(int damage, int armorpen, float accuracy, bool isMelee, bool isMarked)
         {
             // Check if the attack missed, or was dodged. If it hits, do damage calculation
-            float accuracyroll = Random.Range(0.0f, 1.0f);
-            float dodgeroll = Random.Range(0.0f, 1.0f);
+            var accuracyroll = Random.Range(0.0f, 1.0f);
+            var dodgeroll = Random.Range(0.0f, 1.0f);
             float flyingMod = 0;
-            if (this.attributes.Contains("Flying") && isMelee == true)
+            if (this.attributes.Contains("Flying") && isMelee)
             {
                 flyingMod = 0.75f;
             }
@@ -212,7 +243,7 @@
                     damagevalue = damage;
                 }
 
-                if (isMarked == true)
+                if (isMarked)
                 {
                     damagevalue = (int)(damagevalue * 1.25);
 
@@ -231,7 +262,6 @@
             else
             {
                 GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(0, this.transform);
-                return;
             }
         }
 
@@ -245,7 +275,7 @@
             this.stunTime = time;
         }
 
-        void StunTick()
+        private void StunTick()
         {
             this.stunTime -= Time.deltaTime;
             if (this.stunTime <= 0)
@@ -296,9 +326,9 @@
             this.isPurged = true;
         }
 
-        void BlightTick()
+        private void BlightTick()
         {
-            int blightDamage = (int)Math.Ceiling(0.02 * this.blightStacks * this.maxHealth * this.statusMultiplier);
+            var blightDamage = (int)Math.Ceiling(0.02 * this.blightStacks * this.maxHealth * this.statusMultiplier);
             this.health -= blightDamage;
             this.blightTimer = 1;
         }
@@ -324,9 +354,9 @@
             }
         }
 
-        void BurnTick()
+        private void BurnTick()
         {
-            int burnDamage = (int)Math.Ceiling(0.05 * this.maxHealth * this.statusMultiplier);
+            var burnDamage = (int)Math.Ceiling(0.05 * this.maxHealth * this.statusMultiplier);
             this.health -= burnDamage;
             this.burnTimer = 1;
         }
@@ -343,7 +373,7 @@
         }
 
         // Regen handler
-        void RegenTick()
+        private void RegenTick()
         {
             if (this.health < this.maxHealth)
             {
@@ -353,84 +383,44 @@
                     this.health = this.maxHealth;
                 }
             }
+
             this.regenTimer = 1;
         }
 
         #endregion
 
-        // Get the next waypoint and update the index
-        void GetNextWaypoint()
-        {
-            if (this.waypointIndex >= this.waypointList.Count - 1)
-            {
-                this.EndPath();
-                return;
-            }
-            this.waypointIndex++;
-            this.target = this.waypointList[this.waypointIndex];
-            // Get new random waypoint accuracy
-            this.dir = this.target - this.transform.position;
-            float positiondiceroll = Random.Range(-0.4f, 0.4f);
-            if (positiondiceroll < 0)
-            {
-                this.waypointDetection = 0.03f;
-                this.waypointWaitTime = Math.Abs(positiondiceroll);
-            }
-            else
-            {
-                this.waypointDetection = 0.03f + positiondiceroll;
-                this.waypointWaitTime = 0;
-            }
-            this.waiting = false;
-
-            Vector2 dir;
-            dir.x = this.target.x - this.transform.position.x; // Change animation to fit the angle
-            dir.y = this.target.y - this.transform.position.y; // Change animation to fit the angle
-            if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0) { this.animator.SetInteger("Direction", 0); } // Up
-            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0) { this.animator.SetInteger("Direction", 1); } // Right
-            else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0) { this.animator.SetInteger("Direction", 2); } // Down
-            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0) { this.animator.SetInteger("Direction", 3); } // Left
-
-        }
-
-        // When the enemy reaches the end of its path
-        void EndPath()
-        {
-            //GameObject counter = GameObject.Find("HPCounter");
-            //HP hp = counter.GetComponent<HP>();
-            //Debug.Log("Took damage: " + (int)Math.Ceiling(this.power * this.powerMultiplier));
-            //hp.UpdateHealth(-(int)Math.Ceiling(this.power * this.powerMultiplier));
-            Destroy(this.gameObject);
-        }
-
-        void InitializeAttributes()
+        private void InitializeAttributes()
         {
             if (this.attributes.Contains("Resistance"))
             {
                 this.statusMultiplier = 0.5f;
             }
+
             if (this.attributes.Contains("Immune"))
             {
                 this.statusMultiplier = 0;
             }
+
             if (this.attributes.Contains("Evasion"))
             {
                 this.evasion += 0.25f;
             }
+
             if (this.attributes.Contains("Regen"))
             {
                 this.regen += (int)Math.Ceiling(0.05 * this.maxHealth);
             }
+
             if (this.attributes.Contains("Aggregation"))
             {
-                Invoke("MakeAggregationClone", 0.3f);
-                Invoke("MakeAggregationClone", 0.6f);
+                this.Invoke("MakeAggregationClone", 0.3f);
+                this.Invoke("MakeAggregationClone", 0.6f);
             }
         }
 
-        void FadeIn()
+        private void FadeIn()
         {
-            Color tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
+            var tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
             tmp.a += 0.05f;
             this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
             if (tmp.a >= 1)
@@ -439,11 +429,11 @@
             }
         }
 
-        void MakeAggregationClone()
+        private void MakeAggregationClone()
         {
             if (!this.isClone)
             {
-                GameObject thisClone = Instantiate(this.gameObject, this.startingPosition, Quaternion.identity);
+                var thisClone = Instantiate(this.gameObject, this.startingPosition, Quaternion.identity);
                 thisClone.GetComponent<Enemy_Generic>().isClone = true;
             }
         }

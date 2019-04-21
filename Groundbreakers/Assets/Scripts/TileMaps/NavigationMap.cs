@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Sirenix.OdinInspector;
-
     using UnityEngine;
 
     /// <inheritdoc />
@@ -16,22 +14,9 @@
     {
         private const int Dimension = 8;
 
-        private Node[,] map = new Node[Dimension, Dimension];
+        private readonly Node[,] map = new Node[Dimension, Dimension];
 
         private Tilemap tilemap;
-
-        [Button]
-        [InfoBox("Perform an A star algorithm")]
-        public void DebugSearch()
-        {
-            var finalPath = this.Search(new Vector3(0, 0), new Vector3(7, 7));
-
-            foreach (var pos in finalPath)
-            {
-                var block = this.tilemap.GetTileBlockAt(pos);
-                block.GetComponent<SpriteRenderer>().color = Color.red;
-            }
-        }
 
         /// <summary>
         ///     The main A star search algorithm API.
@@ -43,7 +28,7 @@
         ///     The ending(goal) point.
         /// </param>
         /// <returns>
-        ///     The <see cref="IEnumerable" />.
+        ///     The <see cref="Vector3" />.
         /// </returns>
         public IEnumerable<Vector3> Search(Vector3 start, Vector3 end)
         {
@@ -72,7 +57,7 @@
 
                 if (current.Pos == end)
                 {
-                    return this.ConstructFinalPath(current, start);
+                    return ConstructFinalPath(current, start);
                 }
 
                 var adjacentPos = GetAdjacentPos(current);
@@ -111,6 +96,49 @@
             }
 
             return new List<Vector3>();
+        }
+
+        protected void OnEnable()
+        {
+            this.tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
+        }
+
+        protected void OnDrawGizmos()
+        {
+            if (!Application.isPlaying)
+            {
+                return;
+            }
+
+            var center = new Vector3(3.5f, 3.25f, 0.0f);
+
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    var status = this.tilemap.GetTileStatusAt(i, j);
+
+                    if (status == null)
+                    {
+                        return;
+                    }
+
+                    if (status.IsOccupied)
+                    {
+                        Gizmos.color = new Color(1f, 1f, 0.0f, 0.2f);
+                    }
+                    else if (status.CanPass())
+                    {
+                        Gizmos.color = new Color(0f, 1f, 0.0f, 0.2f);
+                    }
+                    else
+                    {
+                        Gizmos.color = new Color(1, 0, 0, 0.2f);
+                    }
+
+                    Gizmos.DrawCube(new Vector3(i, j), new Vector3(1.0f, 1.0f, 0.0f));
+                }
+            }
         }
 
         private static IEnumerable<Vector3> GetAdjacentPos(Node node)
@@ -155,7 +183,7 @@
             return !(x < 0 || x >= Dimension || y < 0 || y >= Dimension);
         }
 
-        private IEnumerable<Vector3> ConstructFinalPath(Node current, Vector3 startPoint)
+        private static IEnumerable<Vector3> ConstructFinalPath(Node current, Vector3 startPoint)
         {
             var finalPath = new List<Vector3>();
 
@@ -173,8 +201,8 @@
 
         private Node GetNodeAt(Vector3 pos)
         {
-            var x = (int)pos.x;
-            var y = (int)pos.y;
+            var x = Mathf.CeilToInt(pos.x);
+            var y = Mathf.CeilToInt(pos.y);
 
             return this.map[x, y];
         }
@@ -191,11 +219,6 @@
                     this.map[i, j].CanPass = status.CanPass();
                 }
             }
-        }
-
-        private void OnEnable()
-        {
-            this.tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         }
 
         /// <summary>

@@ -9,17 +9,13 @@
 
     using UnityEngine;
 
-    public class BasicMovement : MonoBehaviour
+    public class DynamicMovement : MonoBehaviour
     {
         private static readonly int Direction = Animator.StringToHash("Direction");
 
         [SerializeField]
         [Range(0.0f, 3.0f)]
         private float speed = 1.0f; // temp
-
-        [SerializeField]
-        [Range(0.0f, 3.0f)]
-        private float speedMultiplier = 1.0f;
 
         private Animator animator;
 
@@ -30,19 +26,10 @@
         [ShowInInspector]
         private List<Vector3> pathBuffer;
 
-        private Vector3 goal;
-
         /// <summary>
         ///     The target grid, usually the target should be adjacent grids of current.
         /// </summary>
         private Vector3 nextGrid = Vector3.zero;
-
-        /// <summary>
-        ///     The current direction of the object, this is different from unity direction.
-        /// </summary>
-        private Vector3 direction = Vector3.down;
-
-        private bool freezing;
 
         #region Public Functions
 
@@ -56,25 +43,22 @@
             this.nextGrid = pos;
         }
 
-        public void OnTileChange(Vector3 pos)
+        public void OnTilesChange(Vector3 first, Vector3 second)
         {
             // Check if we need to re calculate path
-            if (this.pathBuffer.Any(vec => vec == pos))
+            if (this.pathBuffer.Any(vec => vec == first || vec == second))
             {
                 this.RecalculatePath();
-                var next = this.GetNextPoint();
-                this.MoveToward(next);
             }
         }
 
-        public void Freeze()
+        public void OnTileChange(Vector3 first)
         {
-            this.freezing = true;
-        }
-
-        public void Unfreeze()
-        {
-            this.freezing = false;
+            // Check if we need to re calculate path
+            if (this.pathBuffer.Any(vec => vec == first))
+            {
+                this.RecalculatePath();
+            }
         }
 
         #endregion
@@ -99,18 +83,17 @@
 
         protected void FixedUpdate()
         {
-            if (this.freezing)
+            if (TileController.Busy)
             {
                 return;
             }
 
             if (this.IsMoving())
             {
-                var step = Time.fixedDeltaTime * this.speed * this.speedMultiplier;
-                var position = this.transform.position;
+                var step = Time.fixedDeltaTime * this.speed;
 
                 this.transform.position = Vector3.MoveTowards(
-                    position, 
+                    this.transform.position, 
                     this.nextGrid, 
                     step);
             }
@@ -168,24 +151,30 @@
             return Vector3.Distance(this.transform.position, this.nextGrid) > Mathf.Epsilon;
         }
 
+        /// <summary>
+        ///     Update animator's direction.
+        /// </summary>
+        /// <param name="dir">
+        ///     The direction vector
+        /// </param>
         private void SetDirection(Vector3 dir)
         {
-            this.direction = dir;
+            var yAbs = Mathf.Abs(dir.y);
+            var xAbs = Mathf.Abs(dir.x);
 
-            // Update animator direction
-            if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y > 0)
+            if (yAbs > xAbs && dir.y > 0)
             {
                 this.animator.SetInteger(Direction, 0); // Up
             }
-            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x > 0)
+            else if (yAbs < xAbs && dir.x > 0)
             {
                 this.animator.SetInteger(Direction, 1); // Right
             }
-            else if (Mathf.Abs(dir.y) > Mathf.Abs(dir.x) && dir.y < 0)
+            else if (yAbs > xAbs && dir.y < 0)
             {
                 this.animator.SetInteger(Direction, 2); // Down
             }
-            else if (Mathf.Abs(dir.y) < Mathf.Abs(dir.x) && dir.x < 0)
+            else if (yAbs < xAbs && dir.x < 0)
             {
                 this.animator.SetInteger(Direction, 3); // Left
             }

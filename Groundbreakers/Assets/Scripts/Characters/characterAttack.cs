@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
+using TileMaps;
+
 public class characterAttack : MonoBehaviour
 {
     public string enemyTag = "Enemy";
@@ -187,7 +189,7 @@ public class characterAttack : MonoBehaviour
 
         }
 
-        if (!isChanging && !trickster.disabled && !isStunned)
+        if (!isChanging && !trickster.disabled && !isStunned && !TileController.Busy)
         {
             this.fireCount();
         }

@@ -1,10 +1,12 @@
-﻿namespace Assets.Scripts
+﻿namespace TileMaps
 {
     using DG.Tweening;
+
     using UnityEngine;
 
     using Random = UnityEngine.Random;
 
+    /// <inheritdoc />
     /// <summary>
     ///     This component handles tile enter/exiting animation. Attaching this component to object
     ///     that you wish to falling and fade. We are using DOTween to do the job for us, and it
@@ -50,7 +52,7 @@
         #region Public Functions
 
         /// <summary>
-        /// Let DOTween handle the entering animation(i.e. transform and fade in).
+        ///     Let DOTween handle the entering animation(i.e. transform and fade in).
         /// </summary>
         public void StartEntering()
         {
@@ -66,7 +68,7 @@
         }
 
         /// <summary>
-        /// Let DOTween handle the exiting animation(i.e. transform and fade out).
+        ///     Let DOTween handle the exiting animation(i.e. transform and fade out).
         /// </summary>
         public void StartExiting()
         {
@@ -86,7 +88,7 @@
 
         #region Unity Callbacks
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             // Init transform
             this.originalPos = this.transform.position;

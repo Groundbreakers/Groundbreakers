@@ -1,10 +1,12 @@
 ﻿namespace CombatManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Collections;
 
     using Characters;
+
+    using Core;
+
+    using Sirenix.OdinInspector;
 
     using TileMaps;
 
@@ -25,41 +27,53 @@
 
         private NavigationMap navigation;
 
-        // TODO: FIX THIS
-        public List<Vector3> pathA;
-        public List<Vector3> pathB;
+        private TilemapEnter tileEnter;
 
-        private void OnEnable()
+        [InfoBox("Setup the map and let battle begins")]
+        [Button]
+        public void Setup()
+        {
+            this.StartCoroutine(this.Begin());
+        }
+
+        protected void OnEnable()
         {
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
             this.characters = this.GetComponentInChildren<SpawnCharacters>();
             this.navigation = this.GetComponentInChildren<NavigationMap>();
+            this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
+        }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown("space"))
+            {
+                this.Setup();
+            }
+        }
+
+        private IEnumerator Begin()
+        {
             this.tilemap.SetupMap();
-            this.indicators.Initialize();
+            this.tileEnter.Begin();
+
+            yield return new WaitForSeconds(3.0f);
+
             this.characters.Initialize();
 
-            var tmp = new List<List<Vector3>>();
+            yield return new WaitForSeconds(3.0f);
 
-            foreach (var (spawn, _) in this.indicators.GetPairs())
+            this.indicators.Initialize();
+
+            yield return new WaitForSeconds(0.1f);
+
+            var objs = FindObjectsOfType(typeof(Spanwer));
+
+            foreach (var o in objs)
             {
-                // find nearest end point
-                var targets = this.indicators.GetDefendPoints();
-                var end = targets.OrderBy(pos => Vector3.Distance(spawn.position, pos.position)).First();
-
-                // Temp
-                var path = this.navigation.Search(spawn.position, end.position);
-                tmp.Add(path.ToList());
-                foreach (var pos in path)
-                {
-                    var block = this.tilemap.GetTileBlockAt(pos);
-                    block.GetComponent<SpriteRenderer>().color = Color.red;
-                }
+                ((Spanwer)o).ShouldSpawnWave();
             }
-
-            this.pathA = tmp[0];
-            this.pathB = tmp[1];
         }
     }
 }

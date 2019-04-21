@@ -2,12 +2,11 @@
 {
     using System.Collections;
 
-    using Assets.Enemies.Scripts;
     using Assets.Scripts;
 
-    using CombatManager;
-
     using Sirenix.OdinInspector;
+
+    using TileMaps;
 
     using UnityEngine;
 
@@ -22,17 +21,9 @@
 
         private EnemyGroups pack;
 
-        [SerializeField]
-        private bool A; //temp
-
         [Button]
         public void ShouldSpawnWave()
         {
-            if (!this.PathExists())
-            {
-                return;
-            }
-
             this.pack.ResetPack();
             this.StopAllCoroutines();
             this.StartCoroutine(this.SpawnWave());
@@ -47,11 +38,22 @@
 
             while (!this.pack.Done(pathId))
             {
+                while (TileController.Busy)
+                {
+                    yield return null;
+                }
+
                 // this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(pathId));
                 this.InstantiateEnemyAtSpawnPoint(this.debugMinion);
 
                 yield return new WaitForSeconds(delta);
             }
+        }
+
+        protected void OnEnable()
+        {
+            var db = GameObject.Find("Enemy Groups");
+            this.pack = db.GetComponent<EnemyGroups>();
         }
 
         private void InstantiateEnemyAtSpawnPoint(GameObject minion)
@@ -60,20 +62,7 @@
             var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
             // TODO: FIX THIS
-            var path = GameObject.Find("Battle Field").GetComponent<SetupBattleField>();
-            instance.GetComponent<Enemy_Generic>().waypointList = this.A ? path.pathA : path.pathB;
             instance.transform.SetParent(this.transform);
-        }
-
-        private void OnEnable()
-        {
-            var db = GameObject.Find("Enemy Groups");
-            this.pack = db.GetComponent<EnemyGroups>();
-        }
-
-        private bool PathExists()
-        {
-            return true;
         }
     }
 }
