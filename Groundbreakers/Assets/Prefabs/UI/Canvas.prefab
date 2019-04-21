@@ -15414,7 +15414,7 @@ RectTransform:
   m_GameObject: {fileID: 5623790535995462809}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04897972, y: 0.04897972, z: 0.04897972}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 5623790536386699595}
   - {fileID: 5623790536706326661}
@@ -15475,9 +15475,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 64
+  m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1280, y: 720}
+  m_ReferenceResolution: {x: 512, y: 288}
   m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
@@ -16450,6 +16450,7 @@ MonoBehaviour:
   - {fileID: 21300040, guid: f72d1e58f3251f34594c9358cc250193, type: 3}
   image: {fileID: 5623790536266909355}
   ui: {fileID: 7648955762943712636}
+  healthPoint: 20
 --- !u!1 &5623790536272369623
 GameObject:
   m_ObjectHideFlags: 0
