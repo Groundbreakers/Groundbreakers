@@ -23,8 +23,7 @@ public class Settings : MonoBehaviour
         Manager manager = bgm.GetComponent<Manager>();
         manager.UpdateBGM();
 
-        RoutesGenerator routes = this.GetComponent<RoutesGenerator>();
-        routes.Toggle();
+        // Gnenerate Sector Map here
     }
 
     public void Reset()
