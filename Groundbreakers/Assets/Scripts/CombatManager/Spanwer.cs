@@ -1,4 +1,4 @@
-﻿namespace Core
+﻿namespace CombatManager
 {
     using System.Collections;
 
@@ -36,9 +36,11 @@
             var delta = this.duration / count;
             Debug.Log("total " + count + " enemies in this wave. We should emit at rate " + (int)delta);
 
-            while (!this.pack.Done(pathId))
+            // !this.pack.Done(pathId)
+            while (count --> 0)
             {
-                while (TileController.Busy)
+                // TODO: FIX this TMP solution
+                while (TileController.Busy) 
                 {
                     yield return null;
                 }

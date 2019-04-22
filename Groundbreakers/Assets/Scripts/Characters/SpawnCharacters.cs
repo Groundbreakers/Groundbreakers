@@ -40,6 +40,18 @@
             this.StartDeployCharacters();
         }
 
+        /// <summary>
+        ///     Should be called when the battle has terminated. Retrieve the characters away from
+        ///     The battle fields.
+        /// </summary>
+        public void RetrieveAllCharacters()
+        {
+            foreach (Transform child in this.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+        }
+
         private Transform GetNextTransform()
         {
             if (this.availableBlocks.Count == 0)
@@ -57,6 +69,8 @@
             var sequence = DOTween.Sequence();
             foreach (Transform child in this.transform)
             {
+                child.gameObject.SetActive(true);
+
                 var tile = this.GetNextTransform();
                 var target = tile.position;
                 var offset = new Vector3(0.0f, 10f);

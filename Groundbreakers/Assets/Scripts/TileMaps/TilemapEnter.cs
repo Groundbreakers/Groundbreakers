@@ -1,14 +1,10 @@
 ﻿namespace TileMaps
 {
-    using System;
-
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
 
     using UnityEngine;
-
-    using Random = UnityEngine.Random;
 
     /// <inheritdoc />
     /// <summary>
@@ -44,22 +40,16 @@
         {
             foreach (Transform child in this.transform)
             {
-                var sprite = child.GetComponent<SpriteRenderer>();
+                this.CreateEnterAnimation(child.gameObject);
+            }
+        }
 
-                // Relocate block
-                var ori = child.transform.position;
-                child.position += this.offset;
-
-                // Generate animation
-                var delay = Random.Range(0.0f, this.maxDelay);
-
-                child.DOMove(ori, this.duration)
-                    .SetEase(Ease.OutBack)
-                    .SetDelay(delay);
-
-                sprite.DOFade(1.0f, this.duration)
-                    .SetEase(Ease.OutExpo)
-                    .SetDelay(delay);
+        [Button]
+        public void Terminate()
+        {
+            foreach (Transform child in this.transform)
+            {
+                this.CreateExistAnimation(child.gameObject);
             }
         }
 
@@ -68,24 +58,44 @@
             this.tilemap = this.GetComponent<Tilemap>();
         }
 
-        private void CreateAnimation(GameObject block)
+        private void CreateEnterAnimation(GameObject block)
         {
             var sprite = block.GetComponent<SpriteRenderer>();
 
             // Relocate block
-            var ori = block.transform;
-            block.transform.position += this.offset;
+            var position = block.transform.position;
+            var ori = position;
+            position += this.offset;
+            block.transform.position = position;
 
             // Generate animation
             var delay = Random.Range(0.0f, this.maxDelay);
 
-            block.transform.DOMove(ori.position, this.duration)
+            block.transform.DOMove(ori, this.duration)
                 .SetEase(Ease.OutBack)
                 .SetDelay(delay);
 
             sprite.DOFade(1.0f, this.duration)
                 .SetEase(Ease.OutExpo)
                 .SetDelay(delay);
+        }
+
+        private void CreateExistAnimation(GameObject block)
+        {
+            var sprite = block.GetComponent<SpriteRenderer>();
+
+            var targetPos = block.transform.position - this.offset;
+
+            var delay = Random.Range(0.0f, this.maxDelay);
+
+            block.transform.DOMove(targetPos, this.duration)
+                .SetEase(Ease.InBack)
+                .SetDelay(delay);
+
+            sprite.DOFade(0.0f, this.duration)
+                .SetEase(Ease.InExpo)
+                .SetDelay(delay)
+                .OnComplete(() => Destroy(block));
         }
     }
 }
