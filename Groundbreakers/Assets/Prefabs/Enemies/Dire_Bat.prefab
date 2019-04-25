@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -798880211
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 85fdb210eed4cdb4daaaa204d3ad8183, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,7 +127,6 @@ MonoBehaviour:
   - Flying
   deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
     type: 3}
-  waypointList: []
   time: 0
 --- !u!61 &4820504546433748512
 BoxCollider2D:
@@ -146,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2, y: 0.2}
+    oldSize: {x: 0.78125, y: 0.78125}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
