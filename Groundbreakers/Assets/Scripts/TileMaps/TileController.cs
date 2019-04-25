@@ -106,7 +106,7 @@
             }
         }
 
-        private void OnTilesChange(Vector3 first, Vector3 second)
+        private static void OnTilesChange(Vector3 first, Vector3 second)
         {
             // Refactor this shit
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -154,7 +154,7 @@
                 first.GetComponent<TileStatus>().IsMoving = false;
                 second.GetComponent<TileStatus>().IsMoving = false;
 
-                this.OnTilesChange(first.transform.position, second.transform.position);
+                OnTilesChange(first.transform.position, second.transform.position);
             }
         }
 
@@ -164,28 +164,6 @@
             var second = this.selected[1];
 
             this.SwapTiles(first.transform.position, second.transform.position);
-        }
-
-        private void FreezeAll()
-        {
-            // Refactor this shit
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            foreach (var enemy in enemies)
-            {
-                enemy.GetComponent<BasicMovement>().Freeze();
-            }
-        }
-
-        private void UnfreezeAll()
-        {
-            // Refactor this shit
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            foreach (var enemy in enemies)
-            {
-                enemy.GetComponent<BasicMovement>().Unfreeze();
-            }
         }
     }
 }

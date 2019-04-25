@@ -6,13 +6,30 @@
 
     /// <inheritdoc />
     /// <summary>
-    ///     The passive data component that contains some status of this current tile GameObject.
+    ///     The passive data component that contains some status of this current Tile GameObject.
     /// </summary>
     public class TileStatus : MonoBehaviour
     {
-        [ShowInInspector]
+        /// <summary>
+        ///     Indicating if the player can deploy tiles or objects on this tile block.
+        /// </summary>
+        [SerializeField]
         private bool canDeploy;
 
+        /// <summary>
+        ///     Indicating if this tile can pass through.
+        /// </summary>
+        [SerializeField]
+        private bool canPass;
+
+        /// <summary>
+        ///     Indicating if the player can select or swap this tiles. Currently, only Water tile
+        ///     is not selectable.
+        /// </summary>
+        [SerializeField]
+        private bool canSwap;
+
+        [SerializeField]
         private Tiles type;
 
         [field: ShowInInspector]
@@ -25,14 +42,27 @@
 
         public bool IsOccupied { get; set; }
 
+        /// <summary>
+        ///     Indicating if this tile is selectable. Used by the DebugHover.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public bool CanHover()
         {
-            return !this.IsMoving && !this.IsOccupied;
+            return this.canSwap && !this.IsMoving && !this.IsOccupied;
         }
 
+        /// <summary>
+        ///     Used by the Search Algorithm and character deployment component, to check if this
+        ///     tile can pass.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public bool CanPass()
         {
-            return this.canDeploy && !this.IsMoving;
+            return this.canPass && !this.IsMoving;
         }
 
         public void SetCanDeploy(bool value)
@@ -52,7 +82,7 @@
             this.type = tileType;
 
             // temp
-            this.canDeploy = tileType != Tiles.Water;
+            // this.canDeploy = tileType != Tiles.Water;
         }
     }
 }

@@ -8,6 +8,7 @@
 
     using UnityEngine;
 
+    /// <inheritdoc />
     /// <summary>
     /// The game object class for the timer. 
     /// </summary>

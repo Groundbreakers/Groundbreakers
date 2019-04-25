@@ -249,7 +249,7 @@
                 this.mushrooms.Add(mush);
 
                 // Manually set these tile to undeployable
-                // block.GetComponent<SelectNode>().SetCanDeploy(false);
+                block.GetComponent<TileStatus>().SetCanDeploy(false);
             }
         }
 
