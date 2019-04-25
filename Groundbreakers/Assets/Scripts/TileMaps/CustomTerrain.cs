@@ -72,36 +72,28 @@
             this.data = new[,]
                             {
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Wall, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Wall, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Wall, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Wall, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Wall, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass,
-                                    Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
                                 }
                             };
 

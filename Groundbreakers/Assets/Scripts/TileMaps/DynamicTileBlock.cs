@@ -56,6 +56,8 @@
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            this.status.UpdateTileType(tileType);
         }
 
         protected void OnEnable()

@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using System;
+
     using Sirenix.OdinInspector;
 
     using UnityEngine;
@@ -85,6 +87,30 @@
         public void UpdateTileType(Tiles tileType)
         {
             this.type = tileType;
+
+            // TMP
+            switch (tileType)
+            {
+                case Tiles.Grass:
+                case Tiles.Stone:
+                    this.canPass = true;
+                    this.canDeploy = true;
+                    this.canSwap = true;
+                    break;
+                case Tiles.Wall:
+                    this.canPass = false;
+                    this.canDeploy = false;
+                    this.canSwap = true;
+                    break;
+                case Tiles.Water:
+                    this.canPass = false;
+                    this.canDeploy = false;
+                    this.canSwap = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(tileType), tileType, null);
+            }
+
         }
     }
 }

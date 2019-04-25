@@ -19,6 +19,9 @@
     /// </summary>
     public class SpawnCharacters : MonoBehaviour
     {
+        /// <summary>
+        ///     Store the TileBlock GameObjects that are candidates for spawn in to a list.
+        /// </summary>
         [ShowInInspector]
         private List<Transform> availableBlocks = new List<Transform>();
 
@@ -34,8 +37,7 @@
             var map = tilemap.GetComponent<CustomTerrain>();
             var tm = tilemap.GetComponent<Tilemap>();
 
-            var slots = map.GetSpawnLocations();
-            this.availableBlocks = slots.Select(x => tm.GetTileBlockAt(x).transform).ToList();
+            this.availableBlocks = FindSpawnLocations(tm);
 
             this.StartDeployCharacters();
         }
@@ -50,6 +52,31 @@
             {
                 child.gameObject.SetActive(false);
             }
+        }
+
+        private static List<Transform> FindSpawnLocations(Tilemap tilemap)
+        {
+            var list = new List<Transform>();
+
+            for (var i = 0; i < Tilemap.Dimension; i++)
+            {
+                for (var j = 0; j < Tilemap.Dimension; j++)
+                {
+                    var block = tilemap.GetTileStatusAt(i, j);
+
+                    if (block.GetTileType() == Tiles.Wall)
+                    {
+                        list.Add(block.transform);
+                    }
+                }
+            }
+
+            if (list.Count < 5)
+            {
+                Debug.LogError("Should have at least 5 HighGround block");
+            }
+
+            return list;
         }
 
         private Transform GetNextTransform()

@@ -1,6 +1,7 @@
 ﻿namespace TileMaps
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -16,7 +17,7 @@
     /// </summary>
     [RequireComponent(typeof(CustomTerrain))]
     [RequireComponent(typeof(NavigationMap))]
-    public class Tilemap : MonoBehaviour
+    public class Tilemap : MonoBehaviour, IEnumerable
     {
         private Transform[,] blocks = new Transform[Dimension, Dimension];
 
@@ -26,22 +27,13 @@
 
         private ITerrainData mapData;
 
-        // below are all temp
         [SerializeField]
-        private GameObject tileA;
-
-        [SerializeField]
-        private GameObject tileB;
-
-        [SerializeField]
-        private GameObject tileC;
-
-        [SerializeField]
-        private GameObject water;
+        private GameObject tilePrefab;
 
         // Temp
         [SerializeField]
         private GameObject mushroom;
+
         private List<GameObject> mushrooms = new List<GameObject>();
 
         /// <summary>
@@ -123,6 +115,17 @@
             block.IsOccupied = status;
         }
 
+        public IEnumerator GetEnumerator()
+        {
+            for (var x = 0; x < Dimension; x++)
+            {
+                for (var y = 0; y < Dimension; y++)
+                {
+                    yield return this.GetTileBlockAt(x, y);
+                }
+            }
+        }
+
         protected void OnEnable()
         {
             this.mapData = this.GetComponent<CustomTerrain>();
@@ -147,59 +150,6 @@
         }
 
         /// <summary>
-        ///     Given the tile type, instantiate a GameObject from corresponding prefab at the
-        ///     location (x,y).
-        /// </summary>
-        /// <param name="tileType">
-        ///     The tile type <see cref="Tiles" />
-        /// </param>
-        /// <param name="x">
-        ///     The X coordinate of the desired grid to place the tile.
-        /// </param>
-        /// <param name="y">
-        ///     The Y coordinate of the desired grid to place the tile.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="GameObject" />.
-        /// </returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        ///     Should not happen.
-        /// </exception>
-        private GameObject InstantiateTileAt(Tiles tileType, int x, int y)
-        {
-            GameObject tile;
-
-            // A function that maps Enum -> GameObject.
-            switch (tileType)
-            {
-                case Tiles.Grass:
-                    tile = this.tileA;
-                    break;
-                case Tiles.Stone:
-                    tile = this.tileB;
-                    break;
-                case Tiles.Wall:
-                    tile = this.tileC;
-                    break;
-                case Tiles.Water:
-                    tile = this.water;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            // Finally Instantiate it.
-            var instance = Instantiate(tile, new Vector3(x, y, 0.0f), Quaternion.identity);
-
-            // Setting order and parent
-            instance.transform.SetParent(this.transform);
-
-            instance.GetComponent<TileStatus>().UpdateTileType(tileType);
-
-            return instance;
-        }
-
-        /// <summary>
         ///     Instantiate all tiles. Must call generator.Initialize before using this function.
         ///     This function will destroy any existing tileBlock GameObjects.
         /// </summary>
@@ -215,10 +165,13 @@
                 {
                     var tileType = sourceData.GetTileTypeAt(x, y);
 
-                    var instance = this.InstantiateTileAt(tileType, x, y);
+                    var instance = Instantiate(this.tilePrefab, new Vector3(x, y), Quaternion.identity);
+
+                    var status = instance.GetComponent<TileStatus>();
+                    status.UpdateTileType(tileType);
 
                     this.blocks[x, y] = instance.transform;
-                    this.cachedStatus[x, y] = instance.GetComponent<TileStatus>();
+                    this.cachedStatus[x, y] = status;
                 }
             }
         }
