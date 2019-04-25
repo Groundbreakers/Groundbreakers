@@ -42,6 +42,11 @@
 
         public bool IsOccupied { get; set; }
 
+        public Tiles GetTileType()
+        {
+            return this.type;
+        }
+
         /// <summary>
         ///     Indicating if this tile is selectable. Used by the DebugHover.
         /// </summary>
@@ -80,9 +85,6 @@
         public void UpdateTileType(Tiles tileType)
         {
             this.type = tileType;
-
-            // temp
-            // this.canDeploy = tileType != Tiles.Water;
         }
     }
 }
