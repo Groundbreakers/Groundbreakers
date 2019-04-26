@@ -117,17 +117,12 @@
                     return;
                 }
 
-                if (this.pathBuffer.Count == 0)
-                {
-                    Debug.Log("should not happen");
-                }
-
                 this.UpdatePathIfGoalChanges();
 
-                if (this.transform.position == this.goalGrid)
-                {
-                    GameObject.Destroy(this.gameObject);
-                }
+                //if (this.transform.position == this.goalGrid)
+                //{
+                //    GameObject.Destroy(this.gameObject);
+                //}
 
                 var next = this.GetNextPoint();
                 this.MoveToward(next);

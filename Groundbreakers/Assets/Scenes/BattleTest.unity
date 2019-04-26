@@ -366,10 +366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c64e18c90553a409bbe399b89f9ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileA: {fileID: 5300740713263289941, guid: 1f88124d7a16c474491994a173fa260d, type: 3}
-  tileB: {fileID: 5890712410309033143, guid: 60370c669cd5e9e47afda8e5c8ba3751, type: 3}
-  tileC: {fileID: 3812301382797932396, guid: 32b050950fbf1334b8ba07ee7cc1294a, type: 3}
-  water: {fileID: 3992318074888028234, guid: fa3b53a0c3264414da7a04c938569891, type: 3}
+  tilePrefab: {fileID: 1423346660936018881, guid: 0faf6d68f7505f34a9322f306489f1b4,
+    type: 3}
   mushroom: {fileID: 1520603410798911214, guid: 092fbaa8c700dcd4092bf527211f7809,
     type: 3}
 --- !u!114 &120820389
@@ -396,7 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2e3fad902242599e9a4291ac1f1fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossPrefab: {fileID: 0}
+  bossPrefab: {fileID: 1423346660936018881, guid: 0faf6d68f7505f34a9322f306489f1b4,
+    type: 3}
 --- !u!4 &120820391
 Transform:
   m_ObjectHideFlags: 0
