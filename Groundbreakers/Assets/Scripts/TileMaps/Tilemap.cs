@@ -166,6 +166,7 @@
                     var tileType = sourceData.GetTileTypeAt(x, y);
 
                     var instance = Instantiate(this.tilePrefab, new Vector3(x, y), Quaternion.identity);
+                    instance.transform.SetParent(this.transform);
 
                     var status = instance.GetComponent<TileStatus>();
                     status.UpdateTileType(tileType);

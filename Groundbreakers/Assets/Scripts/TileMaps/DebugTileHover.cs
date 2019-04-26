@@ -76,9 +76,10 @@
                 // TODO: Fix this shit
                 if (Input.GetKeyDown("d"))
                 {
-                    var obj = Instantiate(this.tmpPrefab, this.transform);
+                    //var obj = Instantiate(this.tmpPrefab, this.transform);
 
-                    this.status.SetCanDeploy(false);
+                    this.GetComponent<DynamicTileBlock>().ChangeTileType(Tiles.Wall);
+
 
                     // Refactor this shit
                     var enemies = GameObject.FindGameObjectsWithTag("Enemy");

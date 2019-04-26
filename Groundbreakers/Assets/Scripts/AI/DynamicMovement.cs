@@ -13,6 +13,8 @@
     {
         private static readonly int Direction = Animator.StringToHash("Direction");
 
+        private static IEnumerable<Transform> targets;
+
         [SerializeField]
         [Range(0.0f, 3.0f)]
         private float speed = 1.0f; // temp
@@ -27,9 +29,16 @@
         private List<Vector3> pathBuffer;
 
         /// <summary>
+        ///     The Destination grid position.
+        /// </summary>
+        private Vector3 goalGrid;
+
+        private Vector3 lastGoalGrid;
+
+        /// <summary>
         ///     The target grid, usually the target should be adjacent grids of current.
         /// </summary>
-        private Vector3 nextGrid = Vector3.zero;
+        private Vector3 nextGrid;
 
         #region Public Functions
 
@@ -76,6 +85,9 @@
 
         protected void Start()
         {
+            // Caching the targets
+            targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
+
             this.RecalculatePath();
             var next = this.GetNextPoint();
             this.MoveToward(next);
@@ -88,7 +100,7 @@
                 return;
             }
 
-            if (this.IsMoving())
+            if (this.IsMoving() && this.nextGrid != null)
             {
                 var step = Time.fixedDeltaTime * this.speed;
 
@@ -102,6 +114,19 @@
                 if (this.pathBuffer.Count == 0)
                 {
                     Destroy(this.gameObject);
+                    return;
+                }
+
+                if (this.pathBuffer.Count == 0)
+                {
+                    Debug.Log("should not happen");
+                }
+
+                this.UpdatePathIfGoalChanges();
+
+                if (this.transform.position == this.goalGrid)
+                {
+                    GameObject.Destroy(this.gameObject);
                 }
 
                 var next = this.GetNextPoint();
@@ -118,14 +143,7 @@
 
         private Vector3 GetNextPoint()
         {
-            var point = Vector3.zero;
-
-            if (this.pathBuffer.Count <= 0)
-            {
-                return point;
-            }
-
-            point = this.pathBuffer[0];
+            var point = this.pathBuffer[0];
             this.pathBuffer.RemoveAt(0);
 
             return point;
@@ -133,11 +151,28 @@
 
         private void RecalculatePath()
         {
-            // TODO: Fucking refactor this shit.
-            var targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
+            this.goalGrid = this.FindGoal();
+
+            this.pathBuffer = this.navigator.Search(this.transform.position, this.goalGrid).ToList();
+        }
+
+        private Vector3 FindGoal()
+        {
             var end = targets.OrderBy(pos => Vector3.Distance(this.transform.position, pos.position)).First();
 
-            this.pathBuffer = this.navigator.Search(this.transform.position, end.position).ToList();
+            return end.position;
+        }
+
+        private void UpdatePathIfGoalChanges()
+        {
+            this.goalGrid = this.FindGoal();
+
+            if (!this.goalGrid.Equals(this.lastGoalGrid))
+            {
+                this.lastGoalGrid = this.goalGrid;
+
+                this.RecalculatePath();
+            }
         }
 
         /// <summary>
