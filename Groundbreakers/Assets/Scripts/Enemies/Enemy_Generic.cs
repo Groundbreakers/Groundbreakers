@@ -12,6 +12,8 @@
         #region Variable Declarations
 
         // Stats, some modified by enemy scripts
+        public string specie;
+
         public int maxHealth = 1;
 
         public int health = 1;
