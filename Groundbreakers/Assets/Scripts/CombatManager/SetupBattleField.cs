@@ -92,7 +92,7 @@
 
             foreach (var spawn in this.spanwers)
             {
-                spawn.ShouldSpawnWave();
+                spawn.ShouldStartLevel();
             }
         }
 

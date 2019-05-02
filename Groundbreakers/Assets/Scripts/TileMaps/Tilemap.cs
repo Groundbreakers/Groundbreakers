@@ -1,5 +1,6 @@
 ﻿namespace TileMaps
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -46,6 +47,30 @@
         ///     Gets the squared map's dimension
         /// </summary>
         public static int Dimension { get; } = 8;
+
+        /// <summary>
+        ///     When ever you change the status of a tile, Call this function.
+        /// </summary>
+        /// <param name="position">
+        ///     The position Vector. The x and y should be integers.
+        /// </param>
+        public static void OnTileChanges(Vector3 position)
+        {
+            // Do nothing if battle has not begin.
+            if (!Spanwer.Busy)
+            {
+                return;
+            }
+
+            // TODO: Refactor this shit
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                enemy.GetComponent<DynamicMovement>().OnTileChange(position);
+            }
+        }
+
 
         public GameObject GetTileBlockAt(Vector3 position)
         {
@@ -108,23 +133,6 @@
             this.ClearAllTiles();
             this.InstantiateTiles(this.mapData);
             this.InstantiateEnvironments();
-        }
-
-        public void OnTileChanges(Vector3 position)
-        {
-            // Do nothing if battle has not begin.
-            if (!Spanwer.Busy)
-            {
-                return;
-            }
-
-            // TODO: Refactor this shit
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            foreach (var enemy in enemies)
-            {
-                enemy.GetComponent<DynamicMovement>().OnTileChange(position);
-            }
         }
 
         public void OnTileOccupied(Vector3 pos, bool status = true)
@@ -190,6 +198,7 @@
                     var status = instance.GetComponent<TileStatus>();
                     status.UpdateTileType(tileType);
 
+                    // Store the references in 2D array
                     this.blocks[x, y] = instance.transform;
                     this.cachedStatus[x, y] = status;
                 }
@@ -222,6 +231,7 @@
             }
         }
 
+        [Obsolete("Eventually remove this function")]
         private Transform PickNonOccupiedBlock(ITerrainData sourceData)
         {
             int x;
