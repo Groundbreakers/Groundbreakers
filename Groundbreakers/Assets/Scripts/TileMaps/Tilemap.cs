@@ -19,15 +19,13 @@
     /// <summary>
     ///     Container for actual tile GameObjects. Provide API to construct tiles, modify tiles.
     /// </summary>
-    [RequireComponent(typeof(CustomTerrain))]
+    [RequireComponent(typeof(ITerrainData))]
     [RequireComponent(typeof(NavigationMap))]
     public class Tilemap : MonoBehaviour, IEnumerable
     {
         private Transform[,] blocks = new Transform[Dimension, Dimension];
 
         private TileStatus[,] cachedStatus = new TileStatus[Dimension, Dimension];
-
-        private NavigationMap navigationMap;
 
         /// <summary>
         ///     The source of the map data. Pure data. Should setup the blocks according to this.
@@ -39,7 +37,10 @@
 
         // Temp
         [SerializeField]
-        private GameObject mushroom;
+        private GameObject mushroomPrefab;
+
+        [SerializeField]
+        private GameObject plantPrefab;
 
         private List<GameObject> mushrooms = new List<GameObject>();
 
@@ -130,7 +131,7 @@
         {
             this.mapData.Initialize();
 
-            this.ClearAllTiles();
+            ClearAllTiles();
             this.InstantiateTiles(this.mapData);
             this.InstantiateEnvironments();
         }
@@ -142,6 +143,12 @@
             block.IsOccupied = status;
         }
 
+        /// <summary>
+        ///     Usage: for (var block of this.tileMap) { ... };
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="IEnumerator"/>.
+        /// </returns>
         public IEnumerator GetEnumerator()
         {
             for (var x = 0; x < Dimension; x++)
@@ -155,11 +162,13 @@
 
         protected void OnEnable()
         {
-            this.mapData = this.GetComponent<CustomTerrain>();
-            this.navigationMap = this.GetComponent<NavigationMap>();
+            this.mapData = this.GetComponent<ITerrainData>();
         }
 
-        private void ClearAllTiles()
+        /// <summary>
+        ///     Immediately destroy all tile GameObjects in the scene.
+        /// </summary>
+        private static void ClearAllTiles()
         {
             var tiles = GameObject.FindGameObjectsWithTag("Tile");
 
@@ -167,11 +176,11 @@
             {
                 if (Application.isEditor)
                 {
-                    DestroyImmediate(go);
+                    GameObject.DestroyImmediate(go);
                 }
                 else
                 {
-                    Destroy(go);
+                    GameObject.Destroy(go);
                 }
             }
         }
@@ -210,6 +219,12 @@
         /// </summary>
         private void InstantiateEnvironments()
         {
+            this.SpawnMushrooms();
+            this.SpawnGrass();
+        }
+
+        private void SpawnMushrooms()
+        {
             var num = 4;
             this.mushrooms.Clear();
 
@@ -226,8 +241,26 @@
                 while (duplicate);
 
 
-                var mush = Instantiate(this.mushroom, block);
+                var mush = Instantiate(this.mushroomPrefab, block);
                 this.mushrooms.Add(mush);
+            }
+        }
+
+        private void SpawnGrass()
+        {
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                   var status = this.GetTileStatusAt(i, j);
+
+                   if (status.GetTileType() == Tiles.Grass)
+                   {
+                       var instance = Instantiate(
+                           this.plantPrefab, 
+                           this.GetTileBlockAt(i, j).transform);
+                   }
+                }
             }
         }
 

@@ -35,10 +35,7 @@
         [Range(0.0f, 1.0f)]
         private float sandMax = 0.45f;
 
-        public IEnumerable<Vector3> GetSpawnLocations()
-        {
-            throw new NotImplementedException();
-        }
+        #region ITerrainData
 
         /// <inheritdoc />
         /// <summary>
@@ -73,6 +70,8 @@
             this.GenerateTerrain();
             this.GenerateEnvironment();
         }
+
+        #endregion
 
         private void GenerateEnvironment()
         {

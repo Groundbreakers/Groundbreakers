@@ -77,7 +77,16 @@
 
         private IEnumerator Begin()
         {
-            this.tilemap.SetupMap();
+            // Keep generating map until has valid path.
+            do
+            {
+                this.tilemap.SetupMap();
+                this.indicators.Initialize();
+            }
+            while (!this.indicators.HasValidPath());
+
+            yield return new WaitForSeconds(0.1f);
+
             this.tileEnter.Begin();
 
             yield return new WaitForSeconds(3.0f);
@@ -86,7 +95,7 @@
 
             yield return new WaitForSeconds(3.0f);
 
-            this.indicators.Initialize();
+            this.indicators.RevealIndicators();
 
             yield return new WaitForSeconds(0.1f);
 

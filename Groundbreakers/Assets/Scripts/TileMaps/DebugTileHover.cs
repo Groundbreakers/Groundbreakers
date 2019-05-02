@@ -82,19 +82,6 @@
                 {
                     var blockade = Instantiate(this.blockadePrefab, this.transform);
                 }
-
-                //// TMP
-                //// TODO: Fix this shit
-                //if (Input.GetKeyDown("d"))
-                //{
-                //    //var obj = Instantiate(this.tmpPrefab, this.transform);
-
-                //    this.GetComponent<DynamicTileBlock>().ChangeTileType(Tiles.Wall);
-
-
-                //    // TODO: Refactor this shit
-                //    this.tilemap.OnTileChanges(this.transform.position);
-                //}
             }
             else
             {

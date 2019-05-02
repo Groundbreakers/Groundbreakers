@@ -26,13 +26,5 @@
         ///     For custom Terrains: Should Load the right level from our database.
         /// </summary>
         void Initialize();
-
-        /// <summary>
-        ///     Evaluate and return the spawn locations.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="Vector3" />.
-        /// </returns>
-        IEnumerable<Vector3> GetSpawnLocations();
     }
 }

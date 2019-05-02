@@ -10,6 +10,9 @@
 
     using UnityEngine;
 
+    /// <summary>
+    ///     The Spawn Point: 
+    /// </summary>
     public class Spanwer : MonoBehaviour
     {
         [SerializeField]

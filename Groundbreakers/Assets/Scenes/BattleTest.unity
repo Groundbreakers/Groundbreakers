@@ -368,7 +368,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 1423346660936018881, guid: 0faf6d68f7505f34a9322f306489f1b4,
     type: 3}
-  mushroom: {fileID: 1520603410798911214, guid: 092fbaa8c700dcd4092bf527211f7809,
+  mushroomPrefab: {fileID: 1520603410798911214, guid: 092fbaa8c700dcd4092bf527211f7809,
+    type: 3}
+  plantPrefab: {fileID: 3317147538935926543, guid: d465a8da1ad2f834790992439f72c9a0,
     type: 3}
 --- !u!114 &120820389
 MonoBehaviour:
@@ -391,11 +393,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 120820387}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f2e3fad902242599e9a4291ac1f1fda, type: 3}
+  m_Script: {fileID: 11500000, guid: 905304b1878845cca937d6a03909a0ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossPrefab: {fileID: 1423346660936018881, guid: 0faf6d68f7505f34a9322f306489f1b4,
-    type: 3}
+  frequency: 5
+  grassMax: 0.65
+  sandMax: 0.45
 --- !u!4 &120820391
 Transform:
   m_ObjectHideFlags: 0

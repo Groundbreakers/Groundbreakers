@@ -34,7 +34,7 @@
 
             Assert.IsNotNull(tilemap, "Need to have a Tilemap GameObject active in the scene.");
 
-            var map = tilemap.GetComponent<CustomTerrain>();
+            var map = tilemap.GetComponent<ITerrainData>();
             var tm = tilemap.GetComponent<Tilemap>();
 
             this.availableBlocks = FindSpawnLocations(tm);
@@ -64,7 +64,7 @@
                 {
                     var block = tilemap.GetTileStatusAt(i, j);
 
-                    if (block.GetTileType() == Tiles.Wall)
+                    if (block && block.GetTileType() == Tiles.Wall)
                     {
                         list.Add(block.transform);
                     }

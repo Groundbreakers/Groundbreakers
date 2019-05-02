@@ -100,8 +100,9 @@
                 return;
             }
 
-            if (this.IsMoving() && this.nextGrid != null)
+            if (this.IsMoving())
             {
+                // && this.nextGrid != null
                 var step = Time.fixedDeltaTime * this.speed;
 
                 this.transform.position = Vector3.MoveTowards(

@@ -1,43 +1,24 @@
 ﻿namespace TileMaps
 {
-    using System.Collections.Generic;
-
     using UnityEngine;
 
     /// <inheritdoc cref="ITerrainData" />
     /// <summary>
+    ///     Load a hard-coded map. 
     /// </summary>
     public class CustomTerrain : MonoBehaviour, ITerrainData
     {
-        [SerializeField]
-        private GameObject bossPrefab;
+        /// <summary>
+        ///     The 2D array that stores the important map data.
+        /// </summary>
+        private Tiles[,] data;
 
-        [SerializeField]
-        private Tiles[,] data = new Tiles[8, 8];
-
-        private List<Vector3> spawnLocations = new List<Vector3>();
-
+        /// <summary>
+        ///     Gets the size of this map.
+        /// </summary>
         private static int Dimension { get; } = 8;
 
-        /// <inheritdoc />
-        /// <summary>
-        ///     Evaluate and return the spawn locations.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="T:System.Collections.Generic.List`1" />.
-        /// </returns>
-        public IEnumerable<Vector3> GetSpawnLocations()
-        {
-            this.spawnLocations.Clear();
-
-            this.spawnLocations.Add(new Vector3(3, 3));
-            this.spawnLocations.Add(new Vector3(3, 4));
-            this.spawnLocations.Add(new Vector3(4, 3));
-            this.spawnLocations.Add(new Vector3(4, 4));
-            this.spawnLocations.Add(new Vector3(2, 4));
-
-            return this.spawnLocations;
-        }
+        #region ITerrainData
 
         /// <inheritdoc />
         /// <summary>
@@ -62,6 +43,7 @@
             return this.data[(int)x, (int)y];
         }
 
+        /// <inheritdoc />
         /// <summary>
         ///     This function should be called by GameMap. A new sets of data is generated each time
         ///     you call this Initialize Function.
@@ -96,34 +78,8 @@
                                     Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
                                 }
                             };
-
-            // this.GenerateBoss();
-            this.GenerateEnvironment();
         }
 
-        private void GenerateBoss()
-        {
-            Instantiate(this.bossPrefab, new Vector3(3.0f, 3.0f), Quaternion.identity);
-        }
-
-        private void GenerateEnvironment()
-        {
-            return;
-
-            var num = Random.Range(1, 3);
-            for (var i = 0; i < num; i++)
-            {
-                int x;
-                int y;
-                do
-                {
-                    x = Random.Range(0, Dimension);
-                    y = Random.Range(0, Dimension);
-                }
-                while (this.GetTileTypeAt(x, y) == Tiles.Path);
-
-                this.data[x, y] = Tiles.Water;
-            }
-        }
+        #endregion
     }
 }
