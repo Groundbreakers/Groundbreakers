@@ -124,6 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tmpPrefab: {fileID: 5768924487303635598, guid: 189420c7fdbff8140a3bb163c10a735a,
     type: 3}
+  blockadePrefab: {fileID: 5437903941598735353, guid: 90d547d79c5386347ac726f8bad7b946,
+    type: 3}
 --- !u!114 &9193095297155115878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +159,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fc6c89f4c5a8158428df19c7233d94da, type: 3}
   - {fileID: 21300000, guid: d3487dea8fdff1a43ba7f4eae3c22485, type: 3}
   - {fileID: 21300000, guid: f94f6b26697161045afa2ee2b9bdf22c, type: 3}
+  - {fileID: 0}
 --- !u!95 &985460838840224869
 Animator:
   serializedVersion: 3

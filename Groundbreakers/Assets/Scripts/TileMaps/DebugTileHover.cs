@@ -19,8 +19,13 @@
 
         private TileStatus status;
 
+        private Tilemap tilemap;
+
         [SerializeField]
         private GameObject tmpPrefab;
+
+        [SerializeField]
+        private GameObject blockadePrefab;
 
         /// <summary>
         ///     Indicating if this tile is currently hovered.
@@ -34,10 +39,11 @@
 
         protected void OnEnable()
         {
-            var tilemap = GameObject.Find("Tilemap");
+            var tm = GameObject.Find("Tilemap");
 
+            this.tilemap = tm.GetComponent<Tilemap>();
             this.rend = this.GetComponent<SpriteRenderer>();
-            this.controller = tilemap.GetComponent<TileController>();
+            this.controller = this.tilemap.GetComponent<TileController>();
             this.status = this.GetComponent<TileStatus>();
 
             this.SetAlpha();
@@ -72,23 +78,23 @@
             {
                 this.SetAlpha(0.5f);
 
-                // TMP
-                // TODO: Fix this shit
-                if (Input.GetKeyDown("d"))
+                if (Input.GetKeyDown("b"))
                 {
-                    //var obj = Instantiate(this.tmpPrefab, this.transform);
-
-                    this.GetComponent<DynamicTileBlock>().ChangeTileType(Tiles.Wall);
-
-
-                    // Refactor this shit
-                    var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-                    foreach (var enemy in enemies)
-                    {
-                        enemy.GetComponent<DynamicMovement>().OnTileChange(this.transform.position);
-                    }
+                    var blockade = Instantiate(this.blockadePrefab, this.transform);
                 }
+
+                //// TMP
+                //// TODO: Fix this shit
+                //if (Input.GetKeyDown("d"))
+                //{
+                //    //var obj = Instantiate(this.tmpPrefab, this.transform);
+
+                //    this.GetComponent<DynamicTileBlock>().ChangeTileType(Tiles.Wall);
+
+
+                //    // TODO: Refactor this shit
+                //    this.tilemap.OnTileChanges(this.transform.position);
+                //}
             }
             else
             {

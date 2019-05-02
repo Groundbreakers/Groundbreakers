@@ -21,9 +21,13 @@
 
         private EnemyGroups pack;
 
+        public static bool Busy;
+
         [Button]
         public void ShouldSpawnWave()
         {
+            Busy = true;
+
             this.pack.ResetPack();
             this.StopAllCoroutines();
             this.StartCoroutine(this.SpawnWave());

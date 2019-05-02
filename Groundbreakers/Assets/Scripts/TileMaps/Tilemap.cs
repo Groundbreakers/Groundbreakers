@@ -1,9 +1,12 @@
 ﻿namespace TileMaps
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+
+    using AI;
+
+    using CombatManager;
 
     using Sirenix.OdinInspector;
 
@@ -11,7 +14,7 @@
 
     using Random = UnityEngine.Random;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="IEnumerable" />
     /// <summary>
     ///     Container for actual tile GameObjects. Provide API to construct tiles, modify tiles.
     /// </summary>
@@ -25,6 +28,9 @@
 
         private NavigationMap navigationMap;
 
+        /// <summary>
+        ///     The source of the map data. Pure data. Should setup the blocks according to this.
+        /// </summary>
         private ITerrainData mapData;
 
         [SerializeField]
@@ -104,8 +110,21 @@
             this.InstantiateEnvironments();
         }
 
-        public void OnTileChanges()
+        public void OnTileChanges(Vector3 position)
         {
+            // Do nothing if battle has not begin.
+            if (!Spanwer.Busy)
+            {
+                return;
+            }
+
+            // TODO: Refactor this shit
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (var enemy in enemies)
+            {
+                enemy.GetComponent<DynamicMovement>().OnTileChange(position);
+            }
         }
 
         public void OnTileOccupied(Vector3 pos, bool status = true)
@@ -192,22 +211,18 @@
                 Transform block;
                 do
                 {
-                    block = this.PickNonOcuppiedBlock(this.mapData);
+                    block = this.PickNonOccupiedBlock(this.mapData);
                     duplicate = this.mushrooms.Any(go => go.transform.position.Equals(block.position));
                 }
                 while (duplicate);
 
-                // Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
-                var mush = Instantiate(this.mushroom, block);
-                mush.transform.localPosition = Vector3.zero;
-                this.mushrooms.Add(mush);
 
-                // Manually set these tile to undeployable
-                block.GetComponent<TileStatus>().SetCanDeploy(false);
+                var mush = Instantiate(this.mushroom, block);
+                this.mushrooms.Add(mush);
             }
         }
 
-        private Transform PickNonOcuppiedBlock(ITerrainData sourceData)
+        private Transform PickNonOccupiedBlock(ITerrainData sourceData)
         {
             int x;
             int y;

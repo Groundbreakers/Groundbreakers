@@ -108,6 +108,8 @@
 
         private void GenerateEnvironment()
         {
+            return;
+
             var num = Random.Range(1, 3);
             for (var i = 0; i < num; i++)
             {

@@ -13,12 +13,6 @@
     public class TileStatus : MonoBehaviour
     {
         /// <summary>
-        ///     Indicating if the player can deploy tiles or objects on this tile block.
-        /// </summary>
-        [SerializeField]
-        private bool canDeploy;
-
-        /// <summary>
         ///     Indicating if this tile can pass through.
         /// </summary>
         [SerializeField]
@@ -43,6 +37,11 @@
         public bool IsSelected { get; set; }
 
         public bool IsOccupied { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the weight; Should be used only by the navMesh when doing A*.
+        /// </summary>
+        public float Weight { get; set; }
 
         public Tiles GetTileType()
         {
@@ -72,9 +71,9 @@
             return this.canPass && !this.IsMoving;
         }
 
-        public void SetCanDeploy(bool value)
+        public void SetCanPass(bool value)
         {
-            this.canDeploy = value;
+            this.canPass = value;
         }
 
         /// <summary>
@@ -94,17 +93,14 @@
                 case Tiles.Grass:
                 case Tiles.Stone:
                     this.canPass = true;
-                    this.canDeploy = true;
                     this.canSwap = true;
                     break;
                 case Tiles.Wall:
                     this.canPass = false;
-                    this.canDeploy = false;
                     this.canSwap = true;
                     break;
                 case Tiles.Water:
                     this.canPass = false;
-                    this.canDeploy = false;
                     this.canSwap = false;
                     break;
                 default:
