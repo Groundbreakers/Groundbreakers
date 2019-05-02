@@ -82,8 +82,7 @@ public class characterAttack : MonoBehaviour
             //check if it's pointing right
             if (!trickster.disabled && !isStunned)
             {
-                if(stance == "Gun")
-                {
+
                     if ((angle <= 360 && angle >= 337.5) || (angle >= 0 && angle < 22.5))
                     {
                         animator.SetBool("FacingUpperRight", false);
@@ -185,63 +184,8 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingDown", true);
                         firePoint = new Vector3(gameObject.transform.position.x - .05f, gameObject.transform.position.y - .05f, gameObject.transform.position.z);
                     }
-                }
-                else
-                {
-                    if ((angle <= 360 && angle >= 315) || (angle >= 0 && angle < 45))
-                    {
-                        animator.SetBool("FacingUpperRight", false);
-                        animator.SetBool("FacingLowerRight", false);
-                        animator.SetBool("FacingRight", true);
-                        animator.SetBool("FacingUpperLeft", false);
-                        animator.SetBool("FacingLowerLeft", false);
-                        animator.SetBool("FacingLeft", false);
-                        animator.SetBool("FacingUp", false);
-                        animator.SetBool("FacingDown", false);
-
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
-                    }
-                    else if ((angle < 135 && angle >= 45))
-                    {
-                        animator.SetBool("FacingUpperRight", false);
-                        animator.SetBool("FacingLowerRight", false);
-                        animator.SetBool("FacingRight", false);
-                        animator.SetBool("FacingUpperLeft", false);
-                        animator.SetBool("FacingLowerLeft", false);
-                        animator.SetBool("FacingLeft", false);
-                        animator.SetBool("FacingUp", true);
-                        animator.SetBool("FacingDown", false);
-
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
-                    }
-                    else if ((angle >= 135 && angle > 225))
-                    {
-                        animator.SetBool("FacingUpperRight", false);
-                        animator.SetBool("FacingLowerRight", false);
-                        animator.SetBool("FacingRight", false);
-                        animator.SetBool("FacingUpperLeft", false);
-                        animator.SetBool("FacingLowerLeft", false);
-                        animator.SetBool("FacingLeft", true);
-                        animator.SetBool("FacingUp", false);
-                        animator.SetBool("FacingDown", false);
-
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
-                    }
-                    else if ((angle < 315 && angle >= 225))
-                    {
-                        animator.SetBool("FacingUpperRight", false);
-                        animator.SetBool("FacingLowerRight", false);
-                        animator.SetBool("FacingRight", false);
-                        animator.SetBool("FacingUpperLeft", false);
-                        animator.SetBool("FacingLowerLeft", false);
-                        animator.SetBool("FacingLeft", false);
-                        animator.SetBool("FacingUp", false);
-                        animator.SetBool("FacingDown", true);
-
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
-                    }
-
-                }
+                
+                
                 
 
                 //Debug.Log(angle);
