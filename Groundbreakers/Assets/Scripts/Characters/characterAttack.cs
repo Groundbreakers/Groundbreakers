@@ -35,6 +35,7 @@ public class characterAttack : MonoBehaviour
     // draw the attack range of the character selected
 
     private CircleCollider2D myCollider;
+    public CircleCollider2D meleeCollider;
 
     /// <summary>
     /// Ivan: we keep a reference to the weapon GameObject here. Note the second child of Character
@@ -221,8 +222,12 @@ public class characterAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            targetedEnemies.Add(other.gameObject);
-            updateTarget();
+            if(!targetedEnemies.Contains(other.gameObject))
+            {
+                targetedEnemies.Add(other.gameObject);
+                updateTarget();
+            }
+            
         }
     }
 
@@ -230,8 +235,11 @@ public class characterAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            targetedEnemies.Remove(other.gameObject);
-            updateTarget();
+            if (!meleeCollider.isTrigger)
+            {
+                targetedEnemies.Remove(other.gameObject);
+                updateTarget();
+            }
         }
     }
 

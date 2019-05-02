@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1171955736483787512}
   - component: {fileID: 4230535042426805468}
   - component: {fileID: 7543013341955019752}
+  - component: {fileID: 5411917003956038637}
   - component: {fileID: 609067372233172761}
   - component: {fileID: 5908830486360006541}
   - component: {fileID: 5170317579557245721}
@@ -106,6 +107,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &5411917003956038637
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.20000002}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!58 &609067372233172761
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -167,6 +184,7 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 7543013341955019752}
   stance: Melee
+  meleeCollider: {fileID: 5411917003956038637}
 --- !u!114 &1143237542542456168
 MonoBehaviour:
   m_ObjectHideFlags: 0
