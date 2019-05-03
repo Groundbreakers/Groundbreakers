@@ -105,7 +105,6 @@
 
             if (this.IsMoving())
             {
-                // && this.nextGrid != null
                 var step = Time.fixedDeltaTime * this.speed;
 
                 this.transform.position = Vector3.MoveTowards(
@@ -115,31 +114,15 @@
             }
             else
             {
-                if (this.pathBuffer.Count == 0)
-                {
-                    this.mad = true;
-                    this.RecalculatePath();
-                    // return;
-                }
-
-                this.UpdatePathIfGoalChanges();
-
                 if (this.transform.position == this.goalGrid)
                 {
                     GameObject.Destroy(this.gameObject);
                     return;
                 }
 
-                if (this.pathBuffer.Count == 0)
-                {
-                    return;
-                }
-
+                this.RecalculatePath();
                 var next = this.GetNextPoint();
                 this.MoveToward(next);
-
-                this.map.OnTileOccupied(this.transform.position, false);
-                this.map.OnTileOccupied(next);
             }
         }
 
