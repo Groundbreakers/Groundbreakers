@@ -77,14 +77,7 @@ namespace Assets.Scripts
         {
             Debug.Log("Starting level " + BattleManager.GameLevel.Level);
             // dirty way
-            if (BattleManager.GameLevel.Level == 8)
-            {
-                this.SetupCustomLevel();
-            }
-            else
-            {
-                this.SetupNewLevel();
-            }
+            SetupCustomLevel();
 
             this.StartTilesEntering();
         }

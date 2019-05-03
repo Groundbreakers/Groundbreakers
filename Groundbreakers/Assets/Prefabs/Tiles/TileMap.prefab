@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7590235029275169510}
   - component: {fileID: 7590235029275169504}
   - component: {fileID: 7590235029275169511}
+  - component: {fileID: 3104480443907638332}
   m_Layer: 0
   m_Name: TileMap
   m_TagString: Untagged
@@ -69,3 +70,17 @@ MonoBehaviour:
   grassMax: 0.65
   sandMax: 0.45
   stoneMax: 1
+--- !u!114 &3104480443907638332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590235029275169509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f2e3fad902242599e9a4291ac1f1fda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossPrefab: {fileID: 1488686941386252707, guid: d0bc8405a8f4a7349b302cc33c6553b3,
+    type: 3}
