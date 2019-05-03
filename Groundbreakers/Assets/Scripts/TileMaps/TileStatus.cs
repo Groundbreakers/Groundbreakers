@@ -76,6 +76,11 @@
             this.canPass = value;
         }
 
+        public void SetCanSwap(bool value)
+        {
+            this.canSwap = value;
+        }
+
         /// <summary>
         ///     This function is called when instantiate or on tile type has been changed. Should
         ///     update the status such as if can deploy.

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using UnityEditor;
+
     using UnityEngine;
 
     /// <inheritdoc />
@@ -122,6 +124,8 @@
                     {
                         return;
                     }
+
+                    Handles.Label(new Vector3(i, j), status.Weight.ToString("F2").Remove(0, 1));
 
                     if (status.IsOccupied)
                     {

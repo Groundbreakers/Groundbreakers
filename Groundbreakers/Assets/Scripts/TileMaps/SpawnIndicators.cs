@@ -52,6 +52,19 @@
 
             RearrangeObjectsWithTypeCheck(this.spawnPoints, Tilemap.Dimension - 1);
             RearrangeObjectsWithTypeCheck(this.defendPoints, 0);
+
+            // Set the tile where the spawner locates not swap-able
+            foreach (var go in this.spawnPoints.Concat(this.defendPoints))
+            {
+                var map = GameObject.Find("Tilemap").transform;
+
+                var pos = go.transform.position;
+                var index = (int)(pos.x * Tilemap.Dimension + pos.y);
+
+                var block = map.GetChild(index);
+
+                block.GetComponent<TileStatus>().SetCanSwap(false);
+            }
         }
 
         /// <summary>
