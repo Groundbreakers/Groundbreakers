@@ -57,6 +57,8 @@
 
         public void OnTilesChange(Vector3 first, Vector3 second)
         {
+            return;
+
             // Check if we need to re calculate path
             if (this.pathBuffer.Any(vec => vec == first || vec == second))
             {
@@ -66,6 +68,8 @@
 
         public void OnTileChange(Vector3 first)
         {
+            return;
+
             // Check if we need to re calculate path
             if (this.pathBuffer.Any(vec => vec == first))
             {
@@ -91,9 +95,29 @@
             // Caching the targets
             targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
 
-            this.RecalculatePath();
-            var next = this.GetNextPoint();
-            this.MoveToward(next);
+            this.goalGrid = this.FindGoal();
+
+            Debug.Log("something");
+
+            if (this.transform.position == this.goalGrid)
+            {
+                GameObject.Destroy(this.gameObject);
+                return;
+            }
+
+            var path = this.navigator.Search(
+                    this.transform.position,
+                    this.goalGrid,
+                    false)
+                .ToList();
+
+
+            if (path.Count == 0)
+            {
+                return;
+            }
+
+            this.MoveToward(path.First());
         }
 
         protected void FixedUpdate()
@@ -114,15 +138,30 @@
             }
             else
             {
+                this.goalGrid = this.FindGoal();
+
+                Debug.Log("something");
+
                 if (this.transform.position == this.goalGrid)
                 {
                     GameObject.Destroy(this.gameObject);
                     return;
                 }
 
-                this.RecalculatePath();
-                var next = this.GetNextPoint();
-                this.MoveToward(next);
+                var path = this.navigator.Search(
+                                   this.transform.position,
+                                   this.goalGrid,
+                                   false)
+                               .ToList();
+
+
+                if (path.Count == 0)
+                {
+                    return;
+                }
+
+                path.RemoveAt(0);
+                this.MoveToward(path.First());
             }
         }
 
@@ -145,7 +184,7 @@
             this.pathBuffer = this.navigator.Search(
                 this.transform.position, 
                 this.goalGrid,
-                this.mad)
+                false)
                 .ToList();
         }
 
