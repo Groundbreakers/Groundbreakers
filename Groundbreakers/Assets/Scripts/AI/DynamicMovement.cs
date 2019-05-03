@@ -40,6 +40,9 @@
         /// </summary>
         private Vector3 nextGrid;
 
+        // TODO: Fix this.
+        private bool mad;
+
         #region Public Functions
 
         public void MoveToward(Vector3 pos)
@@ -114,16 +117,23 @@
             {
                 if (this.pathBuffer.Count == 0)
                 {
-                    Destroy(this.gameObject);
-                    return;
+                    this.mad = true;
+                    this.RecalculatePath();
+                    // return;
                 }
 
                 this.UpdatePathIfGoalChanges();
 
-                //if (this.transform.position == this.goalGrid)
-                //{
-                //    GameObject.Destroy(this.gameObject);
-                //}
+                if (this.transform.position == this.goalGrid)
+                {
+                    GameObject.Destroy(this.gameObject);
+                    return;
+                }
+
+                if (this.pathBuffer.Count == 0)
+                {
+                    return;
+                }
 
                 var next = this.GetNextPoint();
                 this.MoveToward(next);
@@ -149,7 +159,11 @@
         {
             this.goalGrid = this.FindGoal();
 
-            this.pathBuffer = this.navigator.Search(this.transform.position, this.goalGrid).ToList();
+            this.pathBuffer = this.navigator.Search(
+                this.transform.position, 
+                this.goalGrid,
+                this.mad)
+                .ToList();
         }
 
         private Vector3 FindGoal()

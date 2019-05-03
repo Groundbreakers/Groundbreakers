@@ -29,10 +29,13 @@
         /// <param name="end">
         ///     The ending(goal) point.
         /// </param>
+        /// <param name="ignoreBlock">
+        ///     The Temp.
+        /// </param>
         /// <returns>
         ///     The <see cref="Vector3" />.
         /// </returns>
-        public IEnumerable<Vector3> Search(Vector3 start, Vector3 end)
+        public IEnumerable<Vector3> Search(Vector3 start, Vector3 end, bool ignoreBlock = false)
         {
             this.InitializeMap();
 
@@ -70,7 +73,13 @@
                     if (!node.CanPass)
                     {
                         // temp solution
-                        continue;
+                        if (ignoreBlock && node.Weight > 0.0f)
+                        {
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
 
                     // if contained in closed set
@@ -221,6 +230,7 @@
 
                     var status = this.tilemap.GetTileStatusAt(i, j);
                     this.map[i, j].CanPass = status.CanPass();
+                    this.map[i, j].Weight = status.Weight;
                 }
             }
         }
@@ -240,6 +250,8 @@
             public float F { get; set; }
 
             public float G { get; set; }
+
+            public float Weight { get; set; }
 
             public Node Parent { get; set; }
 
