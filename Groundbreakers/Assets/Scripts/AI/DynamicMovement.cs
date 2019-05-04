@@ -57,24 +57,10 @@
 
         public void OnTilesChange(Vector3 first, Vector3 second)
         {
-            return;
-
-            // Check if we need to re calculate path
-            if (this.pathBuffer.Any(vec => vec == first || vec == second))
-            {
-                this.RecalculatePath();
-            }
         }
 
         public void OnTileChange(Vector3 first)
         {
-            return;
-
-            // Check if we need to re calculate path
-            if (this.pathBuffer.Any(vec => vec == first))
-            {
-                this.RecalculatePath();
-            }
         }
 
         #endregion
@@ -95,29 +81,7 @@
             // Caching the targets
             targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
 
-            this.goalGrid = this.FindGoal();
-
-            Debug.Log("something");
-
-            if (this.transform.position == this.goalGrid)
-            {
-                GameObject.Destroy(this.gameObject);
-                return;
-            }
-
-            var path = this.navigator.Search(
-                    this.transform.position,
-                    this.goalGrid,
-                    false)
-                .ToList();
-
-
-            if (path.Count == 0)
-            {
-                return;
-            }
-
-            this.MoveToward(path.First());
+            this.nextGrid = this.transform.position;
         }
 
         protected void FixedUpdate()
@@ -138,6 +102,7 @@
             }
             else
             {
+                // When not moving, do the following
                 this.goalGrid = this.FindGoal();
 
                 Debug.Log("something");
@@ -148,15 +113,16 @@
                     return;
                 }
 
+                // TODO: Refactor this shit,
                 var path = this.navigator.Search(
-                                   this.transform.position,
-                                   this.goalGrid,
-                                   false)
-                               .ToList();
-
+                    this.transform.position, 
+                    this.goalGrid, 
+                    this.mad).ToList();
 
                 if (path.Count == 0)
                 {
+                    // This happens when no valid path is made.
+                    this.mad = true;
                     return;
                 }
 
@@ -169,42 +135,11 @@
 
         #region Internal Functions
 
-        private Vector3 GetNextPoint()
-        {
-            var point = this.pathBuffer[0];
-            this.pathBuffer.RemoveAt(0);
-
-            return point;
-        }
-
-        private void RecalculatePath()
-        {
-            this.goalGrid = this.FindGoal();
-
-            this.pathBuffer = this.navigator.Search(
-                this.transform.position, 
-                this.goalGrid,
-                false)
-                .ToList();
-        }
-
         private Vector3 FindGoal()
         {
             var end = targets.OrderBy(pos => Vector3.Distance(this.transform.position, pos.position)).First();
 
             return end.position;
-        }
-
-        private void UpdatePathIfGoalChanges()
-        {
-            this.goalGrid = this.FindGoal();
-
-            if (!this.goalGrid.Equals(this.lastGoalGrid))
-            {
-                this.lastGoalGrid = this.goalGrid;
-
-                this.RecalculatePath();
-            }
         }
 
         /// <summary>

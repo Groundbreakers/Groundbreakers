@@ -35,7 +35,7 @@
         /// <returns>
         ///     The <see cref="Vector3" />.
         /// </returns>
-        public IEnumerable<Vector3> Search(Vector3 start, Vector3 end, bool ignoreBlock = true)
+        public IEnumerable<Vector3> Search(Vector3 start, Vector3 end, bool ignoreBlock = false)
         {
             this.InitializeMap();
 

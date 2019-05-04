@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using System.Linq;
+
     using Sirenix.OdinInspector;
 
     using UnityEngine;
@@ -66,6 +68,19 @@
             status.SetCanPass(this.previousCanPass);
 
             Tilemap.OnTileChanges(parent.position);
+        }
+
+        // TMP
+        // TODO: do it properly
+        private void FixedUpdate()
+        {
+            // TMP Solution, very inefficent
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if (enemies.Any(go => Vector3.Distance(go.transform.position, this.transform.position) < Mathf.Epsilon))
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
