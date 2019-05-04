@@ -1,9 +1,6 @@
 ﻿namespace TileMaps
 {
-    using System;
     using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
 
     using AI;
 
@@ -42,8 +39,6 @@
         [SerializeField]
         private GameObject plantPrefab;
 
-        private List<GameObject> mushrooms = new List<GameObject>();
-
         /// <summary>
         ///     Gets the squared map's dimension
         /// </summary>
@@ -71,7 +66,6 @@
                 enemy.GetComponent<DynamicMovement>().OnTileChange(position);
             }
         }
-
 
         public GameObject GetTileBlockAt(Vector3 position)
         {
@@ -129,6 +123,7 @@
         [Button]
         public void SetupMap()
         {
+            this.mapData = this.GetComponent<ITerrainData>();
             this.mapData.Initialize();
 
             ClearAllTiles();
@@ -225,24 +220,11 @@
 
         private void SpawnMushrooms()
         {
-            var num = 4;
-            this.mushrooms.Clear();
-
-            // We use naive approach here
-            for (var i = 0; i < num; i++)
+            foreach (var pos in this.mapData.GetMushroomLocations())
             {
-                bool duplicate;
-                Transform block;
-                do
-                {
-                    block = this.PickNonOccupiedBlock(this.mapData);
-                    duplicate = this.mushrooms.Any(go => go.transform.position.Equals(block.position));
-                }
-                while (duplicate);
-
-
-                var mush = Instantiate(this.mushroomPrefab, block);
-                this.mushrooms.Add(mush);
+                var instance = Instantiate(
+                    this.mushroomPrefab,
+                    this.GetTileBlockAt(pos).transform);
             }
         }
 
@@ -262,21 +244,6 @@
                    }
                 }
             }
-        }
-
-        [Obsolete("Eventually remove this function")]
-        private Transform PickNonOccupiedBlock(ITerrainData sourceData)
-        {
-            int x;
-            int y;
-            do
-            {
-                x = Random.Range(0, 8);
-                y = Random.Range(0, 8);
-            }
-            while (sourceData.GetTileTypeAt(x, y) == Tiles.Water);
-
-            return this.blocks[x, y];
         }
     }
 }

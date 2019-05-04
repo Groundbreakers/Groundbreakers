@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     using UnityEngine;
 
@@ -24,7 +25,7 @@
         private readonly Tiles[,] data = new Tiles[Tilemap.Dimension, Tilemap.Dimension];
 
         [SerializeField]
-        [Range(0.0f, 10.0f)]
+        [Range(3.0f, 7.0f)]
         private float frequency = 5.0f;
 
         [SerializeField]
@@ -34,6 +35,14 @@
         [SerializeField]
         [Range(0.0f, 1.0f)]
         private float sandMax = 0.45f;
+
+        [SerializeField]
+        private int numberWater = 4;
+
+        [SerializeField]
+        private float numberMushroom = 5;
+
+        private List<Vector3> mushrooms = new List<Vector3>();
 
         #region ITerrainData
 
@@ -71,11 +80,18 @@
             this.GenerateEnvironment();
         }
 
+        public List<Vector3> GetMushroomLocations()
+        {
+            return this.mushrooms;
+        }
+
         #endregion
 
         private void GenerateEnvironment()
         {
-            var num = Random.Range(1, 3);
+            // Generating water
+            var num = this.numberWater + Random.Range(-1, 1);
+
             for (var i = 0; i < num; i++)
             {
                 int x;
@@ -85,9 +101,37 @@
                     x = Random.Range(0, Tilemap.Dimension);
                     y = Random.Range(0, Tilemap.Dimension);
                 }
-                while (this.GetTileTypeAt(x, y) == Tiles.Path);
+                while (this.GetTileTypeAt(x, y) == Tiles.HighGround);
 
                 this.data[x, y] = Tiles.Water;
+            }
+
+            // Generating mushroom
+            this.mushrooms.Clear();
+            for (var i = 0; i < this.numberMushroom; i++)
+            {
+                bool duplicate;
+                int x;
+                int y;
+                do
+                {
+                    Tiles type;
+                    do
+                    {
+                        x = Random.Range(0, Tilemap.Dimension);
+                        y = Random.Range(0, Tilemap.Dimension);
+
+                        type = this.GetTileTypeAt(x, y);
+                    }
+                    while (type == Tiles.HighGround || type == Tiles.Water);
+
+                    duplicate = this.mushrooms.Any(
+                        pos => Math.Abs(pos.x - x) < Mathf.Epsilon && 
+                               Math.Abs(pos.y - y) < Mathf.Epsilon);
+                }
+                while (duplicate);
+
+                this.mushrooms.Add(new Vector3(x, y));
             }
         }
 
@@ -99,7 +143,7 @@
         {
             var n = Tilemap.Dimension;
 
-            var freq = this.frequency;
+            var freq = Random.Range(3.0f, 7.0f);
             var heightMap = new float[n, n];
             var moisture = new float[n, n];
 
@@ -156,7 +200,7 @@
 
             if (e < this.grassMax)
             {
-                return Tiles.Wall;
+                return Tiles.HighGround;
             }
 
             return Tiles.Stone;

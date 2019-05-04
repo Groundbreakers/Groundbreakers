@@ -64,7 +64,7 @@
                 {
                     var block = tilemap.GetTileStatusAt(i, j);
 
-                    if (block && block.GetTileType() == Tiles.Wall)
+                    if (block && block.GetTileType() == Tiles.HighGround)
                     {
                         list.Add(block.transform);
                     }

@@ -13,7 +13,7 @@
 
         Stone,
 
-        Wall,
+        HighGround,
 
         Water
     }

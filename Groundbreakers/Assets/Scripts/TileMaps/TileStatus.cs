@@ -100,7 +100,7 @@
                     this.canPass = true;
                     this.canSwap = true;
                     break;
-                case Tiles.Wall:
+                case Tiles.HighGround:
                     this.canPass = false;
                     this.canSwap = true;
                     break;

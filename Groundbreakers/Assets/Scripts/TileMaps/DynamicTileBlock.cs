@@ -46,7 +46,7 @@
                 case Tiles.Stone:
                     this.spriteRenderer.sprite = this.listSprites[1];
                     break;
-                case Tiles.Wall:
+                case Tiles.HighGround:
                     this.spriteRenderer.sprite = this.listSprites[2];
                     break;
                 case Tiles.Water:

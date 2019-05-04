@@ -26,5 +26,13 @@
         ///     For custom Terrains: Should Load the right level from our database.
         /// </summary>
         void Initialize();
+
+        /// <summary>
+        ///     Get a list of vector3 locations of where the mushrooms are.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="Vector3"/>.
+        /// </returns>
+        List<Vector3> GetMushroomLocations();
     }
 }

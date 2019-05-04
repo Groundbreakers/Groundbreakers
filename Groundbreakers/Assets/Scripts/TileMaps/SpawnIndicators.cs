@@ -70,6 +70,7 @@
         /// <summary>
         ///     Show all the Indicators, which was originally hidden.
         /// </summary>
+        [Button]
         public void RevealIndicators()
         {
             foreach (var go in this.spawnPoints.Concat(this.defendPoints))
@@ -159,31 +160,6 @@
             {
                 trans.SetPositionAndRotation(new Vector3(xs[j], row), Quaternion.identity);
                 j++;
-            }
-        }
-
-        /// <summary>
-        ///     Re-positioning the list of transforms. Pick one column in the row.
-        /// </summary>
-        /// <param name="objects">
-        ///     The objects: An List of Transforms.
-        /// </param>
-        /// <param name="row">
-        ///     The row: The row on the 8 by 8 tiles.
-        /// </param>
-        [Obsolete("Too generic")]
-        private static void RearrangeObjects(IReadOnlyCollection<Transform> objects, int row)
-        {
-            var n = objects.Count;
-            var xs = Enumerable.Range(0, Tilemap.Dimension).OrderBy(x => Random.value).Take(n).ToList();
-
-            xs.Sort();
-
-            var i = 0;
-            foreach (var trans in objects)
-            {
-                trans.SetPositionAndRotation(new Vector3(xs[i], row), Quaternion.identity);
-                i++;
             }
         }
 

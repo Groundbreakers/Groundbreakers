@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using System.Collections.Generic;
+
     using UnityEngine;
 
     /// <inheritdoc cref="ITerrainData" />
@@ -57,19 +59,19 @@
                                     Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Wall, Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.HighGround, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Wall, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Wall, Tiles.Grass
+                                    Tiles.Grass, Tiles.HighGround, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.HighGround, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Wall, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass
+                                    Tiles.Grass, Tiles.HighGround, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass
                                 },
                                 {
                                     Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Grass
                                 },
                                 {
-                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.Wall, Tiles.Grass
+                                    Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Water, Tiles.Water, Tiles.Grass, Tiles.HighGround, Tiles.Grass
                                 },
                                 {
                                     Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
@@ -78,6 +80,11 @@
                                     Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass, Tiles.Grass
                                 }
                             };
+        }
+
+        public List<Vector3> GetMushroomLocations()
+        {
+            return new List<Vector3>();
         }
 
         #endregion
