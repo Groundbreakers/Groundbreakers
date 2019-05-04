@@ -124,7 +124,12 @@
         public void SetupMap()
         {
             this.mapData = this.GetComponent<ITerrainData>();
-            this.mapData.Initialize();
+
+            do
+            {
+                this.mapData.Initialize();
+            }
+            while (CountNumHighGrounds(this.mapData) < 5);
 
             ClearAllTiles();
             this.InstantiateTiles(this.mapData);
@@ -178,6 +183,26 @@
                     GameObject.Destroy(go);
                 }
             }
+        }
+
+        private static int CountNumHighGrounds(ITerrainData data)
+        {
+            var num = 0;
+
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                    var type = data.GetTileTypeAt(i, j);
+
+                    if (type == Tiles.HighGround)
+                    {
+                        num++;
+                    }
+                }
+            }
+
+            return num;
         }
 
         /// <summary>

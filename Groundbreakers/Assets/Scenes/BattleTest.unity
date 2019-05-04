@@ -396,9 +396,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905304b1878845cca937d6a03909a0ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequency: 5
-  grassMax: 0.65
-  sandMax: 0.45
+  frequency: 3.73
+  grassMax: 0.593
+  sandMax: 0.5
+  numberWater: 4
+  numberMushroom: 5
 --- !u!4 &120820391
 Transform:
   m_ObjectHideFlags: 0

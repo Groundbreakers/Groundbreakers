@@ -105,8 +105,6 @@
                 // When not moving, do the following
                 this.goalGrid = this.FindGoal();
 
-                Debug.Log("something");
-
                 if (this.transform.position == this.goalGrid)
                 {
                     GameObject.Destroy(this.gameObject);
