@@ -31,6 +31,8 @@
 
         private bool previousCanPass;
 
+        private float previousWeight;
+
         private void OnEnable()
         {
             // Inefficient but acceptable here.
@@ -50,6 +52,8 @@
 
             // Store original status and update new.
             this.previousCanPass = status.CanPass();
+            this.previousWeight = status.Weight;
+
             status.SetCanPass(false);
             status.Weight = this.weight;
 
@@ -66,6 +70,7 @@
             var status = parent.GetComponent<TileStatus>();
 
             status.SetCanPass(this.previousCanPass);
+            status.Weight = this.previousWeight;
 
             Tilemap.OnTileChanges(parent.position);
         }
