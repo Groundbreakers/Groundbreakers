@@ -261,7 +261,7 @@
             }
             else
             {
-                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(0, this.transform);
+                //GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(0, this.transform);
             }
         }
 

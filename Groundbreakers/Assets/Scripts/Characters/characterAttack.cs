@@ -19,8 +19,8 @@ public class characterAttack : MonoBehaviour
 
     public Animator animator;
 
-    public string stance = "Gun";
-
+    public string stance;
+    public GameObject hitbox;
     private characterAttributes trickster;
     private bool isChanging = false;
     private Vector3 firePoint;
@@ -35,7 +35,6 @@ public class characterAttack : MonoBehaviour
     // draw the attack range of the character selected
 
     private CircleCollider2D myCollider;
-    public CircleCollider2D meleeCollider;
 
     /// <summary>
     /// Ivan: we keep a reference to the weapon GameObject here. Note the second child of Character
@@ -69,6 +68,7 @@ public class characterAttack : MonoBehaviour
 
     void Update()
     {
+        
         if (target != null && !isChanging)
         {
             //calculate angle
@@ -222,12 +222,8 @@ public class characterAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            if(!targetedEnemies.Contains(other.gameObject))
-            {
                 targetedEnemies.Add(other.gameObject);
                 updateTarget();
-            }
-            
         }
     }
 
@@ -235,11 +231,8 @@ public class characterAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            if (!meleeCollider.isTrigger)
-            {
                 targetedEnemies.Remove(other.gameObject);
                 updateTarget();
-            }
         }
     }
 
@@ -276,6 +269,7 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", true);
             // this.shoot();
+            
             this.PerformAttack();
 
             this.fireCountdown = 1f / this.fireRate;
@@ -286,8 +280,10 @@ public class characterAttack : MonoBehaviour
 
     public void PerformAttack()
     {
+
         if (this.stance.Equals("Melee"))
         {
+
             this.MeleeAttack();
         }
         else
@@ -306,9 +302,25 @@ public class characterAttack : MonoBehaviour
 
     public void MeleeAttack()
     {
+        Debug.Log("Melee");
+        MeleeManager meleeattack = hitbox.GetComponent<MeleeManager>();
         // should use a melee attack module here. This is temp solution :(
+        this.setMeleeStatusAttributes(meleeattack);
 
-        this.rangedWeapon.SendMessage("Melee", this.target);
+    }
+
+    private void setMeleeStatusAttributes(MeleeManager meleeattack)
+    {
+        meleeattack.setAttack(trickster.POW);
+        meleeattack.setArmorPen(trickster.AMP);
+        if (this.trickster.burnSE == true) meleeattack.setBurn();
+        if (this.trickster.blightSE == true) meleeattack.setBlight();
+        if (this.trickster.slowSE == true) meleeattack.setSlow();
+        if (this.trickster.stunSE == true) meleeattack.setStun();
+        if (this.trickster.markSE == true) meleeattack.setMark();
+        if (this.trickster.breakSE == true) meleeattack.setBreak();
+        if (this.trickster.netSE == true) meleeattack.setNet();
+        if (this.trickster.purgeSE == true) meleeattack.setPurge();
     }
 
 
