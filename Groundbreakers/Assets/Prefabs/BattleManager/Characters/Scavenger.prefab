@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 5170317579557245721}
   - component: {fileID: 1143237542542456168}
   - component: {fileID: 1181517269323186452}
+  - component: {fileID: 6419686925401315469}
   m_Layer: 2
   m_Name: Scavenger
   m_TagString: Player
@@ -288,6 +289,18 @@ MonoBehaviour:
   isPlagued: 0
   isInterfered: 0
   isShackled: 0
+--- !u!114 &6419686925401315469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335a9fc57059abd4386f14dd2f27f6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7361350732008019827
 MonoBehaviour:
   m_ObjectHideFlags: 0
