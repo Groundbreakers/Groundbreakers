@@ -127,7 +127,6 @@ MonoBehaviour:
   - Evasion
   deathEffect: {fileID: 718309088729475099, guid: 9d0f44788c0be5d4589d653b8f8fa495,
     type: 3}
-  waypointList: []
   time: 0
 --- !u!61 &4820504546433748512
 BoxCollider2D:
@@ -146,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -183,6 +182,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
+    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,12 +245,12 @@ PrefabInstance:
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.005
+      value: -0.017
       objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.434
+      value: 0.605
       objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
@@ -287,11 +291,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4, type: 3}

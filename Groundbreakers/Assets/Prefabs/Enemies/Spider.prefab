@@ -127,7 +127,6 @@ MonoBehaviour:
   - Resistance
   deathEffect: {fileID: 718309088729475099, guid: 7757c771aaaf0d240984cb511faf2267,
     type: 3}
-  waypointList: []
   time: 0
 --- !u!61 &4820504546433748512
 BoxCollider2D:
@@ -146,7 +145,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -246,12 +245,12 @@ PrefabInstance:
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.002
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.347
+      value: 0.407
       objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
