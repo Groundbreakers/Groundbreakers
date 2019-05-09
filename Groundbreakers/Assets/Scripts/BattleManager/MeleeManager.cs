@@ -112,8 +112,6 @@ public class MeleeManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Hit");
-                
                 hitEnemies.Add(other.gameObject);
                 statusEffectHandler(other);
                 Debug.Log(damage);
@@ -140,7 +138,6 @@ public class MeleeManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Damage");
             hitTarget.gameObject.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, true, true);
         }
 
