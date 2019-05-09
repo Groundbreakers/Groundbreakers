@@ -8,6 +8,7 @@
     using TileMaps;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
 
     public class DynamicMovement : MonoBehaviour
     {
@@ -93,39 +94,11 @@
 
             if (this.IsMoving())
             {
-                var step = Time.fixedDeltaTime * this.speed;
-
-                this.transform.position = Vector3.MoveTowards(
-                    this.transform.position, 
-                    this.nextGrid, 
-                    step);
+                this.UpdateMoving();
             }
             else
             {
-                // When not moving, do the following
-                this.goalGrid = this.FindGoal();
-
-                if (this.transform.position == this.goalGrid)
-                {
-                    GameObject.Destroy(this.gameObject);
-                    return;
-                }
-
-                // TODO: Refactor this shit,
-                var path = this.navigator.Search(
-                    this.transform.position, 
-                    this.goalGrid, 
-                    this.mad).ToList();
-
-                if (path.Count == 0)
-                {
-                    // This happens when no valid path is made.
-                    this.mad = true;
-                    return;
-                }
-
-                path.RemoveAt(0);
-                this.MoveToward(path.First());
+                this.UpdateStopping();
             }
         }
 
@@ -133,9 +106,77 @@
 
         #region Internal Functions
 
+        /// <summary>
+        ///     Progress to next grid
+        /// </summary>
+        private void UpdateMoving()
+        {
+            var step = Time.fixedDeltaTime * this.speed;
+
+            this.transform.position = Vector3.MoveTowards(
+                this.transform.position,
+                this.nextGrid,
+                step);
+        }
+
+        /// <summary>
+        ///     The update stopping.
+        /// </summary>
+        private void UpdateStopping()
+        {
+            if (this.CheckHasReachedGoal())
+            {
+                return;
+            }
+
+            // TODO: Refactor this shit,
+            var path = this.navigator.Search(
+                this.transform.position,
+                this.goalGrid,
+                this.mad).ToList();
+
+            if (path.Count == 0)
+            {
+                // This happens when no valid path is made.
+                this.mad = true;
+                return;
+            }
+
+            path.RemoveAt(0);
+            this.MoveToward(path.First());
+        }
+
+        /// <summary>
+        ///     Check if has reached the destination, if so, destroy self.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="bool"/>.
+        /// </returns>
+        private bool CheckHasReachedGoal()
+        {
+            this.goalGrid = this.FindGoal();
+
+            if (this.transform.position != this.goalGrid)
+            {
+                return false;
+            }
+
+            GameObject.Destroy(this.gameObject);
+            return true;
+        }
+
+        /// <summary>
+        ///     The find goal.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="Vector3"/>.
+        /// </returns>
         private Vector3 FindGoal()
         {
-            var end = targets.OrderBy(pos => Vector3.Distance(this.transform.position, pos.position)).First();
+            Assert.IsTrue(targets.Any());
+
+            var end = targets.OrderBy(
+                pos => Vector3.SqrMagnitude(pos.position - this.transform.position)).First();
 
             return end.position;
         }
