@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f8be7e63c6ca44c8f82627b1235771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  specie: 
   maxHealth: 100
   health: 100
   speed: 1
@@ -129,7 +130,6 @@ MonoBehaviour:
   - Flying
   deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
     type: 3}
-  waypointList: []
   time: 0
 --- !u!114 &4499857591035348143
 MonoBehaviour:
