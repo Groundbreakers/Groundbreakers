@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4820504546433748512}
   - component: {fileID: 4534209215401832226}
   - component: {fileID: 1192242751556003524}
+  - component: {fileID: 4030837535887385412}
+  - component: {fileID: 1393917654799835336}
   m_Layer: 0
   m_Name: Dire_Rat
   m_TagString: Enemy
@@ -146,7 +148,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -190,6 +192,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyInfo_prefab: {fileID: 7507061446221834786, guid: 8f2c8cd79306cd54ab6954eb3edc6f3e,
     type: 3}
+--- !u!114 &4030837535887385412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5212bab07345424cb87729e50419f3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+--- !u!114 &1393917654799835336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5212bab07345424cb87729e50419f3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!1001 &5540663516258900008
 PrefabInstance:
   m_ObjectHideFlags: 0

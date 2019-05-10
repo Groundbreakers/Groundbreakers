@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 226798854866218715}
   - component: {fileID: 4820504546433748512}
   - component: {fileID: 4534209215401832226}
+  - component: {fileID: 678002547430339401}
   m_Layer: 0
   m_Name: Vulture
   m_TagString: Enemy
@@ -115,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f8be7e63c6ca44c8f82627b1235771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  specie: 
   maxHealth: 200
   health: 200
   speed: 1
@@ -127,7 +129,6 @@ MonoBehaviour:
   - Flying
   deathEffect: {fileID: 718309088729475099, guid: cee3473a44087e545aa27e51b8154921,
     type: 3}
-  waypointList: []
   time: 0
 --- !u!61 &4820504546433748512
 BoxCollider2D:
@@ -146,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5833333, y: 0.5833333}
+    oldSize: {x: 1.09375, y: 1.09375}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,6 +177,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &678002547430339401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5212bab07345424cb87729e50419f3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!1001 &1615994662466898020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,11 +197,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBarArmored
-      objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,6 +301,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBarArmored
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e39526ec1a428f4e9b11f9733fc0596, type: 3}

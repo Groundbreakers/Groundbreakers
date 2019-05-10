@@ -256,7 +256,7 @@
                 else
                 {
                     this.health -= damagevalue;
-                    // GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
 
                     // Debug.Log("Un Marked Damage = " + damagevalue);
                 }

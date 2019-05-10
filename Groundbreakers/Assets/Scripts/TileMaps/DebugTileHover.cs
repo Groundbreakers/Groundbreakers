@@ -82,6 +82,25 @@
                 {
                     var blockade = Instantiate(this.blockadePrefab, this.transform);
                 }
+
+                if (Input.GetKeyDown("1"))
+                {
+                    var pos = this.transform.position;
+                    this.tilemap.ChangeTileAt(pos, Tiles.Grass);
+                }
+
+                if (Input.GetKeyDown("2"))
+                {
+                    var pos = this.transform.position;
+                    this.tilemap.ChangeTileAt(pos, Tiles.Stone);
+                }
+
+                if (Input.GetKeyDown("3"))
+                {
+                    var pos = this.transform.position;
+                    this.tilemap.ChangeTileAt(pos, Tiles.Water);
+                }
+
             }
             else
             {

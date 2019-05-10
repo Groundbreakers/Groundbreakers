@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4820504546433748512}
   - component: {fileID: 4534209215401832226}
   - component: {fileID: 8116039866667059775}
+  - component: {fileID: 1522816799487986898}
   m_Layer: 0
   m_Name: Mantis
   m_TagString: Enemy
@@ -147,7 +148,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 0.9375, y: 0.9375}
     newSize: {x: 0.5, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -191,6 +192,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyInfo_prefab: {fileID: 7507061446221834786, guid: 8f2c8cd79306cd54ab6954eb3edc6f3e,
     type: 3}
+--- !u!114 &1522816799487986898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5212bab07345424cb87729e50419f3a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!1001 &1044696210177088613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,16 +212,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBarArmored
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -312,6 +316,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBarArmored
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4080714487044414856, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}

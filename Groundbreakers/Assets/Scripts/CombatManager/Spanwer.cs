@@ -1,6 +1,8 @@
 ﻿namespace CombatManager
 {
     using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using Assets.Scripts;
 
@@ -16,7 +18,7 @@
     public class Spanwer : MonoBehaviour
     {
         [SerializeField]
-        private GameObject debugMinion;
+        private List<GameObject> debugMinion;
 
         [SerializeField]
         [Range(10.0f, 25.0f)]
@@ -86,7 +88,8 @@
                 }
 
                 // this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(pathId));
-                this.InstantiateEnemyAtSpawnPoint(this.debugMinion);
+                this.InstantiateEnemyAtSpawnPoint(
+                    this.debugMinion.OrderBy(x => Random.value).FirstOrDefault());
 
                 yield return new WaitForSeconds(delta);
             }
