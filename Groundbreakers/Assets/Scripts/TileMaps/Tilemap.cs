@@ -39,6 +39,9 @@
         [SerializeField]
         private GameObject plantPrefab;
 
+        [SerializeField]
+        private GameObject highGroundPrefab;
+
         /// <summary>
         ///     Gets the squared map's dimension
         /// </summary>
@@ -115,6 +118,16 @@
             this.cachedStatus[x, y] = block.GetComponent<TileStatus>();
 
             block.SetSiblingIndex(index);
+        }
+
+        public void ChangeTileAt(Vector3 position, Tiles type)
+        {
+            var x = (int)position.x;
+            var y = (int)position.y;
+
+            var dynamicTile = this.blocks[x, y].GetComponent<DynamicTileBlock>();
+
+            dynamicTile.ChangeTileType(type);
         }
 
         /// <summary>
@@ -240,7 +253,7 @@
         private void InstantiateEnvironments()
         {
             this.SpawnMushrooms();
-            this.SpawnGrass();
+            this.SpawnGrassAndHighGround();
         }
 
         private void SpawnMushrooms()
@@ -253,7 +266,7 @@
             }
         }
 
-        private void SpawnGrass()
+        private void SpawnGrassAndHighGround()
         {
             for (var i = 0; i < Dimension; i++)
             {
@@ -265,6 +278,13 @@
                    {
                        var instance = Instantiate(
                            this.plantPrefab, 
+                           this.GetTileBlockAt(i, j).transform);
+                   }
+
+                   if (status.GetTileType() == Tiles.HighGround)
+                   {
+                       var instance = Instantiate(
+                           this.highGroundPrefab,
                            this.GetTileBlockAt(i, j).transform);
                    }
                 }

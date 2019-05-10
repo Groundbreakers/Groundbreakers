@@ -36,7 +36,7 @@
         private void OnEnable()
         {
             // Inefficient but acceptable here.
-            this.gameMap = GameObject.FindObjectOfType<Tilemap>();
+            this.gameMap = FindObjectOfType<Tilemap>();
 
             this.sprite = this.GetComponent<SpriteRenderer>();
         }
@@ -84,6 +84,7 @@
 
             if (enemies.Any(go => Vector3.Distance(go.transform.position, this.transform.position) < Mathf.Epsilon))
             {
+                this.gameMap.ChangeTileAt(this.transform.position, Tiles.Stone);
                 Destroy(this.gameObject);
             }
         }
