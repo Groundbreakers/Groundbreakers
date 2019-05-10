@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1342917279963280383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7423578128129625618}
+  - component: {fileID: 5452797114032196585}
+  - component: {fileID: 4414887242196525331}
+  m_Layer: 2
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7423578128129625618
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342917279963280383}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1171955736483787512}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &5452797114032196585
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342917279963280383}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
+--- !u!114 &4414887242196525331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342917279963280383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97321349aa9c35247b550049abd156d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitbox: {fileID: 5452797114032196585}
 --- !u!1 &2061099418179834263
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,12 +72,12 @@ GameObject:
   - component: {fileID: 1171955736483787512}
   - component: {fileID: 4230535042426805468}
   - component: {fileID: 7543013341955019752}
-  - component: {fileID: 5411917003956038637}
   - component: {fileID: 609067372233172761}
   - component: {fileID: 5908830486360006541}
   - component: {fileID: 5170317579557245721}
   - component: {fileID: 1143237542542456168}
   - component: {fileID: 1181517269323186452}
+  - component: {fileID: 6419686925401315469}
   m_Layer: 2
   m_Name: Scavenger
   m_TagString: Player
@@ -37,6 +98,7 @@ Transform:
   m_Children:
   - {fileID: 3449516517280272084}
   - {fileID: 7904024291521041958}
+  - {fileID: 7423578128129625618}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -107,22 +169,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &5411917003956038637
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061099418179834263}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.20000002}
-  serializedVersion: 2
-  m_Radius: 0.1
 --- !u!58 &609067372233172761
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -184,7 +230,7 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 7543013341955019752}
   stance: Melee
-  meleeCollider: {fileID: 5411917003956038637}
+  hitbox: {fileID: 1342917279963280383}
 --- !u!114 &1143237542542456168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   POW: 2
   ROF: 2
-  RNG: 2
+  RNG: 1
   MOB: 2
   AMP: 1
   burstAE: 0
@@ -243,6 +289,18 @@ MonoBehaviour:
   isPlagued: 0
   isInterfered: 0
   isShackled: 0
+--- !u!114 &6419686925401315469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335a9fc57059abd4386f14dd2f27f6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7361350732008019827
 MonoBehaviour:
   m_ObjectHideFlags: 0
