@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 755649469482102478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 2, z: 0.0022056424}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8083328768731070113}
   m_Father: {fileID: 0}
@@ -121,7 +121,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.78125, y: 0.78125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f8be7e63c6ca44c8f82627b1235771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  specie: 
   maxHealth: 100
   health: 100
   speed: 1
@@ -189,7 +190,6 @@ MonoBehaviour:
   - Flying
   deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
     type: 3}
-  waypointList: []
   time: 0
 --- !u!1001 &5227654991649712538
 PrefabInstance:
@@ -198,16 +198,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 755649469482102476}
     m_Modifications:
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBarArmored
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -312,6 +302,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBarArmored
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4080714487044414856, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}

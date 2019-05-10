@@ -372,6 +372,8 @@ MonoBehaviour:
     type: 3}
   plantPrefab: {fileID: 3317147538935926543, guid: d465a8da1ad2f834790992439f72c9a0,
     type: 3}
+  highGroundPrefab: {fileID: 1410983043164879455, guid: 1b261d672a4447a4daa49f01543ed40e,
+    type: 3}
 --- !u!114 &120820389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,6 +455,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Trickster
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
@@ -568,6 +575,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Trickster (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
@@ -992,6 +1004,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Trickster (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
@@ -1797,6 +1814,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1688462708067366167, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688462708067366167, guid: 4fb14a2bb4791934bb6b635d45b7653e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2679509969350117839, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -1896,16 +1923,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -416
-      objectReference: {fileID: 0}
-    - target: {fileID: 1688462708067366167, guid: 4fb14a2bb4791934bb6b635d45b7653e,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1688462708067366167, guid: 4fb14a2bb4791934bb6b635d45b7653e,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5623790535896599992, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}

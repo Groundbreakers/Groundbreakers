@@ -103,7 +103,7 @@ public class MeleeManager : MonoBehaviour
     //if an enemy enters in range
     void OnTriggerEnter2D(Collider2D other)
     {
-        
+
         if (other.tag == "Enemy")
         {
             if (hitEnemies.Contains(other.gameObject))
@@ -166,6 +166,6 @@ public class MeleeManager : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        
+
     }
 }
