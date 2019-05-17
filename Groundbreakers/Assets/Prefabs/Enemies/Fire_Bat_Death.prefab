@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 718309088729475099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.6338036, y: 0.7357236, z: 0.0022056424}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -114,4 +114,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 5981017255391181859}
   loot: {fileID: 2120704700764787243, guid: d7e7a5dd8b39f0746a23b7e9d5ddb366, type: 3}
-  parent: {fileID: 0}

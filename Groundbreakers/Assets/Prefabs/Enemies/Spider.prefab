@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3171230714936546568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.6338036, y: 0.7357236, z: 0.0022056424}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3028118807162097795}
   m_Father: {fileID: 0}
@@ -197,6 +197,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBarArmored
+      objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -301,11 +306,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBarArmored
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e39526ec1a428f4e9b11f9733fc0596, type: 3}

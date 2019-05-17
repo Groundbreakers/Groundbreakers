@@ -69,7 +69,7 @@
 
             var status = parent.GetComponent<TileStatus>();
 
-            status.SetCanPass(this.previousCanPass);
+            status.SetCanPass(true);
             status.Weight = this.previousWeight;
 
             Tilemap.OnTileChanges(parent.position);
