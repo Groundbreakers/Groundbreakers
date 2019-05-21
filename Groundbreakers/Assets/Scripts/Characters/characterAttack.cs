@@ -302,7 +302,6 @@ public class characterAttack : MonoBehaviour
 
     public void MeleeAttack()
     {
-        Debug.Log("Melee");
         MeleeManager meleeattack = hitbox.GetComponent<MeleeManager>();
         // should use a melee attack module here. This is temp solution :(
         this.setMeleeStatusAttributes(meleeattack);
