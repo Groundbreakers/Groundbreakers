@@ -128,7 +128,7 @@ MonoBehaviour:
   attributes:
   - Aggregation
   - Flying
-  deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
+  deathEffect: {fileID: 718309088729475099, guid: 446930bf321aeb043b20a09d85e1d2dc,
     type: 3}
   time: 0
 --- !u!61 &4820504546433748512
@@ -198,6 +198,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
+    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -312,11 +317,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.66666996
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4, type: 3}
