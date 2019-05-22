@@ -111,18 +111,10 @@
         /// </param>
         private void SwapTiles(Vector3 first, Vector3 second)
         {
-            //if (Busy)
-            //{
-            //    return;
-            //}
-
             var tileA = this.tilemap.GetTileBlockAt(first);
             var tileB = this.tilemap.GetTileBlockAt(second);
 
             this.swappingTiles.Clear();
-
-            // this.OnTilesChange(first, second);
-            // Busy = true;
 
             // Resetting the reference, temp
             this.tilemap.SetTileBlock(first, tileB.transform);

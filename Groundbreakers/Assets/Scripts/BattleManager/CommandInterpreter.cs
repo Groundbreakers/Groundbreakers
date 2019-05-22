@@ -13,6 +13,7 @@
         [Required("TileController is necessary for this component.")]
         private TileController controller;
 
+        private Camera mainCamera;
 
         [Button]
         public void ExecuteTileSwap()
@@ -29,7 +30,10 @@
 
         private void OnEnable()
         {
+            Assert.IsNotNull(Camera.main);
             Assert.IsNotNull(this.controller, "please attach the controller to this field.");
+
+            this.mainCamera = Camera.main;
 
             this.controller.ClearSelected();
         }
@@ -40,6 +44,31 @@
             {
                 this.ExecuteTileSwap();
             }
+
+            var hit = Physics2D.Raycast(
+                this.mainCamera.ScreenToWorldPoint(Input.mousePosition),
+                Vector2.zero);
+
+            if (hit)
+            {
+                var target = hit.collider.gameObject;
+
+                if (target.CompareTag("Tile"))
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        this.controller.SelectTile(target);
+
+                        //ExecuteEvents.Execute<ITileSelectMessageTarget>(
+                        //    target,
+                        //    null,
+                        //    (t, data) => t.Select());
+                    }
+                }
+
+
+            }
+
         }
     }
 }

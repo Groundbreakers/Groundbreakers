@@ -33,8 +33,6 @@
         [Range(0.0f, 3.0f)]
         private float maxDelay = 2.0f;
 
-        private Tilemap tilemap;
-
         [Button]
         public void Begin()
         {
@@ -51,11 +49,6 @@
             {
                 this.CreateExistAnimation(child.gameObject);
             }
-        }
-
-        protected void OnEnable()
-        {
-            this.tilemap = this.GetComponent<Tilemap>();
         }
 
         private void CreateEnterAnimation(GameObject block)
