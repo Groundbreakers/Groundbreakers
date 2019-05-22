@@ -70,6 +70,24 @@
             }
         }
 
+        /// <summary>
+        ///     The get blockade at.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="GameObject" />. Might return null if no blockade. 
+        /// </returns>
+        public GameObject GetBlockadeAt(Vector3 position)
+        {
+            var parent = this.GetTileBlockAt(position);
+
+            var blockade = parent.GetComponentInChildren<Blockade>();
+
+            return blockade ? blockade.gameObject : null;
+        }
+
         public GameObject GetTileBlockAt(Vector3 position)
         {
             var x = (int)position.x;

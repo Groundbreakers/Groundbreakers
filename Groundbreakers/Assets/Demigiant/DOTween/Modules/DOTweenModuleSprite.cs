@@ -9,7 +9,7 @@ using DG.Tweening.Core;
 #pragma warning disable 1591
 namespace DG.Tweening
 {
-	public static class DOTweenModuleSprite
+    public static class DOTweenModuleSprite
     {
         #region Shortcuts
 

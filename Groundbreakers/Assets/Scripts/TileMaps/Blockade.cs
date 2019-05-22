@@ -33,6 +33,11 @@
 
         private float previousWeight;
 
+        public void DeliverDamage()
+        {
+
+        }
+
         private void OnEnable()
         {
             // Inefficient but acceptable here.
@@ -73,20 +78,6 @@
             status.Weight = this.previousWeight;
 
             Tilemap.OnTileChanges(parent.position);
-        }
-
-        // TMP
-        // TODO: do it properly
-        private void FixedUpdate()
-        {
-            // TMP Solution, very inefficent
-            //var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            //if (enemies.Any(go => Vector3.Distance(go.transform.position, this.transform.position) < Mathf.Epsilon))
-            //{
-            //    this.gameMap.ChangeTileAt(this.transform.position, Tiles.Stone);
-            //    Destroy(this.gameObject);
-            //}
         }
     }
 }

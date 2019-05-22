@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using DG.Tweening;
+
     using Sirenix.OdinInspector;
 
     using TileMaps;
@@ -72,6 +74,7 @@
         {
             this.animator = this.GetComponent<Animator>();
 
+            // Naive approach
             var tilemap = GameObject.Find("Tilemap");
             this.navigator = tilemap.GetComponent<NavigationMap>();
             this.map = tilemap.GetComponent<Tilemap>();
@@ -137,7 +140,17 @@
             }
 
             path.RemoveAt(0);
-            this.MoveToward(path.First());
+            var next = path.First();
+            var blockade = this.map.GetBlockadeAt(next);
+
+            if (blockade)
+            {
+                // Should damage it
+                blockade.GetComponent<SpriteRenderer>().DOColor(Color.cyan, 2.0f);
+                return;
+            }
+
+            this.MoveToward(next);
         }
 
         /// <summary>
