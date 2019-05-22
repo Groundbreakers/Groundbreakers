@@ -162,8 +162,8 @@
                 var effect = Instantiate(this.deathEffect, this.transform.position, Quaternion.identity);
                 var death = effect.GetComponent<Enemy_Death>();
                 death.setDirection(this.animator.GetInteger("Direction"));
-                //CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
-                //temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
+                CrystalCounter temp = crystalCounter.GetComponent<CrystalCounter>();
+                temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
                 Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
             }
