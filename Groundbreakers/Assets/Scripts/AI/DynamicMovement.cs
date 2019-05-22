@@ -113,10 +113,7 @@
         {
             var step = Time.fixedDeltaTime * this.speed;
 
-            this.transform.position = Vector3.MoveTowards(
-                this.transform.position,
-                this.nextGrid,
-                step);
+            this.transform.position = Vector3.MoveTowards(this.transform.position, this.nextGrid, step);
         }
 
         /// <summary>
@@ -130,10 +127,7 @@
             }
 
             // TODO: Refactor this shit,
-            var path = this.navigator.Search(
-                this.transform.position,
-                this.goalGrid,
-                this.mad).ToList();
+            var path = this.navigator.Search(this.transform.position, this.goalGrid, this.mad).ToList();
 
             if (path.Count == 0)
             {
@@ -150,7 +144,7 @@
         ///     Check if has reached the destination, if so, destroy self.
         /// </summary>
         /// <returns>
-        ///     The <see cref="bool"/>.
+        ///     The <see cref="bool" />.
         /// </returns>
         private bool CheckHasReachedGoal()
         {
@@ -161,7 +155,7 @@
                 return false;
             }
 
-            GameObject.Destroy(this.gameObject);
+            Destroy(this.gameObject);
             return true;
         }
 
@@ -169,14 +163,13 @@
         ///     The find goal.
         /// </summary>
         /// <returns>
-        ///     The <see cref="Vector3"/>.
+        ///     The <see cref="Vector3" />.
         /// </returns>
         private Vector3 FindGoal()
         {
             Assert.IsTrue(targets.Any());
 
-            var end = targets.OrderBy(
-                pos => Vector3.SqrMagnitude(pos.position - this.transform.position)).First();
+            var end = targets.OrderBy(pos => Vector3.SqrMagnitude(pos.position - this.transform.position)).First();
 
             return end.position;
         }

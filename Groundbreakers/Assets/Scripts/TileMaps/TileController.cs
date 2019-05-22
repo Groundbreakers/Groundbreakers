@@ -9,6 +9,7 @@
     using Sirenix.OdinInspector;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
 
     /// <inheritdoc />
     /// <summary>
@@ -26,12 +27,17 @@
         /// </summary>
         private Tilemap tilemap;
 
-        private List<GameObject> swappingTiles = new List<GameObject>();
+        private readonly List<GameObject> swappingTiles = new List<GameObject>();
 
         /// <summary>
         ///     Gets a value indicating whether if any tile is currently swapping.
         /// </summary>
         public static bool Busy { get; private set; }
+
+        public void Begin()
+        {
+            Busy = true;
+        }
 
         /// <summary>
         ///     Clear the selected buffer.
@@ -47,6 +53,15 @@
             this.selected.Clear();
         }
 
+        public void SelectTile(Vector3 pos)
+        {
+            var block = this.tilemap.GetTileBlockAt(pos);
+
+            Assert.IsNotNull(block);
+
+            this.SelectTile(block);
+        }
+
         public void SelectTile(GameObject tile)
         {
             this.selected.Add(tile);
@@ -58,38 +73,6 @@
 
             this.SwapSelectedTiles();
             this.ClearSelected();
-        }
-
-        /// <summary>
-        ///     Perform an swapping of tiles. Do animation, and swap references.
-        /// </summary>
-        /// <param name="first">
-        ///     The first tile to swap.
-        /// </param>
-        /// <param name="second">
-        ///     The second tile to swap.
-        /// </param>
-        public void SwapTiles(Vector3 first, Vector3 second)
-        {
-            if (Busy)
-            {
-                return;
-            }
-
-            var tileA = this.tilemap.GetTileBlockAt(first);
-            var tileB = this.tilemap.GetTileBlockAt(second);
-
-            this.swappingTiles.Clear();
-
-            // this.OnTilesChange(first, second);
-            Busy = true;
-
-            // Resetting the reference, temp
-            this.tilemap.SetTileBlock(first, tileB.transform);
-            this.tilemap.SetTileBlock(second, tileA.transform);
-
-            this.MoveBlockTo(tileA, second);
-            this.MoveBlockTo(tileB, first);
         }
 
         protected void OnEnable()
@@ -108,13 +91,45 @@
 
         private static void OnTilesChange(Vector3 first, Vector3 second)
         {
-            // Refactor this shit
+            // TODO: Refactor this shit
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
             foreach (var enemy in enemies)
             {
                 enemy.GetComponent<DynamicMovement>().OnTilesChange(first, second);
             }
+        }
+
+        /// <summary>
+        ///     Perform an swapping of tiles. Do animation, and swap references.
+        /// </summary>
+        /// <param name="first">
+        ///     The first tile to swap.
+        /// </param>
+        /// <param name="second">
+        ///     The second tile to swap.
+        /// </param>
+        private void SwapTiles(Vector3 first, Vector3 second)
+        {
+            //if (Busy)
+            //{
+            //    return;
+            //}
+
+            var tileA = this.tilemap.GetTileBlockAt(first);
+            var tileB = this.tilemap.GetTileBlockAt(second);
+
+            this.swappingTiles.Clear();
+
+            // this.OnTilesChange(first, second);
+            // Busy = true;
+
+            // Resetting the reference, temp
+            this.tilemap.SetTileBlock(first, tileB.transform);
+            this.tilemap.SetTileBlock(second, tileA.transform);
+
+            this.MoveBlockTo(tileA, second);
+            this.MoveBlockTo(tileB, first);
         }
 
         private void MoveBlockTo(GameObject tile, Vector3 destination)

@@ -80,13 +80,13 @@
         private void FixedUpdate()
         {
             // TMP Solution, very inefficent
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            //var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            if (enemies.Any(go => Vector3.Distance(go.transform.position, this.transform.position) < Mathf.Epsilon))
-            {
-                this.gameMap.ChangeTileAt(this.transform.position, Tiles.Stone);
-                Destroy(this.gameObject);
-            }
+            //if (enemies.Any(go => Vector3.Distance(go.transform.position, this.transform.position) < Mathf.Epsilon))
+            //{
+            //    this.gameMap.ChangeTileAt(this.transform.position, Tiles.Stone);
+            //    Destroy(this.gameObject);
+            //}
         }
     }
 }
