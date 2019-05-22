@@ -342,7 +342,6 @@ GameObject:
   - component: {fileID: 3940766875146652564}
   - component: {fileID: 6814656965237660037}
   - component: {fileID: 5363954639478048802}
-  - component: {fileID: 8579023414525874882}
   m_Layer: 2
   m_Name: Gladiator
   m_TagString: Player
@@ -403,7 +402,7 @@ SpriteRenderer:
   m_SortingLayerID: -798880211
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300004, guid: d59c162e25696ef43ba69b8479b1e172, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d59c162e25696ef43ba69b8479b1e172, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -554,18 +553,6 @@ MonoBehaviour:
   isInterfered: 0
   isShackled: 0
 --- !u!114 &5363954639478048802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5367364221638702442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335a9fc57059abd4386f14dd2f27f6f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8579023414525874882
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
