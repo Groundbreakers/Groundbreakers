@@ -1,6 +1,6 @@
 ﻿namespace TileMaps
 {
-    using System.Linq;
+    using DG.Tweening;
 
     using Sirenix.OdinInspector;
 
@@ -25,25 +25,38 @@
         [Range(0.0f, 1.0f)]
         private float weight;
 
+        [SerializeField]
+        [Range(0.0f, 10.0f)]
+        private float hitPoint = 4.0f;
+
         private SpriteRenderer sprite;
 
         private Tilemap gameMap;
-
-        private bool previousCanPass;
 
         private float previousWeight;
 
         public void DeliverDamage()
         {
+            this.hitPoint -= 1.0f;
 
+            //this.transform.DOShakePosition(1.0f);
+            this.sprite.DOColor(Color.cyan, 1.0f);
+            Debug.Log(this.hitPoint);
+
+            if (this.hitPoint <= 0.0f)
+            {
+                GameObject.Destroy(this.gameObject);
+            }
         }
 
         private void OnEnable()
         {
             // Inefficient but acceptable here.
-            this.gameMap = FindObjectOfType<Tilemap>();
+            this.gameMap = GameObject.FindObjectOfType<Tilemap>();
 
             this.sprite = this.GetComponent<SpriteRenderer>();
+
+            this.hitPoint = 4.0f;
         }
 
         private void Start()
@@ -56,7 +69,7 @@
             var status = parent.GetComponent<TileStatus>();
 
             // Store original status and update new.
-            this.previousCanPass = status.CanPass();
+            //this.previousCanPass = status.CanPass();
             this.previousWeight = status.Weight;
 
             status.SetCanPass(false);
@@ -76,6 +89,8 @@
 
             status.SetCanPass(true);
             status.Weight = this.previousWeight;
+
+            this.gameMap.ChangeTileAt(parent.position, Tiles.Stone);
 
             Tilemap.OnTileChanges(parent.position);
         }

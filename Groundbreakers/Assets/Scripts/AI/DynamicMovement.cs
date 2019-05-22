@@ -1,5 +1,7 @@
 ﻿namespace AI
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -45,6 +47,8 @@
 
         // TODO: Fix this.
         private bool mad;
+
+        private bool attacking;
 
         #region Public Functions
 
@@ -101,7 +105,14 @@
             }
             else
             {
-                this.UpdateStopping();
+                if (this.attacking)
+                {
+                    this.UpdateAttacking();
+                }
+                else
+                {
+                    this.UpdateStopping();
+                }
             }
         }
 
@@ -129,6 +140,17 @@
                 return;
             }
 
+            if (this.mad)
+            {
+                // fucking check if has valid normal path
+                var normalPath = this.navigator.Search(this.transform.position, this.goalGrid, false).ToList();
+
+                if (normalPath.Count > 0)
+                {
+                    this.mad = false;
+                }
+            }
+
             // TODO: Refactor this shit,
             var path = this.navigator.Search(this.transform.position, this.goalGrid, this.mad).ToList();
 
@@ -146,11 +168,16 @@
             if (blockade)
             {
                 // Should damage it
-                blockade.GetComponent<SpriteRenderer>().DOColor(Color.cyan, 2.0f);
+                this.StartAttack(blockade);
                 return;
             }
 
             this.MoveToward(next);
+        }
+
+        private void UpdateAttacking()
+        {
+
         }
 
         /// <summary>
@@ -225,6 +252,40 @@
             {
                 this.animator.SetInteger(Direction, 3); // Left
             }
+        }
+
+        private void StartAttack(GameObject blockade)
+        {
+            if (this.attacking)
+            {
+                return;
+            }
+
+            var b = blockade.GetComponent<Blockade>();
+
+            Assert.IsNotNull(b);
+
+            this.StartCoroutine(this.Attack(b));
+        }
+
+        private IEnumerator Attack(Blockade blockade)
+        {
+            this.attacking = true;
+
+            while (TileController.Busy)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(2.0f);
+
+            Debug.Log("Something");
+            if (blockade)
+            {
+                blockade.DeliverDamage();
+            }
+
+            this.attacking = false;
         }
 
         #endregion
