@@ -74,7 +74,7 @@
         private IEnumerator SpawnWave(int pathId = 1)
         {
             // var count = this.pack.GetCount(pathId);
-            var count = 15;
+            var count = 1;
             var delta = this.duration / count;
             Debug.Log("total " + count + " enemies in this wave. We should emit at rate " + (int)delta);
 

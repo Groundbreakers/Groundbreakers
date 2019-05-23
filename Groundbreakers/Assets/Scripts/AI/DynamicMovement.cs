@@ -22,7 +22,7 @@
         [Range(0.0f, 3.0f)]
         private float speed = 1.0f; // temp
 
-        private Animator animator;
+        public Animator animator;
 
         private NavigationMap navigator;
 
@@ -248,6 +248,29 @@
             }
         }
 
+        private void SetDirectionAttack(Vector3 dir)
+        {
+            var yAbs = dir.y;
+            var xAbs = dir.x;
+
+            if (dir.y > 0)
+            {
+                this.animator.SetInteger(Direction, 0); // Up
+            }
+            else if (dir.x > 0)
+            {
+                this.animator.SetInteger(Direction, 1); // Right
+            }
+            else if (dir.y < 0)
+            {
+                this.animator.SetInteger(Direction, 2); // Down
+            }
+            else if (dir.x < 0)
+            {
+                this.animator.SetInteger(Direction, 3); // Left
+            }
+        }
+
         private void StartAttack(GameObject blockade)
         {
             if (this.attacking)
@@ -256,8 +279,8 @@
             }
 
             var dir = blockade.transform.position - this.transform.position;
-
-            this.SetDirection(dir);
+            Debug.Log(dir);
+            this.SetDirectionAttack(dir);
 
             var b = blockade.GetComponent<Blockade>();
 
@@ -268,9 +291,10 @@
 
         private IEnumerator Attack(Blockade blockade)
         {
+            animator.SetBool("Attacking", true);
             this.attacking = true;
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
 
             if (blockade)
             {
@@ -278,6 +302,7 @@
             }
 
             this.attacking = false;
+            animator.SetBool("Attacking", false);
         }
 
         #endregion

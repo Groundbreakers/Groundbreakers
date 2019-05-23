@@ -29,6 +29,8 @@
         [Range(0.0f, 10.0f)]
         private float hitPoint = 4.0f;
 
+        public GameObject blockadeDeath;
+
         private SpriteRenderer sprite;
 
         private Tilemap gameMap;
@@ -45,7 +47,10 @@
 
             if (this.hitPoint <= 0.0f)
             {
+                var rubble = Instantiate(this.blockadeDeath, this.transform.position, Quaternion.identity);
+                Destroy(rubble, 1f);
                 GameObject.Destroy(this.gameObject);
+                
             }
         }
 
