@@ -12,6 +12,11 @@ public class Settings : MonoBehaviour
     public GameObject ui;
     public float timeScale;
 
+    void Start()
+    {
+        this.TimeScale1x();
+    }
+
     public void Toggle ()
     {
         ui.SetActive(!ui.activeSelf);
