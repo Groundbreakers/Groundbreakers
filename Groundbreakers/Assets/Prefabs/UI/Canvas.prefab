@@ -3781,6 +3781,8 @@ GameObject:
   - component: {fileID: 6910807454208899971}
   - component: {fileID: 7684786971161706859}
   - component: {fileID: 5270833867720035326}
+  - component: {fileID: 3131270210376720084}
+  - component: {fileID: 6802370050902719946}
   m_Layer: 5
   m_Name: SwapButton
   m_TagString: Untagged
@@ -3883,9 +3885,57 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7684786971161706859}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6802370050902719946}
+        m_MethodName: Press
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3131270210376720084}
+        m_MethodName: Press
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &3131270210376720084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5321003595335926833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2d8f17cc10d8640af19a80464c766b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6802370050902719946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5321003595335926833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb0ec74532ef1a44a7a1b8550844043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnpressedSprite: {fileID: 21300000, guid: cb8f9bab53da4404d8c6c19f2c9d8a2e, type: 3}
+  PressedSprite: {fileID: 21300000, guid: c3088f87a36f3494ea97a0e1609fd8db, type: 3}
 --- !u!1 &5359534869593337361
 GameObject:
   m_ObjectHideFlags: 0
@@ -4059,6 +4109,8 @@ GameObject:
   - component: {fileID: 6824026769011004260}
   - component: {fileID: 7171780077903667233}
   - component: {fileID: 7987582077578562136}
+  - component: {fileID: 1112852923863378316}
+  - component: {fileID: 3875839539161199103}
   m_Layer: 5
   m_Name: RockButton
   m_TagString: Untagged
@@ -4161,9 +4213,57 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7171780077903667233}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3875839539161199103}
+        m_MethodName: Press
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1112852923863378316}
+        m_MethodName: Press
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1112852923863378316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497110808516941103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38497c82f63aacf4f891d3f1850974c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3875839539161199103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497110808516941103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bb0ec74532ef1a44a7a1b8550844043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnpressedSprite: {fileID: 21300000, guid: a11b0148befe71e4ca09c77c048e923d, type: 3}
+  PressedSprite: {fileID: 21300000, guid: 2572041baf804024394f893f18de0207, type: 3}
 --- !u!1 &5537359860415008536
 GameObject:
   m_ObjectHideFlags: 0
