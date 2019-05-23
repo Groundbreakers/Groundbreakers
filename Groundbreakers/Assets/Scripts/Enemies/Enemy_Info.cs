@@ -23,8 +23,8 @@ public class Enemy_Info : MonoBehaviour
 
     void Awake()
     {
-        canvas = GameObject.Find("EnemyInfo_Canvas").GetComponent<Canvas>();
-        enemygeneric = this.GetComponent<Enemy_Generic>();
+        //canvas = GameObject.Find("EnemyInfo_Canvas").GetComponent<Canvas>();
+        //enemygeneric = this.GetComponent<Enemy_Generic>();
     }
     
     public void createEnemyInfo()

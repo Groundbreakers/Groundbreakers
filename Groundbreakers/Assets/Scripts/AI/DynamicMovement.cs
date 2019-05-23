@@ -5,8 +5,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using DG.Tweening;
-
     using Sirenix.OdinInspector;
 
     using TileMaps;
@@ -36,6 +34,7 @@
         /// <summary>
         ///     The Destination grid position.
         /// </summary>
+        [ShowInInspector]
         private Vector3 goalGrid;
 
         private Vector3 lastGoalGrid;
@@ -100,6 +99,11 @@
             }
             else
             {
+                if (this.CheckHasReachedGoal())
+                {
+                    return;
+                }
+
                 if (this.attacking)
                 {
                     this.UpdateAttacking();
@@ -130,21 +134,16 @@
         /// </summary>
         private void UpdateStopping()
         {
-            if (this.CheckHasReachedGoal())
-            {
-                return;
-            }
+            //if (this.mad)
+            //{
+            //    // fucking check if has valid normal path
+            //    var normalPath = this.navigator.Search(this.transform.position, this.goalGrid, false).ToList();
 
-            if (this.mad)
-            {
-                // fucking check if has valid normal path
-                var normalPath = this.navigator.Search(this.transform.position, this.goalGrid, false).ToList();
-
-                if (normalPath.Count > 0)
-                {
-                    this.mad = false;
-                }
-            }
+            //    if (normalPath.Count > 0)
+            //    {
+            //        this.mad = false;
+            //    }
+            //}
 
             // TODO: Refactor this shit,
             var path = this.navigator.Search(this.transform.position, this.goalGrid, this.mad).ToList();
@@ -256,9 +255,9 @@
                 return;
             }
 
-            //var dir = blockade.transform.position - this.transform.position;
+            var dir = blockade.transform.position - this.transform.position;
 
-            //this.SetDirection(dir);
+            this.SetDirection(dir);
 
             var b = blockade.GetComponent<Blockade>();
 
@@ -271,14 +270,8 @@
         {
             this.attacking = true;
 
-            //while (TileController.Busy)
-            //{
-            //    yield return null;
-            //}
-
             yield return new WaitForSeconds(2.0f);
 
-            Debug.Log("Something");
             if (blockade)
             {
                 blockade.DeliverDamage();
