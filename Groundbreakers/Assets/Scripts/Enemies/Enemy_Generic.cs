@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
 
     using Random = UnityEngine.Random;
 
@@ -82,9 +84,23 @@
 
         #endregion
 
+        public int time;
+
+        private static GameObject canvasGameObject;
+
         private GameObject crystalCounter;
 
-        public int time;
+        public static void ShowDamagePopup(Transform location, int damage = 0)
+        {
+            Assert.IsNotNull(location);
+
+            if (canvasGameObject == null)
+            {
+                canvasGameObject = GameObject.Find("Canvas");
+            }
+
+            canvasGameObject.GetComponent<DamagePopup>().ProduceText(damage, location);
+        }
 
         private void OnEnable()
         {
@@ -251,19 +267,19 @@
 
                     // Debug.Log("Marked Damage = " + damagevalue);
                     this.health -= damagevalue;
-                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                    ShowDamagePopup(this.transform, damagevalue);
                 }
                 else
                 {
                     this.health -= damagevalue;
-                    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(damagevalue, this.transform);
+                    ShowDamagePopup(this.transform, damagevalue);
 
                     // Debug.Log("Un Marked Damage = " + damagevalue);
                 }
             }
             else
             {
-                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(0, this.transform);
+                ShowDamagePopup(this.transform);
             }
         }
 

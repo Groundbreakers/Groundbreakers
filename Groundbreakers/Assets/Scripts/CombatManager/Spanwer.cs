@@ -74,6 +74,8 @@
 
                 yield return new WaitForSeconds(5.0f);
             }
+
+            BattleManager.TriggerEvent("victory");
         }
 
         private IEnumerator SpawnWave(int pathId = 1)

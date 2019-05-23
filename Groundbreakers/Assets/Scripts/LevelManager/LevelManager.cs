@@ -86,7 +86,7 @@
             {
                 this.Region += 1;
                 this.Level = 1;
-                this.currentLevelUi.OnRegionChanged();
+                // this.currentLevelUi.OnRegionChanged();
             }
             else
             {
@@ -94,7 +94,7 @@
             }
 
             // Update UI Text
-            this.currentLevelUi.UpdateLevelInfo();
+            // this.currentLevelUi.UpdateLevelInfo();
         }
 
         /// <summary>
