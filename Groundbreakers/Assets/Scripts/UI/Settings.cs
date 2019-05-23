@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Assets.Scripts;
 
+using TileMaps;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -47,15 +49,29 @@ public class Settings : MonoBehaviour
     public void TimeScale1x()
     {
         this.timeScale = 1.0F;
+
+        this.UpdateTimeScaleIfNecessary();
     }
 
     public void TimeScale2x()
     {
         this.timeScale = 2.0F;
+
+        this.UpdateTimeScaleIfNecessary();
     }
 
     public void TimeScale4x()
     {
         this.timeScale = 4.0F;
+
+        this.UpdateTimeScaleIfNecessary();
+    }
+
+    private void UpdateTimeScaleIfNecessary()
+    {
+        if (TileController.Active == TileController.CommandState.Inactive)
+        {
+            Time.timeScale = this.timeScale;
+        }
     }
 }

@@ -27,7 +27,7 @@
         /// </summary>
         private Tilemap tilemap;
 
-        private float previousTimeScale;
+        private Settings setting;
 
         public enum CommandState
         {
@@ -46,9 +46,9 @@
 
         public void BeginInactive()
         {
-            Time.timeScale = this.previousTimeScale;
             Active = CommandState.Inactive;
-            this.previousTimeScale = 0.0f;
+            Time.timeScale = this.setting.timeScale;
+
             this.ClearSelected();
         }
 
@@ -75,22 +75,13 @@
         {
             if (Active == state)
             {
-                Active = CommandState.Inactive;
-
-                Time.timeScale = this.previousTimeScale;
-                this.previousTimeScale = 0.0f;
-                this.ClearSelected();
+                this.BeginInactive();
                 return;
             }
 
-            Active = state;
+            Time.timeScale = 0.0f;
 
-            if (Mathf.Abs(this.previousTimeScale) < Mathf.Epsilon)
-            {
-                var t = Time.timeScale;
-                Time.timeScale = 0.0f;
-                this.previousTimeScale = t;
-            }
+            Active = state;
         }
 
         /// <summary>
@@ -140,6 +131,10 @@
         {
             this.tilemap = this.GetComponent<Tilemap>();
             Active = CommandState.Inactive;
+
+            this.setting = GameObject.FindObjectOfType<Settings>();
+
+            Assert.IsNotNull(this.setting);
         }
 
         protected void Update()
@@ -154,7 +149,7 @@
             {
                 if (Active != CommandState.Swapping)
                 {
-                    this.Begin(CommandState.Inactive);
+                    this.BeginInactive();
                 }
                 else
                 {
