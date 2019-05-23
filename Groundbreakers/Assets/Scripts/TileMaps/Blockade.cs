@@ -29,7 +29,8 @@
         [Range(0.0f, 10.0f)]
         private float hitPoint = 4.0f;
 
-        public GameObject blockadeDeath;
+        [SerializeField]
+        private GameObject blockadeDeath;
 
         private SpriteRenderer sprite;
 
@@ -41,16 +42,18 @@
         {
             this.hitPoint -= 1.0f;
 
-            //this.transform.DOShakePosition(1.0f);
             this.sprite.DOColor(Color.cyan, 1.0f);
             Debug.Log(this.hitPoint);
 
             if (this.hitPoint <= 0.0f)
             {
-                var rubble = Instantiate(this.blockadeDeath, this.transform.position, Quaternion.identity);
-                Destroy(rubble, 1f);
+                var rubble = Instantiate(
+                    this.blockadeDeath, 
+                    this.transform.position, 
+                    Quaternion.identity);
+
+                GameObject.Destroy(rubble, 1.0f);
                 GameObject.Destroy(this.gameObject);
-                
             }
         }
 
