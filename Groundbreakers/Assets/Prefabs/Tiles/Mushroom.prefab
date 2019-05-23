@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1520603410798911213}
   - component: {fileID: 8280060614252417308}
   - component: {fileID: 8360832872387029209}
+  - component: {fileID: 2841937841200647720}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -126,3 +127,16 @@ MonoBehaviour:
   hitPoint: 4
   blockadeDeath: {fileID: 5437903941598735353, guid: 7e89df7893e42d942b862b64fef59060,
     type: 3}
+--- !u!114 &2841937841200647720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520603410798911214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d2aaf0d6542b14fa135f7612c96e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boooomRadius: 2
