@@ -22,7 +22,7 @@
         [Range(0.0f, 3.0f)]
         private float speed = 1.0f; // temp
 
-        private Animator animator;
+        public Animator animator;
 
         private NavigationMap navigator;
 
@@ -268,6 +268,7 @@
 
         private IEnumerator Attack(Blockade blockade)
         {
+            animator.SetBool("Attacking", true);
             this.attacking = true;
 
             yield return new WaitForSeconds(2.0f);
@@ -278,6 +279,7 @@
             }
 
             this.attacking = false;
+            animator.SetBool("Attacking", false);
         }
 
         #endregion
