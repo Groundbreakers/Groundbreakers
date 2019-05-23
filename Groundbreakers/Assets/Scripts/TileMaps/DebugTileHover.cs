@@ -34,6 +34,11 @@
         /// </summary>
         private bool hovered;
 
+        public void SetAlpha(float alpha = 1.0f)
+        {
+            this.rend.material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+        }
+
         protected void OnDisable()
         {
             this.SetAlpha();
@@ -86,6 +91,7 @@
                     if (status.CanPass())
                     {
                         var blockade = Instantiate(this.blockadePrefab, this.transform);
+                        this.controller.BeginInactive();
                     }
                     else
                     {
@@ -124,23 +130,10 @@
                     var pos = this.transform.position;
                     this.tilemap.ChangeTileAt(pos, Tiles.Water);
                 }
-
             }
             else
             {
                 this.SetAlpha();
-            }
-        }
-
-        private void SetAlpha(float alpha = 1.0f)
-        {
-            if (Math.Abs(alpha - 1.0f) < Mathf.Epsilon)
-            {
-                this.rend.material.SetFloat(TurnOn, 0.0f);
-            }
-            else
-            {
-                this.rend.material.SetFloat(TurnOn, 1.0f);
             }
         }
     }

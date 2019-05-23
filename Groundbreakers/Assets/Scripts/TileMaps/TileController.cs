@@ -48,6 +48,7 @@
         {
             Active = CommandState.Inactive;
             this.previousTimeScale = 0.0f;
+            this.ClearSelected();
         }
 
         public void BeginBuild()
@@ -77,6 +78,7 @@
 
                 Time.timeScale = this.previousTimeScale;
                 this.previousTimeScale = 0.0f;
+                this.ClearSelected();
                 return;
             }
 
@@ -99,6 +101,7 @@
             foreach (var go in this.selected)
             {
                 go.GetComponent<TileStatus>().IsSelected = false;
+                go.GetComponent<DebugTileHover>().SetAlpha();
             }
 
             this.selected.Clear();
