@@ -46,6 +46,7 @@
 
         public void BeginInactive()
         {
+            Time.timeScale = this.previousTimeScale;
             Active = CommandState.Inactive;
             this.previousTimeScale = 0.0f;
             this.ClearSelected();
