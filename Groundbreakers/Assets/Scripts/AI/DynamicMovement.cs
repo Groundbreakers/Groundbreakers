@@ -94,11 +94,6 @@
 
         protected void FixedUpdate()
         {
-            if (TileController.Busy)
-            {
-                return;
-            }
-
             if (this.IsMoving())
             {
                 this.UpdateMoving();
@@ -261,6 +256,10 @@
                 return;
             }
 
+            //var dir = blockade.transform.position - this.transform.position;
+
+            //this.SetDirection(dir);
+
             var b = blockade.GetComponent<Blockade>();
 
             Assert.IsNotNull(b);
@@ -272,10 +271,10 @@
         {
             this.attacking = true;
 
-            while (TileController.Busy)
-            {
-                yield return null;
-            }
+            //while (TileController.Busy)
+            //{
+            //    yield return null;
+            //}
 
             yield return new WaitForSeconds(2.0f);
 

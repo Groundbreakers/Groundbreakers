@@ -194,7 +194,7 @@ public class characterAttack : MonoBehaviour
 
         }
 
-        if (!isChanging && !trickster.disabled && !isStunned && !TileController.Busy)
+        if (!isChanging && !trickster.disabled && !isStunned)
         {
             this.fireCount();
         }

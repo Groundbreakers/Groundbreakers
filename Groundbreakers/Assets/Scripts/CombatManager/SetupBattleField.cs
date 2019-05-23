@@ -111,8 +111,6 @@
             this.characters.RetrieveAllCharacters();
 
             yield return new WaitForSeconds(3.0f);
-
-
         }
     }
 }

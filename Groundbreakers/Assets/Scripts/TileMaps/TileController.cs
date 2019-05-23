@@ -64,6 +64,12 @@
 
         public void SelectTile(GameObject tile)
         {
+            if (this.selected.Contains(tile))
+            {
+                this.ClearSelected();
+                return;
+            }
+
             this.selected.Add(tile);
 
             if (this.selected.Count < 2)
@@ -72,7 +78,7 @@
             }
 
             this.SwapSelectedTiles();
-            this.ClearSelected();
+            // this.ClearSelected();
         }
 
         protected void OnEnable()
@@ -135,14 +141,23 @@
             var liftHeight = new Vector3(0.0f, 1.0f, 1.0f);
 
             var path = new[] { origin + liftHeight, destination + liftHeight, destination };
-            var durations = new[] { 0.3f, 2.0f, 0.3f };
+            var durations = new[] { 0.2f, 0.6f, 0.4f };
 
             // Perform DOTween sequence
             var sequence = DOTween.Sequence();
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 2; i++)
             {
-                sequence.Append(tile.transform.DOLocalMove(path[i], durations[i]).SetEase(Ease.OutBack));
+                sequence.Append(
+                    tile.transform.DOLocalMove(path[i], durations[i])
+                                  .SetUpdate(true));
             }
+
+            sequence.Append(
+                tile.transform.DOLocalMove(path[2], durations[2])
+                              .SetEase(Ease.OutCubic)
+                              .SetUpdate(true));
+
+            sequence.SetUpdate(true);
 
             sequence.OnComplete(() => { this.OnSwapComplete(tile); });
         }
@@ -163,6 +178,8 @@
 
                 OnTilesChange(first.transform.position, second.transform.position);
             }
+
+            this.ClearSelected();
         }
 
         private void SwapSelectedTiles()

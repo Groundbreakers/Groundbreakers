@@ -1,7 +1,7 @@
 ﻿namespace Characters
 {
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     using DG.Tweening;
 
@@ -17,13 +17,15 @@
     ///     Should attached to "Player Party" game object.
     ///     Call "Initialize" method to spawn all characters on to the map.
     /// </summary>
-    public class SpawnCharacters : MonoBehaviour
+    public class SpawnCharacters : MonoBehaviour, IEnumerable<GameObject>
     {
         /// <summary>
         ///     Store the TileBlock GameObjects that are candidates for spawn in to a list.
         /// </summary>
         [ShowInInspector]
         private List<Transform> availableBlocks = new List<Transform>();
+
+        private List<GameObject> characters = new List<GameObject>();
 
         /// <summary>
         ///     Ask available character spawn slots, then deploy characters.
@@ -52,6 +54,23 @@
             {
                 child.gameObject.SetActive(false);
             }
+        }
+
+        public IEnumerator<GameObject> GetEnumerator()
+        {
+            foreach (Transform child in this.transform)
+            {
+                yield return child.gameObject;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        protected void OnEnable()
+        {
         }
 
         private static List<Transform> FindSpawnLocations(Tilemap tilemap)

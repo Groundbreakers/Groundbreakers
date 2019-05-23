@@ -18,7 +18,7 @@
             this.target = tile;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (this.target)
             {
