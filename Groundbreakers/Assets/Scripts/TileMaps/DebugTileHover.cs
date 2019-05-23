@@ -91,7 +91,7 @@
                     if (status.CanPass())
                     {
                         var blockade = Instantiate(this.blockadePrefab, this.transform);
-                        this.controller.BeginInactive();
+                        // this.controller.BeginInactive();
                     }
                     else
                     {
