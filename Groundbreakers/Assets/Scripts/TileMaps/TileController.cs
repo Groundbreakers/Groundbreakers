@@ -64,6 +64,12 @@
 
         public void SelectTile(GameObject tile)
         {
+            if (this.selected.Contains(tile))
+            {
+                this.ClearSelected();
+                return;
+            }
+
             this.selected.Add(tile);
 
             if (this.selected.Count < 2)

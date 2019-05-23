@@ -84,7 +84,16 @@
 
                 if (Input.GetKeyDown("b"))
                 {
-                    var blockade = Instantiate(this.blockadePrefab, this.transform);
+                    var status = this.tilemap.GetTileStatusAt(this.transform.position);
+                    if (status.CanPass())
+                    {
+                        var blockade = Instantiate(this.blockadePrefab, this.transform);
+                    }
+                    else
+                    {
+                        // Play bad SE
+                    }
+
                 }
 
                 if (Input.GetKeyDown("1"))
