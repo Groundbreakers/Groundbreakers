@@ -256,7 +256,7 @@
             }
 
             var dir = blockade.transform.position - this.transform.position;
-
+            Debug.Log(dir);
             this.SetDirection(dir);
 
             var b = blockade.GetComponent<Blockade>();
@@ -271,7 +271,7 @@
             animator.SetBool("Attacking", true);
             this.attacking = true;
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
 
             if (blockade)
             {
