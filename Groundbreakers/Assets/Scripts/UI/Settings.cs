@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class Settings : MonoBehaviour
 {
     public GameObject ui;
+    public float timeScale;
 
     public void Toggle ()
     {
@@ -40,16 +41,16 @@ public class Settings : MonoBehaviour
 
     public void TimeScale1x()
     {
-        Time.timeScale = 1.0F;
+        this.timeScale = 1.0F;
     }
 
     public void TimeScale2x()
     {
-        Time.timeScale = 2.0F;
+        this.timeScale = 2.0F;
     }
 
     public void TimeScale4x()
     {
-        Time.timeScale = 4.0F;
+        this.timeScale = 4.0F;
     }
 }
