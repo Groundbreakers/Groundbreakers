@@ -93,8 +93,6 @@ public class SectorGenerator : MonoBehaviour
             }
         }
 
-        this.UI.GetComponent<RectTransform>().sizeDelta = new Vector2(this.UI.GetComponent<RectTransform>().sizeDelta.x, this.heightMultiplier * 3);
-
         this.sectors = new GameObject[this.Height + 1, 5];
 
         this.sectors[0, 0] = (GameObject)Instantiate(this.Dummy, this.UI.transform);
@@ -141,11 +139,6 @@ public class SectorGenerator : MonoBehaviour
         if (row == this.Height)
         {
             return;
-        }
-
-        if (this.UI.GetComponent<RectTransform>().sizeDelta.y < this.heightMultiplier * (row + 3))
-        {
-            this.UI.GetComponent<RectTransform>().sizeDelta = new Vector2(this.UI.GetComponent<RectTransform>().sizeDelta.x, this.heightMultiplier * (row + 3));
         }
 
         if (column == 0)
