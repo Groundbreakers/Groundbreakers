@@ -1,5 +1,7 @@
 ﻿namespace Assets.Scripts
 {
+    using System;
+
     using Sirenix.OdinInspector;
 
     using TileMaps;
@@ -14,6 +16,10 @@
         private TileController controller;
 
         private Camera mainCamera;
+
+        private float previousTimeScale;
+
+        private static readonly int TurnOn = Shader.PropertyToID("_TurnOn");
 
         [Button]
         public void ExecuteTileSwap()
@@ -42,9 +48,16 @@
         {
             if (Input.GetKeyDown("s"))
             {
-                this.ExecuteTileSwap();
+                var t = Time.timeScale;
+                if (Math.Abs(t) > Mathf.Epsilon)
+                {
+                    this.previousTimeScale = t;
+                }
+                    
+                Time.timeScale = Math.Abs(t) < Mathf.Epsilon ? this.previousTimeScale : 0.0f;
             }
 
+            // 
             var hit = Physics2D.Raycast(
                 this.mainCamera.ScreenToWorldPoint(Input.mousePosition),
                 Vector2.zero);
@@ -55,6 +68,9 @@
 
                 if (target.CompareTag("Tile"))
                 {
+                    var renderer = target.GetComponent<SpriteRenderer>();
+                    renderer.material.SetFloat(TurnOn, 1.0f);
+
                     if (Input.GetMouseButtonDown(0))
                     {
                         this.controller.SelectTile(target);

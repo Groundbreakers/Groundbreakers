@@ -1,5 +1,7 @@
 ﻿namespace TileMaps
 {
+    using System;
+
     using AI;
 
     using UnityEngine;
@@ -13,6 +15,8 @@
     [RequireComponent(typeof(TileStatus))]
     public class DebugTileHover : MonoBehaviour
     {
+        private static readonly int TurnOn = Shader.PropertyToID("_TurnOn");
+
         private TileController controller;
 
         private SpriteRenderer rend;
@@ -110,8 +114,14 @@
 
         private void SetAlpha(float alpha = 1.0f)
         {
-            var color = this.rend.color;
-            this.rend.color = new Color(color.r, color.g, color.b, alpha);
+            if (Math.Abs(alpha - 1.0f) < Mathf.Epsilon)
+            {
+                this.rend.material.SetFloat(TurnOn, 0.0f);
+            }
+            else
+            {
+                this.rend.material.SetFloat(TurnOn, 1.0f);
+            }
         }
     }
 }

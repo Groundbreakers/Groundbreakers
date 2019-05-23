@@ -81,11 +81,11 @@
             // !this.pack.Done(pathId)
             while (count --> 0)
             {
-                // TODO: FIX this TMP solution
-                while (TileController.Busy) 
-                {
-                    yield return null;
-                }
+                //// TODO: FIX this TMP solution
+                //while (TileController.Busy) 
+                //{
+                //    yield return null;
+                //}
 
                 // this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(pathId));
                 this.InstantiateEnemyAtSpawnPoint(
