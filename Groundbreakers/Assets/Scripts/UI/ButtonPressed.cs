@@ -14,4 +14,9 @@ public class ButtonPressed : MonoBehaviour
         this.GetComponent<Image>().sprite = (sprite == this.UnpressedSprite) ? this.PressedSprite : this.UnpressedSprite;
         Debug.Log(sprite);
     }
+
+    public void Unpress()
+    {
+        this.GetComponent<Image>().sprite = this.UnpressedSprite;
+    }
 }
