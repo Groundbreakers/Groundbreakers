@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using AI;
-
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
@@ -22,21 +20,74 @@
         /// </summary>
         private readonly List<GameObject> selected = new List<GameObject>();
 
+        private readonly List<GameObject> swappingTiles = new List<GameObject>();
+
         /// <summary>
         ///     Cached reference to the Tile map component.
         /// </summary>
         private Tilemap tilemap;
 
-        private readonly List<GameObject> swappingTiles = new List<GameObject>();
+        private float previousTimeScale;
+
+        public enum CommandState
+        {
+            Inactive,
+            Swapping,
+            Building,
+            Deploying,
+        }
 
         /// <summary>
         ///     Gets a value indicating whether if any tile is currently swapping.
         /// </summary>
-        public static bool Busy { get; private set; }
+        public static CommandState Active { get; private set; }
 
-        public void Begin()
+        #region For UI button only
+
+        public void BeginInactive()
         {
-            Busy = true;
+            Active = CommandState.Inactive;
+            this.previousTimeScale = 0.0f;
+        }
+
+        public void BeginBuild()
+        {
+            this.Begin(CommandState.Building);
+        }
+
+        public void BeginSwap()
+        {
+            this.Begin(CommandState.Swapping);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Start doing command
+        /// </summary>
+        /// <param name="state">
+        /// The state.
+        /// </param>
+        [Button]
+        public void Begin(CommandState state)
+        {
+            if (Active == state)
+            {
+                Active = CommandState.Inactive;
+
+                Time.timeScale = this.previousTimeScale;
+                this.previousTimeScale = 0.0f;
+                return;
+            }
+
+            Active = state;
+
+            if (Mathf.Abs(this.previousTimeScale) < Mathf.Epsilon)
+            {
+                var t = Time.timeScale;
+                Time.timeScale = 0.0f;
+                this.previousTimeScale = t;
+            }
         }
 
         /// <summary>
@@ -84,6 +135,7 @@
         protected void OnEnable()
         {
             this.tilemap = this.GetComponent<Tilemap>();
+            Active = CommandState.Inactive;
         }
 
         protected void Update()
@@ -92,6 +144,18 @@
             if (Input.GetMouseButtonDown(1))
             {
                 this.ClearSelected();
+            }
+
+            if (Input.GetKeyDown("s"))
+            {
+                if (Active != CommandState.Swapping)
+                {
+                    this.Begin(CommandState.Inactive);
+                }
+                else
+                {
+                    this.Begin(CommandState.Swapping);
+                }
             }
         }
 
@@ -168,8 +232,7 @@
 
             if (this.swappingTiles.Count >= 2)
             {
-                Busy = false;
-
+                // Active = false;
                 var first = this.swappingTiles[0];
                 var second = this.swappingTiles[1];
 

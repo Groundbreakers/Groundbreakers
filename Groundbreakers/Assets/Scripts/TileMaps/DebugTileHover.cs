@@ -2,8 +2,6 @@
 {
     using System;
 
-    using AI;
-
     using UnityEngine;
 
     /// <inheritdoc />
@@ -60,7 +58,9 @@
 
         protected void OnMouseOver()
         {
-            this.hovered = this.status.CanHover();
+            var active = TileController.Active != TileController.CommandState.Inactive;
+
+            this.hovered = active && this.status.CanHover();
         }
 
         protected void OnMouseUpAsButton()
@@ -70,20 +70,18 @@
                 return;
             }
 
-            this.status.IsSelected = true;
-
-            this.controller.SelectTile(this.gameObject);
-        }
-
-        protected void Update()
-        {
-            // Performance critical
-            if (this.hovered || this.status.IsSelected)
+            switch (TileController.Active)
             {
-                this.SetAlpha(0.5f);
+                case TileController.CommandState.Inactive:
+                    break;
+                case TileController.CommandState.Swapping:
 
-                if (Input.GetKeyDown("b"))
-                {
+                    this.status.IsSelected = true;
+                    this.controller.SelectTile(this.gameObject);
+
+                    break;
+                case TileController.CommandState.Building:
+
                     var status = this.tilemap.GetTileStatusAt(this.transform.position);
                     if (status.CanPass())
                     {
@@ -94,7 +92,20 @@
                         // Play bad SE
                     }
 
-                }
+                    break;
+                case TileController.CommandState.Deploying:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected void Update()
+        {
+            // Performance critical
+            if (this.hovered || this.status.IsSelected)
+            {
+                this.SetAlpha(0.5f);
 
                 if (Input.GetKeyDown("1"))
                 {

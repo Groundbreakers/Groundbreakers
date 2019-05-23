@@ -33,17 +33,6 @@
 
         private void Update()
         {
-            if (Input.GetKeyDown("s"))
-            {
-                var t = Time.timeScale;
-                if (Math.Abs(t) > Mathf.Epsilon)
-                {
-                    this.previousTimeScale = t;
-                }
-
-                Time.timeScale = Math.Abs(t) < Mathf.Epsilon ? this.previousTimeScale : 0.0f;
-            }
-
             // 
             // var hit = Physics2D.Raycast(this.mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             // 

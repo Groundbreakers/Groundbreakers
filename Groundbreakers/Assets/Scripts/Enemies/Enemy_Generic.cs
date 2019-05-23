@@ -99,7 +99,12 @@
                 canvasGameObject = GameObject.Find("Canvas");
             }
 
-            canvasGameObject.GetComponent<DamagePopup>().ProduceText(damage, location);
+            var dp = canvasGameObject.GetComponent<DamagePopup>();
+
+            if (dp)
+            {
+                dp.ProduceText(damage, location);
+            }
         }
 
         private void OnEnable()

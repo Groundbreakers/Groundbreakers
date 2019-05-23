@@ -75,73 +75,73 @@
 
             return;
 
-            if (go.CompareTag("Player"))
-            {
-                var character = this.damageHandler.Source;
+            //if (go.CompareTag("Player"))
+            //{
+            //    var character = this.damageHandler.Source;
 
-                if (ReferenceEquals(go, character))
-                {
-                    return;
-                }
+            //    if (ReferenceEquals(go, character))
+            //    {
+            //        return;
+            //    }
 
-                // Need to further check the distance (sorry run out of time to refactor this)
-                var delta = Vector2.Distance(go.transform.position, character.transform.position);
-                Debug.Log(delta);
-                if (delta > 1.0f)
-                {
-                    return;
-                }
+            //    // Need to further check the distance (sorry run out of time to refactor this)
+            //    var delta = Vector2.Distance(go.transform.position, character.transform.position);
+            //    Debug.Log(delta);
+            //    if (delta > 1.0f)
+            //    {
+            //        return;
+            //    }
 
-                // Stun the target character
-                go.GetComponent<characterAttack>().stun(3);
-                go.transform.DOShakePosition(2.0f, 0.1f);
-                GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(-1, go.transform);
-            }
+            //    // Stun the target character
+            //    go.GetComponent<characterAttack>().stun(3);
+            //    go.transform.DOShakePosition(2.0f, 0.1f);
+            //    GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(-1, go.transform);
+            // }
         }
 
-        public void statusEffectHandler(GameObject go)
-        {
-            // prioritize armor breaking and purge 
-            if (this._break)
-            {
-                go.GetComponent<Enemy_Generic>().breakEnemyArmor();
-            }
+        //public void statusEffectHandler(GameObject go)
+        //{
+        //    // prioritize armor breaking and purge 
+        //    if (this._break)
+        //    {
+        //        go.GetComponent<Enemy_Generic>().breakEnemyArmor();
+        //    }
 
-            if (this.purge && go.GetComponent<Enemy_Generic>().getIsPurged() == false)
-            {
-                go.GetComponent<Enemy_Generic>().purgeEnemy();
-            }
+        //    if (this.purge && go.GetComponent<Enemy_Generic>().getIsPurged() == false)
+        //    {
+        //        go.GetComponent<Enemy_Generic>().purgeEnemy();
+        //    }
 
-            if (this.mark != true)
-            {
-                // go.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, false);
-                this.damageHandler.DeliverDamageTo(go);
-            }
-            else
-            {
-                // go.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, true);
-                this.damageHandler.DeliverDamageTo(go);
-            }
+        //    if (this.mark != true)
+        //    {
+        //        // go.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, false);
+        //        this.damageHandler.DeliverDamageTo(go);
+        //    }
+        //    else
+        //    {
+        //        // go.GetComponent<Enemy_Generic>().DamageEnemy(this.damage, this.armorpen, 1, false, true);
+        //        this.damageHandler.DeliverDamageTo(go);
+        //    }
 
-            if (this.burn && go.GetComponent<Enemy_Generic>().getIsBurned() == false)
-            {
-                go.GetComponent<Enemy_Generic>().BurnEnemy();
-            }
+        //    if (this.burn && go.GetComponent<Enemy_Generic>().getIsBurned() == false)
+        //    {
+        //        go.GetComponent<Enemy_Generic>().BurnEnemy();
+        //    }
 
-            if (this.blight && go.GetComponent<Enemy_Generic>().getIsBlighted() == false)
-            {
-                go.GetComponent<Enemy_Generic>().BlightEnemy();
-            }
+        //    if (this.blight && go.GetComponent<Enemy_Generic>().getIsBlighted() == false)
+        //    {
+        //        go.GetComponent<Enemy_Generic>().BlightEnemy();
+        //    }
 
-            if (this.slow && go.GetComponent<Enemy_Generic>().getIsSlowed() == false)
-            {
-                go.GetComponent<Enemy_Generic>().SlowEnemy(0.5f);
-            }
+        //    if (this.slow && go.GetComponent<Enemy_Generic>().getIsSlowed() == false)
+        //    {
+        //        go.GetComponent<Enemy_Generic>().SlowEnemy(0.5f);
+        //    }
 
-            if (this.stun && go.GetComponent<Enemy_Generic>().getIsStunned() == false)
-            {
-                go.GetComponent<Enemy_Generic>().StunEnemy(0.5f);
-            }
-        }
+        //    if (this.stun && go.GetComponent<Enemy_Generic>().getIsStunned() == false)
+        //    {
+        //        go.GetComponent<Enemy_Generic>().StunEnemy(0.5f);
+        //    }
+        //}
     }
 }
