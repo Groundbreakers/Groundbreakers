@@ -248,6 +248,29 @@
             }
         }
 
+        private void SetDirectionAttack(Vector3 dir)
+        {
+            var yAbs = dir.y;
+            var xAbs = dir.x;
+
+            if (dir.y > 0)
+            {
+                this.animator.SetInteger(Direction, 0); // Up
+            }
+            else if (dir.x > 0)
+            {
+                this.animator.SetInteger(Direction, 1); // Right
+            }
+            else if (dir.y < 0)
+            {
+                this.animator.SetInteger(Direction, 2); // Down
+            }
+            else if (dir.x < 0)
+            {
+                this.animator.SetInteger(Direction, 3); // Left
+            }
+        }
+
         private void StartAttack(GameObject blockade)
         {
             if (this.attacking)
@@ -257,7 +280,7 @@
 
             var dir = blockade.transform.position - this.transform.position;
             Debug.Log(dir);
-            this.SetDirection(dir);
+            this.SetDirectionAttack(dir);
 
             var b = blockade.GetComponent<Blockade>();
 
