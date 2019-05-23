@@ -12,9 +12,11 @@
     using UnityEngine;
     using UnityEngine.Assertions;
 
+    [RequireComponent(typeof(Animator))]
     public class DynamicMovement : MonoBehaviour
     {
         private static readonly int Direction = Animator.StringToHash("Direction");
+        private static readonly int Attacking = Animator.StringToHash("Attacking");
 
         private static IEnumerable<Transform> targets;
 
@@ -22,7 +24,7 @@
         [Range(0.0f, 3.0f)]
         private float speed = 1.0f; // temp
 
-        public Animator animator;
+        private Animator animator;
 
         private NavigationMap navigator;
 
@@ -37,11 +39,10 @@
         [ShowInInspector]
         private Vector3 goalGrid;
 
-        private Vector3 lastGoalGrid;
-
         /// <summary>
         ///     The target grid, usually the target should be adjacent grids of current.
         /// </summary>
+        [ShowInInspector]
         private Vector3 nextGrid;
 
         // TODO: Fix this.
@@ -61,13 +62,13 @@
             this.nextGrid = pos;
         }
 
-        public void OnTilesChange(Vector3 first, Vector3 second)
-        {
-        }
-
-        public void OnTileChange(Vector3 first)
-        {
-        }
+        //public void OnTilesChange(Vector3 first, Vector3 second)
+        //{
+        //}
+        // 
+        //public void OnTileChange(Vector3 first)
+        //{
+        //}
 
         #endregion
 
@@ -86,7 +87,10 @@
         protected void Start()
         {
             // Caching the targets
-            targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
+            if (targets == null)
+            {
+                targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
+            }
 
             this.nextGrid = this.transform.position;
         }
@@ -134,19 +138,21 @@
         /// </summary>
         private void UpdateStopping()
         {
-            //if (this.mad)
-            //{
-            //    // fucking check if has valid normal path
-            //    var normalPath = this.navigator.Search(this.transform.position, this.goalGrid, false).ToList();
+            if (this.mad)
+            {
+                // fucking check if has valid normal path
+                var normalPath = this.navigator.Search(this.transform.position, this.goalGrid, false).ToList();
 
-            //    if (normalPath.Count > 0)
-            //    {
-            //        this.mad = false;
-            //    }
-            //}
+                if (normalPath.Count > 0)
+                {
+                    this.mad = false;
+                }
+            }
 
             // TODO: Refactor this shit,
             var path = this.navigator.Search(this.transform.position, this.goalGrid, this.mad).ToList();
+
+            this.pathBuffer = path;
 
             if (path.Count == 0)
             {
@@ -271,6 +277,12 @@
             }
         }
 
+        /// <summary>
+        ///     The start attack.
+        /// </summary>
+        /// <param name="blockade">
+        ///     The blockade.
+        /// </param>
         private void StartAttack(GameObject blockade)
         {
             if (this.attacking)
@@ -278,8 +290,8 @@
                 return;
             }
 
+            // Set direction
             var dir = blockade.transform.position - this.transform.position;
-            Debug.Log(dir);
             this.SetDirectionAttack(dir);
 
             var b = blockade.GetComponent<Blockade>();
@@ -291,7 +303,7 @@
 
         private IEnumerator Attack(Blockade blockade)
         {
-            animator.SetBool("Attacking", true);
+            this.animator.SetBool(Attacking, true);
             this.attacking = true;
 
             yield return new WaitForSeconds(1.0f);
@@ -302,7 +314,7 @@
             }
 
             this.attacking = false;
-            animator.SetBool("Attacking", false);
+            this.animator.SetBool(Attacking, false);
         }
 
         #endregion

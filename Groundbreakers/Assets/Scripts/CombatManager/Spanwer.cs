@@ -8,9 +8,8 @@
 
     using Sirenix.OdinInspector;
 
-    using TileMaps;
-
     using UnityEngine;
+    using UnityEngine.Assertions;
 
     /// <summary>
     ///     The Spawn Point: 
@@ -19,6 +18,10 @@
     {
         [SerializeField]
         private List<GameObject> debugMinion;
+
+        [Required]
+        [SerializeField]
+        private GameObject mobContainer;
 
         [SerializeField]
         [Range(10.0f, 25.0f)]
@@ -53,6 +56,8 @@
 
         protected void OnEnable()
         {
+            Assert.IsNotNull(this.mobContainer);
+
             var db = GameObject.Find("Enemy Groups");
             this.pack = db.GetComponent<EnemyGroups>();
         }
@@ -81,12 +86,6 @@
             // !this.pack.Done(pathId)
             while (count --> 0)
             {
-                //// TODO: FIX this TMP solution
-                //while (TileController.Busy) 
-                //{
-                //    yield return null;
-                //}
-
                 // this.InstantiateEnemyAtSpawnPoint(this.pack.GetNextMob(pathId));
                 this.InstantiateEnemyAtSpawnPoint(
                     this.debugMinion.OrderBy(x => Random.value).FirstOrDefault());
@@ -101,7 +100,7 @@
             var instance = Instantiate(minion, startingPoint, Quaternion.identity);
 
             // TODO: FIX THIS
-            instance.transform.SetParent(this.transform);
+            instance.transform.SetParent(this.mobContainer.transform);
         }
     }
 }

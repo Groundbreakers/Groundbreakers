@@ -1,6 +1,5 @@
 ﻿namespace TileMaps
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -21,12 +20,12 @@
         /// <summary>
         ///     Caching the list of defending points.
         /// </summary>
-        private readonly List<Transform> defendPoints = new List<Transform>();
+        private List<Transform> defendPoints = new List<Transform>();
 
         /// <summary>
         ///     Caching the list of attacking points (i.e. The enemy spawn points).
         /// </summary>
-        private readonly List<Transform> spawnPoints = new List<Transform>();
+        private List<Transform> spawnPoints = new List<Transform>();
 
         /// <summary>
         ///     Should be used by enemies to do some check.

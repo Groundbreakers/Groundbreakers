@@ -47,28 +47,28 @@
         /// </summary>
         public static int Dimension { get; } = 8;
 
-        /// <summary>
-        ///     When ever you change the status of a tile, Call this function.
-        /// </summary>
-        /// <param name="position">
-        ///     The position Vector. The x and y should be integers.
-        /// </param>
-        public static void OnTileChanges(Vector3 position)
-        {
-            // Do nothing if battle has not begin.
-            if (!Spanwer.Busy)
-            {
-                return;
-            }
+        ///// <summary>
+        /////     When ever you change the status of a tile, Call this function.
+        ///// </summary>
+        ///// <param name="position">
+        /////     The position Vector. The x and y should be integers.
+        ///// </param>
+        //public static void OnTileChanges(Vector3 position)
+        //{
+        //    //// Do nothing if battle has not begin.
+        //    //if (!Spanwer.Busy)
+        //    //{
+        //    //    return;
+        //    //}
 
-            // TODO: Refactor this shit
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //    //// TODO: Refactor this shit
+        //    //var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            foreach (var enemy in enemies)
-            {
-                enemy.GetComponent<DynamicMovement>().OnTileChange(position);
-            }
-        }
+        //    //foreach (var enemy in enemies)
+        //    //{
+        //    //    enemy.GetComponent<DynamicMovement>().OnTileChange(position);
+        //    //}
+        //}
 
         /// <summary>
         ///     The get blockade at.

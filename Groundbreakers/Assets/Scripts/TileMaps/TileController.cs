@@ -95,16 +95,16 @@
             }
         }
 
-        private static void OnTilesChange(Vector3 first, Vector3 second)
-        {
-            // TODO: Refactor this shit
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        //private static void OnTilesChange(Vector3 first, Vector3 second)
+        //{
+        //    // TODO: Refactor this shit
+        //    var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-            foreach (var enemy in enemies)
-            {
-                enemy.GetComponent<DynamicMovement>().OnTilesChange(first, second);
-            }
-        }
+        //    foreach (var enemy in enemies)
+        //    {
+        //        enemy.GetComponent<DynamicMovement>().OnTilesChange(first, second);
+        //    }
+        //}
 
         /// <summary>
         ///     Perform an swapping of tiles. Do animation, and swap references.
@@ -176,7 +176,7 @@
                 first.GetComponent<TileStatus>().IsMoving = false;
                 second.GetComponent<TileStatus>().IsMoving = false;
 
-                OnTilesChange(first.transform.position, second.transform.position);
+                //OnTilesChange(first.transform.position, second.transform.position);
             }
 
             this.ClearSelected();

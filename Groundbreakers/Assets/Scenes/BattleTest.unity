@@ -540,6 +540,36 @@ CircleCollider2D:
     type: 3}
   m_PrefabInstance: {fileID: 1562151202}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &240783072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240783073}
+  m_Layer: 0
+  m_Name: Mobs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &240783073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240783072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 367632177}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &314897905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,6 +682,7 @@ Transform:
   - {fileID: 120820391}
   - {fileID: 1145570824}
   - {fileID: 1806250428}
+  - {fileID: 240783073}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1049,6 +1080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMinion:
   - {fileID: 3171230714936546568, guid: 74b73a9b9cce9c849878e40c8cc45464, type: 3}
+  mobContainer: {fileID: 240783072}
   duration: 25
 --- !u!1 &1001823590
 GameObject:
@@ -1174,6 +1206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMinion:
   - {fileID: 3171230714936546568, guid: 74b73a9b9cce9c849878e40c8cc45464, type: 3}
+  mobContainer: {fileID: 240783072}
   duration: 25
 --- !u!1 &1130316154
 GameObject:
