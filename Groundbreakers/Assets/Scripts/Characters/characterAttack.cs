@@ -47,7 +47,12 @@ public class characterAttack : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        this.rangedWeapon = this.transform.Find("RangedWeapon").gameObject; // should check error
+        var obj = this.transform.Find("RangedWeapon");
+
+        if (obj)
+        {
+            this.rangedWeapon = obj.gameObject; // should check error
+        }
     }
 
     void Awake()
