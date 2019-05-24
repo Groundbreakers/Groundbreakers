@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using Assets.Scripts;
@@ -78,6 +79,7 @@
             BattleManager.TriggerEvent("victory");
         }
 
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1003:SymbolsMustBeSpacedCorrectly", Justification = "Reviewed. Suppression is OK here.")]
         private IEnumerator SpawnWave(int pathId = 1)
         {
             // var count = this.pack.GetCount(pathId);

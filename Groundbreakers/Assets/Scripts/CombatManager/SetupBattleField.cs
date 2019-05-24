@@ -82,6 +82,7 @@
             {
                 this.tilemap.SetupMap();
                 this.indicators.Initialize();
+                this.indicators.RevealIndicators();
             }
             while (!this.indicators.HasValidPath());
 
@@ -94,8 +95,6 @@
             this.characters.Initialize();
 
             yield return new WaitForSeconds(3.0f);
-
-            this.indicators.RevealIndicators();
 
             yield return new WaitForSeconds(0.1f);
 

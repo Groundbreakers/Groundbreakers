@@ -42,6 +42,7 @@
         {
             this.hitPoint -= 1.0f;
 
+            this.transform.DOShakePosition(0.5f, 0.1f);
             this.sprite.DOColor(Color.cyan, 1.0f);
             Debug.Log(this.hitPoint);
 
