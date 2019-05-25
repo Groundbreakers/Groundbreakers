@@ -13,6 +13,8 @@ public class HP : MonoBehaviour
 
     public int healthPoint = 20;
 
+    public Text text;
+
     public void UpdateHealth(int amount)
     {
         this.healthPoint += amount;
@@ -26,6 +28,8 @@ public class HP : MonoBehaviour
         }
 
         this.image.sprite = this.hpFrames[this.healthPoint];
+        this.text.text = this.healthPoint.ToString();
+
         if (this.healthPoint <= 0)
         {
             // Game Over
