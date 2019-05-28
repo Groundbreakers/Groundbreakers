@@ -20,8 +20,8 @@
         private GameObject bulletPrefab;
 
         [SerializeField]
-        private Type type;
-
+        public Type type;
+        
         [SerializeField]
         private Vector3 offSet;
 
@@ -43,13 +43,17 @@
 
         #region Public Properties
 
-        private enum Type
+        public enum Type
         {
             SingleShot,
 
             MultiShot,
 
             Laser,
+
+            Penetrate,
+
+            Explosive,
         }
 
         #endregion
@@ -57,7 +61,7 @@
         #region Public Functions    
 
         [Button("Test Launch All")]
-        public void FireAt(Transform target)
+        private void FireAt(Transform target)
         {
             this.potentialTarget = target;
 
@@ -71,6 +75,12 @@
                     break;
                 case Type.Laser:
                     this.LaserShot(target);
+                    break;
+                case Type.Penetrate:
+                    this.PenetrateShot(target);
+                    break;
+                case Type.Explosive:
+                    this.ExplosiveShot(target);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -120,6 +130,17 @@
             if (Input.GetKeyDown("3"))
             {
                 this.type = Type.Laser;
+            }
+
+            if (Input.GetKeyDown("4"))
+            {
+                this.type = Type.Penetrate;
+            }
+
+            if (Input.GetKeyDown("5"))
+            {
+                this.type = Type.Explosive;
+                Debug.Log(this.type);
             }
 
             //// For laser effect only
@@ -199,6 +220,24 @@
 
         // Subject to change
         private void SingleShot(Transform target)
+        {
+            this.SetHandlerAttributeIfNot();
+
+            var bullet = this.InstantiateBullet();
+
+            bullet.Launch(target, this.damageHandler);
+        }
+
+        private void ExplosiveShot(Transform target)
+        {
+            this.SetHandlerAttributeIfNot();
+
+            var bullet = this.InstantiateBullet();
+
+            bullet.Launch(target, this.damageHandler);
+        }
+
+        private void PenetrateShot(Transform target)
         {
             this.SetHandlerAttributeIfNot();
 

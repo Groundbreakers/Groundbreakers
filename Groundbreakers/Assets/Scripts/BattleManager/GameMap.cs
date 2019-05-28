@@ -40,8 +40,8 @@ namespace Assets.Scripts
         [SerializeField]
         private GameObject tilePath;
 
-        [SerializeField]
-        private GameObject mushroom;
+        
+       // private GameObject mushroom;
 
         [SerializeField]
         private GameObject plants;
@@ -69,7 +69,7 @@ namespace Assets.Scripts
         /// </summary>
         private TG generator;
 
-        private List<GameObject> mushrooms = new List<GameObject>();
+       // private List<GameObject> mushrooms = new List<GameObject>();
 
         #endregion
 
@@ -369,25 +369,25 @@ namespace Assets.Scripts
         {
             //int num = Random.Range(2, 5);
             int num = 28;
-            this.mushrooms.Clear();
+         //   this.mushrooms.Clear();
 
             // We use naive approach here
             for (int i = 0; i < num; i++)
             {
                 bool duplicate;
                 Transform block;
-                do
-                {
-                    block = this.PickNonOcuppiedBlock(sourceData);
-                    duplicate = this.mushrooms.Any(
-                        go => go.transform.position.Equals(block.position));
-                }
-                while (duplicate);
+              //  do
+               // {
+                  //  block = this.PickNonOcuppiedBlock(sourceData);
+                  //  duplicate = this.mushrooms.Any(
+                      //  go => go.transform.position.Equals(block.position));
+                //}
+               // while (duplicate);
 
-                Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
-                var mush = Instantiate(this.mushroom, block);
-                mush.transform.localPosition = Vector3.zero;
-                this.mushrooms.Add(mush);
+               // Debug.Log("Block Location: " + block.position.x + " " + block.position.y);
+               // var mush = Instantiate(this.mushroom, block);
+             //   mush.transform.localPosition = Vector3.zero;
+              //  this.mushrooms.Add(mush);
 
                 // Manually set these tile to undeployable
                 // block.GetComponent<SelectNode>().SetCanDeploy(false);

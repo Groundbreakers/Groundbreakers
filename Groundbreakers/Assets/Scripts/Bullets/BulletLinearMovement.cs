@@ -3,7 +3,7 @@
     using DG.Tweening;
 
     using UnityEngine;
-
+    
     /// <inheritdoc cref="IBullet" />
     /// <summary>
     ///     The most basic bullet movement pattern: move toward one direction in Linear Motion.
@@ -12,6 +12,8 @@
     public class BulletLinearMovement : MonoBehaviour, IBullet
     {
         private DamageHandler damageHandler;
+
+        private float explosionRadius = 1.5f;
 
         /// <summary>
         ///     The linear direction of the movement of the bullet.
@@ -50,11 +52,39 @@
         private void OnTriggerEnter2D(Collider2D other)
         {
             var go = other.gameObject;
-
+           
             if (go.CompareTag("Enemy"))
             {
-                this.damageHandler.DeliverDamageTo(go);
-                GameObject.Destroy(this.gameObject);
+                if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type
+                    == BulletLauncher.Type.Explosive)
+                {
+                    if (explosionRadius >= 0f)
+                    {
+                        Collider2D[] colliders = Physics2D.OverlapCircleAll(this.transform.position, explosionRadius);
+
+                        foreach (Collider2D collider in colliders)
+                        {
+                            if (collider.tag == "Enemy")
+                            {
+                                this.damageHandler.DeliverDamageTo(collider.gameObject);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.damageHandler.DeliverDamageTo(go);
+                    }
+                }
+                else
+                {
+                    this.damageHandler.DeliverDamageTo(go);
+                }
+                
+                 if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type != BulletLauncher.Type.Penetrate)
+                 {
+                     GameObject.Destroy(this.gameObject);
+                 }
+                 
             }
 
             if (go.CompareTag("Player"))
@@ -80,5 +110,6 @@
                 GameObject.Find("Canvas").GetComponent<DamagePopup>().ProduceText(-1, go.transform);
             }
         }
+      
     }
 }

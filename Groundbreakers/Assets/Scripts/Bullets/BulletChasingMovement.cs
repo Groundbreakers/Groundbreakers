@@ -75,6 +75,7 @@
             {
                 this.damageHandler.DeliverDamageTo(go);
                 GameObject.Destroy(this.gameObject);
+                
             }
         }
     }

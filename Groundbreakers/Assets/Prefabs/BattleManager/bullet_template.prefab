@@ -90,7 +90,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725126479709373028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4a2549537f2fa14eaa8c1b3b998dabb, type: 3}
   m_Name: 
@@ -98,7 +98,7 @@ MonoBehaviour:
   armorpen: 8
   damage: 5
   hit: 0
-  speed: 0.5
+  speed: 0.01
   target: {fileID: 0}
 --- !u!61 &4101858626869767788
 BoxCollider2D:
