@@ -1588,6 +1588,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5409896262574256849, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5310334381404288758, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
         type: 3}
       propertyPath: hitbox
@@ -1598,11 +1603,6 @@ PrefabInstance:
       propertyPath: hitbox
       value: 
       objectReference: {fileID: 190215580}
-    - target: {fileID: 5409896262574256849, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8579023414525874882, guid: 7cc9a7215ab44ba49a6d68a84880e8aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7cc9a7215ab44ba49a6d68a84880e8aa, type: 3}
@@ -2000,7 +2000,7 @@ PrefabInstance:
     - target: {fileID: 7250965256672464232, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5623790535036254546, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
