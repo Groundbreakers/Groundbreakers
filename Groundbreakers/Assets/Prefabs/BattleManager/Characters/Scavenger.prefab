@@ -160,7 +160,7 @@ Animator:
   m_GameObject: {fileID: 2061099418179834263}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6197dff16d4768249b281bbcbf0b1842, type: 2}
+  m_Controller: {fileID: 22100000, guid: ac56ea4f661f9e141af5e56b06a5f207, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
   animator: {fileID: 7543013341955019752}
-  stance: Melee
+  stance: Gun
   hitbox: {fileID: 1342917279963280383}
 --- !u!114 &1143237542542456168
 MonoBehaviour:
