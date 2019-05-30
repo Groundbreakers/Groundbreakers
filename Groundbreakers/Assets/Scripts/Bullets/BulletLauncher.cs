@@ -15,7 +15,9 @@
     public class BulletLauncher : MonoBehaviour
     {
         #region Inspector
-        
+
+        public LineRenderer lineRenderer;
+
         [SerializeField]
         private GameObject bulletPrefab;
 
@@ -24,7 +26,7 @@
         
         [SerializeField]
         private Vector3 offSet;
-
+        
         #endregion
 
         #region Internal Fields
@@ -32,8 +34,6 @@
         private DamageHandler damageHandler;
 
         private Transform potentialTarget;
-
-        //private LineRenderer laserBeam;
 
         // tmp
         private int laserDelay = 10;
@@ -221,6 +221,11 @@
         // Subject to change
         private void SingleShot(Transform target)
         {
+            if (this.lineRenderer.enabled)
+            {
+                this.lineRenderer.enabled = false;
+            }
+
             this.SetHandlerAttributeIfNot();
 
             var bullet = this.InstantiateBullet();
@@ -230,6 +235,11 @@
 
         private void ExplosiveShot(Transform target)
         {
+            if (this.lineRenderer.enabled)
+            {
+                this.lineRenderer.enabled = false;
+            }
+
             this.SetHandlerAttributeIfNot();
 
             var bullet = this.InstantiateBullet();
@@ -239,6 +249,11 @@
 
         private void PenetrateShot(Transform target)
         {
+            if (this.lineRenderer.enabled)
+            {
+                this.lineRenderer.enabled = false;
+            }
+
             this.SetHandlerAttributeIfNot();
 
             var bullet = this.InstantiateBullet();
@@ -249,6 +264,11 @@
         // Subject to change
         private void MultiShot(Transform target)
         {
+            if (this.lineRenderer.enabled)
+            {
+                this.lineRenderer.enabled = false;
+            }
+
             this.SetHandlerAttributeIfNot();
 
             var bulletA = this.InstantiateBullet();
@@ -268,7 +288,16 @@
 
         private void LaserShot(Transform target)
         {
-            this.SetHandlerAttributeIfNot();
+                var offset = new Vector3(0.0f, 0.5f, 0.0f);
+
+                this.SetHandlerAttributeIfNot();
+
+                this.lineRenderer.SetPosition(0, this.transform.position + offset);
+
+                this.lineRenderer.SetPosition(1, target.position);
+
+                this.damageHandler.DeliverDamageTo(target.gameObject, false);
+            
         }
 
         #endregion

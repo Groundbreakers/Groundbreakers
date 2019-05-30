@@ -185,6 +185,9 @@ public class laser : MonoBehaviour
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
+
+          
+
             return;
         }
 

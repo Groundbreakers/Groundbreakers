@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using Assets.Scripts;
 
 public class characterAttack : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class characterAttack : MonoBehaviour
     public GameObject rangeAttackPrefab;
 
     public Animator animator;
-
+    
     public string stance = "Gun";
 
     private characterAttributes trickster;
@@ -181,20 +182,40 @@ public class characterAttack : MonoBehaviour
 
     void fireCount()
     {
+
+
         myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
+
+            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled)
+            {
+                GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled = false;
+            }
+
+
+
             return;
         }
 
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
+            GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled = true;
             // this.shoot();
             this.PerformAttack();
 
-            this.fireCountdown = 1f / this.fireRate;
+            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
+            {
+                this.fireCountdown = 0f;
+            }
+            else
+            {
+                this.fireCountdown = 1f / this.fireRate;
+            }
+
+          
         }
 
         this.fireCountdown -= Time.deltaTime;

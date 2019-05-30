@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7085035497353382218}
   - component: {fileID: 3860437930588547951}
   m_Layer: 0
-  m_Name: TileBlock
+  m_Name: TileBlockA
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5300740713263289941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7765663561683278260}
@@ -313,6 +313,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterOnTop: 0
   canDeploy: 1
+  deploying: 0
+  deployingCharacter: -1
   canDeployIcon: {fileID: 21300000, guid: b1c0eb309fbe52a458268b40bdd936f4, type: 3}
   canNotDeployIcon: {fileID: 21300000, guid: b969ae0e2c061b3438f61074a306dafc, type: 3}
   occupiedIcon: {fileID: 21300000, guid: 0c1d367553f98824fa62a179c9aa5eed, type: 3}
+  deploy: {fileID: 0}
