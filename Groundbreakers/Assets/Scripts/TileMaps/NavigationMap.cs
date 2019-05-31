@@ -134,7 +134,9 @@
                         return;
                     }
 
+#if UNITY_EDITOR
                     Handles.Label(new Vector3(i, j), status.Weight.ToString("F2").Remove(0, 1));
+#endif
 
                     if (status.IsOccupied)
                     {
