@@ -189,10 +189,9 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", false);
 
-            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled)
-            {
+            
                 GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled = false;
-            }
+            
 
 
 
@@ -202,7 +201,11 @@ public class characterAttack : MonoBehaviour
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
-            GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled = true;
+
+            
+                GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().lineRenderer.enabled = true;
+           
+
             // this.shoot();
             this.PerformAttack();
 
