@@ -81,17 +81,13 @@
                     break;
                 case TileController.CommandState.Swapping:
 
-                    this.status.IsSelected = true;
                     this.controller.SelectTile(this.gameObject);
 
                     break;
                 case TileController.CommandState.Building:
-
-                    var status = this.tilemap.GetTileStatusAt(this.transform.position);
-                    if (status.CanPass())
+                    if (this.status.CanPass())
                     {
                         var blockade = Instantiate(this.blockadePrefab, this.transform);
-                        // this.controller.BeginInactive();
                     }
                     else
                     {

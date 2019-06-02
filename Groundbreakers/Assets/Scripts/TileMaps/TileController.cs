@@ -42,6 +42,8 @@
         /// </summary>
         public static CommandState Active { get; private set; }
 
+        public static bool Busy { get; private set; }
+
         #region For UI button only
 
         public void BeginInactive()
@@ -110,6 +112,9 @@
 
         public void SelectTile(GameObject tile)
         {
+            var status = tile.GetComponent<TileStatus>();
+            status.IsSelected = true;
+
             if (this.selected.Contains(tile))
             {
                 this.ClearSelected();
@@ -158,17 +163,6 @@
             }
         }
 
-        //private static void OnTilesChange(Vector3 first, Vector3 second)
-        //{
-        //    // TODO: Refactor this shit
-        //    var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        //    foreach (var enemy in enemies)
-        //    {
-        //        enemy.GetComponent<DynamicMovement>().OnTilesChange(first, second);
-        //    }
-        //}
-
         /// <summary>
         ///     Perform an swapping of tiles. Do animation, and swap references.
         /// </summary>
@@ -180,6 +174,8 @@
         /// </param>
         private void SwapTiles(Vector3 first, Vector3 second)
         {
+            Busy = true;
+
             var tileA = this.tilemap.GetTileBlockAt(first);
             var tileB = this.tilemap.GetTileBlockAt(second);
 
@@ -222,7 +218,11 @@
 
             sequence.SetUpdate(true);
 
-            sequence.OnComplete(() => { this.OnSwapComplete(tile); });
+            sequence.OnComplete(
+                () =>
+                    {
+                        this.OnSwapComplete(tile);
+                    });
         }
 
         private void OnSwapComplete(GameObject tile)
@@ -238,7 +238,7 @@
                 first.GetComponent<TileStatus>().IsMoving = false;
                 second.GetComponent<TileStatus>().IsMoving = false;
 
-                //OnTilesChange(first.transform.position, second.transform.position);
+                Busy = false;
             }
 
             this.ClearSelected();

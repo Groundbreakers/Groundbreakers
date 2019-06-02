@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 367632177}
   - component: {fileID: 367632178}
   - component: {fileID: 367632179}
+  - component: {fileID: 367632180}
   m_Layer: 0
   m_Name: Battle Field
   m_TagString: Untagged
@@ -707,6 +708,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e00639b60cb50b46a32253a06ee72fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &367632180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367632176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 959cbbe27a0d8a64c816a7829deb6987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &371058421
@@ -1850,22 +1863,22 @@ PrefabInstance:
     - target: {fileID: 5573888772587790334, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 9.599976
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 5573888772587790334, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -66.600006
+      value: -66.5
       objectReference: {fileID: 0}
     - target: {fileID: 5986808333405427352, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 35.299988
+      value: 35.5
       objectReference: {fileID: 0}
     - target: {fileID: 5986808333405427352, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -36.700012
+      value: -36.75
       objectReference: {fileID: 0}
     - target: {fileID: 1688462708067366167, guid: 4fb14a2bb4791934bb6b635d45b7653e,
         type: 3}

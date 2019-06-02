@@ -15,8 +15,7 @@ GameObject:
   - component: {fileID: 1010405027346922761}
   - component: {fileID: 985460838840224869}
   - component: {fileID: 4773105813452661917}
-  - component: {fileID: 4437197403813287301}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dynamic Tile Block
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -175,19 +174,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a66800365e2f1439347e7b49691cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4437197403813287301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423346660936018881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9cfbf582ddd32f4f8c2ded693e5eff6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tmpPrefab: {fileID: 5437903941598735353, guid: 90d547d79c5386347ac726f8bad7b946,
-    type: 3}
-  blockadePrefab: {fileID: 5437903941598735353, guid: 90d547d79c5386347ac726f8bad7b946,
-    type: 3}
