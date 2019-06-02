@@ -81,7 +81,7 @@
                 return;
             }
 
-            Time.timeScale = 0.0f;
+            Time.timeScale = 0.01f;
 
             Active = state;
         }
@@ -216,13 +216,14 @@
                               .SetEase(Ease.OutCubic)
                               .SetUpdate(true));
 
-            sequence.SetUpdate(true);
-
             sequence.OnComplete(
                 () =>
                     {
                         this.OnSwapComplete(tile);
                     });
+
+            sequence.SetUpdate(true);
+
         }
 
         private void OnSwapComplete(GameObject tile)

@@ -17,8 +17,6 @@
 
         private TileController tileController;
 
-
-        [Required]
         [SerializeField]
         private LayerMask tileLayer;
 
@@ -60,9 +58,7 @@
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("1");
-
-                    // this.tileController.SelectTile(target);
+                    this.tileController.SelectTile(target);
 
                     //ExecuteEvents.Execute<ITileSelectMessageTarget>(
                     //    target,
