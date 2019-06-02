@@ -70,7 +70,7 @@
 
         protected void OnMouseUpAsButton()
         {
-            if (!this.hovered)
+            if (!this.hovered || TileController.Busy)
             {
                 return;
             }

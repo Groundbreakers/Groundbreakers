@@ -81,6 +81,8 @@
                 return;
             }
 
+            // DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.01f, 0.1f).SetUpdate(true);
+
             Time.timeScale = 0.01f;
 
             Active = state;
@@ -185,6 +187,9 @@
             this.tilemap.SetTileBlock(first, tileB.transform);
             this.tilemap.SetTileBlock(second, tileA.transform);
 
+            this.SetRenderOrderFlying(tileA, "HUD", "HUD");
+            this.SetRenderOrderFlying(tileB, "HUD", "HUD");
+
             this.MoveBlockTo(tileA, second);
             this.MoveBlockTo(tileB, first);
         }
@@ -197,7 +202,7 @@
 
             // Calculate travel path
             var origin = tile.transform.position;
-            var liftHeight = new Vector3(0.0f, 1.0f, 1.0f);
+            var liftHeight = new Vector3(0.0f, 1.0f, -1.0f);
 
             var path = new[] { origin + liftHeight, destination + liftHeight, destination };
             var durations = new[] { 0.2f, 0.6f, 0.4f };
@@ -216,14 +221,9 @@
                               .SetEase(Ease.OutCubic)
                               .SetUpdate(true));
 
-            sequence.OnComplete(
-                () =>
-                    {
-                        this.OnSwapComplete(tile);
-                    });
+            sequence.OnComplete(() => { this.OnSwapComplete(tile); });
 
             sequence.SetUpdate(true);
-
         }
 
         private void OnSwapComplete(GameObject tile)
@@ -239,6 +239,9 @@
                 first.GetComponent<TileStatus>().IsMoving = false;
                 second.GetComponent<TileStatus>().IsMoving = false;
 
+                this.SetRenderOrderFlying(first, "GroundTiles", "Mobs");
+                this.SetRenderOrderFlying(second, "GroundTiles", "Mobs");
+
                 Busy = false;
             }
 
@@ -251,6 +254,19 @@
             var second = this.selected[1];
 
             this.SwapTiles(first.transform.position, second.transform.position);
+        }
+
+        private void SetRenderOrderFlying(GameObject tile, string layerName, string childLayer)
+        {
+            return;
+
+            tile.GetComponent<SpriteRenderer>().sortingLayerName = layerName;
+
+            foreach (Transform child in tile.transform)
+            {
+                var render = child.GetComponent<SpriteRenderer>();
+                render.sortingLayerName = childLayer;
+            }
         }
     }
 }
