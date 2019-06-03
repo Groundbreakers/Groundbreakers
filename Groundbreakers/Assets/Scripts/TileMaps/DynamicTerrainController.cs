@@ -5,8 +5,6 @@
 
     using AI;
 
-    using Assets.Enemies.Scripts;
-
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
@@ -14,7 +12,7 @@
     using UnityEngine;
 
     /// <summary>
-    ///     This component provides API for controlling dynamic terrain changes. 
+    ///     This component provides API for controlling dynamic terrain changes.
     /// </summary>
     public class DynamicTerrainController : MonoBehaviour
     {
@@ -64,7 +62,7 @@
 
                 var block = this.tilemap.GetTileBlockAt(pos);
 
-                GameObject.Instantiate(this.mushroomPrefab, block.transform);
+                Instantiate(this.mushroomPrefab, block.transform);
             }
         }
 
@@ -72,27 +70,6 @@
         public void StartEarthQuake()
         {
             this.StartCoroutine(this.BeginEarthQuake());
-
-            //for (var i = 0; i < Tilemap.Dimension; i++)
-            //{
-            //    for (var j = 0; j < Tilemap.Dimension; j++)
-            //    {
-            //        var block = this.tilemap.GetTileBlockAt(i, j);
-
-            //        var ori = block.transform.position;
-
-            //        var duration = j / 3.0f;
-
-            //        var delay = Random.Range(duration, duration + 0.1f);
-
-            //        block.transform.DOShakePosition(0.1f, 0.2f)
-            //            .SetDelay(delay);
-
-            //        //block.transform.DOMoveY(ori, )
-            //        //    .SetEase(Ease.OutBack)
-            //        //    .SetDelay(delay);
-            //    }
-            //}
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -121,17 +98,17 @@
             // Clear all children
             foreach (Transform child in block.transform)
             {
-                GameObject.Destroy(child.gameObject);
+                Destroy(child.gameObject);
             }
 
             if (newType == Tiles.HighGround)
             {
-                GameObject.Instantiate(this.highGroundPrefab, block.transform);
+                Instantiate(this.highGroundPrefab, block.transform);
             }
 
             if (newType == Tiles.Grass)
             {
-                GameObject.Instantiate(this.grassPrefab, block.transform);
+                Instantiate(this.grassPrefab, block.transform);
             }
 
             this.tilemap.ChangeTileAt(pos, newType);
@@ -166,7 +143,7 @@
 
                 block.transform.DOShakePosition(0.2f, 0.2f);
 
-                block.transform.DOMoveY(row, 0.1f).SetEase(Ease.InBounce);
+                // block.transform.DOMoveY(row, 0.1f).SetEase(Ease.InBounce);
             }
         }
 
@@ -185,6 +162,5 @@
         }
 
         #endregion
-
     }
 }
