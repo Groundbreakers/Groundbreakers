@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 120820392}
   - component: {fileID: 120820389}
   - component: {fileID: 120820393}
+  - component: {fileID: 120820394}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -533,6 +534,24 @@ MonoBehaviour:
   offset: {x: 0, y: -5, z: 0}
   duration: 1.27
   maxDelay: 0.23
+--- !u!114 &120820394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120820387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ba0d73707dd9544b17802f539b47b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highGroundPrefab: {fileID: 1410983043164879455, guid: 1b261d672a4447a4daa49f01543ed40e,
+    type: 3}
+  mushroomPrefab: {fileID: 1520603410798911214, guid: 092fbaa8c700dcd4092bf527211f7809,
+    type: 3}
+  grassPrefab: {fileID: 3317147538935926543, guid: d465a8da1ad2f834790992439f72c9a0,
+    type: 3}
 --- !u!1 &190215577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5319498373077778077, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,

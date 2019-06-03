@@ -47,28 +47,25 @@
         /// </summary>
         public static int Dimension { get; } = 8;
 
-        ///// <summary>
-        /////     When ever you change the status of a tile, Call this function.
-        ///// </summary>
-        ///// <param name="position">
-        /////     The position Vector. The x and y should be integers.
-        ///// </param>
-        //public static void OnTileChanges(Vector3 position)
-        //{
-        //    //// Do nothing if battle has not begin.
-        //    //if (!Spanwer.Busy)
-        //    //{
-        //    //    return;
-        //    //}
+        public static int CountNumHighGrounds(ITerrainData data)
+        {
+            var num = 0;
 
-        //    //// TODO: Refactor this shit
-        //    //var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                    var type = data.GetTileTypeAt(i, j);
 
-        //    //foreach (var enemy in enemies)
-        //    //{
-        //    //    enemy.GetComponent<DynamicMovement>().OnTileChange(position);
-        //    //}
-        //}
+                    if (type == Tiles.HighGround)
+                    {
+                        num++;
+                    }
+                }
+            }
+
+            return num;
+        }
 
         /// <summary>
         ///     The get blockade at.
@@ -214,26 +211,6 @@
                     GameObject.Destroy(go);
                 }
             }
-        }
-
-        private static int CountNumHighGrounds(ITerrainData data)
-        {
-            var num = 0;
-
-            for (var i = 0; i < Dimension; i++)
-            {
-                for (var j = 0; j < Dimension; j++)
-                {
-                    var type = data.GetTileTypeAt(i, j);
-
-                    if (type == Tiles.HighGround)
-                    {
-                        num++;
-                    }
-                }
-            }
-
-            return num;
         }
 
         /// <summary>
