@@ -199,6 +199,11 @@ PrefabInstance:
       propertyPath: hitbox
       value: 
       objectReference: {fileID: 659618143}
+    - target: {fileID: 5170317579557245721, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
+        type: 3}
+      propertyPath: stance
+      value: Melee
+      objectReference: {fileID: 0}
     - target: {fileID: 7543013341955019752, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
         type: 3}
       propertyPath: m_Controller
