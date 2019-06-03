@@ -22,6 +22,14 @@ public class Settings : MonoBehaviour
     public void Toggle ()
     {
         ui.SetActive(!ui.activeSelf);
+        if (Time.timeScale != 0.0f)
+        {
+            Time.timeScale = 0.0f;
+        }
+        else
+        {
+            this.UpdateTimeScaleIfNecessary();
+        }
     }
 
     public void NewGame()
@@ -49,21 +57,18 @@ public class Settings : MonoBehaviour
     public void TimeScale1x()
     {
         this.timeScale = 1.0F;
-
         this.UpdateTimeScaleIfNecessary();
     }
 
     public void TimeScale2x()
     {
         this.timeScale = 2.0F;
-
         this.UpdateTimeScaleIfNecessary();
     }
 
     public void TimeScale4x()
     {
         this.timeScale = 4.0F;
-
         this.UpdateTimeScaleIfNecessary();
     }
 

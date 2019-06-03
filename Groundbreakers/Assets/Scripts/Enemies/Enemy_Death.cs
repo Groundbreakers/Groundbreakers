@@ -11,12 +11,12 @@ public class Enemy_Death : MonoBehaviour
     public void setDirection(int i)
     {
         anim.SetInteger("Direction", i);
-        //createLoot();  // drop loot
+        createLoot();  // drop loot
     }
 
     private void createLoot()
     {   
         GameObject temp = (GameObject) Instantiate(loot, transform.position, transform.rotation);
-        temp.transform.parent = GameObject.Find("Loot").transform;
+        //temp.transform.parent = GameObject.Find("Loot").transform;
     }
 }

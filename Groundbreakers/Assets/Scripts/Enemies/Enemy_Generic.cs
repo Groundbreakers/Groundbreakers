@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
 
+    using AI;
+
     using UnityEngine;
     using UnityEngine.Assertions;
 

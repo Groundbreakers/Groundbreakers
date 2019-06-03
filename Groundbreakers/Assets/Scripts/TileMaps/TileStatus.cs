@@ -30,7 +30,7 @@
 
         [field: ShowInInspector]
         [field: ReadOnly]
-        public bool IsMoving { private get; set; }
+        public bool IsMoving { get; set; }
 
         [field: ShowInInspector]
         [field: ReadOnly]

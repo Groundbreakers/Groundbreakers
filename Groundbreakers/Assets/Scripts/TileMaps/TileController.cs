@@ -42,6 +42,8 @@
         /// </summary>
         public static CommandState Active { get; private set; }
 
+        public static bool Busy { get; private set; }
+
         #region For UI button only
 
         public void BeginInactive()
@@ -79,7 +81,9 @@
                 return;
             }
 
-            Time.timeScale = 0.0f;
+            // DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.01f, 0.1f).SetUpdate(true);
+
+            Time.timeScale = 0.01f;
 
             Active = state;
         }
@@ -110,6 +114,9 @@
 
         public void SelectTile(GameObject tile)
         {
+            var status = tile.GetComponent<TileStatus>();
+            status.IsSelected = true;
+
             if (this.selected.Contains(tile))
             {
                 this.ClearSelected();
@@ -158,17 +165,6 @@
             }
         }
 
-        //private static void OnTilesChange(Vector3 first, Vector3 second)
-        //{
-        //    // TODO: Refactor this shit
-        //    var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        //    foreach (var enemy in enemies)
-        //    {
-        //        enemy.GetComponent<DynamicMovement>().OnTilesChange(first, second);
-        //    }
-        //}
-
         /// <summary>
         ///     Perform an swapping of tiles. Do animation, and swap references.
         /// </summary>
@@ -180,6 +176,8 @@
         /// </param>
         private void SwapTiles(Vector3 first, Vector3 second)
         {
+            Busy = true;
+
             var tileA = this.tilemap.GetTileBlockAt(first);
             var tileB = this.tilemap.GetTileBlockAt(second);
 
@@ -188,6 +186,9 @@
             // Resetting the reference, temp
             this.tilemap.SetTileBlock(first, tileB.transform);
             this.tilemap.SetTileBlock(second, tileA.transform);
+
+            this.SetRenderOrderFlying(tileA, "HUD", "HUD");
+            this.SetRenderOrderFlying(tileB, "HUD", "HUD");
 
             this.MoveBlockTo(tileA, second);
             this.MoveBlockTo(tileB, first);
@@ -201,7 +202,7 @@
 
             // Calculate travel path
             var origin = tile.transform.position;
-            var liftHeight = new Vector3(0.0f, 1.0f, 1.0f);
+            var liftHeight = new Vector3(0.0f, 1.0f, -1.0f);
 
             var path = new[] { origin + liftHeight, destination + liftHeight, destination };
             var durations = new[] { 0.2f, 0.6f, 0.4f };
@@ -220,9 +221,9 @@
                               .SetEase(Ease.OutCubic)
                               .SetUpdate(true));
 
-            sequence.SetUpdate(true);
-
             sequence.OnComplete(() => { this.OnSwapComplete(tile); });
+
+            sequence.SetUpdate(true);
         }
 
         private void OnSwapComplete(GameObject tile)
@@ -238,7 +239,10 @@
                 first.GetComponent<TileStatus>().IsMoving = false;
                 second.GetComponent<TileStatus>().IsMoving = false;
 
-                //OnTilesChange(first.transform.position, second.transform.position);
+                this.SetRenderOrderFlying(first, "GroundTiles", "Mobs");
+                this.SetRenderOrderFlying(second, "GroundTiles", "Mobs");
+
+                Busy = false;
             }
 
             this.ClearSelected();
@@ -250,6 +254,19 @@
             var second = this.selected[1];
 
             this.SwapTiles(first.transform.position, second.transform.position);
+        }
+
+        private void SetRenderOrderFlying(GameObject tile, string layerName, string childLayer)
+        {
+            return;
+
+            tile.GetComponent<SpriteRenderer>().sortingLayerName = layerName;
+
+            foreach (Transform child in tile.transform)
+            {
+                var render = child.GetComponent<SpriteRenderer>();
+                render.sortingLayerName = childLayer;
+            }
         }
     }
 }

@@ -17,6 +17,7 @@
     {
         private static readonly int Direction = Animator.StringToHash("Direction");
         private static readonly int Attacking = Animator.StringToHash("Attacking");
+        private static readonly int Stun1 = Animator.StringToHash("Stun");
 
         private static IEnumerable<Transform> targets;
 
@@ -45,10 +46,14 @@
         [ShowInInspector]
         private Vector3 nextGrid;
 
+        // Should indicate if stun
+        private bool canMove = true;
+
         // TODO: Fix this.
         private bool mad;
 
         private bool attacking;
+
 
         #region Public Functions
 
@@ -60,6 +65,11 @@
 
             // Update the new target grid
             this.nextGrid = pos;
+        }
+
+        public void StunEnemy(float duration)
+        {
+            this.StartCoroutine(this.Stun(duration));
         }
 
         //public void OnTilesChange(Vector3 first, Vector3 second)
@@ -97,6 +107,11 @@
 
         protected void FixedUpdate()
         {
+            if (!this.canMove)
+            {
+                return;
+            }
+
             if (this.IsMoving())
             {
                 this.UpdateMoving();
@@ -315,6 +330,17 @@
 
             this.attacking = false;
             this.animator.SetBool(Attacking, false);
+        }
+
+        private IEnumerator Stun(float duration)
+        {
+            this.animator.SetBool(Stun1, true);
+            this.canMove = false;
+
+            yield return new WaitForSeconds(duration);
+
+            this.canMove = true;
+            this.animator.SetBool(Stun1, false);
         }
 
         #endregion

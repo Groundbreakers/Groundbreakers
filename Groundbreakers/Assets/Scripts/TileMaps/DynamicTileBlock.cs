@@ -76,5 +76,10 @@
 
             this.ChangeTileType(tileType);
         }
+
+        protected void Update()
+        {
+            
+        }
     }
 }
