@@ -44,7 +44,6 @@
 
             this.transform.DOShakePosition(0.5f, 0.1f);
             this.sprite.DOColor(Color.cyan, 1.0f);
-            Debug.Log(this.hitPoint);
 
             if (this.hitPoint <= 0.0f)
             {
@@ -100,8 +99,6 @@
             status.Weight = this.previousWeight;
 
             this.gameMap.ChangeTileAt(parent.position, Tiles.Stone);
-
-            // Tilemap.OnTileChanges(parent.position);
         }
     }
 }

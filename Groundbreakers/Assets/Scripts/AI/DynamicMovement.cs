@@ -67,18 +67,16 @@
             this.nextGrid = pos;
         }
 
+        /// <summary>
+        ///     Temporary disable enemy movements. 
+        /// </summary>
+        /// <param name="duration">
+        ///     The duration.
+        /// </param>
         public void StunEnemy(float duration)
         {
             this.StartCoroutine(this.Stun(duration));
         }
-
-        //public void OnTilesChange(Vector3 first, Vector3 second)
-        //{
-        //}
-        // 
-        //public void OnTileChange(Vector3 first)
-        //{
-        //}
 
         #endregion
 
