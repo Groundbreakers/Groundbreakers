@@ -1,5 +1,14 @@
 ﻿namespace TileMaps
 {
+    using System.Collections;
+    using System.Linq;
+
+    using AI;
+
+    using Assets.Enemies.Scripts;
+
+    using DG.Tweening;
+
     using Sirenix.OdinInspector;
 
     using UnityEngine;
@@ -27,6 +36,7 @@
 
         /// <summary>
         ///     Re-roll the middle 6 layer of the map.
+        ///     According to the discussion, we can only.
         /// </summary>
         [Button]
         public void RerollMap()
@@ -56,6 +66,33 @@
 
                 GameObject.Instantiate(this.mushroomPrefab, block.transform);
             }
+        }
+
+        [Button]
+        public void StartEarthQuake()
+        {
+            this.StartCoroutine(this.BeginEarthQuake());
+
+            //for (var i = 0; i < Tilemap.Dimension; i++)
+            //{
+            //    for (var j = 0; j < Tilemap.Dimension; j++)
+            //    {
+            //        var block = this.tilemap.GetTileBlockAt(i, j);
+
+            //        var ori = block.transform.position;
+
+            //        var duration = j / 3.0f;
+
+            //        var delay = Random.Range(duration, duration + 0.1f);
+
+            //        block.transform.DOShakePosition(0.1f, 0.2f)
+            //            .SetDelay(delay);
+
+            //        //block.transform.DOMoveY(ori, )
+            //        //    .SetEase(Ease.OutBack)
+            //        //    .SetDelay(delay);
+            //    }
+            //}
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -105,5 +142,49 @@
             this.tilemap = this.GetComponent<Tilemap>();
             this.generator = this.GetComponent<TerrainGenerator>();
         }
+
+        #region Earth Quake
+
+        private IEnumerator BeginEarthQuake()
+        {
+            const float Speed = 0.25f;
+
+            for (var i = 0; i < Tilemap.Dimension; i++)
+            {
+                this.ShakeRow(i);
+                this.StunEnemiesAtRow(i);
+
+                yield return new WaitForSeconds(Speed);
+            }
+        }
+
+        private void ShakeRow(int row)
+        {
+            for (var x = 0; x < Tilemap.Dimension; x++)
+            {
+                var block = this.tilemap.GetTileBlockAt(x, row);
+
+                block.transform.DOShakePosition(0.2f, 0.2f);
+
+                block.transform.DOMoveY(row, 0.1f).SetEase(Ease.InBounce);
+            }
+        }
+
+        private void StunEnemiesAtRow(int row)
+        {
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            var stunTime = 4.0f;
+
+            var xs = enemies.Where(enemy => enemy.transform.position.y - row < 0.5f);
+
+            foreach (var e in xs)
+            {
+                e.GetComponent<DynamicMovement>().StunEnemy(stunTime);
+            }
+        }
+
+        #endregion
+
     }
 }
