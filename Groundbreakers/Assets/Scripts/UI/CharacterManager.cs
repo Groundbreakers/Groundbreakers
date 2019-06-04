@@ -7,7 +7,6 @@ public class CharacterManager : MonoBehaviour
 {
     public GameObject ui;
     public GameObject[] attributes = new GameObject[4];
-    public Sprite[] bars = new Sprite[6];
 
     //Basic Information
     public Image image;
@@ -65,12 +64,31 @@ public class CharacterManager : MonoBehaviour
         // Show the attributes
         characterAttributes characterAttributes = GameObject.Find("CharacterList").transform
             .GetChild(this.characterIndex).gameObject.GetComponent<characterAttributes>();
-        this.attributes[0].GetComponent<Image>().sprite = this.bars[characterAttributes.POW];
-        this.attributes[1].GetComponent<Image>().sprite = this.bars[characterAttributes.ROF];
-        this.attributes[2].GetComponent<Image>().sprite = this.bars[characterAttributes.RNG];
-        this.attributes[3].GetComponent<Image>().sprite = this.bars[characterAttributes.AMP];
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                this.attributes[i].transform.GetChild(j).gameObject.SetActive(false);
+            }
+        }
+        for (int i = 0; i < characterAttributes.POW; i++)
+        {
+            this.attributes[0].transform.GetChild(i).gameObject.SetActive(true);
+        }
+        for (int i = 0; i < characterAttributes.ROF; i++)
+        {
+            this.attributes[1].transform.GetChild(i).gameObject.SetActive(true);
+        }
+        for (int i = 0; i < characterAttributes.RNG; i++)
+        {
+            this.attributes[2].transform.GetChild(i).gameObject.SetActive(true);
+        }
+        for (int i = 0; i < characterAttributes.AMP; i++)
+        {
+            this.attributes[3].transform.GetChild(i).gameObject.SetActive(true);
+        }
 
-        //
+        //Basic Info
         //this.name.text = characterAttributes.name;
         //this.profession.text = characterAttributes.profession
 
