@@ -1,6 +1,7 @@
 ﻿namespace TileMaps
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
 
     using UnityEngine;
 
@@ -36,7 +37,16 @@
 
         public void SetAlpha(float alpha = 1.0f)
         {
-            this.rend.material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+            // TMP Fast FIX
+            if (this.status.GetTileType() == Tiles.HighGround)
+            {
+                var child = this.transform.GetChild(0);
+                child.GetComponent<SpriteRenderer>().material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+            }
+            else
+            {
+                this.rend.material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+            }
         }
 
         protected void OnDisable()
