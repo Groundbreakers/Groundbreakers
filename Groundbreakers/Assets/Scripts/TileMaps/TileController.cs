@@ -256,8 +256,6 @@
 
         private void SetRenderOrderFlying(GameObject tile, string layerName, string childLayer)
         {
-            return;
-
             tile.GetComponent<SpriteRenderer>().sortingLayerName = layerName;
 
             foreach (Transform child in tile.transform)

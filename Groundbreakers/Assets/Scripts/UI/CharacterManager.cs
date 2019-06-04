@@ -61,6 +61,8 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdatePanel()
     {
+        return;
+
         // Show the attributes
         characterAttributes characterAttributes = GameObject.Find("CharacterList").transform
             .GetChild(this.characterIndex).gameObject.GetComponent<characterAttributes>();
