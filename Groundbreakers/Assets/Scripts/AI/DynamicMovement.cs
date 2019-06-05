@@ -1,6 +1,5 @@
 ﻿namespace AI
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -304,7 +303,12 @@
             }
 
             // Set direction
-            var dir = blockade.transform.position - this.transform.position;
+            var position = blockade.transform.position;
+            var roundedVec = new Vector3(
+                Mathf.RoundToInt(position.x),
+                Mathf.RoundToInt(position.y));
+
+            var dir = roundedVec - this.transform.position;
             this.SetDirectionAttack(dir);
 
             var b = blockade.GetComponent<Blockade>();
