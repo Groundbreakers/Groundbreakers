@@ -7,5 +7,13 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Will_O_Wisp_Death
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: f7f1c5c2f15ecf8409a47bdfb01c1231, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7c0f001c583ca4c40a28c1cd9c63f5b0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d159f83c734c3054cbdcbab9693c01db, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e3122e70833951446a64568dc60192fa, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c8dd88645d12bfb47bd1acf35d8d1f24, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1c584d96a3a62cc418631169438a8703, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 71165fd5135275d40ab1828161cae324, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 314907a2043e69047a054cdb4bc8e8ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3ba1c58d9273e6d4ca36bd81c91d3fd8, type: 2}

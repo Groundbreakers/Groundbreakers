@@ -7,5 +7,13 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Spider_Death
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: f7f1c5c2f15ecf8409a47bdfb01c1231, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7c0f001c583ca4c40a28c1cd9c63f5b0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 87d68bc8e6232ca4593e2f56fd162c5d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e3122e70833951446a64568dc60192fa, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3cd71ab2de3c7bf48b6a8eaef7ea8fb1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1c584d96a3a62cc418631169438a8703, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b1a07dcd941f6ac43a9f685ab54b1db6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 314907a2043e69047a054cdb4bc8e8ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 54613de5ecf8b9642b02dd323a54add8, type: 2}

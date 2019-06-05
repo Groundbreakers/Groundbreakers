@@ -7,5 +7,13 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Tortoise_Death
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: f7f1c5c2f15ecf8409a47bdfb01c1231, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7c0f001c583ca4c40a28c1cd9c63f5b0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d3f9b8ed354041b4d81dd8fc1293c260, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e3122e70833951446a64568dc60192fa, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0b724391a6c9c1d4aabb3a11288286a4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1c584d96a3a62cc418631169438a8703, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e2971a172becd85479945b87e91457c1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 314907a2043e69047a054cdb4bc8e8ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bccf5ff3b35a0b649abb4283ce820096, type: 2}
