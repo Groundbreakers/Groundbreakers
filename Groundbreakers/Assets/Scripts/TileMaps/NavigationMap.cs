@@ -127,7 +127,7 @@
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    var status = this.tilemap.GetTileStatusAt(i, j);
+                    var status = this.tilemap.GetCachedTileStatusAt(i, j);
 
                     if (status == null)
                     {
@@ -230,7 +230,7 @@
                 {
                     this.map[i, j] = new Node(i, j);
 
-                    var status = this.tilemap.GetTileStatusAt(i, j);
+                    var status = this.tilemap.GetCachedTileStatusAt(i, j);
                     this.map[i, j].CanPass = status.CanPass();
                     this.map[i, j].Weight = status.Weight;
                 }

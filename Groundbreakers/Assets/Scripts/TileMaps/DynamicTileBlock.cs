@@ -13,6 +13,14 @@
     /// </summary>
     public class DynamicTileBlock : MonoBehaviour
     {
+        [Required]
+        [SerializeField]
+        private GameObject highGroundPrefab;
+
+        [Required]
+        [SerializeField]
+        private GameObject grassPrefab;
+
         private SpriteRenderer spriteRenderer;
 
         private Animator animator;
@@ -35,6 +43,12 @@
         [Button]
         public void ChangeTileType(Tiles tileType)
         {
+            // Clear all children
+            foreach (Transform child in this.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
             this.animator.enabled = false;
 
             // A function that maps Enum -> GameObject
@@ -42,12 +56,14 @@
             {
                 case Tiles.Grass:
                     this.spriteRenderer.sprite = this.listSprites[0];
+                    Instantiate(this.grassPrefab, this.transform);
                     break;
                 case Tiles.Stone:
                     this.spriteRenderer.sprite = this.listSprites[1];
                     break;
                 case Tiles.HighGround:
                     this.spriteRenderer.sprite = this.listSprites[2];
+                    Instantiate(this.highGroundPrefab, this.transform);
                     break;
                 case Tiles.Water:
                     this.spriteRenderer.sprite = this.listSprites[3];
