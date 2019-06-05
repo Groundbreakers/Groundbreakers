@@ -156,6 +156,7 @@
             do
             {
                 this.mapData.Initialize();
+                this.InitializeSpawns();
             }
             while (CountNumHighGrounds(this.mapData) < 5);
 
@@ -211,6 +212,11 @@
                     GameObject.Destroy(go);
                 }
             }
+        }
+
+        private void InitializeSpawns()
+        {
+            
         }
 
         /// <summary>
