@@ -1,6 +1,7 @@
 ﻿namespace TileMaps
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
 
     using UnityEngine;
 
@@ -36,7 +37,16 @@
 
         public void SetAlpha(float alpha = 1.0f)
         {
-            this.rend.material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+            // TMP Fast FIX
+            if (this.status.GetTileType() == Tiles.HighGround)
+            {
+                var child = this.transform.GetChild(0);
+                child.GetComponent<SpriteRenderer>().material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+            }
+            else
+            {
+                this.rend.material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+            }
         }
 
         protected void OnDisable()
@@ -108,24 +118,6 @@
             if (this.hovered || this.status.IsSelected)
             {
                 this.SetAlpha(0.5f);
-
-                if (Input.GetKeyDown("1"))
-                {
-                    var pos = this.transform.position;
-                    this.tilemap.ChangeTileAt(pos, Tiles.Grass);
-                }
-
-                if (Input.GetKeyDown("2"))
-                {
-                    var pos = this.transform.position;
-                    this.tilemap.ChangeTileAt(pos, Tiles.Stone);
-                }
-
-                if (Input.GetKeyDown("3"))
-                {
-                    var pos = this.transform.position;
-                    this.tilemap.ChangeTileAt(pos, Tiles.Water);
-                }
             }
             else
             {

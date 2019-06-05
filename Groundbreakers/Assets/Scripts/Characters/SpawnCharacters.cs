@@ -36,7 +36,6 @@
 
             Assert.IsNotNull(tilemap, "Need to have a Tilemap GameObject active in the scene.");
 
-            var map = tilemap.GetComponent<ITerrainData>();
             var tm = tilemap.GetComponent<Tilemap>();
 
             this.availableBlocks = FindSpawnLocations(tm);
@@ -67,10 +66,6 @@
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-
-        protected void OnEnable()
-        {
         }
 
         private static List<Transform> FindSpawnLocations(Tilemap tilemap)

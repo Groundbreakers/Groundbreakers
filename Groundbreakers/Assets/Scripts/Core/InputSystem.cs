@@ -20,6 +20,9 @@
         [SerializeField]
         private LayerMask tileLayer;
 
+        [SerializeField]
+        private GameObject playerManager;
+
         [ShowInInspector]
         private GameObject currentHovered;
 
@@ -47,30 +50,27 @@
                 {
                     if (this.currentHovered != null)
                     {
-                        this.currentHovered.transform.localScale = new Vector3(1.0f, 1.0f);
+                        // this.currentHovered.transform.localScale = new Vector3(1.0f, 1.0f);
                     }
 
                     this.currentHovered = target;
 
-                    target.transform.localScale = new Vector3(2.0f, 2.0f);
+                    // target.transform.localScale = new Vector3(2.0f, 2.0f);
                 }
 
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    this.tileController.SelectTile(target);
+                    var man = this.playerManager.GetComponent<PartyManager>();
 
-                    //ExecuteEvents.Execute<ITileSelectMessageTarget>(
-                    //    target,
-                    //    null,
-                    //    (t, data) => t.Select());
+                    man.DeployCurrentCharacterAt(this.currentHovered.transform);
                 }
             }
             else
             {
                 if (this.currentHovered != null)
                 {
-                    this.currentHovered.transform.localScale = new Vector3(1.0f, 1.0f);
+                    // this.currentHovered.transform.localScale = new Vector3(1.0f, 1.0f);
                     this.currentHovered = null;
                 }
             }

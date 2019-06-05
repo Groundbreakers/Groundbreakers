@@ -81,9 +81,7 @@
                 return;
             }
 
-            // DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.01f, 0.1f).SetUpdate(true);
-
-            Time.timeScale = 0.01f;
+            Time.timeScale = 0.00f;
 
             Active = state;
         }
@@ -258,8 +256,6 @@
 
         private void SetRenderOrderFlying(GameObject tile, string layerName, string childLayer)
         {
-            return;
-
             tile.GetComponent<SpriteRenderer>().sortingLayerName = layerName;
 
             foreach (Transform child in tile.transform)
