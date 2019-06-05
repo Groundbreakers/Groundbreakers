@@ -40,12 +40,19 @@
             // TMP Fast FIX
             if (this.status.GetTileType() == Tiles.HighGround)
             {
-                var child = this.transform.GetChild(0);
-                child.GetComponent<SpriteRenderer>().material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+                if (this.transform.childCount > 0)
+                {
+                    var child = this.transform.GetChild(0);
+                    child.GetComponent<SpriteRenderer>().material.SetFloat(
+                        TurnOn,
+                        Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+                }
             }
             else
             {
-                this.rend.material.SetFloat(TurnOn, Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
+                this.rend.material.SetFloat(
+                    TurnOn, 
+                    Math.Abs(alpha - 1.0f) < Mathf.Epsilon ? 0.0f : 1.0f);
             }
         }
 

@@ -139,7 +139,7 @@
                 }
             }
 
-            if (row == 7) Debug.Log(xs.Count);
+            // if (row == 7) Debug.Log(xs.Count);
 
             var n = objects.Count;
             if (xs.Count >= n)
