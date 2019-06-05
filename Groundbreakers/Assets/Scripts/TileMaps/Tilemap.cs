@@ -148,7 +148,7 @@
                 this.mapData.Initialize();
                 this.InitializeSpawns();
             }
-            while (CountNumHighGrounds(this.mapData) < 5);
+            while (CountNumHighGroundsInMiddleLayers(this.mapData) < 5);
 
             ClearAllTiles();
             this.InstantiateTiles(this.mapData);
@@ -201,13 +201,13 @@
             }
         }
 
-        private static int CountNumHighGrounds(ITerrainData data)
+        private static int CountNumHighGroundsInMiddleLayers(ITerrainData data)
         {
             var num = 0;
 
             for (var i = 0; i < Dimension; i++)
             {
-                for (var j = 0; j < Dimension; j++)
+                for (var j = 1; j < Dimension - 1; j++)
                 {
                     var type = data.GetTileTypeAt(i, j);
 
