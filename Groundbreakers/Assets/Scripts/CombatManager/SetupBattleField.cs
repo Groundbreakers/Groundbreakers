@@ -88,6 +88,10 @@
 
             yield return new WaitForSeconds(0.1f);
 
+            this.tilemap.PostSetupMap();
+
+            yield return new WaitForSeconds(0.1f);
+
             this.tileEnter.Begin();
 
             yield return new WaitForSeconds(3.0f);

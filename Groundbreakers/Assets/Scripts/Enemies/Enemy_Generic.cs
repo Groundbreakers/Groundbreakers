@@ -96,12 +96,7 @@
         {
             Assert.IsNotNull(location);
 
-            if (canvasGameObject == null)
-            {
-                canvasGameObject = GameObject.Find("Canvas");
-            }
-
-            var dp = canvasGameObject.GetComponent<DamagePopup>();
+            var dp = GameObject.Find("Canvas").GetComponent<DamagePopup>();
 
             if (dp)
             {

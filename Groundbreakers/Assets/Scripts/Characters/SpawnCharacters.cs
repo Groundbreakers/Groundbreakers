@@ -76,7 +76,7 @@
             {
                 for (var j = 0; j < Tilemap.Dimension; j++)
                 {
-                    var block = tilemap.GetTileStatusAt(i, j);
+                    var block = tilemap.GetCachedTileStatusAt(i, j);
 
                     if (block && block.GetTileType() == Tiles.HighGround)
                     {

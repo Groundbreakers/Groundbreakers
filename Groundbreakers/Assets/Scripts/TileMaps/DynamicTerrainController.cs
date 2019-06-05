@@ -19,15 +19,7 @@
     {
         [Required]
         [SerializeField]
-        private GameObject highGroundPrefab;
-
-        [Required]
-        [SerializeField]
         private GameObject mushroomPrefab;
-
-        [Required]
-        [SerializeField]
-        private GameObject grassPrefab;
 
         private Tilemap tilemap;
 
@@ -92,7 +84,7 @@
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
         {
-            var currentStatus = this.tilemap.GetTileStatusAt(pos);
+            var currentStatus = this.tilemap.GetCachedTileStatusAt(pos);
 
             // Skip water tiles
             if (currentStatus.GetTileType() == Tiles.Water)
@@ -113,22 +105,9 @@
                 Debug.Log(pos);
             }
 
-            // Clear all children
-            foreach (Transform child in block.transform)
-            {
-                Destroy(child.gameObject);
-            }
-
             if (newType == Tiles.HighGround)
             {
-                var go = Instantiate(this.highGroundPrefab, block.transform);
-
                 this.CreateEnterAnimation(block);
-            }
-
-            if (newType == Tiles.Grass)
-            {
-                Instantiate(this.grassPrefab, block.transform);
             }
 
             // this.tilemap.ChangeTileAt(pos, newType);
@@ -154,7 +133,7 @@
         {
             for (var x = 0; x < Tilemap.Dimension; x++)
             {
-                var block = this.tilemap.GetTileBlockAt(x, row);
+                var block = this.tilemap.GetTileAt(x, row);
 
                 block.transform.DOShakePosition(0.2f, 0.2f);
 

@@ -49,8 +49,8 @@
 
             this.InitializeIndicators();
 
-            RearrangeObjectsWithTypeCheck(this.spawnPoints, Tilemap.Dimension - 1);
-            RearrangeObjectsWithTypeCheck(this.defendPoints, 0);
+            RearrangeObjectsBruteForce(this.spawnPoints, Tilemap.Dimension - 1);
+            RearrangeObjectsBruteForce(this.defendPoints, 0);
 
             // Set the tile where the spawner locates not swap-able
             foreach (var go in this.spawnPoints.Concat(this.defendPoints))
@@ -118,46 +118,26 @@
         /// <param name="row">
         ///     The row: The row on the 8 by 8 tiles.
         /// </param>
-        private static void RearrangeObjectsWithTypeCheck(
+        private static void RearrangeObjectsBruteForce(
             IReadOnlyCollection<Transform> objects, 
             int row)
         {
-            var map = GameObject.Find("Tilemap").transform;
-
-            // Create a list of passable block
-            var xs = new List<int>();
-            for (var i = 0; i < Tilemap.Dimension; i++)
-            {
-                // i * 8 is the child index
-                var block = map.GetChild(i * Tilemap.Dimension);
-
-                Assert.IsNotNull(block);
-
-                if (block.GetComponent<TileStatus>().CanPass())
-                {
-                    xs.Add(i);
-                }
-            }
-
-            // if (row == 7) Debug.Log(xs.Count);
-
+            var tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
             var n = objects.Count;
-            if (xs.Count >= n)
-            {
-                // Randomly take n element from xs
-                xs = xs.OrderBy(x => Random.value).Take(n).ToList();
-            }
-            else
-            {
-                Debug.Log("Should not happen, need to re-roll");
-            }
+
+            var xs = Enumerable.Range(0, 7).OrderBy(x => Random.value).Take(n).ToList();
 
             xs.Sort();
 
             var j = 0;
             foreach (var trans in objects)
             {
-                trans.SetPositionAndRotation(new Vector3(xs[j], row), Quaternion.identity);
+                var newPos = new Vector3(xs[j], row);
+
+                trans.SetPositionAndRotation(newPos, Quaternion.identity);
+
+                tilemap.ChangeTileAt(newPos, Tiles.Stone);
+
                 j++;
             }
         }

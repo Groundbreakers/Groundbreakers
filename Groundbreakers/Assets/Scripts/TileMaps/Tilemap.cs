@@ -1,6 +1,8 @@
 ﻿namespace TileMaps
 {
+    using System;
     using System.Collections;
+    using System.Linq;
 
     using AI;
 
@@ -20,8 +22,6 @@
     [RequireComponent(typeof(NavigationMap))]
     public class Tilemap : MonoBehaviour, IEnumerable
     {
-        private Transform[,] blocks = new Transform[Dimension, Dimension];
-
         private TileStatus[,] cachedStatus = new TileStatus[Dimension, Dimension];
 
         /// <summary>
@@ -36,36 +36,15 @@
         [SerializeField]
         private GameObject mushroomPrefab;
 
-        [SerializeField]
-        private GameObject plantPrefab;
-
-        [SerializeField]
-        private GameObject highGroundPrefab;
+        //[SerializeField]
+        //private GameObject plantPrefab;
+        //[SerializeField]
+        //private GameObject highGroundPrefab;
 
         /// <summary>
         ///     Gets the squared map's dimension
         /// </summary>
         public static int Dimension { get; } = 8;
-
-        public static int CountNumHighGrounds(ITerrainData data)
-        {
-            var num = 0;
-
-            for (var i = 0; i < Dimension; i++)
-            {
-                for (var j = 0; j < Dimension; j++)
-                {
-                    var type = data.GetTileTypeAt(i, j);
-
-                    if (type == Tiles.HighGround)
-                    {
-                        num++;
-                    }
-                }
-            }
-
-            return num;
-        }
 
         /// <summary>
         ///     The get blockade at.
@@ -90,20 +69,34 @@
             var x = (int)position.x;
             var y = (int)position.y;
 
-            return this.GetTileBlockAt(x, y);
+            return this.GetTileAt(x, y);
         }
 
-        public GameObject GetTileBlockAt(int x, int y)
+        /// <summary>
+        ///     Safer way to get the tile block Object at certain position.
+        /// </summary>
+        /// <param name="x">
+        ///     The x.
+        /// </param>
+        /// <param name="y">
+        ///     The y.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="GameObject" />.
+        /// </returns>
+        public GameObject GetTileAt(int x, int y)
         {
-            return this.blocks[x, y].gameObject;
+            var index = (x * Dimension) + y;
+
+            return this.transform.GetChild(index).gameObject;
         }
 
-        public TileStatus GetTileStatusAt(Vector3 position)
+        public TileStatus GetCachedTileStatusAt(Vector3 position)
         {
             var x = (int)position.x;
             var y = (int)position.y;
 
-            return this.GetTileStatusAt(x, y);
+            return this.GetCachedTileStatusAt(x, y);
         }
 
         /// <summary>
@@ -118,7 +111,7 @@
         /// <returns>
         ///     The <see cref="TileStatus" />.
         /// </returns>
-        public TileStatus GetTileStatusAt(int x, int y)
+        public TileStatus GetCachedTileStatusAt(int x, int y)
         {
             return this.cachedStatus[x, y];
         }
@@ -129,7 +122,6 @@
             var y = (int)position.y;
             var index = (x * Dimension) + y;
 
-            this.blocks[x, y] = block;
             this.cachedStatus[x, y] = block.GetComponent<TileStatus>();
 
             block.SetSiblingIndex(index);
@@ -137,10 +129,8 @@
 
         public void ChangeTileAt(Vector3 position, Tiles type)
         {
-            var x = (int)position.x;
-            var y = (int)position.y;
-
-            var dynamicTile = this.blocks[x, y].GetComponent<DynamicTileBlock>();
+            var block = this.GetTileBlockAt(position);
+            var dynamicTile = block.GetComponent<DynamicTileBlock>();
 
             dynamicTile.ChangeTileType(type);
         }
@@ -162,14 +152,11 @@
 
             ClearAllTiles();
             this.InstantiateTiles(this.mapData);
-            this.InstantiateEnvironments();
         }
 
-        public void OnTileOccupied(Vector3 pos, bool status = true)
+        public void PostSetupMap()
         {
-            var block = this.GetTileStatusAt(pos);
-
-            block.IsOccupied = status;
+            this.InstantiateEnvironments();
         }
 
         /// <summary>
@@ -184,7 +171,7 @@
             {
                 for (var y = 0; y < Dimension; y++)
                 {
-                    yield return this.GetTileBlockAt(x, y);
+                    yield return this.GetTileAt(x, y);
                 }
             }
         }
@@ -214,6 +201,26 @@
             }
         }
 
+        private static int CountNumHighGrounds(ITerrainData data)
+        {
+            var num = 0;
+
+            for (var i = 0; i < Dimension; i++)
+            {
+                for (var j = 0; j < Dimension; j++)
+                {
+                    var type = data.GetTileTypeAt(i, j);
+
+                    if (type == Tiles.HighGround)
+                    {
+                        num++;
+                    }
+                }
+            }
+
+            return num;
+        }
+
         private void InitializeSpawns()
         {
             
@@ -235,14 +242,17 @@
                 {
                     var tileType = sourceData.GetTileTypeAt(x, y);
 
-                    var instance = Instantiate(this.tilePrefab, new Vector3(x, y), Quaternion.identity);
+                    var instance = Instantiate(
+                        this.tilePrefab, 
+                        new Vector3(x, y), 
+                        Quaternion.identity);
+
                     instance.transform.SetParent(this.transform);
 
                     var status = instance.GetComponent<TileStatus>();
                     status.UpdateTileType(tileType);
 
                     // Store the references in 2D array
-                    this.blocks[x, y] = instance.transform;
                     this.cachedStatus[x, y] = status;
                 }
             }
@@ -254,40 +264,20 @@
         private void InstantiateEnvironments()
         {
             this.SpawnMushrooms();
-            this.SpawnGrassAndHighGround();
         }
 
         private void SpawnMushrooms()
         {
             foreach (var pos in this.mapData.GetMushroomLocations())
             {
-                var instance = Instantiate(
-                    this.mushroomPrefab,
-                    this.GetTileBlockAt(pos).transform);
-            }
-        }
+                // Skip if mushroom
+                var spawns = GameObject.FindGameObjectsWithTag("Respawn");
 
-        private void SpawnGrassAndHighGround()
-        {
-            for (var i = 0; i < Dimension; i++)
-            {
-                for (var j = 0; j < Dimension; j++)
+                if (spawns.All(s => s.transform.position != pos))
                 {
-                   var status = this.GetTileStatusAt(i, j);
-
-                   if (status.GetTileType() == Tiles.Grass)
-                   {
-                       var instance = Instantiate(
-                           this.plantPrefab, 
-                           this.GetTileBlockAt(i, j).transform);
-                   }
-
-                   if (status.GetTileType() == Tiles.HighGround)
-                   {
-                       var instance = Instantiate(
-                           this.highGroundPrefab,
-                           this.GetTileBlockAt(i, j).transform);
-                   }
+                    var instance = Instantiate(
+                        this.mushroomPrefab,
+                        this.GetTileBlockAt(pos).transform);
                 }
             }
         }
