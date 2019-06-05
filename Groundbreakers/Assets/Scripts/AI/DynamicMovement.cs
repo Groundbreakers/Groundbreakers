@@ -1,6 +1,5 @@
 ﻿namespace AI
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -67,18 +66,16 @@
             this.nextGrid = pos;
         }
 
+        /// <summary>
+        ///     Temporary disable enemy movements. 
+        /// </summary>
+        /// <param name="duration">
+        ///     The duration.
+        /// </param>
         public void StunEnemy(float duration)
         {
             this.StartCoroutine(this.Stun(duration));
         }
-
-        //public void OnTilesChange(Vector3 first, Vector3 second)
-        //{
-        //}
-        // 
-        //public void OnTileChange(Vector3 first)
-        //{
-        //}
 
         #endregion
 
@@ -306,7 +303,12 @@
             }
 
             // Set direction
-            var dir = blockade.transform.position - this.transform.position;
+            var position = blockade.transform.position;
+            var roundedVec = new Vector3(
+                Mathf.RoundToInt(position.x),
+                Mathf.RoundToInt(position.y));
+
+            var dir = roundedVec - this.transform.position;
             this.SetDirectionAttack(dir);
 
             var b = blockade.GetComponent<Blockade>();

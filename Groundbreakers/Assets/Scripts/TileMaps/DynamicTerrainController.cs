@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using AI;
 
@@ -32,6 +33,8 @@
 
         private TerrainGenerator generator;
 
+        #region Public APIs
+
         /// <summary>
         ///     Re-roll the middle 6 layer of the map.
         ///     According to the discussion, we can only.
@@ -55,9 +58,16 @@
 
             foreach (var pos in this.generator.GetMushroomLocations())
             {
-                if (pos.y < 1 && pos.y > Tilemap.Dimension - 1)
+                // Skip bounds
+                if (pos.y <= 0 || pos.y >= 7)
                 {
-                    return;
+                    continue;
+                }
+
+                // Skip water
+                if (this.generator.GetTileTypeAt(pos.x, pos.y) == Tiles.Water)
+                {
+                    continue;
                 }
 
                 var block = this.tilemap.GetTileBlockAt(pos);
@@ -70,6 +80,14 @@
         public void StartEarthQuake()
         {
             this.StartCoroutine(this.BeginEarthQuake());
+        }
+
+        #endregion
+
+        private void OnEnable()
+        {
+            this.tilemap = this.GetComponent<Tilemap>();
+            this.generator = this.GetComponent<TerrainGenerator>();
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -103,7 +121,9 @@
 
             if (newType == Tiles.HighGround)
             {
-                Instantiate(this.highGroundPrefab, block.transform);
+                var go = Instantiate(this.highGroundPrefab, block.transform);
+
+                this.CreateEnterAnimation(block);
             }
 
             if (newType == Tiles.Grass)
@@ -111,13 +131,8 @@
                 Instantiate(this.grassPrefab, block.transform);
             }
 
-            this.tilemap.ChangeTileAt(pos, newType);
-        }
-
-        private void OnEnable()
-        {
-            this.tilemap = this.GetComponent<Tilemap>();
-            this.generator = this.GetComponent<TerrainGenerator>();
+            // this.tilemap.ChangeTileAt(pos, newType);
+            block.GetComponent<DynamicTileBlock>().ChangeTileType(newType);
         }
 
         #region Earth Quake
@@ -145,6 +160,34 @@
 
                 // block.transform.DOMoveY(row, 0.1f).SetEase(Ease.InBounce);
             }
+        }
+
+        /// <summary>
+        ///     This is different from the TileEnter animation, but pretty similar. 
+        /// </summary>
+        /// <param name="block">
+        ///     The block.
+        /// </param>
+        private void CreateEnterAnimation(GameObject block)
+        {
+            const float Duration = 1.0f;
+            const float MaxDelay = 0.25f;
+            var offset = new Vector3(0.0f, 5.0f);
+
+            var sprite = block.GetComponent<SpriteRenderer>();
+
+            // Relocate block
+            var position = block.transform.position;
+            var ori = position;
+            position += offset;
+            block.transform.position = position;
+
+            // Generate animation
+            var delay = Random.Range(0.0f, MaxDelay);
+
+            block.transform.DOMove(ori, Duration)
+                .SetEase(Ease.OutExpo)
+                .SetDelay(delay);
         }
 
         private void StunEnemiesAtRow(int row)
