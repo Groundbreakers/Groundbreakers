@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 3171230714936546568}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f1773c2dfce561849a8e747fe24a9158, type: 2}
+  m_Controller: {fileID: 22100000, guid: 12f0d1c6183ccdd46a53ec4bebddaa2b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -197,6 +197,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
+    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -301,11 +306,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4, type: 3}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mantis_Death
+  m_Controller: {fileID: 9100000, guid: f7f1c5c2f15ecf8409a47bdfb01c1231, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7c0f001c583ca4c40a28c1cd9c63f5b0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2a305ddd7acbeb54a9fa781722df131d, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e3122e70833951446a64568dc60192fa, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d586a114b1b6ac940a3c18b86675b1d5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1c584d96a3a62cc418631169438a8703, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b385748aca7ad6143a8b00ea1b2359ee, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 314907a2043e69047a054cdb4bc8e8ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c95459d5113227c47b2e5c759166b49a, type: 2}
