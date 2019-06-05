@@ -119,6 +119,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1806250428}
     m_Modifications:
+    - target: {fileID: 2061099418179834263, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
+        type: 3}
+      propertyPath: m_Name
+      value: Scavenger
+      objectReference: {fileID: 0}
     - target: {fileID: 1171955736483787512, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -174,11 +179,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2061099418179834263, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
-        type: 3}
-      propertyPath: m_Name
-      value: Scavenger
-      objectReference: {fileID: 0}
     - target: {fileID: 4230535042426805468, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
         type: 3}
       propertyPath: m_Enabled
@@ -199,6 +199,11 @@ PrefabInstance:
       propertyPath: hitbox
       value: 
       objectReference: {fileID: 659618143}
+    - target: {fileID: 5170317579557245721, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
+        type: 3}
+      propertyPath: stance
+      value: Melee
+      objectReference: {fileID: 0}
     - target: {fileID: 7543013341955019752, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
         type: 3}
       propertyPath: m_Controller
@@ -619,6 +624,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1806250428}
     m_Modifications:
+    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: m_Name
+      value: Trickster
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1171955736483787512, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -673,16 +688,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
-        type: 3}
-      propertyPath: m_Name
-      value: Trickster
-      objectReference: {fileID: 0}
-    - target: {fileID: 2061099418179834263, guid: 798988b7145208f43b913596a74551c8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4230535042426805468, guid: 798988b7145208f43b913596a74551c8,
         type: 3}
@@ -1570,6 +1575,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1806250428}
     m_Modifications:
+    - target: {fileID: 5367364221638702442, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
+        type: 3}
+      propertyPath: m_Name
+      value: Gladiator
+      objectReference: {fileID: 0}
     - target: {fileID: 2629985204200677398, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1635,11 +1645,6 @@ PrefabInstance:
       propertyPath: hitbox
       value: 
       objectReference: {fileID: 190215577}
-    - target: {fileID: 5367364221638702442, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
-        type: 3}
-      propertyPath: m_Name
-      value: Gladiator
-      objectReference: {fileID: 0}
     - target: {fileID: 5409896262574256849, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
         type: 3}
       propertyPath: m_Enabled
