@@ -38,6 +38,11 @@
 
         private float previousWeight;
 
+        public float GetHitPoint()
+        {
+            return this.hitPoint;
+        }
+
         public void DeliverDamage()
         {
             this.hitPoint -= 1.0f;
@@ -77,13 +82,10 @@
             var status = parent.GetComponent<TileStatus>();
 
             // Store original status and update new.
-            // this.previousCanPass = status.CanPass();
             this.previousWeight = status.Weight;
 
             status.SetCanPass(false);
             status.Weight = this.weight;
-
-            // Tilemap.OnTileChanges(parent.position);
         }
 
         private void OnDestroy()

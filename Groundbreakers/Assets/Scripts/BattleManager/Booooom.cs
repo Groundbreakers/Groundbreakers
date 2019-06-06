@@ -1,23 +1,39 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using Assets.Enemies.Scripts;
 
+using TileMaps;
+
 using UnityEngine;
 
+[RequireComponent(typeof(Blockade))]
 public class Booooom : MonoBehaviour
 {
     [SerializeField]
     [Range(0.0f, 5.0f)]
     private float boooomRadius = 2.0f;
 
+    [SerializeField]
+    [Range(0.0f, 200.0f)]
+    private float boooomDamage = 100.0f;
+
+    private Blockade blockade;
+
     // Start is called before the first frame update
-    private void Start()
+    private void OnEnable()
     {
+        this.blockade = this.GetComponent<Blockade>();
     }
 
     private void OnDisable()
     {
+        // Nothing happen if not dead
+        if (this.blockade && this.blockade.GetHitPoint() > 0.0f)
+        {
+            return;
+        }
+
+        // Perform range explosion
         var enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         var pos = this.transform.position;
@@ -27,7 +43,12 @@ public class Booooom : MonoBehaviour
 
         foreach (var target in targets)
         {
-            target.GetComponent<Enemy_Generic>().DamageEnemy(999, 999, 1.0f, false, false);
+            target.GetComponent<Enemy_Generic>().DamageEnemy(
+                (int)this.boooomDamage, 
+                0, 
+                1.0f, 
+                false, 
+                false);
         }
     }
 }

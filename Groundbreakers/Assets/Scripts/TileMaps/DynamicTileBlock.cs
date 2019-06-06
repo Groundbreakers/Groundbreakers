@@ -76,7 +76,7 @@
             this.status.UpdateTileType(tileType);
         }
 
-        protected void OnEnable()
+        private void OnEnable()
         {
             this.spriteRenderer = this.GetComponent<SpriteRenderer>();
             this.animator = this.GetComponent<Animator>();
@@ -86,16 +86,11 @@
         /// <summary>
         ///     Change the Sprite of this tile base on its type when Start.
         /// </summary>
-        protected void Start()
+        private void Start()
         {
             var tileType = this.status.GetTileType();
 
             this.ChangeTileType(tileType);
-        }
-
-        protected void Update()
-        {
-            
         }
     }
 }
