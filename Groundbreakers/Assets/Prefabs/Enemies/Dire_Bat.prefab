@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4820504546433748512}
   - component: {fileID: 4534209215401832226}
   - component: {fileID: 6112321279802188269}
+  - component: {fileID: 1115100657913103346}
   m_Layer: 0
   m_Name: Dire_Bat
   m_TagString: Enemy
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f8be7e63c6ca44c8f82627b1235771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specie: 
+  specie: Dire Bat
   maxHealth: 100
   health: 100
   speed: 1
@@ -191,7 +192,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  animator: {fileID: 3628644994677537622}
+--- !u!114 &1115100657913103346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e6c4b69c47aa345a42ef40e30f4445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyInfo_prefab: {fileID: 7507061446221834786, guid: 8f2c8cd79306cd54ab6954eb3edc6f3e,
+    type: 3}
 --- !u!1001 &6832459026012101116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -199,6 +213,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3171230714936546570}
     m_Modifications:
+    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 570140265097572543, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -313,11 +332,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.66666996
-      objectReference: {fileID: 0}
-    - target: {fileID: 570140265097572542, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70e3fc87f6673e44a96f8dc19bb2f5f4, type: 3}
