@@ -12,21 +12,14 @@
     /// </summary>
     public class TileStatus : MonoBehaviour
     {
-        /// <summary>
-        ///     Indicating if this tile can pass through.
-        /// </summary>
-        [SerializeField]
-        private bool canPass;
-
-        /// <summary>
-        ///     Indicating if the player can select or swap this tiles. Currently, only Water tile
-        ///     is not selectable.
-        /// </summary>
-        [SerializeField]
-        private bool canSwap;
-
         [SerializeField]
         private Tiles type;
+
+        private bool canPass;
+
+        private bool canSwap;
+
+        private bool isSpawn;
 
         [field: ShowInInspector]
         [field: ReadOnly]
@@ -56,7 +49,7 @@
         /// </returns>
         public bool CanHover()
         {
-            return this.canSwap && !this.IsMoving && !this.IsOccupied;
+            return this.canSwap && !this.IsMoving && !this.IsOccupied && !this.isSpawn;
         }
 
         /// <summary>
@@ -76,9 +69,9 @@
             this.canPass = value;
         }
 
-        public void SetCanSwap(bool value)
+        public void SetAsSpawn()
         {
-            this.canSwap = value;
+            this.isSpawn = true;
         }
 
         /// <summary>

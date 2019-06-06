@@ -2,7 +2,6 @@
 {
     using System.Collections;
     using System.Linq;
-    using System.Linq.Expressions;
 
     using AI;
 
@@ -134,6 +133,8 @@
             for (var x = 0; x < Tilemap.Dimension; x++)
             {
                 var block = this.tilemap.GetTileAt(x, row);
+
+
 
                 block.transform.DOShakePosition(0.2f, 0.2f);
 

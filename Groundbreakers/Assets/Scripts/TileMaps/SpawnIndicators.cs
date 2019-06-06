@@ -62,7 +62,7 @@
 
                 var block = map.GetChild(index);
 
-                block.GetComponent<TileStatus>().SetCanSwap(false);
+                block.GetComponent<TileStatus>().SetAsSpawn();
             }
         }
 
