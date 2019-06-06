@@ -59,8 +59,8 @@
                     this.transform.position, 
                     Quaternion.identity);
 
-                GameObject.Destroy(rubble, 1.0f);
                 GameObject.Destroy(this.gameObject);
+                GameObject.Destroy(rubble, 1.0f);
             }
         }
 

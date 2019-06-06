@@ -32,8 +32,6 @@
         [ReadOnly]
         private List<GameObject> characters = new List<GameObject>();
 
-        private List<Vector3> occupiedTiles = new List<Vector3>();
-
         private int currentSelectedIndex = Unselected;
 
         public void SelectCharacter(int index)
@@ -97,7 +95,7 @@
             // Enable it first
             if (!this.IsAvailable(this.currentSelectedIndex))
             {
-                Debug.LogError("Already deployed. Should not happen.");
+                Debug.LogWarning("Already deployed. Should not happen.");
                 return;
             }
 
@@ -116,6 +114,18 @@
 
             // Lastly, reset
             this.currentSelectedIndex = Unselected;
+
+            // Trigger the UI button
+            var i = character.transform.GetSiblingIndex();
+            this.TurnOnOff(i, false);
+        }
+
+        public void RetrieveCharacter(GameObject character)
+        {
+            character.SetActive(false);
+
+            var i = character.transform.GetSiblingIndex();
+            this.TurnOnOff(i, true);
         }
 
         /// <summary>
@@ -127,8 +137,19 @@
         {
             foreach (var character in this.characters)
             {
-                character.gameObject.SetActive(false);
+                this.RetrieveCharacter(character);
             }
+        }
+
+        /// <summary>
+        ///     Use this to help determine which character is on specific tile.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="GameObject" />.
+        /// </returns>
+        public IEnumerable<GameObject> GetDeployedCharacters()
+        {
+            return this.characters.Where(x => x.activeSelf);
         }
 
         private void OnEnable()
@@ -139,9 +160,10 @@
             {
                 // Cache the character
                 this.characters.Add(child.gameObject);
+                child.gameObject.SetActive(false);
             }
 
-            this.RetrieveAllCharacters();
+            // this.RetrieveAllCharacters();
         }
 
         private bool IsAvailable(int index)
@@ -157,6 +179,27 @@
 
             var tc = FindObjectOfType<TileController>();
             tc.BeginInactive();
+        }
+
+        private void TurnOnOff(int index, bool on)
+        {
+            // Un-Trigger the UI button
+            var bp = GameObject.Find("CommandPanel")
+                .transform
+                .GetChild(index)
+                .gameObject
+                .GetComponent<ButtonPressed>();
+
+            Debug.Log(index);
+
+            if (on)
+            {
+                bp.Press();
+            }
+            else
+            {
+                bp.Unpress();
+            }
         }
     }
 }

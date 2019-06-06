@@ -194,6 +194,7 @@
                     this.party.DeselectCharacter();
 
                     this.tileController.BeginInactive();
+                    
 
                     break;
                 default:
