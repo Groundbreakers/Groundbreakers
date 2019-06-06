@@ -13,7 +13,7 @@ public class Explorer : MonoBehaviour
     public RuntimeAnimatorController agent;
     public Text text;
 
-    private int profession;
+    public int profession;
 
     // Start is called before the first frame update
     void Start()
