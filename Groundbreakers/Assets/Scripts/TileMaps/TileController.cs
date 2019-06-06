@@ -1,6 +1,9 @@
 ﻿namespace TileMaps
 {
     using System.Collections.Generic;
+    using System.Linq;
+
+    using Core;
 
     using DG.Tweening;
 
@@ -31,10 +34,25 @@
 
         public enum CommandState
         {
+            /// <summary>
+            ///     Inactive, can not be hovered, nor clicked.
+            /// </summary>
             Inactive,
+
+            /// <summary>
+            ///     Swapping, can be hovered, also allow selection.
+            /// </summary>
             Swapping,
+
+            /// <summary>
+            ///     Building, can be hovered, but not selected.
+            /// </summary>
             Building,
-            Deploying,
+
+            /// <summary>
+            ///     Deploying characters, different way of hover.
+            /// </summary>
+            Deploying
         }
 
         /// <summary>
@@ -42,7 +60,7 @@
         /// </summary>
         public static CommandState Active { get; private set; }
 
-        public static bool Busy { get; private set; }
+        public static bool Busy { get; private set; } = true;
 
         #region For UI button only
 
@@ -62,6 +80,20 @@
         public void BeginSwap()
         {
             this.Begin(CommandState.Swapping);
+        }
+
+        public void BeginDeploying(int index)
+        {
+            var go = FindObjectOfType<PartyManager>();
+
+            Assert.IsTrue(Enumerable.Range(0, 5).Contains(index));
+            Assert.IsNotNull(go);
+
+            go.SelectCharacter(index);
+
+            Time.timeScale = 0.00f;
+
+            Active = CommandState.Deploying;
         }
 
         #endregion
@@ -89,27 +121,23 @@
         /// <summary>
         ///     Clear the selected buffer.
         /// </summary>
-        [Button]
         public void ClearSelected()
         {
             foreach (var go in this.selected)
             {
                 go.GetComponent<TileStatus>().IsSelected = false;
-                go.GetComponent<DebugTileHover>().SetAlpha();
+                go.GetComponent<Hoverable>().Unhover();
             }
 
             this.selected.Clear();
         }
 
-        public void SelectTile(Vector3 pos)
-        {
-            var block = this.tilemap.GetTileBlockAt(pos);
-
-            Assert.IsNotNull(block);
-
-            this.SelectTile(block);
-        }
-
+        /// <summary>
+        ///     The select tile.
+        /// </summary>
+        /// <param name="tile">
+        ///     The tile.
+        /// </param>
         public void SelectTile(GameObject tile)
         {
             var status = tile.GetComponent<TileStatus>();
@@ -129,7 +157,30 @@
             }
 
             this.SwapSelectedTiles();
-            // this.ClearSelected();
+        }
+
+        /// <summary>
+        ///     Indicate if has something selected.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="bool"/>.
+        /// </returns>
+        public bool HasSelected()
+        {
+            return this.selected.Any();
+        }
+
+        /// <summary>
+        ///     Must be called after map is setup. To allow interaction.
+        /// </summary>
+        public void Activate()
+        {
+            Busy = false;
+        }
+
+        public void DeActivate()
+        {
+            Busy = true;
         }
 
         protected void OnEnable()
@@ -140,27 +191,6 @@
             this.setting = GameObject.FindObjectOfType<Settings>();
 
             Assert.IsNotNull(this.setting);
-        }
-
-        protected void Update()
-        {
-            // temp
-            if (Input.GetMouseButtonDown(1))
-            {
-                this.ClearSelected();
-            }
-
-            if (Input.GetKeyDown("s"))
-            {
-                if (Active != CommandState.Swapping)
-                {
-                    this.BeginInactive();
-                }
-                else
-                {
-                    this.Begin(CommandState.Swapping);
-                }
-            }
         }
 
         /// <summary>

@@ -12,7 +12,7 @@
     using UnityEngine;
     using UnityEngine.Assertions;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="MonoBehaviour" />
     /// <summary>
     ///     Should attached to "Player Party" game object.
     ///     Call "Initialize" method to spawn all characters on to the map.
@@ -25,12 +25,23 @@
         [ShowInInspector]
         private List<Transform> availableBlocks = new List<Transform>();
 
-        private List<GameObject> characters = new List<GameObject>();
-
         /// <summary>
         ///     Ask available character spawn slots, then deploy characters.
         /// </summary>
         public void Initialize()
+        {
+            var tilemap = GameObject.Find("Tilemap");
+
+            Assert.IsNotNull(tilemap, "Need to have a Tilemap GameObject active in the scene.");
+
+            var tm = tilemap.GetComponent<Tilemap>();
+
+            this.availableBlocks = FindSpawnLocations(tm);
+
+            this.StartDeployCharacters();
+        }
+
+        public void OldInitialize()
         {
             var tilemap = GameObject.Find("Tilemap");
 
