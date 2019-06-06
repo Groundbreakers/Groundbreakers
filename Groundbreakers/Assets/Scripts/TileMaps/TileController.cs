@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using Core;
+
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
@@ -95,7 +97,7 @@
             foreach (var go in this.selected)
             {
                 go.GetComponent<TileStatus>().IsSelected = false;
-                go.GetComponent<DebugTileHover>().SetAlpha();
+                go.GetComponent<Hoverable>().Unhover();
             }
 
             this.selected.Clear();

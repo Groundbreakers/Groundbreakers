@@ -699,6 +699,7 @@ GameObject:
   - component: {fileID: 367632177}
   - component: {fileID: 367632178}
   - component: {fileID: 367632179}
+  - component: {fileID: 367632180}
   m_Layer: 0
   m_Name: Battle Field
   m_TagString: Untagged
@@ -748,6 +749,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e00639b60cb50b46a32253a06ee72fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &367632180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367632176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 959cbbe27a0d8a64c816a7829deb6987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockadePrefab: {fileID: 0}
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  playerManager: {fileID: 1806250427}
 --- !u!1 &371058421
 GameObject:
   m_ObjectHideFlags: 0
