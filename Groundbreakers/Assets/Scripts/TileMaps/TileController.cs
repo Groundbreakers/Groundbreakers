@@ -183,15 +183,6 @@
             Assert.IsNotNull(this.setting);
         }
 
-        protected void Update()
-        {
-            // temp
-            if (Input.GetMouseButtonDown(1))
-            {
-                this.ClearSelected();
-            }
-        }
-
         /// <summary>
         ///     Perform an swapping of tiles. Do animation, and swap references.
         /// </summary>

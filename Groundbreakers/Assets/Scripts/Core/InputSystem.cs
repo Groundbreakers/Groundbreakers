@@ -51,6 +51,7 @@
             }
 
             this.HandleLeftClick();
+            this.HandleRightClick();
         }
 
         private void ResetHovered()
@@ -123,6 +124,37 @@
                     break;
                 case TileController.CommandState.Deploying:
                     this.HandleDeploying();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void HandleRightClick()
+        {
+            if (!Input.GetMouseButtonDown(1))
+            {
+                return;
+            }
+
+            if (!this.currentHovered)
+            {
+                return;
+            }
+
+            switch (TileController.Active)
+            {
+                case TileController.CommandState.Inactive:
+                    break;
+                case TileController.CommandState.Swapping:
+                    this.tileController.ClearSelected();
+                    break;
+                case TileController.CommandState.Building:
+                    this.tileController.ClearSelected();
+                    break;
+                case TileController.CommandState.Deploying:
+                    var man = this.playerManager.GetComponent<PartyManager>();
+                    man.DeselectCharacter();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

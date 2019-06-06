@@ -38,6 +38,12 @@
             Debug.Log($"Selected = {this.currentSelectedIndex}");
         }
 
+        /// <summary>
+        ///     Should only be called by InputSystem (well, ideally command module)
+        /// </summary>
+        /// <param name="tile">
+        ///     The tile to deploy on.
+        /// </param>
         [Button]
         public void DeployCurrentCharacterAt(Transform tile)
         {
@@ -62,6 +68,18 @@
                 .SetUpdate(true);
 
             this.currentSelectedIndex = Unselected;
+        }
+
+        /// <summary>
+        ///     Should be called when the battle has terminated. Retrieve the characters away from
+        ///     The battle fields.
+        /// </summary>
+        public void RetrieveAllCharacters()
+        {
+            foreach (Transform child in this.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
 
         private void OnEnable()
