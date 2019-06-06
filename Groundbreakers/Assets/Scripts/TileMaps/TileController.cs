@@ -59,7 +59,7 @@
         /// </summary>
         public static CommandState Active { get; private set; }
 
-        public static bool Busy { get; private set; }
+        public static bool Busy { get; private set; } = true;
 
         #region For UI button only
 
@@ -118,6 +118,12 @@
             this.selected.Clear();
         }
 
+        /// <summary>
+        ///     The select tile.
+        /// </summary>
+        /// <param name="tile">
+        ///     The tile.
+        /// </param>
         public void SelectTile(GameObject tile)
         {
             var status = tile.GetComponent<TileStatus>();
@@ -137,6 +143,19 @@
             }
 
             this.SwapSelectedTiles();
+        }
+
+        /// <summary>
+        ///     Must be called after map is setup. To allow interaction.
+        /// </summary>
+        public void Activate()
+        {
+            Busy = false;
+        }
+
+        public void DeActivate()
+        {
+            Busy = true;
         }
 
         protected void OnEnable()
