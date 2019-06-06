@@ -15,12 +15,14 @@
     public class BulletLauncher : MonoBehaviour
     {
         #region Inspector
-        
+
+        //public LineRenderer lineRenderer;
+
         [SerializeField]
         private GameObject bulletPrefab;
 
         [SerializeField]
-        private Type type;
+        public Type type;
 
         [SerializeField]
         private Vector3 offSet;
@@ -33,8 +35,6 @@
 
         private Transform potentialTarget;
 
-        //private LineRenderer laserBeam;
-
         // tmp
         private int laserDelay = 10;
         private int counter = 0;
@@ -43,13 +43,17 @@
 
         #region Public Properties
 
-        private enum Type
+        public enum Type
         {
             SingleShot,
 
             MultiShot,
 
             Laser,
+
+            Penetrate,
+
+            Explosive,
         }
 
         #endregion
@@ -57,7 +61,7 @@
         #region Public Functions    
 
         [Button("Test Launch All")]
-        public void FireAt(Transform target)
+        private void FireAt(Transform target)
         {
             this.potentialTarget = target;
 
@@ -71,6 +75,12 @@
                     break;
                 case Type.Laser:
                     this.LaserShot(target);
+                    break;
+                case Type.Penetrate:
+                    this.PenetrateShot(target);
+                    break;
+                case Type.Explosive:
+                    this.ExplosiveShot(target);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -120,6 +130,17 @@
             if (Input.GetKeyDown("3"))
             {
                 this.type = Type.Laser;
+            }
+
+            if (Input.GetKeyDown("4"))
+            {
+                this.type = Type.Penetrate;
+            }
+
+            if (Input.GetKeyDown("5"))
+            {
+                this.type = Type.Explosive;
+                Debug.Log(this.type);
             }
 
             //// For laser effect only
@@ -174,12 +195,12 @@
             var go = Instantiate(this.bulletPrefab, pos + offset, Quaternion.identity);
 
             var bullet = go.GetComponent<IBullet>();
-            
+
             // this.buffer.Add(bullet);
             return bullet;
         }
 
-        private void SetHandlerAttributeIfNot()
+        public void SetHandlerAttributeIfNot()
         {
             if (this.damageHandler.IsValid())
             {
@@ -200,6 +221,30 @@
         // Subject to change
         private void SingleShot(Transform target)
         {
+
+
+            this.SetHandlerAttributeIfNot();
+
+            var bullet = this.InstantiateBullet();
+
+            bullet.Launch(target, this.damageHandler);
+        }
+
+        private void ExplosiveShot(Transform target)
+        {
+
+
+            this.SetHandlerAttributeIfNot();
+
+            var bullet = this.InstantiateBullet();
+
+            bullet.Launch(target, this.damageHandler);
+        }
+
+        private void PenetrateShot(Transform target)
+        {
+
+
             this.SetHandlerAttributeIfNot();
 
             var bullet = this.InstantiateBullet();
@@ -210,6 +255,7 @@
         // Subject to change
         private void MultiShot(Transform target)
         {
+
             this.SetHandlerAttributeIfNot();
 
             var bulletA = this.InstantiateBullet();
@@ -229,7 +275,16 @@
 
         private void LaserShot(Transform target)
         {
+            /*var offset = new Vector3(0.0f, 0.5f, 0.0f);
+
             this.SetHandlerAttributeIfNot();
+
+            this.lineRenderer.SetPosition(0, this.transform.position + offset);
+
+            this.lineRenderer.SetPosition(1, target.position);
+
+            this.damageHandler.DeliverDamageTo(target.gameObject, false);
+      */
         }
 
         #endregion

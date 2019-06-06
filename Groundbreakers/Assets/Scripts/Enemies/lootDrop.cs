@@ -9,27 +9,31 @@ public class lootDrop : Loot
     private bool reachedTop;
 
     private float spawnPointY;
+    
 
     /// <summary>
     /// PlaceHolder for loot drop animation
     /// </summary>
-    private void dropLoot()
-    {
-        if (this.reachedTop == false && this.distance <= 0.5f)
-        {
-            this.transform.Translate(Vector2.up * 2 * Time.deltaTime, Space.World);
-            this.distance = this.transform.position.y - this.spawnPointY;
+    private void dropLoot() {
 
-            if (this.distance >= 0.5f)
-            {
-                this.reachedTop = true;
-            }
-        }
-        else if (this.reachedTop == true && this.distance >= 0f)
-        {
-            this.transform.Translate(Vector2.down * 2 * Time.deltaTime, Space.World);
-            this.distance = this.transform.position.y - this.spawnPointY;
-        }
+         if (this.reachedTop == false && this.distance <= 0.5f)
+         {
+              this.transform.Translate(Vector2.up * 2 * Time.deltaTime, Space.World);
+              this.distance = this.transform.position.y - this.spawnPointY;
+
+              if (this.distance >= 0.5f)
+              {
+                  this.reachedTop = true;
+              }
+         }
+         else if (this.reachedTop == true && this.distance >= 0f)
+         {
+             this.transform.Translate(Vector2.down * 2 * Time.deltaTime, Space.World);
+             this.distance = this.transform.position.y - this.spawnPointY;
+         }
+          
+        //this.transform.Translate(Random.insideUnitCircle.normalized * 2 * Time.deltaTime, Space.World);
+
     }
 
 
@@ -37,7 +41,7 @@ public class lootDrop : Loot
     {
         int layerMask = (LayerMask.GetMask("loot"));
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GameObject.Find("SwapButton").GetComponent<ButtonPressed>().Pressed != true)
         {
             Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
             Vector3 mousePos = GetWorldPositionOnPlane(mouseScreenPos, Input.mousePosition.z);
@@ -60,6 +64,7 @@ public class lootDrop : Loot
         this.spawnPointY = this.transform.position.y;
         this.distance = this.transform.position.y - this.spawnPointY;
         this.reachedTop = false;
+      
     }
 
     // Update is called once per frame

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using Assets.Scripts;
 
 using TileMaps;
 
@@ -18,6 +19,8 @@ public class characterAttack : MonoBehaviour
     public GameObject rangeAttackPrefab;
 
     public Animator animator;
+
+    public LineRenderer lineRenderer;
 
     public string stance;
     public GameObject hitbox;
@@ -61,7 +64,7 @@ public class characterAttack : MonoBehaviour
         myCollider = GetComponent<CircleCollider2D>();
         trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
-
+        this.lineRenderer.enabled = false;
     }
 
     void Start()
@@ -247,37 +250,42 @@ public class characterAttack : MonoBehaviour
         if (this.attackMode == "default") defaultMode();
     }
 
-    void OnMouseOver()
-    {
-        if (Input.GetKeyDown("r"))
-        {
-            this.attackMode = "multi-shot";
-            //Debug.Log(this.attackMode);
-        }
-        else if (Input.GetKeyDown("n"))
-        {
-            this.attackMode = "default";
-            //Debug.Log(this.attackMode);
-        }
-    }
 
     void fireCount()
     {
+
+
         myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)
         {
             animator.SetBool("Firing", false);
+
+            if (this.lineRenderer.enabled)
+            {
+                this.lineRenderer.enabled = false;
+            }
+
             return;
+        }
+        else
+        {
+            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
+            {
+                this.lineRenderer.enabled = true;
+                this.fireCountdown = 0f;
+            }
         }
 
         if (this.fireCountdown <= 0f)
         {
             animator.SetBool("Firing", true);
-            // this.shoot();
-            
+
             this.PerformAttack();
 
-            this.fireCountdown = 1f / this.fireRate;
+            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type != BulletLauncher.Type.Laser)
+            {
+                this.fireCountdown = 1f / this.fireRate;
+            }
         }
 
         this.fireCountdown -= Time.deltaTime;
@@ -285,17 +293,26 @@ public class characterAttack : MonoBehaviour
 
     public void PerformAttack()
     {
-
         if (this.stance.Equals("Melee"))
         {
-
             this.MeleeAttack();
+        }
+        else if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
+        {
+            this.LaserAttack(this.target);
+
         }
         else
         {
+            if (this.lineRenderer.enabled)
+            {
+                this.lineRenderer.enabled = false;
+            }
+
             this.RangedAttack();
         }
     }
+
 
     /// <summary>
     /// This is the alternative way of shooting bullets written by Ivan.
@@ -310,6 +327,20 @@ public class characterAttack : MonoBehaviour
         MeleeManager meleeattack = hitbox.GetComponent<MeleeManager>();
         // should use a melee attack module here. This is temp solution :(
         this.setMeleeStatusAttributes(meleeattack);
+
+    }
+
+    public void LaserAttack(Transform target)
+    {
+        var offset = new Vector3(0.0f, 0.5f, 0.0f);
+
+        GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
+
+        this.lineRenderer.SetPosition(0, this.gameObject.transform.position);
+
+        this.lineRenderer.SetPosition(1, this.target.position);
+
+        GameObject.Find("RangedWeapon").GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject, false);
 
     }
 
