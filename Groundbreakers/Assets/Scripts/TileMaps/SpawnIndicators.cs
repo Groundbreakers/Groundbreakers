@@ -125,7 +125,7 @@
             var tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
             var n = objects.Count;
 
-            var xs = Enumerable.Range(0, 7).OrderBy(x => Random.value).Take(n).ToList();
+            var xs = Enumerable.Range(0, 8).OrderBy(x => Random.value).Take(n).ToList();
 
             xs.Sort();
 

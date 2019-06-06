@@ -87,7 +87,8 @@
             while (!this.indicators.HasValidPath());
 
             yield return new WaitForSeconds(0.1f);
-
+            
+            // Initialize Environment
             this.tilemap.PostSetupMap();
 
             yield return new WaitForSeconds(0.1f);
@@ -96,9 +97,9 @@
 
             yield return new WaitForSeconds(3.0f);
 
-            this.characters.Initialize();
+            // this.characters.Initialize();
 
-            yield return new WaitForSeconds(3.0f);
+            FindObjectOfType<TileController>().Activate();
 
             yield return new WaitForSeconds(0.1f);
 
