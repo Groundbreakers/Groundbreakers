@@ -1,7 +1,5 @@
 ﻿namespace Core
 {
-    using System;
-
     using TileMaps;
 
     using UnityEngine;
@@ -34,11 +32,6 @@
         {
             this.isHovered = false;
             this.isDirty = true;
-        }
-
-        public bool IsHoverd()
-        {
-            return this.isHovered;
         }
 
         private void OnEnable()

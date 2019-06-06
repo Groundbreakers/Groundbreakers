@@ -33,10 +33,25 @@
 
         public enum CommandState
         {
+            /// <summary>
+            ///     Inactive, can not be hovered, nor clicked.
+            /// </summary>
             Inactive,
+
+            /// <summary>
+            ///     Swapping, can be hovered, also allow selection.
+            /// </summary>
             Swapping,
+
+            /// <summary>
+            ///     Building, can be hovered, but not selected.
+            /// </summary>
             Building,
-            Deploying,
+
+            /// <summary>
+            ///     Deploying characters, different way of hover.
+            /// </summary>
+            Deploying
         }
 
         /// <summary>
@@ -103,15 +118,6 @@
             this.selected.Clear();
         }
 
-        public void SelectTile(Vector3 pos)
-        {
-            var block = this.tilemap.GetTileBlockAt(pos);
-
-            Assert.IsNotNull(block);
-
-            this.SelectTile(block);
-        }
-
         public void SelectTile(GameObject tile)
         {
             var status = tile.GetComponent<TileStatus>();
@@ -131,7 +137,6 @@
             }
 
             this.SwapSelectedTiles();
-            // this.ClearSelected();
         }
 
         protected void OnEnable()
@@ -150,18 +155,6 @@
             if (Input.GetMouseButtonDown(1))
             {
                 this.ClearSelected();
-            }
-
-            if (Input.GetKeyDown("s"))
-            {
-                if (Active != CommandState.Swapping)
-                {
-                    this.BeginInactive();
-                }
-                else
-                {
-                    this.Begin(CommandState.Swapping);
-                }
             }
         }
 
