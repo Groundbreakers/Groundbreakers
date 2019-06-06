@@ -18,8 +18,8 @@ public class Explorer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.animator.runtimeAnimatorController = this.scholar;
-        this.profession = 0;
+        this.profession = Random.Range(0, 4);
+        this.UpdateSprite();
     }
 
     // Update is called once per frame
