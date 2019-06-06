@@ -18,8 +18,7 @@
         [SerializeField]
         private LayerMask tileLayer;
 
-        [SerializeField]
-        private GameObject playerManager;
+        private PartyManager party;
 
         private Camera mainCamera;
 
@@ -33,6 +32,7 @@
 
             this.mainCamera = Camera.main;
             this.tileController = GameObject.FindObjectOfType<TileController>();
+            this.party = GameObject.FindObjectOfType<PartyManager>();
         }
 
         private void Update()
@@ -85,12 +85,10 @@
                 var target = hit.collider.gameObject;
 
                 // Check can hover
-                var status = target.GetComponent<TileStatus>();
                 var hovered = target.GetComponent<Hoverable>();
 
-                Assert.IsNotNull(status);
 
-                if (!status.CanHover())
+                if (!this.AdditionalHoverCheck(target))
                 {
                     return;
                 }
@@ -98,6 +96,33 @@
                 hovered.Hover();
                 this.currentHovered = hovered;
             }
+        }
+
+        private bool AdditionalHoverCheck(GameObject tile)
+        {
+            var status = tile.GetComponent<TileStatus>();
+
+            Assert.IsNotNull(status);
+
+            var canHover = status.CanHover();
+            switch (TileController.Active)
+            {
+                case TileController.CommandState.Inactive:
+                    break;
+                case TileController.CommandState.Swapping:
+                    break;
+                case TileController.CommandState.Building:
+                    break;
+                case TileController.CommandState.Deploying:
+
+                    canHover = this.party.CanDeployAt(tile.transform);
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return canHover;
         }
 
         private void HandleLeftClick()
@@ -166,8 +191,7 @@
                     break;
                 case TileController.CommandState.Deploying:
 
-                    var man = this.playerManager.GetComponent<PartyManager>();
-                    man.DeselectCharacter();
+                    this.party.DeselectCharacter();
 
                     this.tileController.BeginInactive();
 
@@ -206,8 +230,7 @@
 
         private void HandleDeploying()
         {
-            var man = this.playerManager.GetComponent<PartyManager>();
-            man.DeployCurrentCharacterAt(this.currentHovered.transform);
+            this.party.DeployCurrentCharacterAt(this.currentHovered.transform);
         }
 
         #endregion

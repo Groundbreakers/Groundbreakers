@@ -27,10 +27,12 @@
 
         [SerializeField]
         [Range(0.0f, 10.0f)]
-        private float hitPoint = 4.0f;
+        private float maxHitPoint = 4.0f;
 
         [SerializeField]
         private GameObject blockadeDeath;
+
+        private float hitPoint;
 
         private SpriteRenderer sprite;
 
@@ -69,7 +71,7 @@
 
             this.sprite = this.GetComponent<SpriteRenderer>();
 
-            this.hitPoint = 4.0f;
+            this.hitPoint = this.maxHitPoint;
         }
 
         private void Start()

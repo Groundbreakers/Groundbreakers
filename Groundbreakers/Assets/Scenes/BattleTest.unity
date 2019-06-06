@@ -179,21 +179,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5170317579557245721, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
-        type: 3}
-      propertyPath: hitbox
-      value: 
-      objectReference: {fileID: 659618143}
-    - target: {fileID: 5170317579557245721, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
-        type: 3}
-      propertyPath: stance
-      value: Melee
-      objectReference: {fileID: 0}
-    - target: {fileID: 4414887242196525331, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
-        type: 3}
-      propertyPath: hitbox
-      value: 
-      objectReference: {fileID: 659618146}
     - target: {fileID: 4230535042426805468, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
         type: 3}
       propertyPath: m_Enabled
@@ -210,6 +195,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: ac56ea4f661f9e141af5e56b06a5f207,
         type: 2}
+    - target: {fileID: 5170317579557245721, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
+        type: 3}
+      propertyPath: hitbox
+      value: 
+      objectReference: {fileID: 659618143}
+    - target: {fileID: 5170317579557245721, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
+        type: 3}
+      propertyPath: stance
+      value: Melee
+      objectReference: {fileID: 0}
+    - target: {fileID: 4414887242196525331, guid: 84bd5c3c6b030b34482d5d448cba8c0b,
+        type: 3}
+      propertyPath: hitbox
+      value: 
+      objectReference: {fileID: 659618146}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84bd5c3c6b030b34482d5d448cba8c0b, type: 3}
 --- !u!1 &7640668
@@ -754,7 +754,6 @@ MonoBehaviour:
   tileLayer:
     serializedVersion: 2
     m_Bits: 512
-  playerManager: {fileID: 1806250427}
 --- !u!1 &371058421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,16 +1742,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5310334381404288758, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
-        type: 3}
-      propertyPath: hitbox
-      value: 
-      objectReference: {fileID: 190215577}
-    - target: {fileID: 4229703736244874419, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
-        type: 3}
-      propertyPath: hitbox
-      value: 
-      objectReference: {fileID: 190215580}
     - target: {fileID: 5409896262574256849, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
         type: 3}
       propertyPath: m_Enabled
@@ -1763,6 +1752,16 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5310334381404288758, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
+        type: 3}
+      propertyPath: hitbox
+      value: 
+      objectReference: {fileID: 190215577}
+    - target: {fileID: 4229703736244874419, guid: 7cc9a7215ab44ba49a6d68a84880e8aa,
+        type: 3}
+      propertyPath: hitbox
+      value: 
+      objectReference: {fileID: 190215580}
     m_RemovedComponents:
     - {fileID: 8579023414525874882, guid: 7cc9a7215ab44ba49a6d68a84880e8aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7cc9a7215ab44ba49a6d68a84880e8aa, type: 3}
@@ -1824,6 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a777d12cd2adf6d4f8f0da1e61b9f450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDeployType: 4
 --- !u!1 &1931310453
 GameObject:
   m_ObjectHideFlags: 0

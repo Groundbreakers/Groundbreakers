@@ -36,8 +36,6 @@
         [field: ReadOnly]
         public bool IsSelected { get; set; }
 
-        public bool IsHovered { get; set; }
-
         public bool IsOccupied { get; set; }
 
         /// <summary>

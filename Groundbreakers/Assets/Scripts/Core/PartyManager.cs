@@ -1,6 +1,7 @@
 ﻿namespace Core
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using Characters;
 
@@ -19,8 +20,19 @@
     {
         private const int Unselected = -1;
 
+        /// <summary>
+        ///     Select Which tile type can you deploy the characters on.
+        /// </summary>
+        [Required]
+        [SerializeField]
+        [EnumToggleButtons]
+        private Tiles canDeployType = Tiles.HighGround;
+
         [ShowInInspector]
+        [ReadOnly]
         private List<GameObject> characters = new List<GameObject>();
+
+        private List<Vector3> occupiedTiles = new List<Vector3>();
 
         private int currentSelectedIndex = Unselected;
 
@@ -36,6 +48,33 @@
             this.currentSelectedIndex = Unselected;
 
             Debug.Log($"Selected = {this.currentSelectedIndex}");
+        }
+
+        /// <summary>
+        ///     Use this to check if you can deploy the character on this tile. Particularly useful
+        ///     to render option area.
+        /// </summary>
+        /// <param name="tile">
+        ///     The tile.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public bool CanDeployAt(Transform tile)
+        {
+            // First, check tile type
+            var type = tile.GetComponent<TileStatus>().GetTileType();
+
+            if (type != this.canDeployType)
+            {
+                return false;
+            }
+
+            var pos = tile.position;
+
+            return this.characters.All(
+                x => Vector3.Distance(
+                         x.transform.position, pos) > Mathf.Epsilon);
         }
 
         /// <summary>
