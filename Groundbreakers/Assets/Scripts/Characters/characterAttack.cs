@@ -357,7 +357,7 @@ public class characterAttack : MonoBehaviour
 
     void defaultMode()
     {
-        if (targetedEnemies.Count != 0)
+        if (targetedEnemies.Count != 0 && this.targetedEnemies[0])
         {
             target = targetedEnemies[0].transform;
         }
