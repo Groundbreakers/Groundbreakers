@@ -12,7 +12,7 @@
     using UnityEngine;
     using UnityEngine.Assertions;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="MonoBehaviour" />
     /// <summary>
     ///     Should attached to "Player Party" game object.
     ///     Call "Initialize" method to spawn all characters on to the map.
@@ -24,8 +24,6 @@
         /// </summary>
         [ShowInInspector]
         private List<Transform> availableBlocks = new List<Transform>();
-
-        private List<GameObject> characters = new List<GameObject>();
 
         /// <summary>
         ///     Ask available character spawn slots, then deploy characters.

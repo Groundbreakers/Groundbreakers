@@ -8,8 +8,13 @@
 
     using Sirenix.OdinInspector;
 
+    using TileMaps;
+
     using UnityEngine;
 
+    /// <summary>
+    ///     Provide API to manipulate Characters on the battle field. 
+    /// </summary>
     public class PartyManager : MonoBehaviour
     {
         private const int Unselected = -1;
@@ -21,13 +26,14 @@
 
         public void SelectCharacter(int index)
         {
-            if (this.currentSelectedIndex == index)
-            {
-                // Already select, deselect
-                this.currentSelectedIndex = Unselected;
-            }
-
             this.currentSelectedIndex = index;
+
+            Debug.Log($"Selected = {this.currentSelectedIndex}");
+        }
+
+        public void DeselectCharacter()
+        {
+            this.currentSelectedIndex = Unselected;
 
             Debug.Log($"Selected = {this.currentSelectedIndex}");
         }
@@ -35,20 +41,27 @@
         [Button]
         public void DeployCurrentCharacterAt(Transform tile)
         {
-            if (this.currentSelectedIndex != Unselected)
+            if (this.currentSelectedIndex == Unselected)
             {
-                var character = this.characters[this.currentSelectedIndex];
+                Debug.Log("Did not select a character");
 
-                var target = tile.position;
-                var offset = new Vector3(0.0f, 10f);
-
-                character.transform.SetPositionAndRotation(target + offset, Quaternion.identity);
-
-                character.transform.DOMove(target, 1.0f).SetEase(Ease.OutCubic).OnComplete(
-                    () => { character.GetComponent<FollowTile>().AffiliateTile(tile); });
-
-                this.currentSelectedIndex = Unselected;
+                return;
             }
+
+            var character = this.characters[this.currentSelectedIndex];
+
+            var target = tile.position;
+            var offset = new Vector3(0.0f, 10f);
+
+            // character.transform.SetPositionAndRotation(target + offset, Quaternion.identity);
+            character.transform.position = target + offset;
+
+            character.transform.DOMove(target, 1.0f)
+                .SetEase(Ease.OutCubic)
+                .OnComplete(() => this.OnDeployComplete(character, tile))
+                .SetUpdate(true);
+
+            this.currentSelectedIndex = Unselected;
         }
 
         private void OnEnable()
@@ -60,13 +73,18 @@
                 // Cache the character
                 this.characters.Add(child.gameObject);
 
-
                 // Setup 
             }
         }
-        private void Update()
-        {
 
+        private void OnDeployComplete(GameObject character, Transform tile)
+        {
+            character.GetComponent<FollowTile>().AffiliateTile(tile);
+
+            this.DeselectCharacter();
+
+            var tc = FindObjectOfType<TileController>();
+            tc.BeginInactive();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace TileMaps
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using Core;
 
@@ -79,6 +80,20 @@
         public void BeginSwap()
         {
             this.Begin(CommandState.Swapping);
+        }
+
+        public void BeginDeploying(int index)
+        {
+            var go = FindObjectOfType<PartyManager>();
+
+            Assert.IsTrue(Enumerable.Range(0, 5).Contains(index));
+            Assert.IsNotNull(go);
+
+            go.SelectCharacter(index);
+
+            Time.timeScale = 0.00f;
+
+            Active = CommandState.Deploying;
         }
 
         #endregion

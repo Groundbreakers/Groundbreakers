@@ -158,8 +158,8 @@
 
         private void HandleDeploying()
         {
-            // var man = this.playerManager.GetComponent<PartyManager>();
-            // man.DeployCurrentCharacterAt(this.currentHovered.transform);
+            var man = this.playerManager.GetComponent<PartyManager>();
+            man.DeployCurrentCharacterAt(this.currentHovered.transform);
         }
 
         #endregion
