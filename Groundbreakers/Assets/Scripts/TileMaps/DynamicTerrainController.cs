@@ -1,5 +1,6 @@
 ﻿namespace TileMaps
 {
+    using System;
     using System.Collections;
     using System.Linq;
 
@@ -10,6 +11,10 @@
     using Sirenix.OdinInspector;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
+    using UnityEngine.UI;
+
+    using Random = UnityEngine.Random;
 
     /// <summary>
     ///     This component provides API for controlling dynamic terrain changes.
@@ -24,7 +29,32 @@
 
         private TerrainGenerator generator;
 
+        // Cached reference to UI
+        private GameObject riskLevelUi;
+
+        private float riskLevel;
+
+        private bool shaking;
+
         #region Public APIs
+
+        /// <summary>
+        ///     Use this when ground breaker command is ever triggered
+        /// </summary>
+        /// <param name="value">
+        ///     The amount.
+        /// </param>
+        public void IncrementRiskLevel(float value)
+        {
+            this.riskLevel += value;
+
+            if (this.riskLevel >= 1.0f)
+            {
+                this.RerollMap();
+            }
+
+            this.UpdateUi();
+        }
 
         /// <summary>
         ///     Re-roll the middle 6 layer of the map.
@@ -33,6 +63,9 @@
         [Button]
         public void RerollMap()
         {
+            FindObjectOfType<TileController>().BeginInactive();
+            this.ResetRiskLevel();
+
             // Should generate somewhat a new map
             this.generator.Initialize();
 
@@ -70,6 +103,14 @@
         [Button]
         public void StartEarthQuake()
         {
+            if (this.shaking)
+            {
+                // Play bad SE
+                return;
+            }
+
+            this.IncrementRiskLevel(0.3f);
+
             this.StartCoroutine(this.BeginEarthQuake());
         }
 
@@ -79,6 +120,17 @@
         {
             this.tilemap = this.GetComponent<Tilemap>();
             this.generator = this.GetComponent<TerrainGenerator>();
+
+            this.riskLevelUi = GameObject.Find("RiskLevel");
+
+            Assert.IsNotNull(this.riskLevelUi);
+
+            this.UpdateUi();
+        }
+
+        private void FixedUpdate()
+        {
+            
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -119,6 +171,8 @@
         {
             const float Speed = 0.25f;
 
+            this.shaking = true;
+
             for (var i = 0; i < Tilemap.Dimension; i++)
             {
                 this.ShakeRow(i);
@@ -126,6 +180,8 @@
 
                 yield return new WaitForSeconds(Speed);
             }
+
+            this.shaking = false;
         }
 
         private void ShakeRow(int row)
@@ -133,8 +189,6 @@
             for (var x = 0; x < Tilemap.Dimension; x++)
             {
                 var block = this.tilemap.GetTileAt(x, row);
-
-
 
                 block.transform.DOShakePosition(0.2f, 0.2f);
 
@@ -183,6 +237,26 @@
                 e.GetComponent<DynamicMovement>().StunEnemy(stunTime);
             }
         }
+
+        #region Risk Level related
+
+        private void ResetRiskLevel()
+        {
+            this.riskLevel = 0.0f;
+
+            this.UpdateUi();
+        }
+
+        private void UpdateUi()
+        {
+            var str = $"{this.riskLevel:P0}";
+
+            Debug.Log(str);
+
+            this.riskLevelUi.GetComponent<Text>().text = str;
+        }
+
+        #endregion
 
         #endregion
     }

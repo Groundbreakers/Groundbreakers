@@ -24,6 +24,8 @@
 
         private TileController tileController;
 
+        private DynamicTerrainController terrainController;
+
         private Hoverable currentHovered;
 
         private void OnEnable()
@@ -31,7 +33,9 @@
             Assert.IsNotNull(Camera.main);
 
             this.mainCamera = Camera.main;
+
             this.tileController = GameObject.FindObjectOfType<TileController>();
+            this.terrainController = GameObject.FindObjectOfType<DynamicTerrainController>();
             this.party = GameObject.FindObjectOfType<PartyManager>();
         }
 
@@ -222,6 +226,8 @@
                 var blockade = Instantiate(
                     this.blockadePrefab,
                     tile.transform);
+
+                this.terrainController.IncrementRiskLevel(0.1f);
             }
             else
             {

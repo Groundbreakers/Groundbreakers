@@ -213,6 +213,9 @@
         /// </param>
         private void SwapTiles(Vector3 first, Vector3 second)
         {
+            // tmp
+            FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.15f);
+
             Busy = true;
 
             var tileA = this.tilemap.GetTileBlockAt(first);

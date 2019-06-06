@@ -122,6 +122,7 @@
 
         public void RetrieveCharacter(GameObject character)
         {
+            character.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             character.SetActive(false);
 
             var i = character.transform.GetSiblingIndex();
@@ -162,8 +163,6 @@
                 this.characters.Add(child.gameObject);
                 child.gameObject.SetActive(false);
             }
-
-            // this.RetrieveAllCharacters();
         }
 
         private bool IsAvailable(int index)
