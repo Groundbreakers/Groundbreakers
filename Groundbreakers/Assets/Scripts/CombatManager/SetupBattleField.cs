@@ -111,10 +111,20 @@
 
         private IEnumerator Terminate()
         {
+            this.KillAllEnemies();
+
             this.tileEnter.Terminate();
             this.characters.RetrieveAllCharacters();
 
             yield return new WaitForSeconds(3.0f);
+        }
+
+        private void KillAllEnemies()
+        {
+            foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                GameObject.Destroy(e);
+            }
         }
     }
 }
