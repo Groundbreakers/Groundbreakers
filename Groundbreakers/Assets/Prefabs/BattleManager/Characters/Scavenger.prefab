@@ -243,8 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4065c780f72c6c34eb8c82e1cf834458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: William
-  Profession: Scavenger
+  name: William
+  profession: Scavenger
+  Level: 1
   POW: 3
   ROF: 1
   RNG: 1
@@ -252,8 +253,8 @@ MonoBehaviour:
   MOB: 2
   laserAE: 0
   pierceAE: 0
-  whirwindAE: 0
-  reflectionAE: 0
+  whirlwindAE: 0
+  multishotAE: 0
   slowSE: 0
   stunSE: 0
   burnSE: 0

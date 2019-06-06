@@ -6,8 +6,10 @@ public class characterAttributes : MonoBehaviour
 {
 
     //Name
-    public string Name;
-    public string Profession;
+    public string name;
+    public string profession;
+    [Range(1, 5)]
+    public int Level = 1;
     //Stats
     public int POW = 2;
     public int ROF = 2;
@@ -20,8 +22,8 @@ public class characterAttributes : MonoBehaviour
     //Attack Effects
     public bool laserAE = false;
     public bool pierceAE = false;
-    public bool whirwindAE = false;
-    public bool reflectionAE = false;
+    public bool whirlwindAE = false;
+    public bool multishotAE = false;
 
     //Status Effects
     public bool slowSE = false;
@@ -124,7 +126,7 @@ public class characterAttributes : MonoBehaviour
         //update effects
         laserAE = temp[2];
         pierceAE = temp[4];
-        whirwindAE = temp[6];
+        whirlwindAE = temp[6];
         slowSE = temp[8];
         stunSE = temp[9];
         burnSE = temp[10];
@@ -165,6 +167,7 @@ public class characterAttributes : MonoBehaviour
             AMP -= 1;
         }
     }
+
 
     public void keepStance()
     {
