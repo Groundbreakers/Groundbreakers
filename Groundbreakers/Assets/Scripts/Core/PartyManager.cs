@@ -44,7 +44,6 @@
         /// <param name="tile">
         ///     The tile to deploy on.
         /// </param>
-        [Button]
         public void DeployCurrentCharacterAt(Transform tile)
         {
             if (this.currentSelectedIndex == Unselected)
@@ -56,10 +55,19 @@
 
             var character = this.characters[this.currentSelectedIndex];
 
+            // Enable it first
+            if (!this.IsAvailable(this.currentSelectedIndex))
+            {
+                Debug.LogError("Already deployed. Should not happen.");
+                return;
+            }
+
+            character.SetActive(true);
+
+            // Now create tween animation
             var target = tile.position;
             var offset = new Vector3(0.0f, 10f);
 
-            // character.transform.SetPositionAndRotation(target + offset, Quaternion.identity);
             character.transform.position = target + offset;
 
             character.transform.DOMove(target, 1.0f)
@@ -67,6 +75,7 @@
                 .OnComplete(() => this.OnDeployComplete(character, tile))
                 .SetUpdate(true);
 
+            // Lastly, reset
             this.currentSelectedIndex = Unselected;
         }
 
@@ -74,11 +83,12 @@
         ///     Should be called when the battle has terminated. Retrieve the characters away from
         ///     The battle fields.
         /// </summary>
+        [Button]
         public void RetrieveAllCharacters()
         {
-            foreach (Transform child in this.transform)
+            foreach (var character in this.characters)
             {
-                child.gameObject.SetActive(false);
+                character.gameObject.SetActive(false);
             }
         }
 
@@ -90,9 +100,14 @@
             {
                 // Cache the character
                 this.characters.Add(child.gameObject);
-
-                // Setup 
             }
+
+            this.RetrieveAllCharacters();
+        }
+
+        private bool IsAvailable(int index)
+        {
+            return !this.characters[index].activeSelf;
         }
 
         private void OnDeployComplete(GameObject character, Transform tile)

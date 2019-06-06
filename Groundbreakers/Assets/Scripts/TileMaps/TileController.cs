@@ -121,7 +121,6 @@
         /// <summary>
         ///     Clear the selected buffer.
         /// </summary>
-        [Button]
         public void ClearSelected()
         {
             foreach (var go in this.selected)
@@ -158,6 +157,17 @@
             }
 
             this.SwapSelectedTiles();
+        }
+
+        /// <summary>
+        ///     Indicate if has something selected.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="bool"/>.
+        /// </returns>
+        public bool HasSelected()
+        {
+            return this.selected.Any();
         }
 
         /// <summary>

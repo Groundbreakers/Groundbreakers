@@ -147,14 +147,30 @@
                 case TileController.CommandState.Inactive:
                     break;
                 case TileController.CommandState.Swapping:
-                    this.tileController.ClearSelected();
+
+                    if (this.tileController.HasSelected())
+                    {
+                        this.tileController.ClearSelected();
+                    }
+                    else
+                    {
+                        this.tileController.BeginInactive();
+                    }
+
                     break;
                 case TileController.CommandState.Building:
+
                     this.tileController.ClearSelected();
+                    this.tileController.BeginInactive();
+
                     break;
                 case TileController.CommandState.Deploying:
+
                     var man = this.playerManager.GetComponent<PartyManager>();
                     man.DeselectCharacter();
+
+                    this.tileController.BeginInactive();
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

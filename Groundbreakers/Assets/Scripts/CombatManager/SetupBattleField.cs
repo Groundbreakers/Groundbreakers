@@ -97,9 +97,7 @@
 
             yield return new WaitForSeconds(3.0f);
 
-            this.characters.Initialize();
-
-            yield return new WaitForSeconds(3.0f);
+            // this.characters.Initialize();
 
             FindObjectOfType<TileController>().Activate();
 

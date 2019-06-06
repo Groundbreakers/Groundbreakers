@@ -41,6 +41,19 @@
             this.StartDeployCharacters();
         }
 
+        public void OldInitialize()
+        {
+            var tilemap = GameObject.Find("Tilemap");
+
+            Assert.IsNotNull(tilemap, "Need to have a Tilemap GameObject active in the scene.");
+
+            var tm = tilemap.GetComponent<Tilemap>();
+
+            this.availableBlocks = FindSpawnLocations(tm);
+
+            this.StartDeployCharacters();
+        }
+
         /// <summary>
         ///     Should be called when the battle has terminated. Retrieve the characters away from
         ///     The battle fields.
