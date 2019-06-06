@@ -318,13 +318,8 @@ public class characterAttack : MonoBehaviour
         meleeattack.setAttack(trickster.POW);
         meleeattack.setArmorPen(trickster.AMP);
         if (this.trickster.burnSE == true) meleeattack.setBurn();
-        if (this.trickster.blightSE == true) meleeattack.setBlight();
         if (this.trickster.slowSE == true) meleeattack.setSlow();
         if (this.trickster.stunSE == true) meleeattack.setStun();
-        if (this.trickster.markSE == true) meleeattack.setMark();
-        if (this.trickster.breakSE == true) meleeattack.setBreak();
-        if (this.trickster.netSE == true) meleeattack.setNet();
-        if (this.trickster.purgeSE == true) meleeattack.setPurge();
     }
 
 
@@ -400,13 +395,8 @@ public class characterAttack : MonoBehaviour
     private void setProjectileStatusAttributes(rangeattack rangeattack)
     {
         if (this.trickster.burnSE == true) rangeattack.setBurn();
-        if (this.trickster.blightSE == true) rangeattack.setBlight();
         if (this.trickster.slowSE == true) rangeattack.setSlow();
         if (this.trickster.stunSE == true) rangeattack.setStun();
-        if (this.trickster.markSE == true) rangeattack.setMark();
-        if (this.trickster.breakSE == true) rangeattack.setBreak();
-        if (this.trickster.netSE == true) rangeattack.setNet();
-        if (this.trickster.purgeSE == true) rangeattack.setPurge();
     }
 
     public void stun(int time)
