@@ -11,6 +11,7 @@
 
     using UnityEngine;
     using UnityEngine.Assertions;
+    using UnityEngine.UI;
 
     /// <inheritdoc />
     /// <summary>
@@ -70,6 +71,14 @@
             Time.timeScale = this.setting.timeScale;
 
             this.ClearSelected();
+
+            // TMP Fast fix
+            var panel = GameObject.Find("GroundbreakerPanel");
+            for (var i = 0; i < 4; i++)
+            {
+                var buttonGo = panel.transform.GetChild(i);
+                buttonGo.GetComponent<ButtonPressed>().Unpress();
+            }
         }
 
         public void BeginBuild()
