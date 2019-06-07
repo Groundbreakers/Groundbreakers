@@ -23,32 +23,32 @@ public class Enemy_Info : MonoBehaviour
 
     void Awake()
     {
-        canvas = GameObject.Find("EnemyInfo_Canvas").GetComponent<Canvas>();
-        enemygeneric = this.GetComponent<Enemy_Generic>();
+        //canvas = GameObject.Find("EnemyInfo_Canvas").GetComponent<Canvas>();
+        //enemygeneric = this.GetComponent<Enemy_Generic>();
     }
     
-    public void createEnemyInfo()
-    {
-        box = (GameObject) Instantiate(this.enemyInfo_prefab);
-        box.transform.SetParent(this.canvas.gameObject.transform, false);
-        this.box.transform.position = this.gameObject.transform.position + new Vector3(1.5f,1.5f);
-        box.GetComponent<EnemyInfoBox>().enemySpecie.text = "Specie: " + this.enemygeneric.specie;
-        box.GetComponent<EnemyInfoBox>().enemyHealth.text = "Health: " + this.enemygeneric.health;
-        box.GetComponent<EnemyInfoBox>().enemySpeed.text = "Speed: " + this.enemygeneric.speed;
-        box.GetComponent<EnemyInfoBox>().enemyPower.text = "Power: " + this.enemygeneric.power;
-        box.GetComponent<EnemyInfoBox>().enemyEvasion.text = "Evasion: " + this.enemygeneric.evasion;
-        box.GetComponent<EnemyInfoBox>().enemyRegan.text = "Regen: " + this.enemygeneric.regen;
-    }
+    //public void createEnemyInfo()
+    //{
+    //    box = (GameObject) Instantiate(this.enemyInfo_prefab);
+    //    box.transform.SetParent(this.canvas.gameObject.transform, false);
+    //    this.box.transform.position = this.gameObject.transform.position + new Vector3(1.5f,1.5f);
+    //    box.GetComponent<EnemyInfoBox>().enemySpecie.text = "Specie: " + this.enemygeneric.specie;
+    //    box.GetComponent<EnemyInfoBox>().enemyHealth.text = "Health: " + this.enemygeneric.health;
+    //    box.GetComponent<EnemyInfoBox>().enemySpeed.text = "Speed: " + this.enemygeneric.speed;
+    //    box.GetComponent<EnemyInfoBox>().enemyPower.text = "Power: " + this.enemygeneric.power;
+    //    box.GetComponent<EnemyInfoBox>().enemyEvasion.text = "Evasion: " + this.enemygeneric.evasion;
+    //    box.GetComponent<EnemyInfoBox>().enemyRegan.text = "Regen: " + this.enemygeneric.regen;
+    //}
 
-    void OnMouseEnter()
-    {
-        createEnemyInfo();
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-    }
+    //void OnMouseEnter()
+    //{
+    //    createEnemyInfo();
+    //    this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+    //}
 
-    void OnMouseExit()
-    {
-        Destroy(box);
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-    }
+    //void OnMouseExit()
+    //{
+    //    Destroy(box);
+    //    this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+    //}
 }
