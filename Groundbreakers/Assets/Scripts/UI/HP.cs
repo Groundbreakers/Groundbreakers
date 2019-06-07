@@ -1,6 +1,4 @@
-﻿using System;
-
-using DG.Tweening;
+﻿using DG.Tweening;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,15 +20,16 @@ public class HP : MonoBehaviour
         // some effects
         GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("PlayerHpLoss");
 
-        Camera.main.DOShakePosition(1.0f, amount / 4.0f);
+        var power = Mathf.Abs(amount / 4.0f);
+
+        Camera.main.DOShakePosition(1.0f, power);
 
         var sprite = GameObject.Find("RedScreen").GetComponent<SpriteRenderer>();
 
         var sequence = DOTween.Sequence();
-
-        var value = Mathf.Clamp(amount / 4.0f, 0.0f, 1.0f);
-        sequence.Append(sprite.DOFade(value, 0.5f).SetEase(Ease.OutBounce));
-        sequence.Append(sprite.DOFade(0.0f, 0.5f).SetEase(Ease.OutBounce));
+        var value = Mathf.Clamp(power, 0.0f, 1.0f);
+        sequence.Append(sprite.DOFade(value, 0.3f).SetEase(Ease.OutBounce));
+        sequence.Append(sprite.DOFade(0.0f, 0.3f).SetEase(Ease.OutBounce));
 
         // Blow are the old code
         this.healthPoint += amount;
