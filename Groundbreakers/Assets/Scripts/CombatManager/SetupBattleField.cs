@@ -79,7 +79,6 @@
             {
                 this.tilemap.SetupMap();
                 this.indicators.Initialize();
-                this.indicators.RevealIndicators();
             }
             while (!this.indicators.HasValidPath());
 
@@ -93,6 +92,8 @@
             this.tileEnter.Begin();
 
             yield return new WaitForSeconds(3.0f);
+
+            this.indicators.RevealIndicators();
 
             FindObjectOfType<TileController>().Activate();
 
