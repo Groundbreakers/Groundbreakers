@@ -13,13 +13,13 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 0}
   - m_Name: Standing
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: FacingUpperLeft
     m_Type: 4
@@ -19726,9 +19726,9 @@ AnimatorStateMachine:
   m_EntryTransitions:
   - {fileID: 1109704215730608290}
   m_StateMachineTransitions:
-  - first: {fileID: 1107602575596742686}
-    second: []
   - first: {fileID: 1107178539237052298}
+    second: []
+  - first: {fileID: 1107602575596742686}
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -504, y: -84, z: 0}
