@@ -6,8 +6,6 @@
 
     using Characters;
 
-    using Core;
-
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
@@ -23,13 +21,13 @@
     /// </summary>
     public class SetupBattleField : MonoBehaviour
     {
+        public static WaveInformation CurrentWaveInformation;
+
         private SpawnCharacters characters;
 
         private SpawnIndicators indicators;
 
         private Tilemap tilemap;
-
-        private NavigationMap navigation;
 
         private TilemapEnter tileEnter;
 
@@ -56,7 +54,6 @@
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
             this.characters = this.GetComponentInChildren<SpawnCharacters>();
-            this.navigation = this.GetComponentInChildren<NavigationMap>();
             this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
 
             this.spanwers = SetupSpawner();
@@ -103,18 +100,63 @@
 
             yield return new WaitForSeconds(0.1f);
 
-            foreach (var spawn in this.spanwers)
-            {
-                spawn.ShouldStartLevel();
-            }
+            this.StartCoroutine(this.StartTimer());
         }
 
         private IEnumerator Terminate()
         {
+            this.KillAllEnemies();
+
             this.tileEnter.Terminate();
             this.characters.RetrieveAllCharacters();
 
             yield return new WaitForSeconds(3.0f);
+        }
+
+        private void KillAllEnemies()
+        {
+            foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                GameObject.Destroy(e);
+            }
+        }
+
+        private IEnumerator StartTimer()
+        {
+            const int Waves = 5;
+            const int Duration = 30;
+
+            for (var i = 0; i < Waves; i++)
+            {
+                this.SpawnWaves();
+
+                for (var j = 0; j < Duration; j++)
+                {
+                    Debug.Log($"{CurrentWaveInformation.WaveNumber}-{CurrentWaveInformation.Time}");
+
+                    CurrentWaveInformation.WaveNumber = i;
+                    CurrentWaveInformation.Time = j;
+
+                    yield return new WaitForSeconds(1.0f);
+                }
+            }
+
+            this.EndBattle();
+        }
+
+        private void SpawnWaves()
+        {
+            foreach (var spanwer in this.spanwers)
+            {
+                spanwer.ShouldSpawnWave();
+            }
+        }
+
+        public struct WaveInformation
+        {
+            public int WaveNumber;
+
+            public float Time;
         }
     }
 }

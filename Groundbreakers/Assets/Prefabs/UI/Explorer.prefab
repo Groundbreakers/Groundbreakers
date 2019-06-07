@@ -98,6 +98,7 @@ MonoBehaviour:
   scavenger: {fileID: 9100000, guid: 63b6c9ebbe17dce41bd20457eda84f95, type: 2}
   agent: {fileID: 9100000, guid: 5ed9610b467a6594dafa112782dd543c, type: 2}
   text: {fileID: 5673757563178539734}
+  profession: 0
 --- !u!1 &4370592859627968779
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,8 +165,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 506b579f5f66ce74db4a33e981a31fcf, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -292,8 +293,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: d0ab15a4caab8f9478b00a5273740463, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

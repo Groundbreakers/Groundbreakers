@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Assets.Enemies.Scripts;
+
     using Sirenix.OdinInspector;
 
     using TileMaps;
@@ -208,6 +210,14 @@
             }
 
             Destroy(this.gameObject);
+
+            //// Shitty way to deliver damage to groundbreaker 
+            //// todo: fix
+            //var hp = GameObject.Find("HPCounter").GetComponent<HP>();
+            //var power = this.GetComponent<Enemy_Generic>().power;
+
+            //hp.UpdateHealth(-power);
+
             return true;
         }
 

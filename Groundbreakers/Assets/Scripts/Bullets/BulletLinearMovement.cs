@@ -15,6 +15,8 @@
     {
         private DamageHandler damageHandler;
 
+        private float explosionRadius = 1.5f;
+
         /// <summary>
         ///     The linear direction of the movement of the bullet.
         /// </summary>
@@ -69,8 +71,35 @@
 
             if (go.CompareTag("Enemy"))
             {
-                this.damageHandler.DeliverDamageTo(go);
-                Destroy(this.gameObject);
+                if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type
+                    == BulletLauncher.Type.Explosive)
+                {
+                    if (explosionRadius >= 0f)
+                    {
+                        Collider2D[] colliders = Physics2D.OverlapCircleAll(this.transform.position, explosionRadius);
+
+                        foreach (Collider2D collider in colliders)
+                        {
+                            if (collider.tag == "Enemy")
+                            {
+                                this.damageHandler.DeliverDamageTo(collider.gameObject);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.damageHandler.DeliverDamageTo(go);
+                    }
+                }
+                else
+                {
+                    this.damageHandler.DeliverDamageTo(go);
+                }
+
+                if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type != BulletLauncher.Type.Penetrate)
+                {
+                    GameObject.Destroy(this.gameObject);
+                }
             }
 
             return;

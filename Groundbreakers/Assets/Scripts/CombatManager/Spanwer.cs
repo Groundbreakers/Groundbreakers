@@ -35,16 +35,16 @@
         /// </summary>
         public static bool Busy { get; private set; }
 
-        [Button]
-        public void ShouldStartLevel()
-        {
-            Busy = true;
+        //[Button]
+        //public void ShouldStartLevel()
+        //{
+        //    Busy = true;
 
-            this.pack.ResetPack();
-            this.StopAllCoroutines();
+        //    this.pack.ResetPack();
+        //    this.StopAllCoroutines();
 
-            this.StartCoroutine(this.StartLevel());
-        }
+        //    this.StartCoroutine(this.StartLevel());
+        //}
 
         public void ShouldSpawnWave()
         {
@@ -63,6 +63,7 @@
             this.pack = db.GetComponent<EnemyGroups>();
         }
 
+
         private IEnumerator StartLevel()
         {
             const int Waves = 5;
@@ -75,8 +76,11 @@
 
                 yield return new WaitForSeconds(5.0f);
             }
+        }
 
-            BattleManager.TriggerEvent("victory");
+        public void StartWave()
+        {
+
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1003:SymbolsMustBeSpacedCorrectly", Justification = "Reviewed. Suppression is OK here.")]

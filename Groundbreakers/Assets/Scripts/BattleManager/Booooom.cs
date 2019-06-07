@@ -5,6 +5,7 @@ using Assets.Enemies.Scripts;
 using TileMaps;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(Blockade))]
 public class Booooom : MonoBehaviour
@@ -23,6 +24,8 @@ public class Booooom : MonoBehaviour
     private void OnEnable()
     {
         this.blockade = this.GetComponent<Blockade>();
+
+        Assert.IsNotNull(this.blockade);
     }
 
     private void OnDisable()
@@ -32,6 +35,9 @@ public class Booooom : MonoBehaviour
         {
             return;
         }
+
+        Debug.Log($"BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOM{this.blockade.GetHitPoint()}");
+
 
         // Perform range explosion
         var enemies = GameObject.FindGameObjectsWithTag("Enemy");

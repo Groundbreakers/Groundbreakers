@@ -64,7 +64,7 @@ public class CharacterManager : MonoBehaviour
         return;
 
         // Show the attributes
-        characterAttributes characterAttributes = GameObject.Find("CharacterList").transform
+        characterAttributes characterAttributes = GameObject.Find("Player Party").transform
             .GetChild(this.characterIndex).gameObject.GetComponent<characterAttributes>();
         for (int i = 0; i < 4; i++)
         {
