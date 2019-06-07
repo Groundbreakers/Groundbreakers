@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: William
-  profession: Scholar
+  profession: Agent
   Level: 1
   POW: 2
   ROF: 3
@@ -318,6 +318,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1171955736483787512}
     m_Modifications:
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Name
+      value: DeployBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -433,16 +443,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Name
-      value: DeployBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4080714487044414857, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -495,6 +495,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1171955736483787512}
     m_Modifications:
+    - target: {fileID: 4217686435854685768, guid: 6fd2af10ce4afe744bd7d966362f0484,
+        type: 3}
+      propertyPath: m_Name
+      value: RangedWeapon
+      objectReference: {fileID: 0}
     - target: {fileID: 4217686435854685774, guid: 6fd2af10ce4afe744bd7d966362f0484,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -549,11 +554,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4217686435854685768, guid: 6fd2af10ce4afe744bd7d966362f0484,
-        type: 3}
-      propertyPath: m_Name
-      value: RangedWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fd2af10ce4afe744bd7d966362f0484, type: 3}
