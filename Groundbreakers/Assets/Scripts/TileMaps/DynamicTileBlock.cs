@@ -46,6 +46,12 @@
             // Clear all children
             foreach (Transform child in this.transform)
             {
+                var blockade = child.GetComponent<Blockade>();
+                if (blockade)
+                {
+                    blockade.CreateRubble();
+                }
+
                 Destroy(child.gameObject);
             }
 

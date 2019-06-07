@@ -54,14 +54,19 @@
 
             if (this.hitPoint <= 0.0f)
             {
-                var rubble = Instantiate(
-                    this.blockadeDeath, 
-                    this.transform.position, 
-                    Quaternion.identity);
-
-                GameObject.Destroy(rubble, 1.0f);
                 GameObject.Destroy(this.gameObject);
+                this.CreateRubble();
             }
+        }
+
+        public void CreateRubble()
+        {
+            var rubble = Instantiate(
+                this.blockadeDeath,
+                this.transform.position,
+                Quaternion.identity);
+
+            GameObject.Destroy(rubble, 1.0f);
         }
 
         private void OnEnable()

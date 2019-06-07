@@ -142,7 +142,7 @@
 
                     yield return new WaitForSeconds(1.0f);
 
-                    FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.1f);
+                    FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
                 }
             }
 

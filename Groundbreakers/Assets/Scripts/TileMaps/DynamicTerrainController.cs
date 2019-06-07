@@ -170,12 +170,12 @@
                 Debug.Log(pos);
             }
 
-            //if (newType == Tiles.HighGround)
-            //{
-            //    this.CreateEnterAnimation(block);
-            //}
-
             block.GetComponent<DynamicTileBlock>().ChangeTileType(newType);
+
+            if (newType == Tiles.HighGround)
+            {
+                this.CreateEnterAnimation(block);
+            }
         }
 
         #region Earth Quake
@@ -233,10 +233,13 @@
             var delay = Random.Range(0.0f, MaxDelay);
 
             block.transform.DOMove(ori, Duration)
-                .SetEase(Ease.OutBack)
+                .SetEase(Ease.InCirc)
                 .SetDelay(delay);
 
             // Handle for high ground
+            //if (block.transform.childCount >= 0)
+            //{
+            //}
             var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
             item.material = this.outlineMaterial;
