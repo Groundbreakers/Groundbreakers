@@ -3518,6 +3518,11 @@
             If true, object/type pickers will never be shown when the list add button is clicked, and default(T) will always be added instantly instead, where T is the element type of the list.
             </summary>
         </member>
+        <member name="F:Sirenix.OdinInspector.ListDrawerSettingsAttribute.AddCopiesLastElement">
+            <summary>
+            Whether adding a new element should copy the last element. False by default.
+            </summary>
+        </member>
         <member name="P:Sirenix.OdinInspector.ListDrawerSettingsAttribute.ShowPaging">
             <summary>
             Override the default setting specified in the Advanced Odin Preferences window and explicitly tell whether paging should be enabled or not.

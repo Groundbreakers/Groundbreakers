@@ -32,9 +32,6 @@
 
         private Tilemap map;
 
-        [ShowInInspector]
-        private List<Vector3> pathBuffer;
-
         /// <summary>
         ///     The Destination grid position.
         /// </summary>
@@ -54,7 +51,6 @@
         private bool mad;
 
         private bool attacking;
-
 
         #region Public Functions
 
@@ -165,8 +161,6 @@
 
             // TODO: Refactor this shit,
             var path = this.navigator.Search(this.transform.position, this.goalGrid, this.mad).ToList();
-
-            this.pathBuffer = path;
 
             if (path.Count == 0)
             {

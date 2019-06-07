@@ -49,7 +49,7 @@ public class Loot : MonoBehaviour
     /// </summary>
     protected void freeLoot()
     {
-        if (HP.healthPoint <= 0 || BattleManager.GameState == GameStates.Exiting)
+        if (HP.healthPoint <= 0)
         {
             Destroy(this.gameObject);
         }

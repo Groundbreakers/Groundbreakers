@@ -248,8 +248,6 @@
         {
             var str = $"{this.riskLevel:P0}";
 
-            Debug.Log(str);
-
             this.riskLevelUi.GetComponent<Text>().text = str;
         }
 

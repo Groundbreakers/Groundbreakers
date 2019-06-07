@@ -35,7 +35,7 @@
 
             // Temp, do a quick test mob or boss?
             var enemyGeneric = other.GetComponent<Enemy_Generic>();
-            var boos = other.GetComponent<CetusScript>();
+            //var boos = other.GetComponent<CetusScript>();
 
             if (enemyGeneric)
             {
@@ -49,15 +49,15 @@
                     enemyGeneric.DamageEnemy(damage.Pow, damage.Amp, 1.0f, isMelee, false);
                 }
             }
-            else if (boos)
-            {
-                // Boss
-                boos.DamageCetus(damage.Pow);
-            }
-            else
-            {
-                // Do nothing
-            }
+            //else if (boos)
+            //{
+            //    // Boss
+            //    boos.DamageCetus(damage.Pow);
+            //}
+            //else
+            //{
+            //    // Do nothing
+            //}
         }
 
         /// <summary>

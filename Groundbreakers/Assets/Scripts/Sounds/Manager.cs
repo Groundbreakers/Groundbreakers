@@ -24,7 +24,7 @@ public class Manager : MonoBehaviour
     void Update()
     {
         // Fade in & out effects
-        if (BattleManager.GameState != GameStates.Null)
+        if (true) // BattleManager.GameState != GameStates.Null
         {
             if (peaceTheme.volume != 0.0F)
             {

@@ -13,6 +13,7 @@
     using TileMaps;
 
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <inheritdoc />
     /// <summary>
@@ -49,7 +50,7 @@
 
         protected void OnEnable()
         {
-            DOTween.Init();
+            DOTween.Init(true, true);
 
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
@@ -131,7 +132,8 @@
 
                 for (var j = 0; j < Duration; j++)
                 {
-                    Debug.Log($"{CurrentWaveInformation.WaveNumber}-{CurrentWaveInformation.Time}");
+                    // Debug.Log($"{CurrentWaveInformation.WaveNumber}-{CurrentWaveInformation.Time}");
+                    this.UpdateUiTimer();
 
                     CurrentWaveInformation.WaveNumber = i;
                     CurrentWaveInformation.Time = j;
@@ -149,6 +151,15 @@
             {
                 spanwer.ShouldSpawnWave();
             }
+        }
+
+        private void UpdateUiTimer()
+        {
+            // shitty
+            var ui = GameObject.Find("NextWave");
+
+            ui.transform.GetChild(0).GetComponent<Text>().text = $"Wave {CurrentWaveInformation.WaveNumber + 1}";
+            ui.transform.GetChild(1).GetComponent<Text>().text = $"{30 - CurrentWaveInformation.Time}";
         }
 
         public struct WaveInformation

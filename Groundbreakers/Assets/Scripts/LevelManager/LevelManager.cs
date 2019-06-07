@@ -31,7 +31,7 @@
         /// </summary>
         private Manager audioManager;
 
-        private RoutesGenerator routesGenerator;
+        //private RoutesGenerator routesGenerator;
 
         #endregion
 
@@ -74,7 +74,7 @@
 
             this.GotoNextLevel();
 
-            this.routesGenerator.Toggle();
+            //this.routesGenerator.Toggle();
         }
 
         /// <summary>

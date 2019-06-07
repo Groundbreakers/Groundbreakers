@@ -1,4 +1,5 @@
-﻿#if UNITY_5_6_OR_NEWER
+﻿#if UNITY_EDITOR
+#if UNITY_5_6_OR_NEWER
 
 //-----------------------------------------------------------------------
 // <copyright file="AssemblyImportSettingsAutomation.cs" company="Sirenix IVS">
@@ -8,7 +9,7 @@
 
 namespace Sirenix.OdinInspector.Editor
 {
-    using System.IO;
+    using System.Collections.Generic;
     using Sirenix.Serialization.Utilities.Editor;
     using Sirenix.Utilities;
     using UnityEditor;
@@ -17,7 +18,7 @@ namespace Sirenix.OdinInspector.Editor
 #if UNITY_2018_1_OR_NEWER
     using UnityEditor.Build.Reporting;
 #endif
-    
+
     public class AssemblyImportSettingsAutomation :
 #if UNITY_2018_1_OR_NEWER
         IPreprocessBuildWithReport
@@ -25,38 +26,56 @@ namespace Sirenix.OdinInspector.Editor
         IPreprocessBuild
 #endif
     {
-        private const string JITAssemblyFolder = "NoEditor";
-        private const string AOTAssemblyFolder = "NoEmitAndNoEditor";
 
         public int callbackOrder { get { return -1500; } }
 
         private static void ConfigureImportSettings()
-        {   
+        {
             if (EditorOnlyModeConfig.Instance.IsEditorOnlyModeEnabled() || ImportSettingsConfig.Instance.AutomateBeforeBuild == false)
             {
                 return;
             }
 
-            BuildTarget platform = EditorUserBuildSettings.activeBuildTarget;
-            string assemblyDirectory = Path.Combine("Assets", SirenixAssetPaths.SirenixAssembliesPath);
-            string[] aotAssemblies = Directory.GetFiles(Path.Combine(assemblyDirectory, AOTAssemblyFolder), "*.dll");
-            string[] jitAssemblies = Directory.GetFiles(Path.Combine(assemblyDirectory, JITAssemblyFolder), "*.dll");
+            var assemblyDir = SirenixAssetPaths.SirenixAssembliesPath;
+            var aotDir = assemblyDir + "NoEmitAndNoEditor/";
+            var jitDir = assemblyDir + "NoEditor/";
+            var aotAssemblies = new List<string>();
+            var jitAssemblies = new List<string>();
+            var paths = AssetDatabase.GetAllAssetPaths();
+            for (int i = 0; i < paths.Length; i++)
+            {
+                var p = paths[i];
+                if (p.StartsWith(assemblyDir))
+                {
+                    if (!p.EndsWith(".dll", System.StringComparison.InvariantCultureIgnoreCase)) continue;
+                    if (p.StartsWith(aotDir))
+                    {
+                        aotAssemblies.Add(p);
+                    }
+                    else if (p.StartsWith(jitDir))
+                    {
+                        jitAssemblies.Add(p);
+                    }
+                }
+            }
 
             AssetDatabase.StartAssetEditing();
             try
             {
+                var platform = EditorUserBuildSettings.activeBuildTarget;
+
                 if (AssemblyImportSettingsUtilities.IsJITSupported(
                     platform,
                     AssemblyImportSettingsUtilities.GetCurrentScriptingBackend(),
                     AssemblyImportSettingsUtilities.GetCurrentApiCompatibilityLevel()))
                 {
-                    ApplyImportSettings(platform, aotAssemblies, OdinAssemblyImportSettings.ExcludeFromAll);
-                    ApplyImportSettings(platform, jitAssemblies, OdinAssemblyImportSettings.IncludeInBuildOnly);
+                    ApplyImportSettings(platform, aotAssemblies.ToArray(), OdinAssemblyImportSettings.ExcludeFromAll);
+                    ApplyImportSettings(platform, jitAssemblies.ToArray(), OdinAssemblyImportSettings.IncludeInBuildOnly);
                 }
                 else
                 {
-                    ApplyImportSettings(platform, aotAssemblies, OdinAssemblyImportSettings.IncludeInBuildOnly);
-                    ApplyImportSettings(platform, jitAssemblies, OdinAssemblyImportSettings.ExcludeFromAll);
+                    ApplyImportSettings(platform, aotAssemblies.ToArray(), OdinAssemblyImportSettings.IncludeInBuildOnly);
+                    ApplyImportSettings(platform, jitAssemblies.ToArray(), OdinAssemblyImportSettings.ExcludeFromAll);
                 }
             }
             finally
@@ -92,3 +111,4 @@ namespace Sirenix.OdinInspector.Editor
 }
 
 #endif // UNITY_5_6_OR_NEWER
+#endif

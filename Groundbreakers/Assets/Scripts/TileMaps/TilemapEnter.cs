@@ -14,6 +14,16 @@
     public class TilemapEnter : MonoBehaviour
     {
         /// <summary>
+        ///     Using default sprite material first, then change this back to outline material when
+        ///     the entering animation is completed. 
+        /// </summary>
+        [SerializeField]
+        private Material outlineMaterial;
+
+        [SerializeField]
+        private Material defaultMaterial;
+
+        /// <summary>
         ///     The offset: it is the position of where you would like the object to travel from.
         /// </summary>
         [SerializeField]
@@ -55,11 +65,7 @@
         {
             var sprite = block.GetComponent<SpriteRenderer>();
 
-            var material = sprite.material;
-            var r = material.color.r;
-            var g = material.color.g;
-            var b = material.color.b;
-            sprite.material.color = new Color(r, g, b, 0.0f);
+            var delay = Random.Range(0.0f, this.maxDelay);
 
             // Relocate block
             var position = block.transform.position;
@@ -67,22 +73,37 @@
             position += this.offset;
             block.transform.position = position;
 
-            // Generate animation
-            var delay = Random.Range(0.0f, this.maxDelay);
-
             block.transform.DOMove(ori, this.duration)
                 .SetEase(Ease.OutBack)
                 .SetDelay(delay);
 
-            // spriteDOFade()
-            sprite.material.DOFade(1.0f, this.duration)
+            sprite.DOFade(1.0f, this.duration)
                 .SetEase(Ease.OutExpo)
-                .SetDelay(delay);
+                .SetDelay(delay)
+                .OnComplete(() => { sprite.material = this.outlineMaterial; });
+
+            // Handle for high ground
+            var status = block.GetComponent<TileStatus>();
+            if (status)
+            {
+                var type = status.GetTileType();
+                if (type == Tiles.HighGround)
+                {
+                    var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+                    item.DOFade(1.0f, this.duration)
+                        .SetEase(Ease.OutExpo)
+                        .SetDelay(delay)
+                        .OnComplete(() => { item.material = this.outlineMaterial; });
+                }
+            }
         }
 
         private void CreateExistAnimation(GameObject block)
         {
             var sprite = block.GetComponent<SpriteRenderer>();
+
+            sprite.material = this.defaultMaterial;
 
             var targetPos = block.transform.position - this.offset;
 
@@ -92,10 +113,27 @@
                 .SetEase(Ease.InBack)
                 .SetDelay(delay);
 
-            sprite.material.DOFade(0.0f, this.duration)
+            sprite.DOFade(0.0f, this.duration)
                 .SetEase(Ease.InExpo)
                 .SetDelay(delay)
                 .OnComplete(() => Destroy(block));
+
+            // Handle for high ground
+            var status = block.GetComponent<TileStatus>();
+            if (status)
+            {
+                var type = status.GetTileType();
+                if (type == Tiles.HighGround)
+                {
+                    var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+                    item.material = this.defaultMaterial;
+
+                    item.DOFade(0.0f, this.duration)
+                        .SetEase(Ease.InExpo)
+                        .SetDelay(delay);
+                }
+            }
         }
     }
 }
