@@ -35,7 +35,7 @@
 
         [InfoBox("Setup the map and let battle begins.")]
         [Button]
-        public void Setup()
+        public void Setup(int Depth, int Risk)
         {
             this.StartCoroutine(this.Begin());
         }
@@ -63,7 +63,7 @@
         {
             if (Input.GetKeyDown("space"))
             {
-                this.Setup();
+                this.Setup(50, 1);
             }
         }
 
