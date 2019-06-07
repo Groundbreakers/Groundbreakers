@@ -20,7 +20,7 @@
         private static readonly int Attacking = Animator.StringToHash("Attacking");
         private static readonly int Stun1 = Animator.StringToHash("Stun");
 
-        private static IEnumerable<Transform> targets;
+        private IEnumerable<Transform> targets;
 
         [SerializeField]
         [Range(0.0f, 3.0f)]
@@ -58,11 +58,6 @@
         private bool isSlowed = false;
 
         #region Public Functions
-
-        private void Awake()
-        {
-            speed = speed * speedMultiplier;
-        }
 
         public void MoveToward(Vector3 pos)
         {
@@ -111,12 +106,17 @@
             this.map = tilemap.GetComponent<Tilemap>();
         }
 
+        protected void Awake()
+        {
+            this.speed = this.speed * this.speedMultiplier;
+        }
+
         protected void Start()
         {
             // Caching the targets
-            if (targets == null)
+            if (this.targets == null)
             {
-                targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
+                this.targets = GameObject.Find("Indicators").GetComponent<SpawnIndicators>().GetDefendPoints();
             }
 
             this.nextGrid = this.transform.position;
@@ -245,9 +245,9 @@
         /// </returns>
         private Vector3 FindGoal()
         {
-            Assert.IsTrue(targets.Any());
+            Assert.IsTrue(this.targets.Any());
 
-            var end = targets.OrderBy(pos => Vector3.SqrMagnitude(pos.position - this.transform.position)).First();
+            var end = this.targets.OrderBy(pos => Vector3.SqrMagnitude(pos.position - this.transform.position)).First();
 
             return end.position;
         }
