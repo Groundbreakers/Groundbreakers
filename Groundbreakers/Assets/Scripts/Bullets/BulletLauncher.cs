@@ -65,6 +65,8 @@
         {
             this.potentialTarget = target;
 
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("CharacterShoot");
+
             switch (this.type)
             {
                 case Type.SingleShot:

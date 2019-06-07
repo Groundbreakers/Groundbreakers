@@ -1,5 +1,7 @@
 ﻿using System;
 
+using DG.Tweening;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +19,11 @@ public class HP : MonoBehaviour
 
     public void UpdateHealth(int amount)
     {
+        GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("PlayerHpLoss");
+
+        Camera.main.DOShakePosition(1.0f, amount / 4.0f);
+
+        // Blow are the old code
         this.healthPoint += amount;
         if (this.healthPoint < 0)
         {

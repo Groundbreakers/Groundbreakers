@@ -181,6 +181,8 @@
                 temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
                 Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
+
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("EnemyDie");
             }
 
             // Check for "Rage" attribute and HP < 50%
@@ -275,6 +277,9 @@
 
                     // Debug.Log("Un Marked Damage = " + damagevalue);
                 }
+
+
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX(isMelee ? "CharacterBladeHit" : "CharacterBulletHit");
             }
             else
             {

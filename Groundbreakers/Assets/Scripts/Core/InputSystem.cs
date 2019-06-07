@@ -182,11 +182,15 @@
                         this.tileController.BeginInactive();
                     }
 
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
+
                     break;
                 case TileController.CommandState.Building:
 
                     this.tileController.ClearSelected();
                     this.tileController.BeginInactive();
+
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
 
                     break;
                 case TileController.CommandState.Deploying:
@@ -194,6 +198,8 @@
                     this.party.DeselectCharacter();
 
                     this.tileController.BeginInactive();
+
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
 
                     break;
                 default:
@@ -208,6 +214,8 @@
             var tile = this.currentHovered.transform.gameObject;
 
             this.tileController.SelectTile(tile);
+
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
         }
 
         private void HandleBuild()
@@ -221,10 +229,13 @@
                 var blockade = Instantiate(
                     this.blockadePrefab,
                     tile.transform);
+
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
             }
             else
             {
                 // Play bad SE
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
             }
         }
 
