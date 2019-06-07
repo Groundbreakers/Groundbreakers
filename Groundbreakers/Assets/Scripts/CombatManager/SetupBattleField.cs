@@ -50,7 +50,7 @@
 
         protected void OnEnable()
         {
-            DOTween.Init();
+            DOTween.Init(true, true);
 
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
