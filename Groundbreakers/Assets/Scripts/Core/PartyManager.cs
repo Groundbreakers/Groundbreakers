@@ -138,6 +138,17 @@
             }
         }
 
+        /// <summary>
+        ///     Use this to help determine which character is on specific tile.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="GameObject" />.
+        /// </returns>
+        public IEnumerable<GameObject> GetDeployedCharacters()
+        {
+            return this.characters.Where(x => x.activeSelf);
+        }
+
         private void OnEnable()
         {
             this.characters.Clear();

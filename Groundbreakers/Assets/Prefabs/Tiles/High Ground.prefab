@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1948941590928688212}
   - component: {fileID: 4208363329234860791}
   - component: {fileID: 6297654058854515996}
+  - component: {fileID: 7390183093790875045}
   m_Layer: 0
   m_Name: High Ground
   m_TagString: Untagged
@@ -93,6 +94,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 0.637
-  hitPoint: 4
+  maxHitPoint: 4
   blockadeDeath: {fileID: 5437903941598735353, guid: 7e89df7893e42d942b862b64fef59060,
     type: 3}
+--- !u!114 &7390183093790875045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410983043164879455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938db43124a3964428a9886d488d9e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
