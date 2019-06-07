@@ -1,5 +1,6 @@
 ﻿namespace TileMaps
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -208,9 +209,6 @@
         /// </param>
         private void SwapTiles(Vector3 first, Vector3 second)
         {
-            // tmp
-            FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.15f);
-
             Busy = true;
 
             var tileA = this.tilemap.GetTileBlockAt(first);
@@ -261,6 +259,21 @@
             sequence.SetUpdate(true);
         }
 
+        private IEnumerator PreventBug(GameObject first, GameObject second)
+        {
+            Time.timeScale = 1.0f;
+
+            yield return new WaitForFixedUpdate();
+
+            first.GetComponent<TileStatus>().IsMoving = false;
+            second.GetComponent<TileStatus>().IsMoving = false;
+
+            Time.timeScale = 0.0f;
+
+            // tmp
+            FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.15f);
+        }
+
         private void OnSwapComplete(GameObject tile)
         {
             this.swappingTiles.Add(tile);
@@ -271,11 +284,10 @@
                 var first = this.swappingTiles[0];
                 var second = this.swappingTiles[1];
 
-                first.GetComponent<TileStatus>().IsMoving = false;
-                second.GetComponent<TileStatus>().IsMoving = false;
-
                 this.SetRenderOrderFlying(first, "GroundTiles", "Mobs");
                 this.SetRenderOrderFlying(second, "GroundTiles", "Mobs");
+
+                this.StartCoroutine(this.PreventBug(first, second));
 
                 Busy = false;
             }

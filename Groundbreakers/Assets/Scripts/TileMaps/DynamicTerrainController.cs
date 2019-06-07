@@ -1,5 +1,6 @@
 ﻿namespace TileMaps
 {
+    using System;
     using System.Collections;
     using System.Linq;
 
@@ -12,6 +13,8 @@
     using UnityEngine;
     using UnityEngine.Assertions;
     using UnityEngine.UI;
+
+    using Random = UnityEngine.Random;
 
     /// <summary>
     ///     This component provides API for controlling dynamic terrain changes.
@@ -60,11 +63,6 @@
         {
             this.riskLevel += value;
 
-            if (this.riskLevel >= 1.0f)
-            {
-                this.RerollMap();
-            }
-
             this.UpdateUi();
         }
 
@@ -76,6 +74,7 @@
         public void RerollMap()
         {
             FindObjectOfType<TileController>().BeginInactive();
+            
             this.ResetRiskLevel();
 
             // Should generate somewhat a new map
@@ -138,6 +137,14 @@
             Assert.IsNotNull(this.riskLevelUi);
 
             this.UpdateUi();
+        }
+
+        private void Update()
+        {
+            if (this.riskLevel >= 1.0f && !this.Busy)
+            {
+                this.RerollMap();
+            }
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -217,8 +224,6 @@
             const float MaxDelay = 0.25f;
             var offset = new Vector3(0.0f, 5.0f);
 
-            var sprite = block.GetComponent<SpriteRenderer>();
-
             // Relocate block
             var position = block.transform.position;
             var ori = position;
@@ -232,20 +237,10 @@
                 .SetEase(Ease.OutBack)
                 .SetDelay(delay);
 
-            sprite.DOFade(1.0f, Duration)
-                .SetEase(Ease.OutExpo)
-                .SetDelay(delay)
-                .OnComplete(() => { sprite.material = this.outlineMaterial; });
-
             // Handle for high ground
             var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
             item.material = this.outlineMaterial;
-            item.color = Color.white;
-
-            //item.DOFade(1.0f, Duration)
-            //    .SetEase(Ease.OutExpo)
-            //    .OnComplete(() => { item.material = this.outlineMaterial; });
         }
 
         private void StunEnemiesAtRow(int row)
