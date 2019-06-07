@@ -55,6 +55,12 @@
         {
             var sprite = block.GetComponent<SpriteRenderer>();
 
+            var material = sprite.material;
+            var r = material.color.r;
+            var g = material.color.g;
+            var b = material.color.b;
+            sprite.material.color = new Color(r, g, b, 0.0f);
+
             // Relocate block
             var position = block.transform.position;
             var ori = position;
@@ -68,7 +74,8 @@
                 .SetEase(Ease.OutBack)
                 .SetDelay(delay);
 
-            sprite.DOFade(1.0f, this.duration)
+            // spriteDOFade()
+            sprite.material.DOFade(1.0f, this.duration)
                 .SetEase(Ease.OutExpo)
                 .SetDelay(delay);
         }
@@ -85,7 +92,7 @@
                 .SetEase(Ease.InBack)
                 .SetDelay(delay);
 
-            sprite.DOFade(0.0f, this.duration)
+            sprite.material.DOFade(0.0f, this.duration)
                 .SetEase(Ease.InExpo)
                 .SetDelay(delay)
                 .OnComplete(() => Destroy(block));
