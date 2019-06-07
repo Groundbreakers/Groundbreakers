@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CombatManager;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class Sector : MonoBehaviour
 
     public void HandleButton()
     {
+        FindObjectOfType<SetupBattleField>().Setup();
         GameObject.Find("SectorMap").GetComponent<SectorGenerator>().ShowPath(this.Row, this.Column);
     }
 

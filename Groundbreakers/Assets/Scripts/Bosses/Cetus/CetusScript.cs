@@ -272,7 +272,7 @@ public class CetusScript : MonoBehaviour
     private IEnumerator Splash()
     {
         this.GetSplashTiles();
-        var characterlist = GameObject.Find("CharacterList").transform;
+        var characterlist = GameObject.Find("Player Party").transform;
 
         // Affected tiles flash blue
         var tmpcolor = Color.white;
@@ -435,7 +435,7 @@ public class CetusScript : MonoBehaviour
     private IEnumerator WaterStrike()
     {
         this.GetWaterStrikeTiles();
-        var characterlist = GameObject.Find("CharacterList").transform;
+        var characterlist = GameObject.Find("Player Party").transform;
 
         // Affected tiles flash blue
         var tmpcolor = Color.white;

@@ -233,7 +233,7 @@ public class SelectNode : MonoBehaviour
         // Trying to get the radius of the collider box
         // To be honest, I don't like this solution, but it works, and it does not break
         // others code.
-        var character = GameObject.Find("CharacterList").transform.GetChild(this.characterOnTop);
+        var character = GameObject.Find("Player Party").transform.GetChild(this.characterOnTop);
         var radius = character.GetComponent<CircleCollider2D>().radius;
 
         this.CreatePoints(radius, radius, Segments);

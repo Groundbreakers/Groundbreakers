@@ -280,7 +280,7 @@ public class Deploy : MonoBehaviour
     private void Start()
     {
         // Reference five characters and their attributes
-        var characterList = GameObject.Find("CharacterList");
+        var characterList = GameObject.Find("Player Party");
         this.character[0] = characterList.transform.GetChild(0).gameObject;
         this.character[1] = characterList.transform.GetChild(1).gameObject;
         this.character[2] = characterList.transform.GetChild(2).gameObject;
