@@ -64,7 +64,7 @@ public class characterAttack : MonoBehaviour
         myCollider = GetComponent<CircleCollider2D>();
         trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
-        this.lineRenderer.enabled = false;
+        //this.lineRenderer.enabled = false;
     }
 
     void Start()
@@ -260,10 +260,10 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", false);
 
-            if (this.lineRenderer.enabled)
-            {
-                this.lineRenderer.enabled = false;
-            }
+            //if (this.lineRenderer.enabled)
+            //{
+            //    this.lineRenderer.enabled = false;
+            //}
 
             return;
         }
@@ -304,10 +304,10 @@ public class characterAttack : MonoBehaviour
         }
         else
         {
-            if (this.lineRenderer.enabled)
-            {
-                this.lineRenderer.enabled = false;
-            }
+            //if (this.lineRenderer.enabled)
+            //{
+            //    this.lineRenderer.enabled = false;
+            //}
 
             this.RangedAttack();
         }
@@ -336,9 +336,9 @@ public class characterAttack : MonoBehaviour
 
         GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
 
-        this.lineRenderer.SetPosition(0, this.gameObject.transform.position);
+        //this.lineRenderer.SetPosition(0, this.gameObject.transform.position);
 
-        this.lineRenderer.SetPosition(1, this.target.position);
+        //this.lineRenderer.SetPosition(1, this.target.position);
 
         GameObject.Find("RangedWeapon").GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject, false);
 
