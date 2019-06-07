@@ -44,11 +44,11 @@ public class SFXManager : MonoBehaviour
                 break;
 
             case "CharacterBulletHit":
-                this.SFX.PlayOneShot(this.CharacterBulletHit);
+                this.SFX.PlayOneShot(this.CharacterBulletHit, .5f);
                 break;
 
             case "CharacterShoot":
-                this.SFX.PlayOneShot(this.CharacterShoot);
+                this.SFX.PlayOneShot(this.CharacterShoot, .5f);
                 break;
 
             case "CharacterSwing":
@@ -60,7 +60,7 @@ public class SFXManager : MonoBehaviour
                 break;
 
             case "EnemyDie":
-                this.SFX.PlayOneShot(this.EnemyDie);
+                this.SFX.PlayOneShot(this.EnemyDie, .5f);
                 break;
 
             case "MenuClick":
