@@ -1,9 +1,6 @@
 ﻿namespace Core
 {
     using System;
-    using System.Collections.Generic;
-
-    using Sirenix.OdinInspector;
 
     using TileMaps;
 
@@ -24,6 +21,8 @@
 
         private TileController tileController;
 
+        private DynamicTerrainController terrainController;
+
         private Hoverable currentHovered;
 
         private void OnEnable()
@@ -32,6 +31,7 @@
 
             this.mainCamera = Camera.main;
             this.tileController = GameObject.FindObjectOfType<TileController>();
+            this.terrainController = GameObject.FindObjectOfType<DynamicTerrainController>();
             this.party = GameObject.FindObjectOfType<PartyManager>();
         }
 
@@ -182,11 +182,15 @@
                         this.tileController.BeginInactive();
                     }
 
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
+
                     break;
                 case TileController.CommandState.Building:
 
                     this.tileController.ClearSelected();
                     this.tileController.BeginInactive();
+
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
 
                     break;
                 case TileController.CommandState.Deploying:
@@ -194,6 +198,8 @@
                     this.party.DeselectCharacter();
 
                     this.tileController.BeginInactive();
+
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
 
                     break;
                 default:
@@ -208,6 +214,8 @@
             var tile = this.currentHovered.transform.gameObject;
 
             this.tileController.SelectTile(tile);
+
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
         }
 
         private void HandleBuild()
@@ -221,10 +229,14 @@
                 var blockade = Instantiate(
                     this.blockadePrefab,
                     tile.transform);
+
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+                this.terrainController.IncrementRiskLevel(0.1f);
             }
             else
             {
                 // Play bad SE
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
             }
         }
 

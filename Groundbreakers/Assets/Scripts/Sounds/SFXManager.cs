@@ -26,7 +26,16 @@ public class SFXManager : MonoBehaviour
         this.SFX = this.GetComponent<AudioSource>();
     }
 
-    public void PlaySFX(String title)
+    /// <summary>
+    ///     The play sfx.
+    /// </summary>
+    /// <example>
+    ///     GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("CharacterShoot");
+    /// </example>
+    /// <param name="title">
+    ///     The title.
+    /// </param>
+    public void PlaySFX(string title)
     {
         switch (title)
         {

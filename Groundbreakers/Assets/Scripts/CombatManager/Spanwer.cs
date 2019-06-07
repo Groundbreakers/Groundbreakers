@@ -35,17 +35,6 @@
         /// </summary>
         public static bool Busy { get; private set; }
 
-        //[Button]
-        //public void ShouldStartLevel()
-        //{
-        //    Busy = true;
-
-        //    this.pack.ResetPack();
-        //    this.StopAllCoroutines();
-
-        //    this.StartCoroutine(this.StartLevel());
-        //}
-
         public void ShouldSpawnWave()
         {
             Busy = true;
