@@ -19,9 +19,18 @@ public class HP : MonoBehaviour
 
     public void UpdateHealth(int amount)
     {
+        // some effects
         GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("PlayerHpLoss");
 
         Camera.main.DOShakePosition(1.0f, amount / 4.0f);
+
+        var sprite = GameObject.Find("RedScreen").GetComponent<SpriteRenderer>();
+
+        var sequence = DOTween.Sequence();
+
+        var value = Mathf.Clamp(amount / 4.0f, 0.0f, 1.0f);
+        sequence.Append(sprite.DOFade(value, 0.5f).SetEase(Ease.OutBounce));
+        sequence.Append(sprite.DOFade(0.0f, 0.5f).SetEase(Ease.OutBounce));
 
         // Blow are the old code
         this.healthPoint += amount;

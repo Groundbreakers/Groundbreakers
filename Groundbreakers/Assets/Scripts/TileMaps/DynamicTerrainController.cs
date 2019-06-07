@@ -237,9 +237,6 @@
                 .SetDelay(delay);
 
             // Handle for high ground
-            //if (block.transform.childCount >= 0)
-            //{
-            //}
             var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
             item.material = this.outlineMaterial;
