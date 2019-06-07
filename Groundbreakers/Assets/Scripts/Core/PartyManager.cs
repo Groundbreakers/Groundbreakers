@@ -32,8 +32,6 @@
         [ReadOnly]
         private List<GameObject> characters = new List<GameObject>();
 
-        private List<Vector3> occupiedTiles = new List<Vector3>();
-
         private int currentSelectedIndex = Unselected;
 
         public void SelectCharacter(int index)
@@ -116,6 +114,15 @@
 
             // Lastly, reset
             this.currentSelectedIndex = Unselected;
+        }
+
+        public void RetrieveCharacter(GameObject character)
+        {
+            character.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            character.SetActive(false);
+
+            var i = character.transform.GetSiblingIndex();
+            // this.TurnOnOff(i, true);
         }
 
         /// <summary>
