@@ -170,12 +170,11 @@
                 Debug.Log(pos);
             }
 
-            if (newType == Tiles.HighGround)
-            {
-                this.CreateEnterAnimation(block);
-            }
+            //if (newType == Tiles.HighGround)
+            //{
+            //    this.CreateEnterAnimation(block);
+            //}
 
-            // this.tilemap.ChangeTileAt(pos, newType);
             block.GetComponent<DynamicTileBlock>().ChangeTileType(newType);
         }
 

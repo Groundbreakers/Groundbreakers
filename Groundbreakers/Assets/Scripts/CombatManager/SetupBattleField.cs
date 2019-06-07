@@ -36,7 +36,7 @@
 
         [InfoBox("Setup the map and let battle begins.")]
         [Button]
-        public void Setup(int Depth, int Risk)
+        public void Setup(int depth, int risk)
         {
             this.StartCoroutine(this.Begin());
         }
@@ -70,7 +70,7 @@
 
         private static List<Spanwer> SetupSpawner()
         {
-             return FindObjectsOfType(typeof(Spanwer)).Select(o => (Spanwer)o).ToList();
+            return FindObjectsOfType(typeof(Spanwer)).Select(o => (Spanwer)o).ToList();
         }
 
         private IEnumerator Begin()
@@ -84,7 +84,7 @@
             while (!this.indicators.HasValidPath());
 
             yield return new WaitForSeconds(0.1f);
-            
+
             // Initialize Environment
             this.tilemap.PostSetupMap();
 
@@ -110,6 +110,8 @@
             this.tileEnter.Terminate();
             this.characters.RetrieveAllCharacters();
 
+            this.indicators.HideIndicators();
+
             yield return new WaitForSeconds(3.0f);
         }
 
@@ -117,7 +119,7 @@
         {
             foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                GameObject.Destroy(e);
+                Destroy(e);
             }
         }
 
@@ -139,6 +141,8 @@
                     CurrentWaveInformation.Time = j;
 
                     yield return new WaitForSeconds(1.0f);
+
+                    FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.1f);
                 }
             }
 
