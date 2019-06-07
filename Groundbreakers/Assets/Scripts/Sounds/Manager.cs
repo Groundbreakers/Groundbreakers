@@ -55,8 +55,8 @@ public class Manager : MonoBehaviour
         }
 
         // Get to know what is the current region
-        var lm = GameObject.Find("LevelManager").GetComponent<LevelManager.LevelManager>();
-        this.region = lm.Region;
+        // var lm = GameObject.Find("LevelManager").GetComponent<LevelManager.LevelManager>();
+        this.region = 1;
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
         if (this.region == 1)

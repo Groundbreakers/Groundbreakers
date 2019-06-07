@@ -18,6 +18,16 @@
     /// </summary>
     public class DynamicTerrainController : MonoBehaviour
     {
+        /// <summary>
+        ///     Using default sprite material first, then change this back to outline material when
+        ///     the entering animation is completed. 
+        /// </summary>
+        [SerializeField]
+        private Material outlineMaterial;
+
+        [SerializeField]
+        private Material defaultMaterial;
+
         [Required]
         [SerializeField]
         private GameObject mushroomPrefab;
@@ -36,7 +46,7 @@
         /// </summary>
         private float riskLevel;
 
-        private bool shaking;
+        public bool Busy { get; private set; }
 
         #region Public APIs
 
@@ -105,7 +115,7 @@
         [Button]
         public void StartEarthQuake()
         {
-            if (this.shaking)
+            if (this.Busy)
             {
                 // Play bad SE
                 return;
@@ -166,6 +176,8 @@
 
         private IEnumerator BeginEarthQuake()
         {
+            this.Busy = true;
+
             const float Speed = 0.25f;
 
             for (var i = 0; i < Tilemap.Dimension; i++)
@@ -175,6 +187,8 @@
 
                 yield return new WaitForSeconds(Speed);
             }
+
+            this.Busy = false;
         }
 
         private void ShakeRow(int row)
@@ -215,8 +229,23 @@
             var delay = Random.Range(0.0f, MaxDelay);
 
             block.transform.DOMove(ori, Duration)
-                .SetEase(Ease.OutExpo)
+                .SetEase(Ease.OutBack)
                 .SetDelay(delay);
+
+            sprite.DOFade(1.0f, Duration)
+                .SetEase(Ease.OutExpo)
+                .SetDelay(delay)
+                .OnComplete(() => { sprite.material = this.outlineMaterial; });
+
+            // Handle for high ground
+            var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+            item.material = this.outlineMaterial;
+            item.color = Color.white;
+
+            //item.DOFade(1.0f, Duration)
+            //    .SetEase(Ease.OutExpo)
+            //    .OnComplete(() => { item.material = this.outlineMaterial; });
         }
 
         private void StunEnemiesAtRow(int row)

@@ -45,7 +45,8 @@
             }
 
             // Only update with hover if in Swapping/Building/Deploy mode.
-            if (TileController.Active != TileController.CommandState.Inactive)
+            if (TileController.Active != TileController.CommandState.Inactive &&
+                !this.terrainController.Busy)
             {
                 this.UpdateWithHover();
             }
