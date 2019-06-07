@@ -46,7 +46,7 @@ public class Settings : MonoBehaviour
     public void Reset()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        BattleManager.TriggerEvent("reset");
+        // BattleManager.TriggerEvent("reset");
     }
 
     public void Exit()

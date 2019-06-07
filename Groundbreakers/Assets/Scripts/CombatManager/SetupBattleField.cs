@@ -100,11 +100,6 @@
 
             yield return new WaitForSeconds(0.1f);
 
-            //foreach (var spawn in this.spanwers)
-            //{
-            //    spawn.ShouldStartLevel();
-            //}
-
             this.StartCoroutine(this.StartTimer());
         }
 
@@ -146,9 +141,7 @@
                 }
             }
 
-            Debug.Log("End");
-
-            this.Terminate();
+            this.EndBattle();
         }
 
         private void SpawnWaves()
