@@ -25,6 +25,8 @@
         [SerializeField]
         [Range(0.0f, 3.0f)]
         private float speed = 1.0f; // temp
+        [Range(0.0f, 2.0f)]
+        private float speedMultiplier = 1.0f;
 
         private Animator animator;
 
@@ -55,8 +57,14 @@
 
         private bool attacking;
 
-
+        [ShowInInspector]
+        private bool isSlowed = false;
         #region Public Functions
+
+        private void Awake()
+        {
+            speed = speed * speedMultiplier;
+        }
 
         public void MoveToward(Vector3 pos)
         {
@@ -77,6 +85,18 @@
         public void StunEnemy(float duration)
         {
             this.StartCoroutine(this.Stun(duration));
+        }
+
+        // Slow handler. Takes a float for slow strength (0.2 = 20% slow, 0.05 = 5% slow, etc)
+        public void SlowEnemy(float strength)
+        {
+            if (!isSlowed)
+            {
+                isSlowed = true;
+                speedMultiplier -= strength;
+                speed *= speedMultiplier;
+            }
+
         }
 
         #endregion
@@ -354,6 +374,7 @@
             this.canMove = true;
             this.animator.SetBool(Stun1, false);
         }
+
 
         #endregion
     }

@@ -170,7 +170,7 @@ MonoBehaviour:
   animator: {fileID: 7543013341955019752}
   lineRenderer: {fileID: 0}
   stance: Gun
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 7402512264952329442}
 --- !u!114 &1143237542542456168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   pierceAE: 0
   whirlwindAE: 0
   multishotAE: 0
-  slowSE: 0
+  slowSE: 1
   stunSE: 0
   burnSE: 0
   disabled: 0

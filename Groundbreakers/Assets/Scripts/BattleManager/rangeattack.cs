@@ -113,7 +113,7 @@ public class rangeattack : MonoBehaviour
             hitTarget.gameObject.GetComponent<Enemy_Generic>().BlightEnemy();
         }
 
-        if (this.slow == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsSlowed() == false)
+        if (this.slow == true)
         {
             hitTarget.gameObject.GetComponent<Enemy_Generic>().SlowEnemy(0.5f);
         }

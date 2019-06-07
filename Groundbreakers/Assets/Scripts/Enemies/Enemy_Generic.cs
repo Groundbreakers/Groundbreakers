@@ -5,7 +5,7 @@
 
     using UnityEngine;
     using UnityEngine.Assertions;
-
+    using Assets.Scripts;
     using Random = UnityEngine.Random;
 
     public class Enemy_Generic : MonoBehaviour
@@ -88,6 +88,9 @@
         private static GameObject canvasGameObject;
 
         private GameObject crystalCounter;
+
+        
+
 
         public static void ShowDamagePopup(Transform location, int damage = 0)
         {
@@ -386,12 +389,7 @@
         // Slow handler. Takes a float for slow strength (0.2 = 20% slow, 0.05 = 5% slow, etc)
         public void SlowEnemy(float strength)
         {
-            this.isSlowed = true;
-            if (strength > this.strongestSlow)
-            {
-                this.strongestSlow = strength;
-                this.speedMultiplier = 1 - this.strongestSlow;
-            }
+            this.gameObject.GetComponent<AI.DynamicMovement>().SlowEnemy(strength);
         }
 
         // Regen handler
