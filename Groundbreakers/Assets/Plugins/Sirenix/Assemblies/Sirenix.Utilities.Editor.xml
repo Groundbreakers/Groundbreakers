@@ -1802,31 +1802,6 @@
             Logs a warning if a validation check is currently running.
             </summary>
         </member>
-        <member name="T:Sirenix.Utilities.Editor.DelayedGUIDrawer">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DelayedGUIDrawer.Begin(System.Single,System.Single,System.Boolean)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DelayedGUIDrawer.Begin(UnityEngine.Vector2,System.Boolean)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DelayedGUIDrawer.End">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
-        <member name="M:Sirenix.Utilities.Editor.DelayedGUIDrawer.Draw(UnityEngine.Vector2)">
-            <summary>
-            Not yet documented.
-            </summary>
-        </member>
         <member name="T:Sirenix.Utilities.Editor.DragAndDropManager">
             <summary>
             <para>This class is due to undergo refactoring. Use the new DragAndDropUtilities instead.</para>
@@ -7794,6 +7769,8 @@
             </summary>
             <param name="source">The source string.</param>
             <param name="target">The target string.</param>
+            <param name="ignoreCase"></param>
+            <param name="abbreviation"></param>
             <returns>Distance score. 0 is no match, and 1 is exact match.</returns>
         </member>
         <member name="T:Sirenix.Utilities.Editor.GUIFrameCounter">

@@ -474,7 +474,11 @@
             <param name="list">The list.</param>
             <param name="item">The value.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Sirenix.Utilities.LinqExtensions.AddRange``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``0})" -->
+        <member name="M:Sirenix.Utilities.LinqExtensions.AddRange``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Adds the elements of the specified collection to the end of the IList&lt;T&gt;.
+            </summary>
+        </member>
         <member name="M:Sirenix.Utilities.LinqExtensions.Sort``1(System.Collections.Generic.IList{``0},System.Comparison{``0})">
             <summary>
             Sorts an IList
@@ -1022,11 +1026,6 @@
             <summary>
             Splits a Rect into a grid from left to right and then down.
             </summary>
-            <param name="rect">The original rect.</param>
-            <param name="width">The width of a grid cell.</param>
-            <param name="height">The height of a grid cell.</param>
-            <param name="index">The index of the grid cell.</param>
-            <returns></returns>
         </member>
         <member name="M:Sirenix.Utilities.RectExtensions.SetCenterX(UnityEngine.Rect,System.Single)">
             <summary>
@@ -1627,7 +1626,7 @@
             <para>Checks whether an array of types satisfy the constraints of a given generic method definition.</para>
             <para>If this method returns true, the given parameters can be safely used with <see cref="M:System.Reflection.MethodInfo.MakeGenericMethod(System.Type[])"/> with the given generic method definition.</para>
             </summary>
-            <param name="genericType">The generic method definition to check.</param>
+            <param name="genericMethod">The generic method definition to check.</param>
             <param name="parameters">The parameters to check validity for.</param>
             <exception cref="T:System.ArgumentNullException">
             genericType is null
@@ -1808,22 +1807,12 @@
             A utility class for finding types in various asssembly.
             </summary>
         </member>
-        <member name="F:Sirenix.Utilities.AssemblyUtilities.ASSEMBLY_LOAD_QUEUE_LOCK">
-            <summary>
-            Lock for the assembly load queue
-            </summary>
-        </member>
-        <member name="F:Sirenix.Utilities.AssemblyUtilities.MAIN_LOCK">
-            <summary>
-            Lock for everything but the assembly load queue, IsDynamic cache, and the initialized and initializing fields
-            </summary>
-        </member>
         <member name="M:Sirenix.Utilities.AssemblyUtilities.#cctor">
             <summary>
             Initializes the <see cref="T:Sirenix.Utilities.AssemblyUtilities"/> class.
             </summary>
         </member>
-        <member name="M:Sirenix.Utilities.AssemblyUtilities.Reload">
+        <member name="M:Sirenix.Utilities.AssemblyUtilities.Load(System.Reflection.Assembly[])">
             <summary>
             Re-scans the entire AppDomain.
             </summary>
