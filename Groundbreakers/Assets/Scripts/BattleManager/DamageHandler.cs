@@ -47,6 +47,9 @@
                 else
                 {
                     enemyGeneric.DamageEnemy(damage.Pow, damage.Amp, 1.0f, isMelee, false);
+                    if (this.attributes.burnSE == true) enemyGeneric.BurnEnemy();
+                    if (this.attributes.slowSE == true) enemyGeneric.SlowEnemy(.5f);
+                    if (this.attributes.stunSE == true) enemyGeneric.StunEnemy(.5f);
                 }
             }
             //else if (boos)

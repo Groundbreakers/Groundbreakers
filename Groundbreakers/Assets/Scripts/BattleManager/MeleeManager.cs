@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MeleeManager : MonoBehaviour
 {
-    public CircleCollider2D hitbox;
+    public Collider2D hitbox;
     private List<GameObject> hitEnemies;
 
     private int armorpen;

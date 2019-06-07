@@ -121,7 +121,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.25}
   serializedVersion: 2
   m_Radius: 2
 --- !u!114 &5908830486360006541
@@ -168,8 +168,9 @@ MonoBehaviour:
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
   animator: {fileID: 7543013341955019752}
+  lineRenderer: {fileID: 0}
   stance: Gun
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 7402512264952329442}
 --- !u!114 &1143237542542456168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,27 +183,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4065c780f72c6c34eb8c82e1cf834458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POW: 2
-  ROF: 2
-  RNG: 2
-  MOB: 2
+  name: William
+  profession: Scholar
+  Level: 1
+  POW: 1
+  ROF: 5
+  RNG: 3
   AMP: 1
-  burstAE: 0
-  ricochetAE: 0
+  MOB: 2
   laserAE: 0
-  splashAE: 0
   pierceAE: 0
-  traceAE: 0
-  whirwindAE: 0
-  reachAE: 0
-  slowSE: 0
+  whirlwindAE: 0
+  multishotAE: 0
+  slowSE: 1
   stunSE: 0
   burnSE: 0
-  markSE: 0
-  purgeSE: 0
-  breakSE: 0
-  blightSE: 0
-  netSE: 0
   disabled: 0
   modules:
   - {fileID: 0}
@@ -323,16 +318,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1171955736483787512}
     m_Modifications:
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_Name
-      value: DeployBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4080714487068170043, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -448,6 +433,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_Name
+      value: DeployBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080714487068170042, guid: 2e39526ec1a428f4e9b11f9733fc0596,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4080714487044414857, guid: 2e39526ec1a428f4e9b11f9733fc0596,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -500,11 +495,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1171955736483787512}
     m_Modifications:
-    - target: {fileID: 4217686435854685768, guid: 6fd2af10ce4afe744bd7d966362f0484,
-        type: 3}
-      propertyPath: m_Name
-      value: RangedWeapon
-      objectReference: {fileID: 0}
     - target: {fileID: 4217686435854685774, guid: 6fd2af10ce4afe744bd7d966362f0484,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -559,6 +549,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217686435854685768, guid: 6fd2af10ce4afe744bd7d966362f0484,
+        type: 3}
+      propertyPath: m_Name
+      value: RangedWeapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fd2af10ce4afe744bd7d966362f0484, type: 3}
