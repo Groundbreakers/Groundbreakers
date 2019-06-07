@@ -438,6 +438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e165ebf6408543b1b941690cb38c3f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineMaterial: {fileID: 2100000, guid: 2f5cde0df3dd49842aea952dc6c90e9b, type: 2}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   offset: {x: 0, y: -5, z: 0}
   duration: 1.27
   maxDelay: 0.23
