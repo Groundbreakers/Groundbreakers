@@ -10,6 +10,8 @@
     using Sirenix.OdinInspector;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
+    using UnityEngine.UI;
 
     /// <summary>
     ///     This component provides API for controlling dynamic terrain changes.
@@ -24,7 +26,37 @@
 
         private TerrainGenerator generator;
 
+        /// <summary>
+        ///     Caching the UI
+        /// </summary>
+        private GameObject riskLevelUi;
+
+        /// <summary>
+        ///     Indicating The risk level.
+        /// </summary>
+        private float riskLevel;
+
+        private bool shaking;
+
         #region Public APIs
+
+        /// <summary>
+        ///     Use this when ground breaker command is ever triggered
+        /// </summary>
+        /// <param name="value">
+        ///     The amount.
+        /// </param>
+        public void IncrementRiskLevel(float value)
+        {
+            this.riskLevel += value;
+
+            if (this.riskLevel >= 1.0f)
+            {
+                this.RerollMap();
+            }
+
+            this.UpdateUi();
+        }
 
         /// <summary>
         ///     Re-roll the middle 6 layer of the map.
@@ -33,6 +65,9 @@
         [Button]
         public void RerollMap()
         {
+            FindObjectOfType<TileController>().BeginInactive();
+            this.ResetRiskLevel();
+
             // Should generate somewhat a new map
             this.generator.Initialize();
 
@@ -70,6 +105,14 @@
         [Button]
         public void StartEarthQuake()
         {
+            if (this.shaking)
+            {
+                // Play bad SE
+                return;
+            }
+
+            this.IncrementRiskLevel(0.3f);
+
             this.StartCoroutine(this.BeginEarthQuake());
         }
 
@@ -79,6 +122,12 @@
         {
             this.tilemap = this.GetComponent<Tilemap>();
             this.generator = this.GetComponent<TerrainGenerator>();
+
+            this.riskLevelUi = GameObject.Find("RiskLevel");
+
+            Assert.IsNotNull(this.riskLevelUi);
+
+            this.UpdateUi();
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -182,6 +231,26 @@
             {
                 e.GetComponent<DynamicMovement>().StunEnemy(stunTime);
             }
+        }
+
+        #endregion
+
+        #region Risk Level related
+
+        private void ResetRiskLevel()
+        {
+            this.riskLevel = 0.0f;
+
+            this.UpdateUi();
+        }
+
+        private void UpdateUi()
+        {
+            var str = $"{this.riskLevel:P0}";
+
+            Debug.Log(str);
+
+            this.riskLevelUi.GetComponent<Text>().text = str;
         }
 
         #endregion

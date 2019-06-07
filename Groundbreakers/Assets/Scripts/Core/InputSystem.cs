@@ -1,9 +1,6 @@
 ﻿namespace Core
 {
     using System;
-    using System.Collections.Generic;
-
-    using Sirenix.OdinInspector;
 
     using TileMaps;
 
@@ -24,6 +21,8 @@
 
         private TileController tileController;
 
+        private DynamicTerrainController terrainController;
+
         private Hoverable currentHovered;
 
         private void OnEnable()
@@ -32,6 +31,7 @@
 
             this.mainCamera = Camera.main;
             this.tileController = GameObject.FindObjectOfType<TileController>();
+            this.terrainController = GameObject.FindObjectOfType<DynamicTerrainController>();
             this.party = GameObject.FindObjectOfType<PartyManager>();
         }
 
@@ -231,6 +231,7 @@
                     tile.transform);
 
                 GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+                this.terrainController.IncrementRiskLevel(0.1f);
             }
             else
             {
