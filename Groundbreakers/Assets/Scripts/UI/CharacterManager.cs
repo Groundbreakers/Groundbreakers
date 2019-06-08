@@ -36,7 +36,7 @@ public class CharacterManager : MonoBehaviour
     private int characterIndex;
 
     private float rotateSpeed = 10.0F;
-
+    private int charLevel = 1;
     void Start()
     {
         this.UpdatePanel();
@@ -114,6 +114,9 @@ public class CharacterManager : MonoBehaviour
         {
             this.UpdateAgent();
         }
+
+        charLevel = characterAttributes.Level;
+        
     }
 
     public int GetCharacterIndex()
@@ -130,6 +133,37 @@ public class CharacterManager : MonoBehaviour
     public void Close()
     {
         this.ui.SetActive(false);
+    }
+
+    public void ClickLevelUp()
+    {
+        var cc = FindObjectOfType<CrystalCounter>();
+        var money = cc.GetCrystals();
+
+        if (this.charLevel >= 5)
+        {
+            // Play bad SE
+            return;
+        }
+
+        var cost = 1000 * this.charLevel;
+
+        if (money < cost)
+        {
+            // Play bad SE
+            return;
+        }
+
+        // this.crystals += amount; ????????
+        cc.SetCrystals(-cost);
+
+        // ????
+        GameObject.Find("Player Party")
+            .transform
+            .GetChild(this.characterIndex)
+            .gameObject
+            .GetComponent<characterAttributes>()
+            .LevelUp();
     }
 
     public void UpdateScholar()
