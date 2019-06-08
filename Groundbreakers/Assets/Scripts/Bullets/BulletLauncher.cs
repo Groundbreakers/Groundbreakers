@@ -131,9 +131,10 @@
                     this.type = Type.MultiShot;
                 }
 
-                if (Input.GetKeyDown("3"))
+                if (ability_name == "Laserbeam")
                 {
                     this.type = Type.Laser;
+                   
                 }
 
                 if (ability_name == "PenetrateShot")
@@ -145,6 +146,7 @@
                 if (ability_name == "ExplosiveShot")
                 {
                     this.type = Type.Explosive;
+                    
                 }
             }
             //// For laser effect only

@@ -16,8 +16,5 @@ public class EnemyInfoBox : MonoBehaviour
     public Text enemySpeed;
 
     public Text enemyPower;
-
-    public Text enemyEvasion;
-
-    public Text enemyRegan;
+   
 }

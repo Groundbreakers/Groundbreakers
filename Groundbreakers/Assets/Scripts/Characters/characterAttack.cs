@@ -20,7 +20,9 @@ public class characterAttack : MonoBehaviour
 
     public Animator animator;
 
-    public LineRenderer lineRenderer;
+    private LineRenderer lineRenderer;
+
+    //public LineRenderer lineRenderer;
 
     public MonoBehaviour ability1;
 
@@ -65,8 +67,12 @@ public class characterAttack : MonoBehaviour
         targetedEnemies = new List<GameObject>();
         myCollider = GetComponent<CircleCollider2D>();
         trickster = GetComponent<characterAttributes>();
-        firePoint = rangeAttackFirepoint.position;
-        this.lineRenderer.enabled = false;
+       firePoint = rangeAttackFirepoint.position;
+       
+        if (this.gameObject.GetComponent<Laserbeam>() != null)
+       {
+           lineRenderer = this.gameObject.GetComponent<Laserbeam>().lineRenderer;
+       }
     }
 
     void Start()
@@ -261,7 +267,7 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", false);
 
-            if (this.lineRenderer.enabled)
+           if (this.gameObject.GetComponent<Laserbeam>() != null)
             {
                 this.lineRenderer.enabled = false;
             }
@@ -270,11 +276,12 @@ public class characterAttack : MonoBehaviour
         }
         else
         {
-            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
-            {
+
+           if (this.gameObject.GetComponentInChildren<BulletLauncher>().type == BulletLauncher.Type.Laser)
+           {
                 this.lineRenderer.enabled = true;
                 this.fireCountdown = 0f;
-            }
+           }
         }
 
         if (this.fireCountdown <= 0f)
@@ -292,24 +299,19 @@ public class characterAttack : MonoBehaviour
         this.fireCountdown -= Time.deltaTime;
     }
 
-    public void PerformAttack()
-    {
+    public void PerformAttack() {
+      
         if (this.stance.Equals("Melee"))
         {
             this.MeleeAttack();
         }
-        else if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
+        else if (this.gameObject.GetComponentInChildren<BulletLauncher>().type == BulletLauncher.Type.Laser && this.gameObject.GetComponent<Laserbeam>() != null)
         {
-            this.LaserAttack(this.target);
-
+            this.gameObject.GetComponent<Laserbeam>().LaserAttack(this.target);
+          
         }
         else
         {
-            if (this.lineRenderer.enabled)
-            {
-                this.lineRenderer.enabled = false;
-            }
-
             this.RangedAttack();
         }
     }
@@ -328,20 +330,6 @@ public class characterAttack : MonoBehaviour
         MeleeManager meleeattack = hitbox.GetComponent<MeleeManager>();
         // should use a melee attack module here. This is temp solution :(
         this.setMeleeStatusAttributes(meleeattack);
-
-    }
-
-    public void LaserAttack(Transform target)
-    {
-        var offset = new Vector3(0.0f, 0.5f, 0.0f);
-
-       // GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
-
-        this.lineRenderer.SetPosition(0, this.gameObject.transform.position);
-
-        this.lineRenderer.SetPosition(1, this.target.position);
-
-        GameObject.Find("RangedWeapon").GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject, false);
 
     }
 

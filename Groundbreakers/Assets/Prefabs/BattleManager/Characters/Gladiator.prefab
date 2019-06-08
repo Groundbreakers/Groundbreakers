@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 3940766875146652564}
   - component: {fileID: 6814656965237660037}
   - component: {fileID: 5363954639478048802}
+  - component: {fileID: 7667121202668134482}
   m_Layer: 2
   m_Name: Gladiator
   m_TagString: Player
@@ -480,7 +481,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5367364221638702442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29a6a66b55b5f034db39e3e0f1306c84, type: 3}
   m_Name: 
@@ -492,6 +493,7 @@ MonoBehaviour:
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
   animator: {fileID: 3636710890971549056}
+  ability1: {fileID: 7667121202668134482}
   stance: Melee
   hitbox: {fileID: 5319498373077778077}
 --- !u!114 &3940766875146652564
@@ -562,5 +564,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 335a9fc57059abd4386f14dd2f27f6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7667121202668134482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5367364221638702442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f05a6854ab4ee458daeebc0b06f9a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
