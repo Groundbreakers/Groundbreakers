@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class Sector : MonoBehaviour
@@ -27,7 +28,18 @@ public class Sector : MonoBehaviour
 
     public void HandleButton()
     {
-        FindObjectOfType<SetupBattleField>().Setup(Depth, FindObjectOfType<Difficulty>().Risk);
+        // Should disable this if the player is currently in battle. ----- by Ivan
+        var battleField = FindObjectOfType<SetupBattleField>();
+
+        Assert.IsNotNull(battleField);
+
+        if (SetupBattleField.State != SetupBattleField.BattleState.NotInBattle)
+        {
+            return;
+        }
+
+        battleField.Setup(Depth, FindObjectOfType<Difficulty>().Risk);
+
         GameObject.Find("SectorMap").GetComponent<SectorGenerator>().ShowPath(this.Row, this.Column);
     }
 

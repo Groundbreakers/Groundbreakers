@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Characters;
-
     using Core;
 
     using DG.Tweening;
@@ -26,6 +24,8 @@
     {
         public static WaveInformation CurrentWaveInformation;
 
+        public static BattleState State = BattleState.NotInBattle;
+
         private SpawnIndicators indicators;
 
         private PartyManager party;
@@ -36,10 +36,25 @@
 
         private List<Spanwer> spanwers;
 
+        public enum BattleState
+        {
+            NotInBattle,
+            EnterMap,
+            InBattle,
+            ExitingMap
+        }
+
         [InfoBox("Setup the map and let battle begins.")]
         [Button]
         public void Setup(int depth, int risk)
         {
+            if (State != BattleState.NotInBattle)
+            {
+                Debug.LogWarning("Should not begin two instance of battle.");
+
+                return;
+            }
+
             this.StartCoroutine(this.Begin());
         }
 
@@ -47,6 +62,8 @@
         [Button]
         public void EndBattle()
         {
+            State = BattleState.ExitingMap;
+
             // Clear timer
             CurrentWaveInformation.Time = 0;
             CurrentWaveInformation.WaveNumber = 0;
@@ -68,14 +85,6 @@
             this.spanwers = SetupSpawner();
         }
 
-        protected void Update()
-        {
-            if (Input.GetKeyDown("space"))
-            {
-                this.Setup(50, 1);
-            }
-        }
-
         private static List<Spanwer> SetupSpawner()
         {
             return FindObjectsOfType(typeof(Spanwer)).Select(o => (Spanwer)o).ToList();
@@ -83,6 +92,8 @@
 
         private IEnumerator Begin()
         {
+            State = BattleState.EnterMap;
+
             // Keep generating map until has valid path.
             do
             {
@@ -108,40 +119,11 @@
 
             yield return new WaitForSeconds(0.1f);
 
+            State = BattleState.InBattle;
+
             this.StartCoroutine(this.StartTimer());
         }
 
-        private IEnumerator Terminate()
-        {
-            this.KillAllEnemies();
-            this.KillAllMisc();
-
-            this.party.RetrieveAllCharacters();
-
-            yield return new WaitForSeconds(0.01f);
-
-            this.indicators.HideIndicators();
-
-            this.tileEnter.Terminate();
-
-            yield return new WaitForSeconds(3.0f);
-        }
-
-        private void KillAllEnemies()
-        {
-            foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
-            {
-                Destroy(e);
-            }
-        }
-
-        private void KillAllMisc()
-        {
-            foreach (var e in GameObject.FindGameObjectsWithTag("Loot"))
-            {
-                Destroy(e);
-            }
-        }
 
         private IEnumerator StartTimer()
         {
@@ -165,6 +147,41 @@
             }
 
             this.EndBattle();
+        }
+
+        private IEnumerator Terminate()
+        {
+            this.KillAllEnemies();
+            this.KillAllMisc();
+
+            this.party.RetrieveAllCharacters();
+
+            yield return new WaitForSeconds(0.01f);
+
+            this.indicators.HideIndicators();
+
+            this.tileEnter.Terminate();
+
+
+            yield return new WaitForSeconds(3.0f);
+
+            State = BattleState.NotInBattle;
+        }
+
+        private void KillAllEnemies()
+        {
+            foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                Destroy(e);
+            }
+        }
+
+        private void KillAllMisc()
+        {
+            foreach (var e in GameObject.FindGameObjectsWithTag("Loot"))
+            {
+                Destroy(e);
+            }
         }
 
         private void SpawnWaves()
