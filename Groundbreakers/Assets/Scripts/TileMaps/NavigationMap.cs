@@ -32,10 +32,17 @@
         /// <param name="ignoreBlock">
         ///     The Temp.
         /// </param>
+        /// <param name="isFlying">
+        ///     The is Flying.
+        /// </param>
         /// <returns>
         ///     The <see cref="Vector3" />.
         /// </returns>
-        public IEnumerable<Vector3> Search(Vector3 start, Vector3 end, bool ignoreBlock = false)
+        public IEnumerable<Vector3> Search(
+            Vector3 start, 
+            Vector3 end, 
+            bool ignoreBlock = false, 
+            bool isFlying = false)
         {
             this.InitializeMap();
 
@@ -75,6 +82,11 @@
                         // temp solution
                         if (ignoreBlock && node.Weight > 0.0f)
                         {
+
+                        }
+                        else if (node.IsWater && isFlying)
+                        {
+
                         }
                         else
                         {
@@ -233,6 +245,8 @@
                     var status = this.tilemap.GetCachedTileStatusAt(i, j);
                     this.map[i, j].CanPass = status.CanPass();
                     this.map[i, j].Weight = status.Weight;
+
+                    this.map[i, j].IsWater = status.GetTileType() == Tiles.Water;
                 }
             }
         }
@@ -248,6 +262,8 @@
             }
 
             public bool CanPass { get; set; }
+
+            public bool IsWater { get; set; } 
 
             public float F { get; set; }
 
