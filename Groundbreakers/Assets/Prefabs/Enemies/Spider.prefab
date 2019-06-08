@@ -128,6 +128,7 @@ MonoBehaviour:
   regen: 0
   attributes:
   - Resistance
+  - Armored
   deathEffect: {fileID: 718309088729475099, guid: 7757c771aaaf0d240984cb511faf2267,
     type: 3}
   time: 0
@@ -191,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  isFlying: 0
 --- !u!114 &5259930508367303925
 MonoBehaviour:
   m_ObjectHideFlags: 0
