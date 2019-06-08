@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specie: Dire Rat
-  maxHealth: 200
-  health: 200
+  maxHealth: 250
+  health: 250
   speed: 1
   speedMultiplier: 1
   power: 1
@@ -203,7 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5212bab07345424cb87729e50419f3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 1.3
+  isFlying: 0
 --- !u!1001 &5540663516258900008
 PrefabInstance:
   m_ObjectHideFlags: 0

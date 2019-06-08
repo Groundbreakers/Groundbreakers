@@ -118,8 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specie: Termite
-  maxHealth: 100
-  health: 100
+  maxHealth: 175
+  health: 175
   speed: 1
   speedMultiplier: 1
   power: 1
@@ -128,6 +128,7 @@ MonoBehaviour:
   regen: 0
   attributes:
   - Aggregation
+  - Evasion
   deathEffect: {fileID: 718309088729475099, guid: d20ab6eb1f4dfd440b5e8482cca4b56e,
     type: 3}
   time: 0
@@ -190,7 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5212bab07345424cb87729e50419f3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 1.25
+  isFlying: 0
 --- !u!114 &7977625291105870044
 MonoBehaviour:
   m_ObjectHideFlags: 0
