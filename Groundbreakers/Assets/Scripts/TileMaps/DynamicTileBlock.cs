@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using CombatManager;
+
     using Sirenix.OdinInspector;
 
     using UnityEngine;
@@ -47,7 +49,7 @@
             foreach (Transform child in this.transform)
             {
                 var blockade = child.GetComponent<Blockade>();
-                if (blockade)
+                if (blockade && SetupBattleField.State == SetupBattleField.BattleState.InBattle)
                 {
                     blockade.CreateRubble();
                 }

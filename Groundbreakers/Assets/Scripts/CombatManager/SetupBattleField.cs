@@ -73,6 +73,30 @@
             this.StartCoroutine(this.Terminate());
         }
 
+        public void OnGameOver()
+        {
+            State = BattleState.NotInBattle;
+
+            // Clear timer
+            CurrentWaveInformation.Time = 0;
+            CurrentWaveInformation.WaveNumber = 0;
+
+            this.UpdateUiTimer();
+            this.KillAllEnemies();
+            this.KillAllMisc();
+
+            this.party.RetrieveAllCharacters();
+            this.indicators.HideIndicators();
+
+            var tilemap = GameObject.Find("Tilemap");
+            foreach (Transform child in tilemap.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            State = BattleState.NotInBattle;
+        }
+
         protected void OnEnable()
         {
             DOTween.Init(true, true);
