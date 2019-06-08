@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1488686941386252704}
   - component: {fileID: 8813340176414161547}
   - component: {fileID: 452090767429262217}
-  - component: {fileID: 8519304357723558555}
   m_Layer: 0
   m_Name: Cetus
   m_TagString: Enemy
@@ -71,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: -798880211
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1a44a0a73a4614a4f8eb5dbf26a9a9d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bbdc9d9c8232da94eb0402b4a40ae80e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +98,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.91, y: 2.4}
+    oldSize: {x: 6.4, y: 6.4}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -129,28 +128,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8519304357723558555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1488686941386252707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bfd5e77f4573fb4583b4ee6774973cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chargeParticle: {fileID: 8712480500940496337, guid: 027f57a200e8c6a42ae4333f0523737d,
-    type: 3}
-  chargeShot: {fileID: 1707023657865167692, guid: 072a16dd30da4684fa1f1c4783dd4fdf,
-    type: 3}
-  chargeShotTimer: 36
-  deathEffect: {fileID: 718309088729475099, guid: fc85cec4d452a3f4583753dcae203782,
-    type: 3}
-  health: 10000
-  maxHealth: 10000
-  power: 1
-  powerMultiplier: 1
-  splashTimer: 24
-  waterStrikeTimer: 6
