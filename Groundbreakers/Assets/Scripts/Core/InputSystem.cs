@@ -233,12 +233,23 @@
 
             if (status.CanPass())
             {
-                var blockade = Instantiate(
-                    this.blockadePrefab,
-                    tile.transform);
+                // CCCP
+                var result = this.terrainController.DecreaseRiskLevel(0.1f);
+                if (result)
+                {
+                    var blockade = Instantiate(
+                        this.blockadePrefab,
+                        tile.transform);
 
-                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
-                this.terrainController.IncrementRiskLevel(0.15f);
+                    this.tileController.BeginInactive();
+
+                    // Build rock
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+                }
+                else
+                {
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
+                }
             }
             else
             {

@@ -159,7 +159,7 @@
             Time.timeScale = 0.00f;
             
             // Should start increasing the risk
-            this.StartCoroutine(this.PerodicallyIncreaseRisk());
+            // this.StartCoroutine(this.PerodicallyIncreaseRisk());
 
             Active = state;
         }
@@ -212,11 +212,21 @@
 
             if (blocade)
             {
-                this.tilemap.ChangeTileAt(pos, Tiles.Stone);
+                // CCCP
+                var result = FindObjectOfType<DynamicTerrainController>().DecreaseRiskLevel(0.05f);
+                if (result)
+                {
+                    this.tilemap.ChangeTileAt(pos, Tiles.Stone);
 
-                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.1f);
+                    this.BeginInactive();
 
-                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+                }
+                else
+                {
+                    GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
+                }
+
             }
             else
             {
@@ -326,7 +336,9 @@
             Time.timeScale = 0.0f;
 
             // tmp
-            FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.15f);
+            FindObjectOfType<DynamicTerrainController>().DecreaseRiskLevel(0.15f);
+
+            this.BeginInactive();
         }
 
         private void OnSwapComplete(GameObject tile)
@@ -369,14 +381,14 @@
             }
         }
 
-        private IEnumerator PerodicallyIncreaseRisk()
-        {
-            for (;;)
-            {
-                yield return new WaitForSecondsRealtime(1.0f);
+        //private IEnumerator PerodicallyIncreaseRisk()
+        //{
+        //    for (;;)
+        //    {
+        //        yield return new WaitForSecondsRealtime(1.0f);
 
-                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
-            }
-        }
+        //        FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
+        //    }
+        //}
     }
 }

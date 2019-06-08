@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charactersPanel: {fileID: 265505494}
+  cost: 0
 --- !u!1 &7640668
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charactersPanel: {fileID: 265505494}
+  cost: 0
 --- !u!1001 &92274068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -643,6 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charactersPanel: {fileID: 265505494}
+  cost: 0
 --- !u!1 &367632176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,6 +1554,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da6dab5693169e4887228624c7b0a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costs:
+  - 0.05
+  - 0.3
+  - 0.15
+  - 0.1
 --- !u!1 &1235095660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,6 +1668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charactersPanel: {fileID: 265505494}
+  cost: 0
 --- !u!1 &1806250427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,6 +1732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charactersPanel: {fileID: 265505494}
+  cost: 0
 --- !u!1 &1931310453
 GameObject:
   m_ObjectHideFlags: 0

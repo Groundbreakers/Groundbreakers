@@ -67,6 +67,27 @@
             this.UpdateUi();
         }
 
+        public bool DecreaseRiskLevel(float value)
+        {
+            var newValue = this.riskLevel - value;
+
+            if (newValue < 0.0f)
+            {
+                return false;
+            }
+
+            this.riskLevel = Mathf.Clamp(newValue, 0.0f, 1.0f);
+
+            this.UpdateUi();
+
+            return true;
+        }
+
+        public float GetRiskLevel()
+        {
+            return this.riskLevel;
+        }
+
         /// <summary>
         ///     Re-roll the middle 6 layer of the map.
         ///     According to the discussion, we can only.
@@ -126,11 +147,18 @@
                 return;
             }
 
-            this.IncrementRiskLevel(0.35f);
+            // CCCP
+            var result = this.DecreaseRiskLevel(0.30f);
+            if (result)
+            {
+                this.StartCoroutine(this.BeginEarthQuake());
 
-            this.StartCoroutine(this.BeginEarthQuake());
+                FindObjectOfType<TileController>().BeginInactive();
+            }
+            else
+            {
 
-            FindObjectOfType<TileController>().BeginInactive();
+            }
         }
 
         #endregion
@@ -141,6 +169,9 @@
             this.generator = this.GetComponent<TerrainGenerator>();
 
             this.riskLevelUi = GameObject.Find("RiskLevel");
+
+            // Should start with some enegy.
+            this.riskLevel = 0.5f;
 
             Assert.IsNotNull(this.riskLevelUi);
 

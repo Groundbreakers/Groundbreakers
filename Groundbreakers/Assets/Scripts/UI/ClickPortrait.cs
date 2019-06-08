@@ -9,12 +9,17 @@ using TileMaps;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class ClickPortrait : MonoBehaviour
 {
     [Required]
     [SerializeField]
     private GameObject charactersPanel;
+
+    [Required]
+    [SerializeField]
+    private int cost;
 
     private CharacterManager manager;
 
