@@ -330,6 +330,7 @@ public class characterAttack : MonoBehaviour
         else if (this.trickster.pierceAE)
         {
             type = BulletLauncher.Type.Penetrate;
+            this.RangedAttack();
         }
         else if (type == BulletLauncher.Type.Laser)
         {
