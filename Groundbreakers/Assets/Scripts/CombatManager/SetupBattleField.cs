@@ -55,6 +55,9 @@
                 return;
             }
 
+            // Disable Tutorial
+            FindObjectOfType<Settings>().ui2.SetActive(false);
+
             this.StartCoroutine(this.Begin());
         }
 
@@ -63,6 +66,8 @@
         public void EndBattle()
         {
             State = BattleState.ExitingMap;
+
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("Victory");
 
             // Clear timer
             CurrentWaveInformation.Time = 0;

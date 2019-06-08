@@ -17,15 +17,15 @@ public class ButtonPressed : MonoBehaviour
         if (this.GetComponent<Image>().sprite == this.PressedSprite)
         {
             this.Pressed = true;
-            Debug.Log(Pressed);
+            // Debug.Log(Pressed);
         }
         else
         {
             this.Pressed = false;
-            Debug.Log(Pressed);
+            // Debug.Log(Pressed);
         }
 
-        Debug.Log(sprite);
+        // Debug.Log(sprite);
     }
 
     public void Unpress()

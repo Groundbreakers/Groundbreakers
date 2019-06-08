@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Assets.Scripts;
 
+using CombatManager;
+
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -24,7 +26,7 @@ public class Manager : MonoBehaviour
     void Update()
     {
         // Fade in & out effects
-        if (true) // BattleManager.GameState != GameStates.Null
+        if (SetupBattleField.State != SetupBattleField.BattleState.NotInBattle) // BattleManager.GameState != GameStates.Null
         {
             if (peaceTheme.volume != 0.0F)
             {
@@ -74,6 +76,7 @@ public class Manager : MonoBehaviour
             peaceTheme = audioSources[5];
             battleTheme = audioSources[6];
         }
+
         peaceTheme.Play();
         battleTheme.Play();
     }
