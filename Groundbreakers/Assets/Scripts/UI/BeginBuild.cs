@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using TileMaps;
+﻿using TileMaps;
 
 using UnityEngine;
 

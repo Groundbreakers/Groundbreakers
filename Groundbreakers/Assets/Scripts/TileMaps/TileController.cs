@@ -42,6 +42,11 @@
             Inactive,
 
             /// <summary>
+            ///     Inactive, can be hovered, can click.
+            /// </summary>
+            Boooming,
+
+            /// <summary>
             ///     Swapping, can be hovered, also allow selection.
             /// </summary>
             Swapping,
@@ -92,6 +97,11 @@
         public void BeginSwap()
         {
             this.Begin(CommandState.Swapping);
+        }
+
+        public void BeginBooom()
+        {
+            this.Begin(CommandState.Boooming);
         }
 
         public void BeginDeploying(int index)
@@ -172,6 +182,25 @@
             }
 
             this.SwapSelectedTiles();
+        }
+
+        public void BooomTile(GameObject tile)
+        {
+            var pos = tile.transform.position;
+            var blocade = this.tilemap.GetBlockadeAt(pos);
+
+            if (blocade)
+            {
+                this.tilemap.ChangeTileAt(pos, Tiles.Stone);
+
+                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.05f);
+
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+            }
+            else
+            {
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
+            }
         }
 
         /// <summary>

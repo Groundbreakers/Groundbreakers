@@ -119,6 +119,8 @@
                     canHover = this.party.CanDeployAt(tile.transform);
 
                     break;
+                case TileController.CommandState.Boooming:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -150,6 +152,9 @@
                     break;
                 case TileController.CommandState.Deploying:
                     this.HandleDeploying();
+                    break;
+                case TileController.CommandState.Boooming:
+                    this.HandleBooom();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -186,6 +191,8 @@
                     GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
 
                     break;
+
+                case TileController.CommandState.Boooming:
                 case TileController.CommandState.Building:
 
                     this.tileController.ClearSelected();
@@ -224,7 +231,6 @@
             var tile = this.currentHovered.transform.gameObject;
             var status = tile.GetComponent<TileStatus>();
 
-
             if (status.CanPass())
             {
                 var blockade = Instantiate(
@@ -244,6 +250,15 @@
         private void HandleDeploying()
         {
             this.party.DeployCurrentCharacterAt(this.currentHovered.transform);
+
+            GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("CharacterTransform");
+        }
+
+        private void HandleBooom()
+        {
+            var tile = this.currentHovered.transform.gameObject;
+
+            this.tileController.BooomTile(tile);
         }
 
         #endregion
