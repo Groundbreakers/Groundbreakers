@@ -13,6 +13,7 @@
     using TileMaps;
 
     using UnityEngine;
+    using UnityEngine.Assertions;
     using UnityEngine.UI;
 
     /// <inheritdoc />
@@ -35,6 +36,8 @@
         private TilemapEnter tileEnter;
 
         private List<Spanwer> spanwers;
+
+        private GameObject sectorMap;
 
         public enum BattleState
         {
@@ -105,6 +108,10 @@
         protected void OnEnable()
         {
             DOTween.Init(true, true);
+
+            this.sectorMap = GameObject.Find("SectorMap");
+
+            Assert.IsNotNull(this.sectorMap);
 
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
@@ -195,6 +202,8 @@
             yield return new WaitForSeconds(3.0f);
 
             State = BattleState.NotInBattle;
+
+            this.sectorMap.SetActive(true);
         }
 
         private void KillAllEnemies()
