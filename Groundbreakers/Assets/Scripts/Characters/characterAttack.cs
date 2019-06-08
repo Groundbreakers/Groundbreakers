@@ -299,6 +299,7 @@ public class characterAttack : MonoBehaviour
                 {
                     this.lineRenderer.enabled = true;
                 }
+
                 this.fireCountdown = 0f;
             }
         }

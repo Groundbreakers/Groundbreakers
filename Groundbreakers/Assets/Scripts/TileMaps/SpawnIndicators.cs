@@ -80,8 +80,8 @@
 
         public void HideIndicators()
         {
-            Debug.Log("Trying to hide the sprite");
-
+            Debug.Log($"Trying to hide the sprite{this.spawnPoints.Count + this.defendPoints.Count}");
+            
             foreach (var go in this.spawnPoints.Concat(this.defendPoints))
             {
                 Debug.Log("Hiding");

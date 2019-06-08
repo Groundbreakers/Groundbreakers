@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy_Death : MonoBehaviour
 {
@@ -9,21 +6,23 @@ public class Enemy_Death : MonoBehaviour
 
     public GameObject loot;
 
-    private float lootDrop_probability = 15f;
+    private readonly int lootDropProbability = 15;
 
-    public void setDirection(int i) {
-        anim.SetInteger("Direction", i);
-        createLoot(); // drop loot
+    private static readonly int Direction = Animator.StringToHash("Direction");
+
+    public void setDirection(int i)
+    {
+        this.anim.SetInteger(Direction, i);
+        this.createLoot(); // drop loot
     }
 
-    private void createLoot() {
+    private void createLoot()
+    {
+        var probability = Random.Range(0, 100);
 
-        float probability = Random.Range(0f, 100f);
-
-        if (probability <= lootDrop_probability)
+        if (probability <= this.lootDropProbability)
         {
-            GameObject temp = (GameObject)Instantiate(loot, transform.position, transform.rotation);
-            //temp.transform.parent = GameObject.Find("Loot").transform;
+            var temp = Instantiate(this.loot, this.transform.position, this.transform.rotation);
         }
     }
 }
