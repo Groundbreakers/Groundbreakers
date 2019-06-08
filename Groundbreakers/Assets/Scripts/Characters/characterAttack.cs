@@ -64,7 +64,20 @@ public class characterAttack : MonoBehaviour
         myCollider = GetComponent<CircleCollider2D>();
         trickster = GetComponent<characterAttributes>();
         firePoint = rangeAttackFirepoint.position;
-        //this.lineRenderer.enabled = false;
+        if(stance == "Gun")
+        {
+            trickster.gun();
+        }
+        else
+        {
+            trickster.melee();
+        }
+        
+        if(this.lineRenderer != null)
+        {
+            this.lineRenderer.enabled = false;
+        }
+        
     }
 
     void Start()
@@ -74,7 +87,7 @@ public class characterAttack : MonoBehaviour
         myCollider.radius = trickster.RNG + .5f;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         
         if (target != null && !isChanging)
