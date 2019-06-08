@@ -238,8 +238,6 @@ public class characterAttack : MonoBehaviour
 
     public void OnDisable()
     {
-        Debug.Log("OnDisable of a character attack");
-
         targetedEnemies.Clear();
         target = null;
         trickster.keepStance();
@@ -334,6 +332,11 @@ public class characterAttack : MonoBehaviour
         else if (this.trickster.pierceAE)
         {
             rangedWeapon.GetComponent<BulletLauncher>().setType(4);
+            this.RangedAttack();
+        }
+        else if (this.trickster.multishotAE)
+        {
+            rangedWeapon.GetComponent<BulletLauncher>().setType(2);
             this.RangedAttack();
         }
         else if (type == BulletLauncher.Type.Laser)

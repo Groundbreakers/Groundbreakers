@@ -238,7 +238,7 @@
                     tile.transform);
 
                 GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
-                this.terrainController.IncrementRiskLevel(0.1f);
+                this.terrainController.IncrementRiskLevel(0.15f);
             }
             else
             {

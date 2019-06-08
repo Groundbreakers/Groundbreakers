@@ -63,6 +63,11 @@
             Debug.Log($"Selected = {this.currentSelectedIndex}");
         }
 
+        public int GetCurrentlySelectedIndex()
+        {
+            return this.currentSelectedIndex;
+        }
+
         /// <summary>
         ///     Use this to check if you can deploy the character on this tile. Particularly useful
         ///     to render option area.

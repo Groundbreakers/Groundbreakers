@@ -34,6 +34,8 @@
 
         private Settings setting;
 
+        private int lastSelected = -1;
+
         public enum CommandState
         {
             /// <summary>
@@ -110,6 +112,17 @@
 
             Assert.IsTrue(Enumerable.Range(0, 5).Contains(index));
             Assert.IsNotNull(go);
+
+            // Off course skip this
+            if (Active == CommandState.Deploying && index == this.lastSelected)
+            {
+                this.BeginInactive();
+                return;
+            }
+
+            this.lastSelected = index;
+
+            // this.StartCoroutine(this.PerodicallyIncreaseRisk());
 
             go.SelectCharacter(index);
 
@@ -201,7 +214,7 @@
             {
                 this.tilemap.ChangeTileAt(pos, Tiles.Stone);
 
-                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.05f);
+                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.1f);
 
                 GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
             }
