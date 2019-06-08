@@ -107,7 +107,7 @@
             status.SetCanPass(true);
             status.Weight = this.previousWeight;
 
-            this.gameMap.ChangeTileAt(parent.position, Tiles.Stone);
+            parent.GetComponent<DynamicTileBlock>().ChangeTileType(Tiles.Stone);
         }
     }
 }

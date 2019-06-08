@@ -209,10 +209,6 @@ public class characterAttack : MonoBehaviour
                         firePoint = new Vector3(gameObject.transform.position.x - 0.1425f, gameObject.transform.position.y + .1f, gameObject.transform.position.z);
                     }
                 
-                
-                
-
-                //Debug.Log(angle);
             }
 
         }

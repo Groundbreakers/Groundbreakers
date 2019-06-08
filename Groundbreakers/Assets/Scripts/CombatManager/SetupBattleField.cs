@@ -47,6 +47,10 @@
         [Button]
         public void EndBattle()
         {
+            // Clear timer
+            CurrentWaveInformation.Time = 0;
+            CurrentWaveInformation.WaveNumber = 0;
+
             this.StartCoroutine(this.Terminate());
         }
 
