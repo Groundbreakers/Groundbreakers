@@ -92,7 +92,7 @@ public class CharacterManager : MonoBehaviour
 
         //Basic Info
         //this.name.text = characterAttributes.name;
-        //this.profession.text = characterAttributes.profession
+        //this.profession.text = characterAttributes.profession;
 
         if (this.profession.text == "Scholar")
         {

@@ -36,7 +36,7 @@
 
         [InfoBox("Setup the map and let battle begins.")]
         [Button]
-        public void Setup()
+        public void Setup(int depth, int risk)
         {
             this.StartCoroutine(this.Begin());
         }
@@ -64,13 +64,13 @@
         {
             if (Input.GetKeyDown("space"))
             {
-                this.Setup();
+                this.Setup(50, 1);
             }
         }
 
         private static List<Spanwer> SetupSpawner()
         {
-             return FindObjectsOfType(typeof(Spanwer)).Select(o => (Spanwer)o).ToList();
+            return FindObjectsOfType(typeof(Spanwer)).Select(o => (Spanwer)o).ToList();
         }
 
         private IEnumerator Begin()
@@ -84,7 +84,7 @@
             while (!this.indicators.HasValidPath());
 
             yield return new WaitForSeconds(0.1f);
-            
+
             // Initialize Environment
             this.tilemap.PostSetupMap();
 
@@ -110,6 +110,8 @@
             this.tileEnter.Terminate();
             this.characters.RetrieveAllCharacters();
 
+            this.indicators.HideIndicators();
+
             yield return new WaitForSeconds(3.0f);
         }
 
@@ -117,7 +119,7 @@
         {
             foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                GameObject.Destroy(e);
+                Destroy(e);
             }
         }
 

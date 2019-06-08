@@ -78,6 +78,14 @@
             }
         }
 
+        public void HideIndicators()
+        {
+            foreach (var go in this.spawnPoints.Concat(this.defendPoints))
+            {
+                go.GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+
         /// <summary>
         ///     Do a search to check if there is any valid path from start points to end point.
         ///     Should be checked each time map is generated. And if no valid path, you should

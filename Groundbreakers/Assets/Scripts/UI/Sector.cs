@@ -27,7 +27,7 @@ public class Sector : MonoBehaviour
 
     public void HandleButton()
     {
-        FindObjectOfType<SetupBattleField>().Setup();
+        FindObjectOfType<SetupBattleField>().Setup(Depth, FindObjectOfType<Difficulty>().Risk);
         GameObject.Find("SectorMap").GetComponent<SectorGenerator>().ShowPath(this.Row, this.Column);
     }
 

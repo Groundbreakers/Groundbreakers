@@ -15,7 +15,9 @@ public class Background : MonoBehaviour
 
     public void UpdateBackground()
     {
-        var region = GameObject.Find("LevelManager").GetComponent<LevelManager.LevelManager>().Region;
+        // var region = GameObject.Find("LevelManager").GetComponent<LevelManager.LevelManager>().Region;
+
+        var region = 1;
 
         if (region == 1)
             backgroundRawImage.texture = this.background1;

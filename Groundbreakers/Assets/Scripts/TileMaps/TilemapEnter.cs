@@ -67,6 +67,8 @@
 
             var delay = Random.Range(0.0f, this.maxDelay);
 
+            sprite.material = this.defaultMaterial;
+
             // Relocate block
             var position = block.transform.position;
             var ori = position;
@@ -90,6 +92,8 @@
                 if (type == Tiles.HighGround)
                 {
                     var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+                    item.material = this.defaultMaterial;
 
                     item.DOFade(1.0f, this.duration)
                         .SetEase(Ease.OutExpo)

@@ -4,34 +4,32 @@ using UnityEngine;
 
 public class characterAttributes : MonoBehaviour
 {
+
+    //Name
+    public string name;
+    public string profession;
+    [Range(1, 5)]
+    public int Level = 1;
     //Stats
     public int POW = 2;
     public int ROF = 2;
     public int RNG = 2;
-    public int MOB = 2;
     public int AMP = 1;
+    public int MOB = 2;
 
 
 
     //Attack Effects
-    public bool burstAE = false;
-    public bool ricochetAE = false;
     public bool laserAE = false;
-    public bool splashAE = false;
     public bool pierceAE = false;
-    public bool traceAE = false;
-    public bool whirwindAE = false;
-    public bool reachAE = false;
-
+    public bool whirlwindAE = false;
+    public bool multishotAE = false;
+    public bool reflectionAE = false;
+    public bool trueStrikeAE = false;
     //Status Effects
     public bool slowSE = false;
     public bool stunSE = false;
     public bool burnSE = false;
-    public bool markSE = false;
-    public bool purgeSE = false;
-    public bool breakSE = false;
-    public bool blightSE = false;
-    public bool netSE = false;
     public bool disabled = false;
 
     //Scripts
@@ -46,22 +44,19 @@ public class characterAttributes : MonoBehaviour
     void Awake()
     {
         attack = GetComponent<characterAttack>();
+        updateAttributes();
     }
     //functions
     public void gun()
     {
         stance = "gun";
-        POW = 2;
-        RNG = 2;
-        AMP = 1;
+        updateAttributes();
     }
 
     public void melee()
     {
         stance = "melee";
-        POW = 3;
-        RNG = 1;
-        AMP = 2;
+        updateAttributes();
     }
 
     public void disable()
@@ -75,93 +70,289 @@ public class characterAttributes : MonoBehaviour
     }
 
 
-    public void updateAttributes(int[] inventory)
+    public void updateAttributes()
     {
         //reset stats and update character attributes
         resetStats();
-        POW += inventory[0];
-        ROF += inventory[1];
-        RNG += inventory[2];
-        MOB += inventory[3];
-        AMP += inventory[4];
 
-        if(POW > 10)
+        switch (profession)
         {
-            POW = 10;
+            case "Trickster":
+                TricksterLevelUp();
+                break;
+            case "Scavenger":
+                ScavengerLevelUp();
+                break;
+            case "Gladiator":
+                GladiatorLevelUp();
+                break;
+            case "Scholar":
+                ScholarLevelUp();
+                break;
+            case "Agent":
+                AgentLevelUp();
+                break;
         }
 
-        if (ROF > 10)
+        //unecessary code
+        if (POW > 5)
         {
-            ROF = 10;
+            POW = 5;
         }
 
-        if (RNG > 10)
+        if (ROF > 5)
         {
-            RNG = 10;
+            ROF = 5;
         }
 
-        if (MOB > 10)
+        if (RNG > 5)
         {
-            MOB = 10;
+            RNG = 5;
         }
 
-        if (AMP > 10)
+        if (MOB > 5)
         {
-            AMP = 10;
+            MOB = 5;
         }
 
-
-
-        bool[] temp = new bool[16];
-        for (int i = 5; i < inventory.Length; i++)
+        if (AMP > 5)
         {
-            if (inventory[i] > 0)
-            {
-                temp[i - 5] = true;
-            }
-            else
-            {
-                temp[i - 5] = false;
-            }
+            AMP = 5;
         }
-
-        //update effects
-        burstAE = temp[0];
-        ricochetAE = temp[1];
-        laserAE = temp[2];
-        splashAE = temp[3];
-        pierceAE = temp[4];
-        traceAE = temp[5];
-        whirwindAE = temp[6];
-        reachAE = temp[7];
-        slowSE = temp[8];
-        stunSE = temp[9];
-        burnSE = temp[10];
-        markSE = temp[11];
-        purgeSE = temp[12];
-        breakSE = temp[13];
-        blightSE = temp[14];
-        netSE = temp[15];
     }
 
     public void resetStats()
     {
-        if (stance == "gun")
+        switch(profession)
         {
-            POW = 2;
-            ROF = 2;
-            RNG = 2;
-            MOB = 2;
-            AMP = 1;
+            case "Trickster":
+                if (stance == "gun")
+                {
+                    POW = 3;
+                    ROF = 2;
+                    RNG = 3;
+                    AMP = 2;
+                }
+                else
+                {
+                    POW = 4;
+                    ROF = 1;
+                    RNG = 1;
+                    AMP = 3;
+                }
+                break;
+            case "Scavenger":
+                if (stance == "gun")
+                {
+                    POW = 3;
+                    ROF = 1;
+                    RNG = 3;
+                    AMP = 3;
+                }
+                else
+                {
+                    POW = 3;
+                    ROF = 1;
+                    RNG = 1;
+                    AMP = 3;
+                }
+                break;
+            case "Gladiator":
+                    POW = 4;
+                    ROF = 2;
+                    RNG = 1;
+                    AMP = 3;
+                break;
+            case "Scholar":
+                    POW = 1;
+                    ROF = 5;
+                    RNG = 3;
+                    AMP = 1;
+                break;
+            case "Agent":
+                    POW = 1;
+                    ROF = 5;
+                    RNG = 3;
+                    AMP = 1;
+                break;
         }
-        else
+    }
+
+    public void LevelUp()
+    {
+        if(Level < 5)
         {
-            POW = 3;
-            ROF = 2;
-            RNG = 1;
-            MOB = 2;
-            AMP = 2;
+            //increase Level
+            Level++;
+            updateAttributes();
         }
+
+        
+    }
+
+    private void TricksterLevelUp()
+    {
+        switch (Level)
+        {
+            case 2:
+                ROF += 1;
+                AMP += 1;
+                break;
+            case 3:
+                ROF += 1;
+                AMP += 1;
+                whirlwindAE = true;
+                break;
+            case 4:
+                if(stance == "gun")
+                {
+                    RNG += 1;
+                }
+                POW += 1;
+                ROF += 1;
+                AMP += 1;
+                whirlwindAE = true;
+                break;
+            case 5:
+                if (stance == "gun")
+                {
+                    RNG += 1;
+                }
+                POW += 1;
+                ROF += 1;
+                AMP += 1;
+                whirlwindAE = true;
+                slowSE = true;
+                break;
+        }          
+    }
+
+    private void ScavengerLevelUp()
+    {
+        switch (Level)
+        {
+            case 2:
+                POW += 1;
+                AMP += 1;
+                break;
+            case 3:
+                POW += 1;
+                AMP += 1;
+                multishotAE = true;
+                break;
+            case 4:
+                POW += 1;
+                AMP += 1;
+                multishotAE = true;
+                if (stance == "gun")
+                {
+                    RNG += 1;
+                }
+                ROF += 1;
+                break;
+            case 5:
+                POW += 1;
+                AMP += 1;
+                multishotAE = true;
+                if (stance == "gun")
+                {
+                    RNG += 1;
+                }
+                ROF += 1;
+                burnSE = true;
+                break;
+        }
+
+    }
+
+    private void GladiatorLevelUp()
+    {
+        switch (Level)
+        {
+            case 2:
+                POW += 1;
+                AMP += 1;
+                break;
+            case 3:
+                POW += 1;
+                AMP += 1;
+                stunSE = true;
+                break;
+            case 4:
+                ROF += 1;
+                POW += 1;
+                AMP += 2;
+                stunSE = true;
+                break;
+            case 5:
+                ROF += 1;
+                POW += 1;
+                AMP += 2;
+                stunSE = true;
+                slowSE = true;
+                break;
+        }
+
+    }
+
+    private void ScholarLevelUp()
+    {
+        switch (Level)
+        {
+            case 2:
+                AMP += 1;
+                RNG += 1;
+                break;
+            case 3:
+                AMP += 1;
+                RNG += 1;
+                slowSE = true;
+                break;
+            case 4:
+                AMP += 1;
+                RNG += 2;
+                POW += 1;
+                slowSE = true;
+                break;
+            case 5:
+                AMP += 1;
+                RNG += 2;
+                POW += 1;
+                slowSE = true;
+                reflectionAE = true;
+                break;
+        }
+
+    }
+
+    private void AgentLevelUp()
+    {
+        switch (Level)
+        {
+            case 2:
+                ROF += 1;
+                RNG += 1;
+                break;
+            case 3:
+                ROF += 1;
+                RNG += 1;
+                trueStrikeAE = true;
+                break;
+            case 4:
+                ROF += 2;
+                RNG += 1;
+                POW += 1;
+                trueStrikeAE = true;
+                break;
+            case 5:
+                ROF += 2;
+                RNG += 1;
+                POW += 1;
+                trueStrikeAE = true;
+                pierceAE = true;
+                break;
+        }
+
     }
 
     public void Transform()
@@ -179,6 +370,7 @@ public class characterAttributes : MonoBehaviour
             AMP -= 1;
         }
     }
+
 
     public void keepStance()
     {

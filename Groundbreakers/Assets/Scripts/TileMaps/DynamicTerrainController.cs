@@ -13,11 +13,23 @@
     using UnityEngine.Assertions;
     using UnityEngine.UI;
 
+    using Random = UnityEngine.Random;
+
     /// <summary>
     ///     This component provides API for controlling dynamic terrain changes.
     /// </summary>
     public class DynamicTerrainController : MonoBehaviour
     {
+        /// <summary>
+        ///     Using default sprite material first, then change this back to outline material when
+        ///     the entering animation is completed. 
+        /// </summary>
+        [SerializeField]
+        private Material outlineMaterial;
+
+        [SerializeField]
+        private Material defaultMaterial;
+
         [Required]
         [SerializeField]
         private GameObject mushroomPrefab;
@@ -36,7 +48,7 @@
         /// </summary>
         private float riskLevel;
 
-        private bool shaking;
+        public bool Busy { get; private set; }
 
         #region Public APIs
 
@@ -50,11 +62,6 @@
         {
             this.riskLevel += value;
 
-            if (this.riskLevel >= 1.0f)
-            {
-                this.RerollMap();
-            }
-
             this.UpdateUi();
         }
 
@@ -66,6 +73,7 @@
         public void RerollMap()
         {
             FindObjectOfType<TileController>().BeginInactive();
+            
             this.ResetRiskLevel();
 
             // Should generate somewhat a new map
@@ -105,7 +113,7 @@
         [Button]
         public void StartEarthQuake()
         {
-            if (this.shaking)
+            if (this.Busy)
             {
                 // Play bad SE
                 return;
@@ -128,6 +136,16 @@
             Assert.IsNotNull(this.riskLevelUi);
 
             this.UpdateUi();
+        }
+
+        private void Update()
+        {
+            if (this.riskLevel >= 1.0f && !this.Busy)
+            {
+                FindObjectOfType<FlashScreen>().StartScreenFlash(Color.white, 0.25f);
+
+                this.RerollMap();
+            }
         }
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
@@ -153,19 +171,20 @@
                 Debug.Log(pos);
             }
 
+            block.GetComponent<DynamicTileBlock>().ChangeTileType(newType);
+
             if (newType == Tiles.HighGround)
             {
                 this.CreateEnterAnimation(block);
             }
-
-            // this.tilemap.ChangeTileAt(pos, newType);
-            block.GetComponent<DynamicTileBlock>().ChangeTileType(newType);
         }
 
         #region Earth Quake
 
         private IEnumerator BeginEarthQuake()
         {
+            this.Busy = true;
+
             const float Speed = 0.25f;
 
             for (var i = 0; i < Tilemap.Dimension; i++)
@@ -175,6 +194,8 @@
 
                 yield return new WaitForSeconds(Speed);
             }
+
+            this.Busy = false;
         }
 
         private void ShakeRow(int row)
@@ -203,8 +224,6 @@
             const float MaxDelay = 0.25f;
             var offset = new Vector3(0.0f, 5.0f);
 
-            var sprite = block.GetComponent<SpriteRenderer>();
-
             // Relocate block
             var position = block.transform.position;
             var ori = position;
@@ -215,8 +234,13 @@
             var delay = Random.Range(0.0f, MaxDelay);
 
             block.transform.DOMove(ori, Duration)
-                .SetEase(Ease.OutExpo)
+                .SetEase(Ease.InCirc)
                 .SetDelay(delay);
+
+            // Handle for high ground
+            var item = block.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+            item.material = this.outlineMaterial;
         }
 
         private void StunEnemiesAtRow(int row)

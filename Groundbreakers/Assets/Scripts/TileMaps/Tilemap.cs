@@ -36,11 +36,6 @@
         [SerializeField]
         private GameObject mushroomPrefab;
 
-        //[SerializeField]
-        //private GameObject plantPrefab;
-        //[SerializeField]
-        //private GameObject highGroundPrefab;
-
         /// <summary>
         ///     Gets the squared map's dimension
         /// </summary>

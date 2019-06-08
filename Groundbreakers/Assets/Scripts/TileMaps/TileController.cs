@@ -1,5 +1,6 @@
 ﻿namespace TileMaps
 {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -41,6 +42,11 @@
             Inactive,
 
             /// <summary>
+            ///     Inactive, can be hovered, can click.
+            /// </summary>
+            Boooming,
+
+            /// <summary>
             ///     Swapping, can be hovered, also allow selection.
             /// </summary>
             Swapping,
@@ -67,6 +73,8 @@
 
         public void BeginInactive()
         {
+            this.StopAllCoroutines();
+
             Active = CommandState.Inactive;
             Time.timeScale = this.setting.timeScale;
 
@@ -89,6 +97,11 @@
         public void BeginSwap()
         {
             this.Begin(CommandState.Swapping);
+        }
+
+        public void BeginBooom()
+        {
+            this.Begin(CommandState.Boooming);
         }
 
         public void BeginDeploying(int index)
@@ -123,6 +136,9 @@
             }
 
             Time.timeScale = 0.00f;
+            
+            // Should start increasing the risk
+            this.StartCoroutine(this.PerodicallyIncreaseRisk());
 
             Active = state;
         }
@@ -168,6 +184,25 @@
             this.SwapSelectedTiles();
         }
 
+        public void BooomTile(GameObject tile)
+        {
+            var pos = tile.transform.position;
+            var blocade = this.tilemap.GetBlockadeAt(pos);
+
+            if (blocade)
+            {
+                this.tilemap.ChangeTileAt(pos, Tiles.Stone);
+
+                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.05f);
+
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
+            }
+            else
+            {
+                GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileError");
+            }
+        }
+
         /// <summary>
         ///     Indicate if has something selected.
         /// </summary>
@@ -208,9 +243,6 @@
         /// </param>
         private void SwapTiles(Vector3 first, Vector3 second)
         {
-            // tmp
-            FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.15f);
-
             Busy = true;
 
             var tileA = this.tilemap.GetTileBlockAt(first);
@@ -261,6 +293,21 @@
             sequence.SetUpdate(true);
         }
 
+        private IEnumerator PreventBug(GameObject first, GameObject second)
+        {
+            Time.timeScale = 1.0f;
+
+            yield return new WaitForFixedUpdate();
+
+            first.GetComponent<TileStatus>().IsMoving = false;
+            second.GetComponent<TileStatus>().IsMoving = false;
+
+            Time.timeScale = 0.0f;
+
+            // tmp
+            FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.15f);
+        }
+
         private void OnSwapComplete(GameObject tile)
         {
             this.swappingTiles.Add(tile);
@@ -271,11 +318,10 @@
                 var first = this.swappingTiles[0];
                 var second = this.swappingTiles[1];
 
-                first.GetComponent<TileStatus>().IsMoving = false;
-                second.GetComponent<TileStatus>().IsMoving = false;
-
                 this.SetRenderOrderFlying(first, "GroundTiles", "Mobs");
                 this.SetRenderOrderFlying(second, "GroundTiles", "Mobs");
+
+                this.StartCoroutine(this.PreventBug(first, second));
 
                 Busy = false;
             }
@@ -299,6 +345,16 @@
             {
                 var render = child.GetComponent<SpriteRenderer>();
                 render.sortingLayerName = childLayer;
+            }
+        }
+
+        private IEnumerator PerodicallyIncreaseRisk()
+        {
+            for (;;)
+            {
+                yield return new WaitForSecondsRealtime(1.0f);
+
+                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
             }
         }
     }

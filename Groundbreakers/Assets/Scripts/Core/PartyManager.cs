@@ -23,7 +23,6 @@
         /// <summary>
         ///     Select Which tile type can you deploy the characters on.
         /// </summary>
-        [Required]
         [SerializeField]
         [EnumToggleButtons]
         private Tiles canDeployType = Tiles.HighGround;
@@ -33,6 +32,24 @@
         private List<GameObject> characters = new List<GameObject>();
 
         private int currentSelectedIndex = Unselected;
+
+        /// <summary>
+        ///     This Must be called when a battle starts.
+        ///     And you want to have the character game objects already instantiated in under the
+        ///     Player Party' game object.
+        /// </summary>
+        public void LoadCharacters()
+        {
+            this.characters.Clear();
+
+            foreach (Transform child in this.transform)
+            {
+                // Cache the character
+                this.characters.Add(child.gameObject);
+            }
+
+            this.RetrieveAllCharacters();
+        }
 
         public void SelectCharacter(int index)
         {
@@ -121,7 +138,7 @@
             character.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             character.SetActive(false);
 
-            var i = character.transform.GetSiblingIndex();
+            // var i = character.transform.GetSiblingIndex();
             // this.TurnOnOff(i, true);
         }
 
@@ -151,15 +168,6 @@
 
         private void OnEnable()
         {
-            this.characters.Clear();
-
-            foreach (Transform child in this.transform)
-            {
-                // Cache the character
-                this.characters.Add(child.gameObject);
-            }
-
-            this.RetrieveAllCharacters();
         }
 
         private bool IsAvailable(int index)
