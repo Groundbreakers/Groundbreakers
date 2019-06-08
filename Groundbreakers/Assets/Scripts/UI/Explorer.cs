@@ -15,6 +15,8 @@ public class Explorer : MonoBehaviour
 
     public int profession;
 
+    public GameObject popup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,8 @@ public class Explorer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        var screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 100.0f);
+        this.popup.transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
     }
 
     public void LeftButton()
@@ -71,5 +74,15 @@ public class Explorer : MonoBehaviour
     private int mod(int x, int m)
     {
         return (x % m + m) % m;
+    }
+
+    public void ShowPopup()
+    {
+        this.popup.SetActive(true);
+    }
+
+    public void HidePopup()
+    {
+        this.popup.SetActive(false);
     }
 }
