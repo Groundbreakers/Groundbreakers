@@ -157,8 +157,9 @@
             }
 
             Time.timeScale = 0.00f;
-            
-            // Should start increasing the risk
+
+            // Should start inc
+            this.StopAllCoroutines();
             this.StartCoroutine(this.PerodicallyIncreaseRisk());
 
             Active = state;
