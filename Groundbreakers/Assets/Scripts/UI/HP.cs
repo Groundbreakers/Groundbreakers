@@ -24,12 +24,7 @@ public class HP : MonoBehaviour
 
         Camera.main.DOShakePosition(1.0f, power);
 
-        var sprite = GameObject.Find("RedScreen").GetComponent<SpriteRenderer>();
-
-        var sequence = DOTween.Sequence();
-        var value = Mathf.Clamp(power, 0.0f, 1.0f);
-        sequence.Append(sprite.DOFade(value, 0.3f).SetEase(Ease.OutBounce));
-        sequence.Append(sprite.DOFade(0.0f, 0.3f).SetEase(Ease.OutBounce));
+        FindObjectOfType<FlashScreen>().StartScreenFlash(Color.red, power);
 
         // Blow are the old code
         this.healthPoint += amount;

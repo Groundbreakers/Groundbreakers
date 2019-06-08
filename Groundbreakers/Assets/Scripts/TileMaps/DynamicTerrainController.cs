@@ -143,6 +143,8 @@
         {
             if (this.riskLevel >= 1.0f && !this.Busy)
             {
+                FindObjectOfType<FlashScreen>().StartScreenFlash(Color.white, 0.25f);
+
                 this.RerollMap();
             }
         }
