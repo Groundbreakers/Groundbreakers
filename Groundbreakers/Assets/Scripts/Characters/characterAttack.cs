@@ -45,6 +45,8 @@ public class characterAttack : MonoBehaviour
     /// </summary>
     private GameObject rangedWeapon;
 
+    private static readonly int Firing = Animator.StringToHash("Firing");
+
     /// <summary>
     /// Written by Ivan
     /// </summary>
@@ -272,45 +274,43 @@ public class characterAttack : MonoBehaviour
         if (this.attackMode == "default") defaultMode();
     }
 
-
-    void fireCount()
+    private void fireCount()
     {
+        var type = this.rangedWeapon.GetComponent<BulletLauncher>().type;
 
-
-        myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
+        this.myCollider.radius = this.trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)
         {
-            animator.SetBool("Firing", false);
+            this.animator.SetBool("Firing", false);
 
-            if(this.lineRenderer != null)
+            if (this.lineRenderer != null)
             {
                 if (this.lineRenderer.enabled)
                 {
-                   this.lineRenderer.enabled = false;
+                    this.lineRenderer.enabled = false;
                 }
             }
+
             return;
         }
-        else
-        {
-            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
-            {
-                if (this.lineRenderer)
-                {
-                    this.lineRenderer.enabled = true;
-                }
 
-                this.fireCountdown = 0f;
+        if (type == BulletLauncher.Type.Laser)
+        {
+            if (this.lineRenderer)
+            {
+                this.lineRenderer.enabled = true;
             }
+
+            this.fireCountdown = 0f;
         }
 
         if (this.fireCountdown <= 0f)
         {
-            animator.SetBool("Firing", true);
+            this.animator.SetBool(Firing, true);
 
             this.PerformAttack();
 
-            if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type != BulletLauncher.Type.Laser)
+            if (type != BulletLauncher.Type.Laser)
             {
                 this.fireCountdown = 1f / this.fireRate;
             }
@@ -321,25 +321,29 @@ public class characterAttack : MonoBehaviour
 
     public void PerformAttack()
     {
+        var type = this.rangedWeapon.GetComponent<BulletLauncher>().type;
+
         if (this.stance.Equals("Melee"))
         {
             this.MeleeAttack();
         }
-        else if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
+        else if (this.trickster.pierceAE)
+        {
+            type = BulletLauncher.Type.Penetrate;
+        }
+        else if (type == BulletLauncher.Type.Laser)
         {
             this.LaserAttack(this.target);
-
         }
         else
         {
-            if(this.lineRenderer != null)
+            if (this.lineRenderer != null)
             {
                 if (this.lineRenderer.enabled)
                 {
                     this.lineRenderer.enabled = false;
                 }
             }
-
 
             this.RangedAttack();
         }
@@ -364,16 +368,17 @@ public class characterAttack : MonoBehaviour
 
     public void LaserAttack(Transform target)
     {
+        var launcher = this.rangedWeapon.GetComponent<BulletLauncher>();
+
         var offset = new Vector3(0.0f, 0.5f, 0.0f);
 
-        GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
+        launcher.SetHandlerAttributeIfNot();
 
-        this.lineRenderer.SetPosition(0, firePoint);
+        this.lineRenderer.SetPosition(0, this.firePoint);
 
         this.lineRenderer.SetPosition(1, this.target.position);
 
-        GameObject.Find("RangedWeapon").GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject, false);
-
+        this.rangedWeapon.GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject);
     }
 
     private void setMeleeStatusAttributes(MeleeManager meleeattack)

@@ -6,6 +6,8 @@
 
     using Characters;
 
+    using Core;
+
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
@@ -24,9 +26,9 @@
     {
         public static WaveInformation CurrentWaveInformation;
 
-        //private SpawnCharacters characters;
-
         private SpawnIndicators indicators;
+
+        private PartyManager party;
 
         private Tilemap tilemap;
 
@@ -54,7 +56,7 @@
 
             this.tilemap = this.GetComponentInChildren<Tilemap>();
             this.indicators = this.GetComponentInChildren<SpawnIndicators>();
-            //this.characters = this.GetComponentInChildren<SpawnCharacters>();
+            this.party = this.GetComponentInChildren<PartyManager>();
             this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
 
             this.spanwers = SetupSpawner();
@@ -108,7 +110,7 @@
             this.KillAllEnemies();
             this.KillAllMisc();
 
-            //this.characters.RetrieveAllCharacters();
+            this.party.RetrieveAllCharacters();
 
             yield return new WaitForSeconds(0.01f);
 
