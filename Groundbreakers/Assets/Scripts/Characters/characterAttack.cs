@@ -297,19 +297,27 @@ public class characterAttack : MonoBehaviour
                 this.lineRenderer.enabled = true;
             }
 
-            this.fireCountdown = 0f;
+            this.LaserAttack(this.target);
         }
 
+        
         if (this.fireCountdown <= 0f)
         {
             this.animator.SetBool(Firing, true);
 
             this.PerformAttack();
 
-            if (type != BulletLauncher.Type.Laser)
+            if (type == BulletLauncher.Type.Laser)
+            {
+                this.fireCountdown = .75f / (this.fireRate);
+            }
+            else
             {
                 this.fireCountdown = 1f / this.fireRate;
             }
+            
+
+            
         }
 
         this.fireCountdown -= Time.deltaTime;
@@ -330,7 +338,8 @@ public class characterAttack : MonoBehaviour
         }
         else if (type == BulletLauncher.Type.Laser)
         {
-            this.LaserAttack(this.target);
+            //this.LaserAttack(this.target);
+            this.rangedWeapon.GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject);
         }
         else
         {
@@ -375,7 +384,7 @@ public class characterAttack : MonoBehaviour
 
         this.lineRenderer.SetPosition(1, this.target.position);
 
-        this.rangedWeapon.GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject);
+        
     }
 
     private void setMeleeStatusAttributes(MeleeManager meleeattack)
