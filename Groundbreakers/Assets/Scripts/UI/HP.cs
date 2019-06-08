@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿using CombatManager;
+
+using DG.Tweening;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,6 +60,9 @@ public class HP : MonoBehaviour
             var bgmManager = GameObject.Find("BGM Manager");
             var manager = bgmManager.GetComponent<Manager>();
             manager.GameOver();
+
+            // 
+            FindObjectOfType<SetupBattleField>().OnGameOver();
         }
     }
 
