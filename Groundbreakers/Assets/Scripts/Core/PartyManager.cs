@@ -88,8 +88,7 @@
             var pos = tile.position;
 
             return this.characters.All(
-                x => Vector3.Distance(
-                         x.transform.position, pos) > Mathf.Epsilon);
+                x => Vector3.Distance(x.transform.position, pos) > Mathf.Epsilon);
         }
 
         /// <summary>
@@ -117,17 +116,7 @@
             }
 
             character.SetActive(true);
-
-            // Now create tween animation
-            var target = tile.position;
-            var offset = new Vector3(0.0f, 10f);
-
-            character.transform.position = target + offset;
-
-            character.transform.DOMove(target, 1.0f)
-                .SetEase(Ease.OutCubic)
-                .OnComplete(() => this.OnDeployComplete(character, tile))
-                .SetUpdate(true);
+            this.OnDeployComplete(character, tile);
 
             // Lastly, reset
             this.currentSelectedIndex = Unselected;
@@ -135,7 +124,7 @@
 
         public void RetrieveCharacter(GameObject character)
         {
-            character.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            character.transform.position = Vector3.zero;
             character.SetActive(false);
 
             // var i = character.transform.GetSiblingIndex();
@@ -166,10 +155,6 @@
             return this.characters.Where(x => x.activeSelf);
         }
 
-        private void OnEnable()
-        {
-        }
-
         private bool IsAvailable(int index)
         {
             return !this.characters[index].activeSelf;
@@ -183,6 +168,8 @@
 
             var tc = FindObjectOfType<TileController>();
             tc.BeginInactive();
+
+            character.transform.position = tile.position;
         }
     }
 }
