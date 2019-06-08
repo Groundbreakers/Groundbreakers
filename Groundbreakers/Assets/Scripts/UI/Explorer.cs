@@ -18,7 +18,7 @@ public class Explorer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.profession = Random.Range(0, 4);
+        this.profession = Random.Range(0, 5);
         this.UpdateSprite();
     }
 
@@ -42,7 +42,7 @@ public class Explorer : MonoBehaviour
 
     public void UpdateSprite()
     {
-        this.profession = this.mod(this.profession, 4);
+        this.profession = this.mod(this.profession, 5);
         switch (this.profession)
         {
             case 0:
@@ -60,6 +60,10 @@ public class Explorer : MonoBehaviour
             case 3:
                 this.animator.runtimeAnimatorController = this.scavenger;
                 this.text.text = "Scavenger";
+                break;
+            case 4:
+                this.animator.runtimeAnimatorController = this.agent;
+                this.text.text = "Agent";
                 break;
         }
     }

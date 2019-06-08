@@ -29,6 +29,7 @@ public class GameStart : MonoBehaviour
     void Awake()
     {
         this.characterList = GameObject.Find("Player Party");
+        Debug.Log(this.name);
     }
 
     public void InitializeCharacterList()
@@ -66,6 +67,10 @@ public class GameStart : MonoBehaviour
             case 3:
                 Instantiate(this.scavenger, this.characterList.transform);
                 this.images[i].sprite = this.icons[3];
+                break;
+            case 4:
+                Instantiate(this.agent, this.characterList.transform);
+                this.images[i].sprite = this.icons[4];
                 break;
         }
     }
