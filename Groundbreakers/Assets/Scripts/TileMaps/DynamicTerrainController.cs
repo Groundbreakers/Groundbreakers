@@ -5,6 +5,8 @@
 
     using AI;
 
+    using CombatManager;
+
     using DG.Tweening;
 
     using Sirenix.OdinInspector;
@@ -113,6 +115,11 @@
         [Button]
         public void StartEarthQuake()
         {
+            if (SetupBattleField.State != SetupBattleField.BattleState.InBattle)
+            {
+                return;
+            }
+
             if (this.Busy)
             {
                 // Play bad SE
