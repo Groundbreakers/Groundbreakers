@@ -108,8 +108,9 @@
             this.KillAllEnemies();
             this.KillAllMisc();
 
-            this.indicators.HideIndicators();
+            yield return new WaitForSeconds(0.01f);
 
+            this.indicators.HideIndicators();
 
             this.tileEnter.Terminate();
             this.characters.RetrieveAllCharacters();

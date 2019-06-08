@@ -80,8 +80,12 @@
 
         public void HideIndicators()
         {
+            Debug.Log("Trying to hide the sprite");
+
             foreach (var go in this.spawnPoints.Concat(this.defendPoints))
             {
+                Debug.Log("Hiding");
+
                 go.GetComponent<SpriteRenderer>().enabled = false;
             }
         }

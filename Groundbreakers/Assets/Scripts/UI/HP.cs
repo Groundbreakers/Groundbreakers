@@ -15,8 +15,16 @@ public class HP : MonoBehaviour
 
     public Text text;
 
+    [SerializeField]
+    private bool debugging;
+
     public void UpdateHealth(int amount)
     {
+        if (this.debugging)
+        {
+            return;
+        }
+
         // some effects
         GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("PlayerHpLoss");
 

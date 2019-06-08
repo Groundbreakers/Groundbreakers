@@ -238,8 +238,10 @@ public class characterAttack : MonoBehaviour
         }
     }
 
-    public void Reset()
+    public void OnDisable()
     {
+        Debug.Log("OnDisable of a character attack");
+
         targetedEnemies.Clear();
         target = null;
         trickster.keepStance();
@@ -293,7 +295,10 @@ public class characterAttack : MonoBehaviour
         {
             if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
             {
-                this.lineRenderer.enabled = true;
+                if (this.lineRenderer)
+                {
+                    this.lineRenderer.enabled = true;
+                }
                 this.fireCountdown = 0f;
             }
         }
