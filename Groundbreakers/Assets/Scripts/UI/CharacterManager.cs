@@ -17,7 +17,9 @@ public class CharacterManager : MonoBehaviour
     public Text ability1;
     public Text ability2;
     public Text levelup2;
+    public Text levelup3;
     public Text levelup4;
+    public Text levelup5;
 
     //Enabled or Disabled
     public Image level2;
@@ -32,6 +34,17 @@ public class CharacterManager : MonoBehaviour
     public Sprite disabledSmall;
     public Sprite enabledMedium;
     public Sprite disabledMedium;
+
+    //Character icons
+    public Sprite[] icons;
+
+    //Character sprite
+    public Animator animator;
+    public RuntimeAnimatorController scholar;
+    public RuntimeAnimatorController trickster;
+    public RuntimeAnimatorController gladiator;
+    public RuntimeAnimatorController scavenger;
+    public RuntimeAnimatorController agent;
 
     private int characterIndex;
 
@@ -116,7 +129,25 @@ public class CharacterManager : MonoBehaviour
         }
 
         charLevel = characterAttributes.Level;
-        
+        switch (charLevel)
+        {
+            case 1:
+                this.UpdateLvl1();
+                break;
+            case 2:
+                this.UpdateLvl2();
+                break;
+            case 3:
+                this.UpdateLvl3();
+                break;
+            case 4:
+                this.UpdateLvl4();
+                break;
+            case 5:
+                this.UpdateLvl5();
+                break;
+
+        }
     }
 
     public int GetCharacterIndex()
@@ -170,6 +201,8 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdateScholar()
     {
+        this.animator.runtimeAnimatorController = this.scholar;
+        this.image.sprite = this.icons[0];
         this.levelup2.text = "AMP+1 RNG+1";
         this.levelup4.text = "POW+1 RNG+1";
         this.ability1.text = "Ability 1: Slow targeting enemy";
@@ -178,6 +211,8 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdateTrickster()
     {
+        this.animator.runtimeAnimatorController = this.trickster;
+        this.image.sprite = this.icons[1];
         this.levelup2.text = "ROF+1 AMP+1";
         this.levelup4.text = "POW+1 RNG+1";
         this.ability1.text = "Ability 1: Transform Whirlwind";
@@ -186,6 +221,8 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdateGladiator()
     {
+        this.animator.runtimeAnimatorController = this.gladiator;
+        this.image.sprite = this.icons[2];
         this.levelup2.text = "POW+1 AMP+1";
         this.levelup4.text = "ROF+1 AMP+1";
         this.ability1.text = "Ability 1: Attacks stop enemies for 0.5 second";
@@ -194,6 +231,8 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdateScavenger()
     {
+        this.animator.runtimeAnimatorController = this.scavenger;
+        this.image.sprite = this.icons[3];
         this.levelup2.text = "POW+1 AMP+1";
         this.levelup4.text = "ROF+1 RNG+1";
         this.ability1.text = "Ability 1: Transform Multi-shot";
@@ -202,9 +241,61 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdateAgent()
     {
+        this.animator.runtimeAnimatorController = this.agent;
+        this.image.sprite = this.icons[4];
         this.levelup2.text = "ROF+1 RNG+1";
         this.levelup4.text = "POW+1 ROF+1";
         this.ability1.text = "Ability 1: True Strike";
         this.ability2.text = "Ability 2: Bullets Pierce";
+    }
+
+    public void UpdateLvl1()
+    {
+        this.level2.sprite = this.disabledSmall;
+        this.level3.sprite = this.disabledSmall;
+        this.level3ability.sprite = this.disabledMedium;
+        this.level4.sprite = this.disabledSmall;
+        this.level5.sprite = this.disabledSmall;
+        this.level5ability.sprite = this.disabledMedium;
+    }
+
+    public void UpdateLvl2()
+    {
+        this.level2.sprite = this.enabledSmall;
+        this.level3.sprite = this.disabledSmall;
+        this.level3ability.sprite = this.disabledMedium;
+        this.level4.sprite = this.disabledSmall;
+        this.level5.sprite = this.disabledSmall;
+        this.level5ability.sprite = this.disabledMedium;
+    }
+
+    public void UpdateLvl3()
+    {
+        this.level2.sprite = this.enabledSmall;
+        this.level3.sprite = this.enabledSmall;
+        this.level3ability.sprite = this.enabledMedium;
+        this.level4.sprite = this.disabledSmall;
+        this.level5.sprite = this.disabledSmall;
+        this.level5ability.sprite = this.disabledMedium;
+    }
+
+    public void UpdateLvl4()
+    {
+        this.level2.sprite = this.enabledSmall;
+        this.level3.sprite = this.enabledSmall;
+        this.level3ability.sprite = this.enabledMedium;
+        this.level4.sprite = this.enabledSmall;
+        this.level5.sprite = this.disabledSmall;
+        this.level5ability.sprite = this.disabledMedium;
+    }
+
+    public void UpdateLvl5()
+    {
+        this.level2.sprite = this.enabledSmall;
+        this.level3.sprite = this.enabledSmall;
+        this.level3ability.sprite = this.enabledMedium;
+        this.level4.sprite = this.enabledSmall;
+        this.level5.sprite = this.enabledSmall;
+        this.level5ability.sprite = this.enabledMedium;
     }
 }

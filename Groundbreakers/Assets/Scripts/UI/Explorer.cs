@@ -75,14 +75,4 @@ public class Explorer : MonoBehaviour
     {
         return (x % m + m) % m;
     }
-
-    public void ShowPopup()
-    {
-        this.popup.SetActive(true);
-    }
-
-    public void HidePopup()
-    {
-        this.popup.SetActive(false);
-    }
 }
