@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4742223488455748415}
   m_Layer: 8
   m_Name: loot
-  m_TagString: Untagged
+  m_TagString: Loot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf82f6d75f46cda428a84723ae3ad133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lootValue: 10000
+  lootValue: 100
 --- !u!50 &4742223488455748415
 Rigidbody2D:
   serializedVersion: 4

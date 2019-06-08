@@ -106,11 +106,14 @@
         private IEnumerator Terminate()
         {
             this.KillAllEnemies();
+            this.KillAllMisc();
+
+            this.indicators.HideIndicators();
+
 
             this.tileEnter.Terminate();
             this.characters.RetrieveAllCharacters();
 
-            this.indicators.HideIndicators();
 
             yield return new WaitForSeconds(3.0f);
         }
@@ -118,6 +121,14 @@
         private void KillAllEnemies()
         {
             foreach (var e in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                Destroy(e);
+            }
+        }
+
+        private void KillAllMisc()
+        {
+            foreach (var e in GameObject.FindGameObjectsWithTag("Loot"))
             {
                 Destroy(e);
             }
