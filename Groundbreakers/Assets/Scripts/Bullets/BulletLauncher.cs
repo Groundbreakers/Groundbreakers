@@ -64,7 +64,7 @@
         private void FireAt(Transform target)
         {
             this.potentialTarget = target;
-
+            
             GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("CharacterShoot");
 
             switch (this.type)
@@ -95,6 +95,30 @@
             this.SetHandlerAttributeIfNot();
 
             this.damageHandler.DeliverDamageTo(target.gameObject, true);
+        }
+
+        public void setType(int num)
+        {
+            switch (num)
+            {
+                case 1:
+                    this.type = Type.SingleShot;
+                    break;
+                case 2:
+                    this.type = Type.MultiShot;
+                    break;
+                case 3:
+                    this.type = Type.Laser;
+                    break;
+                case 4:
+                    this.type = Type.Penetrate;
+                    break;
+                case 5:
+                    this.type = Type.Explosive;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion

@@ -329,7 +329,7 @@ public class characterAttack : MonoBehaviour
         }
         else if (this.trickster.pierceAE)
         {
-            type = BulletLauncher.Type.Penetrate;
+            rangedWeapon.GetComponent<BulletLauncher>().setType(4);
             this.RangedAttack();
         }
         else if (type == BulletLauncher.Type.Laser)
