@@ -51,6 +51,8 @@
             CurrentWaveInformation.Time = 0;
             CurrentWaveInformation.WaveNumber = 0;
 
+            this.UpdateUiTimer();
+
             this.StartCoroutine(this.Terminate());
         }
 
