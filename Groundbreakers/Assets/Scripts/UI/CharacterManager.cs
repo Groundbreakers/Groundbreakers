@@ -164,6 +164,8 @@ public class CharacterManager : MonoBehaviour
             .gameObject
             .GetComponent<characterAttributes>()
             .LevelUp();
+
+        this.UpdatePanel();
     }
 
     public void UpdateScholar()
