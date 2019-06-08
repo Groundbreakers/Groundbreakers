@@ -1,5 +1,6 @@
 ﻿namespace Core
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -33,6 +34,8 @@
         private Dictionary<GameObject, int> greyedout = new Dictionary<GameObject, int>();
 
         private int currentSelectedIndex = Unselected;
+
+        private GameObject commandPanelUi;
 
         /// <summary>
         ///     This Must be called when a battle starts.
@@ -167,6 +170,11 @@
             return this.characters.Where(x => x.activeSelf);
         }
 
+        private void OnEnable()
+        {
+            this.commandPanelUi = GameObject.Find("CommandPanel");
+        }
+
         private bool IsAvailable(int index)
         {
             return !this.characters[index].activeSelf;
@@ -191,10 +199,12 @@
 
         private void GreyOutUiButton(int index, bool grey)
         {
-            var obj = GameObject.Find("CommandPanel");
-            var portrait = obj.transform.GetChild(index);
+            var portrait = this.commandPanelUi.transform.GetChild(index);
 
-            portrait.GetComponent<Button>().interactable = !grey;
+            if (portrait)
+            {
+                portrait.GetComponent<Button>().interactable = !grey;
+            }
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Assets.Scripts;
 
+using CombatManager;
+
 using TileMaps;
 
 using UnityEngine;
@@ -51,6 +53,7 @@ public class Settings : MonoBehaviour
 
     public void Reset()
     {
+        FindObjectOfType<SetupBattleField>().OnGameOver();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         // BattleManager.TriggerEvent("reset");
     }
