@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour, IDropHandler
         this.inventory[this.characterIndex].SetActive(true);
 
         // Update character attributes
-        GameObject.Find("Player Party").transform.GetChild(this.characterIndex).GetComponent<characterAttributes>().updateAttributes(this.GetCharacterInventory(this.characterIndex));
+        GameObject.Find("Player Party").transform.GetChild(this.characterIndex).GetComponent<characterAttributes>().updateAttributes();
     }
 
     public void Toggle()
