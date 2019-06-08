@@ -22,7 +22,9 @@
         {
             var characters = this.party.GetDeployedCharacters();
 
-            var pos = this.transform.position;
+            var parent = this.transform.parent;
+            var pos = parent.position;
+            Assert.IsTrue(parent.gameObject.CompareTag("Tile"));
 
             var target = characters.Where(
                     x => Vector3.Distance(pos, x.transform.position) <= Mathf.Epsilon)
