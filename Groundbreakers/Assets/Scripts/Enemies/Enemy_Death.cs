@@ -6,7 +6,7 @@ public class Enemy_Death : MonoBehaviour
 
     public GameObject loot;
 
-    private readonly int lootDropProbability = 15;
+    private readonly int lootDropProbability = 5;
 
     private static readonly int Direction = Animator.StringToHash("Direction");
 
