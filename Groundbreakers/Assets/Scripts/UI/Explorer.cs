@@ -16,6 +16,7 @@ public class Explorer : MonoBehaviour
     public int profession;
 
     public GameObject popup;
+    public Text description;
 
     // Start is called before the first frame update
     void Start()
@@ -51,22 +52,27 @@ public class Explorer : MonoBehaviour
             case 0:
                 this.animator.runtimeAnimatorController = this.scholar;
                 this.text.text = "Scholar";
+                this.description.text = "Ranged.\nHigh damage, good against multiple enemies but bad against armored enemies.";
                 break;
             case 1:
                 this.animator.runtimeAnimatorController = this.trickster;
                 this.text.text = "Trickster";
+                this.description.text = "Ranged.\nModerate damage, single target focused and can slow enemies at level 5.";
                 break;
             case 2:
                 this.animator.runtimeAnimatorController = this.gladiator;
                 this.text.text = "Gladiator";
+                this.description.text = "Melee.\nModerate damage, good at crowd control and against armored enemies.";
                 break;
             case 3:
                 this.animator.runtimeAnimatorController = this.scavenger;
                 this.text.text = "Scavenger";
+                this.description.text = "Melee.\nModerate damage, good against multiple and armored enemies and bosses.";
                 break;
             case 4:
                 this.animator.runtimeAnimatorController = this.agent;
                 this.text.text = "Agent";
+                this.description.text = "Ranged.\nHigh damage, amazing against multiple enemies but bad against armored enemies.";
                 break;
         }
     }

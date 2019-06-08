@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public class Settings : MonoBehaviour
 {
     public GameObject ui;
+    public GameObject ui2;
     public float timeScale;
 
     void Start()
@@ -19,7 +20,7 @@ public class Settings : MonoBehaviour
         this.TimeScale1x();
     }
 
-    public void Toggle ()
+    public void Toggle()
     {
         ui.SetActive(!ui.activeSelf);
         if (Time.timeScale != 0.0f)
@@ -30,6 +31,11 @@ public class Settings : MonoBehaviour
         {
             this.UpdateTimeScaleIfNecessary();
         }
+    }
+
+    public void Tutorial()
+    {
+        ui2.SetActive(!ui2.activeSelf);
     }
 
     public void NewGame()

@@ -41,6 +41,7 @@ public class Sector : MonoBehaviour
         battleField.Setup(Depth, FindObjectOfType<Difficulty>().Risk);
 
         GameObject.Find("SectorMap").GetComponent<SectorGenerator>().ShowPath(this.Row, this.Column);
+        this.transform.parent.parent.parent.gameObject.SetActive(false);
     }
 
     public void ShowButton()
