@@ -142,32 +142,7 @@
 
         private void Update()
         {
-            // DEBUG
-            if (Input.GetKeyDown("1"))
-            {
-                this.type = Type.SingleShot;
-            }
-
-            if (Input.GetKeyDown("2"))
-            {
-                this.type = Type.MultiShot;
-            }
-
-            if (Input.GetKeyDown("3"))
-            {
-                this.type = Type.Laser;
-            }
-
-            if (Input.GetKeyDown("4"))
-            {
-                this.type = Type.Penetrate;
-            }
-
-            if (Input.GetKeyDown("5"))
-            {
-                this.type = Type.Explosive;
-                Debug.Log(this.type);
-            }
+            
 
             //// For laser effect only
             //if (this.type == Type.Laser)
