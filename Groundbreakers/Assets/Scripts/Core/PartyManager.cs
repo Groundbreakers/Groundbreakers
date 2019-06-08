@@ -111,7 +111,7 @@
             // Enable it first
             if (!this.IsAvailable(this.currentSelectedIndex))
             {
-                Debug.LogError("Already deployed. Should not happen.");
+                Debug.LogWarning("Already deployed. Should not happen.");
                 return;
             }
 
