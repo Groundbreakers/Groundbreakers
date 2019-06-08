@@ -1,25 +1,21 @@
-﻿namespace Assets.Scripts
+﻿using Assets.Scripts;
+using UnityEngine;
+
+public class SingleShot : MonoBehaviour
 {
-    using UnityEngine;
-   
+    private BulletLauncher bulletLauncher;
 
-    public class SingleShot : MonoBehaviour
-    {
-        private BulletLauncher bulletLauncher;
+    private DamageHandler damageHandler;
 
-        private DamageHandler damageHandler;
+    public void singleShot(Transform target) {
 
-        public void singleShot(Transform target) {
+       this.bulletLauncher = this.GetComponentInChildren<BulletLauncher>();
 
-            this.bulletLauncher = this.GetComponentInChildren<BulletLauncher>();
+       this.damageHandler = GameObject.Find("RangedWeapon").GetComponent<DamageHandler>();
+           
+       var bullet = this.bulletLauncher.InstantiateBullet();
 
-            this.damageHandler = GameObject.Find("RangedWeapon").GetComponent<DamageHandler>();
-            
-            var bullet = this.bulletLauncher.InstantiateBullet();
-
-            bullet.Launch(target, this.damageHandler);
+       bullet.Launch(target, this.damageHandler);
           
-        }
-
     }
 }

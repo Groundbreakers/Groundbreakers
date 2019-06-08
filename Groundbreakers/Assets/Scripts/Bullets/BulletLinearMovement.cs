@@ -92,15 +92,13 @@
                 else
                 {
                    this.damageHandler.DeliverDamageTo(go);
-                // Debug.Log("hi");
-                   
                 }
 
                 if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type != BulletLauncher.Type.Penetrate)
                 {
                     GameObject.Destroy(this.gameObject);
                     
-                    }
+                }
             
 
             return;

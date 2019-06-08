@@ -15,8 +15,10 @@ GameObject:
   - component: {fileID: 5908830486360006541}
   - component: {fileID: 5170317579557245721}
   - component: {fileID: 1143237542542456168}
+  - component: {fileID: 4548997050018229144}
   - component: {fileID: 5877464912421080251}
   - component: {fileID: 4207755965218781970}
+  - component: {fileID: 116456435998728430}
   - component: {fileID: 1181517269323186452}
   - component: {fileID: 3921564059754132325}
   - component: {fileID: 9128130067373362106}
@@ -172,7 +174,7 @@ MonoBehaviour:
     type: 3}
   animator: {fileID: 7543013341955019752}
   lineRenderer: {fileID: 9128130067373362106}
-  ability1: {fileID: 4207755965218781970}
+  ability1: {fileID: 4548997050018229144}
   stance: Gun
   hitbox: {fileID: 3816646590778798397}
 --- !u!114 &1143237542542456168
@@ -216,6 +218,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &4548997050018229144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d66e4cf475cd9ad49b937f4c942f652c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5877464912421080251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +252,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb1863240246854f857766995e100cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &116456435998728430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061099418179834263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe43c42eae2639448ceb729c73a2507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1181517269323186452

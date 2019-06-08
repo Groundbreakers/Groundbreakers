@@ -76,10 +76,10 @@
                 case Type.Laser:
                     break;
                 case Type.Penetrate:
-                    this.PenetrateShot(target);
+                    this.gameObject.GetComponentInParent<PenetrateShot>().penetrateShot(target);
                     break;
                 case Type.Explosive:
-                    this.ExplosiveShot(target);
+                    this.gameObject.GetComponentInParent<ExplosiveShot>().explosiveShot(target);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -115,7 +115,7 @@
         private void Update() {
 
             MonoBehaviour ability = this.gameObject.GetComponentInParent<characterAttack>().ability1;
-
+            
             if (ability != null)
             {
                 string ability_name = ability.GetType().ToString();
@@ -136,15 +136,15 @@
                     this.type = Type.Laser;
                 }
 
-                if (Input.GetKeyDown("4"))
+                if (ability_name == "PenetrateShot")
                 {
                     this.type = Type.Penetrate;
+                    
                 }
 
-                if (Input.GetKeyDown("5"))
+                if (ability_name == "ExplosiveShot")
                 {
                     this.type = Type.Explosive;
-                    Debug.Log(this.type);
                 }
             }
             //// For laser effect only
@@ -202,24 +202,6 @@
 
             // this.buffer.Add(bullet);
             return bullet;
-        }
-
-        // Subject to change
-    
-        private void ExplosiveShot(Transform target)
-        {
-            
-            var bullet = this.InstantiateBullet();
-
-            bullet.Launch(target, this.damageHandler);
-        }
-
-        private void PenetrateShot(Transform target)
-        {
-            
-            var bullet = this.InstantiateBullet();
-
-            bullet.Launch(target, this.damageHandler);
         }
         
         #endregion
