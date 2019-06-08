@@ -182,14 +182,14 @@ public class characterAttributes : MonoBehaviour
                 if (stance == "gun")
                 {
                     POW = 3;
-                    ROF = 1;
+                    ROF = 2;
                     RNG = 3;
                     AMP = 3;
                 }
                 else
                 {
                     POW = 3;
-                    ROF = 1;
+                    ROF = 2;
                     RNG = 1;
                     AMP = 3;
                 }
