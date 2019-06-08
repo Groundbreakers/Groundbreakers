@@ -129,6 +129,8 @@
             this.IncrementRiskLevel(0.35f);
 
             this.StartCoroutine(this.BeginEarthQuake());
+
+            FindObjectOfType<TileController>().BeginInactive();
         }
 
         #endregion
