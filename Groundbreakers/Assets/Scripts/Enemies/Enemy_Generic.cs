@@ -184,6 +184,8 @@
                 temp.SetCrystals((int)(10 * UnityEngine.Random.Range(1.0f - .2f, 1.0f + .2f)));
                 Destroy(effect, 0.5f);
                 Destroy(this.gameObject);
+                Destroy(gameObject.GetComponent<Enemy_Info>().box);
+               
             }
 
             // Check for "Rage" attribute and HP < 50%

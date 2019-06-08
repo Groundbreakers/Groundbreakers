@@ -307,7 +307,7 @@ public class characterAttack : MonoBehaviour
         }
         else if (this.gameObject.GetComponentInChildren<BulletLauncher>().type == BulletLauncher.Type.Laser && this.gameObject.GetComponent<Laserbeam>() != null)
         {
-            this.gameObject.GetComponent<Laserbeam>().LaserAttack(this.target);
+            this.gameObject.GetComponent<Laserbeam>().LaserRelection(this.target);
           
         }
         else

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 4534209215401832226}
   - component: {fileID: 3551891409558589061}
   - component: {fileID: 5625725940809612579}
+  - component: {fileID: 3414568422549877619}
+  - component: {fileID: 7559904073796947558}
   m_Layer: 0
   m_Name: Tortoise
   m_TagString: Enemy
@@ -206,6 +208,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyInfo_prefab: {fileID: 7507061446221834786, guid: 8f2c8cd79306cd54ab6954eb3edc6f3e,
     type: 3}
+--- !u!58 &3414568422549877619
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
+--- !u!114 &7559904073796947558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3171230714936546568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48548cd2cc8a9ad4c8def98a8be2058a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1001 &3781220307018469737
 PrefabInstance:
   m_ObjectHideFlags: 0

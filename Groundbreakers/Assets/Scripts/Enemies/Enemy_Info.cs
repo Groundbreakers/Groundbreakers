@@ -16,7 +16,7 @@ public class Enemy_Info : MonoBehaviour
 
     private Canvas canvas;
 
-    private GameObject box;
+    public GameObject box;
 
     private Enemy_Generic enemygeneric;
     
@@ -39,10 +39,11 @@ public class Enemy_Info : MonoBehaviour
     
     }
 
-    void OnMouseEnter()
-    {
+    void OnMouseEnter() {
+       
         createEnemyInfo();
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        
     }
 
     void OnMouseExit()
@@ -50,4 +51,5 @@ public class Enemy_Info : MonoBehaviour
         Destroy(box);
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
+    
 }
