@@ -141,8 +141,6 @@
                     CurrentWaveInformation.Time = j;
 
                     yield return new WaitForSeconds(1.0f);
-
-                    FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
                 }
             }
 

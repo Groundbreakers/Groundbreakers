@@ -68,6 +68,8 @@
 
         public void BeginInactive()
         {
+            this.StopAllCoroutines();
+
             Active = CommandState.Inactive;
             Time.timeScale = this.setting.timeScale;
 
@@ -124,6 +126,9 @@
             }
 
             Time.timeScale = 0.00f;
+            
+            // Should start increasing the risk
+            this.StartCoroutine(this.PerodicallyIncreaseRisk());
 
             Active = state;
         }
@@ -311,6 +316,16 @@
             {
                 var render = child.GetComponent<SpriteRenderer>();
                 render.sortingLayerName = childLayer;
+            }
+        }
+
+        private IEnumerator PerodicallyIncreaseRisk()
+        {
+            for (;;)
+            {
+                yield return new WaitForSecondsRealtime(1.0f);
+
+                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
             }
         }
     }
