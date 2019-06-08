@@ -195,7 +195,7 @@ public class characterAttributes : MonoBehaviour
                 }
                 break;
             case "Gladiator":
-                    POW = 4;
+                    POW = 2;
                     ROF = 2;
                     RNG = 1;
                     AMP = 3;
