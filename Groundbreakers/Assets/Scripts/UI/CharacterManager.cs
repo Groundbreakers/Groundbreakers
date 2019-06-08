@@ -61,7 +61,7 @@ public class CharacterManager : MonoBehaviour
 
     public void UpdatePanel()
     {
-        return;
+        //return;
 
         // Show the attributes
         characterAttributes characterAttributes = GameObject.Find("Player Party").transform
@@ -91,8 +91,8 @@ public class CharacterManager : MonoBehaviour
         }
 
         //Basic Info
-        //this.name.text = characterAttributes.name;
-        //this.profession.text = characterAttributes.profession;
+        this.name.text = characterAttributes.name;
+        this.profession.text = characterAttributes.profession;
 
         if (this.profession.text == "Scholar")
         {

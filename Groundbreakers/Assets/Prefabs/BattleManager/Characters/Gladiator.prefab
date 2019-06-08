@@ -524,9 +524,16 @@ MonoBehaviour:
   reflectionAE: 0
   trueStrikeAE: 0
   slowSE: 0
-  stunSE: 0
+  stunSE: 1
   burnSE: 0
   disabled: 0
+  animator: {fileID: 3636710890971549056}
+  BaseColor: {fileID: 9100000, guid: 1f05d73be7139af40ae37a82e859b5b1, type: 2}
+  colors:
+  - {fileID: 22100000, guid: 516aff7292937da46afc002bce8a9d9f, type: 2}
+  - {fileID: 22100000, guid: e92c9c654d1b6bc4eaebc6b64cffc421, type: 2}
+  - {fileID: 22100000, guid: b7af3d41eb86d534496a0d7df472e6ef, type: 2}
+  - {fileID: 22100000, guid: 5dbb20feafb3b6948af7e2a189b1c4cf, type: 2}
   modules:
   - {fileID: 0}
   - {fileID: 0}

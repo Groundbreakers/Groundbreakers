@@ -39,7 +39,13 @@ public class characterAttributes : MonoBehaviour
     private string stance = "gun";
 
     //Modules
+    public Animator animator;
+    public RuntimeAnimatorController BaseColor;
+    public AnimatorOverrideController[] colors = new AnimatorOverrideController[4];
     public GameObject[] modules = new GameObject[6];
+    private int index = 0;
+   
+
 
     void Awake()
     {
@@ -69,6 +75,37 @@ public class characterAttributes : MonoBehaviour
         disabled = false;
     }
 
+    public void changeColor()
+    {
+        if(index < 4)
+        {
+            index++;
+        }
+        else
+        {
+            index = 0;
+        }
+
+        switch(index)
+        {
+            case 0:
+                animator.runtimeAnimatorController = BaseColor;
+                break;
+            case 1:
+                animator.runtimeAnimatorController = colors[0];
+                break;
+            case 2:
+                animator.runtimeAnimatorController = colors[2];
+                break;
+            case 3:
+                animator.runtimeAnimatorController = colors[3];
+                break;
+            case 4:
+                animator.runtimeAnimatorController = colors[4];
+                break;
+        }
+        
+    }
 
     public void updateAttributes()
     {

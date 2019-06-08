@@ -158,7 +158,7 @@ public class MeleeManager : MonoBehaviour
 
         if (this.stun == true && hitTarget.gameObject.GetComponent<Enemy_Generic>().getIsStunned() == false)
         {
-            hitTarget.gameObject.GetComponent<Enemy_Generic>().StunEnemy(0.5f);
+            hitTarget.gameObject.GetComponent<AI.DynamicMovement>().StunEnemy(0.5f);
         }
     }
 
