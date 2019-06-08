@@ -132,7 +132,7 @@
 
         private void SetNextReroll()
         {
-            this.nextReroll = Random.Range(40, 75);
+            this.nextReroll = Random.Range(45, 100);
             Debug.Log($"Scheduled next reroll ----> {this.nextReroll}");
         }
 
