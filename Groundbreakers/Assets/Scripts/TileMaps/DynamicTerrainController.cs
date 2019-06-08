@@ -64,6 +64,8 @@
         {
             this.riskLevel += value;
 
+            this.riskLevel = Mathf.Clamp(this.riskLevel, 0.0f, 1.0f);
+
             this.UpdateUi();
         }
 
@@ -95,9 +97,11 @@
         [Button]
         public void RerollMap()
         {
+            FindObjectOfType<FlashScreen>().StartScreenFlash(Color.white, 0.25f);
+
             FindObjectOfType<TileController>().BeginInactive();
             
-            this.ResetRiskLevel();
+            // this.ResetRiskLevel();
 
             // Should generate somewhat a new map
             this.generator.Initialize();
@@ -178,15 +182,14 @@
             this.UpdateUi();
         }
 
-        private void Update()
-        {
-            if (this.riskLevel >= 1.0f && !this.Busy)
-            {
-                FindObjectOfType<FlashScreen>().StartScreenFlash(Color.white, 0.25f);
+        //private void Update()
+        //{
+        //    if (this.riskLevel >= 1.0f && !this.Busy)
+        //    {
 
-                this.RerollMap();
-            }
-        }
+        //        this.RerollMap();
+        //    }
+        //}
 
         private void UpdateTileIfNecessary(Vector3 pos, Tiles newType)
         {
@@ -244,11 +247,7 @@
             {
                 var block = this.tilemap.GetTileAt(x, row);
 
-
-
                 block.transform.DOShakePosition(0.2f, 0.2f);
-
-                // block.transform.DOMoveY(row, 0.1f).SetEase(Ease.InBounce);
             }
         }
 

@@ -39,6 +39,8 @@
 
         private GameObject sectorMap;
 
+        private int nextReroll;
+
         public enum BattleState
         {
             NotInBattle,
@@ -119,11 +121,19 @@
             this.tileEnter = this.GetComponentInChildren<TilemapEnter>();
 
             this.spanwers = SetupSpawner();
+
+            this.SetNextReroll();
         }
 
         private static List<Spanwer> SetupSpawner()
         {
             return FindObjectsOfType(typeof(Spanwer)).Select(o => (Spanwer)o).ToList();
+        }
+
+        private void SetNextReroll()
+        {
+            this.nextReroll = Random.Range(40, 75);
+            Debug.Log($"Scheduled next reroll ----> {this.nextReroll}");
         }
 
         private IEnumerator Begin()
@@ -180,7 +190,16 @@
 
                     yield return new WaitForSeconds(1.0f);
 
-                    FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.01f);
+                    var dtc = FindObjectOfType<DynamicTerrainController>();
+                    dtc.IncrementRiskLevel(0.01f);
+
+                    // Reroll the map if change
+                    this.nextReroll--;
+                    if (this.nextReroll <= 0)
+                    {
+                        this.SetNextReroll();
+                        dtc.RerollMap();
+                    }
                 }
             }
 
