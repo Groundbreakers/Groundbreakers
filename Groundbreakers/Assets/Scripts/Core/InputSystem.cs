@@ -253,7 +253,6 @@
 
             GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("CharacterTransform");
 
-
             // Should unhover ground breaker buttons
         }
 

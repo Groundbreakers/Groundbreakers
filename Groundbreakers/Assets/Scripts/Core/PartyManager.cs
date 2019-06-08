@@ -10,6 +10,7 @@
     using TileMaps;
 
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
     ///     Provide API to manipulate Characters on the battle field. 
@@ -29,6 +30,8 @@
         [ReadOnly]
         private List<GameObject> characters = new List<GameObject>();
 
+        private Dictionary<GameObject, int> greyedout = new Dictionary<GameObject, int>();
+
         private int currentSelectedIndex = Unselected;
 
         /// <summary>
@@ -39,6 +42,7 @@
         public void LoadCharacters()
         {
             this.characters.Clear();
+            this.greyedout.Clear();
 
             foreach (Transform child in this.transform)
             {
@@ -130,8 +134,12 @@
             character.transform.position = Vector3.zero;
             character.SetActive(false);
 
-            // var i = character.transform.GetSiblingIndex();
-            // this.TurnOnOff(i, true);
+            if (this.greyedout.ContainsKey(character))
+            {
+                var index = this.greyedout[character];
+                this.greyedout.Remove(character);
+                this.GreyOutUiButton(index, false);
+            }
         }
 
         /// <summary>
@@ -143,7 +151,8 @@
         {
             foreach (var character in this.characters)
             {
-                character.gameObject.SetActive(false);
+                // character.gameObject.SetActive(false);
+                this.RetrieveCharacter(character.gameObject);
             }
         }
 
@@ -165,6 +174,11 @@
 
         private void OnDeployComplete(GameObject character, Transform tile)
         {
+            // Grey out the UI
+            this.greyedout.Add(character, this.currentSelectedIndex);
+            this.GreyOutUiButton(this.currentSelectedIndex, true);
+
+            // Others
             character.GetComponent<FollowTile>().AffiliateTile(tile);
 
             this.DeselectCharacter();
@@ -173,6 +187,14 @@
             tc.BeginInactive();
 
             character.transform.position = tile.position;
+        }
+
+        private void GreyOutUiButton(int index, bool grey)
+        {
+            var obj = GameObject.Find("CommandPanel");
+            var portrait = obj.transform.GetChild(index);
+
+            portrait.GetComponent<Button>().interactable = !grey;
         }
     }
 }
