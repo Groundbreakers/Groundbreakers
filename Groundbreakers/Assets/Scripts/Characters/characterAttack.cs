@@ -266,7 +266,10 @@ public class characterAttack : MonoBehaviour
 
     void fireCount()
     {
-
+        if (!this.enabled)
+        {
+            return;
+        }
 
         myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)

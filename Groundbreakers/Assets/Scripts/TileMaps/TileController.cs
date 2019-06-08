@@ -116,6 +116,14 @@
             Time.timeScale = 0.00f;
 
             Active = CommandState.Deploying;
+
+            // TMP Fast fix
+            var panel = GameObject.Find("GroundbreakerPanel");
+            for (var i = 0; i < 4; i++)
+            {
+                var buttonGo = panel.transform.GetChild(i);
+                buttonGo.GetComponent<ButtonPressed>().Unpress();
+            }
         }
 
         #endregion
