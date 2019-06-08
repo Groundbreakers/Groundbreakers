@@ -238,6 +238,13 @@ public class characterAttack : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        targetedEnemies.Clear();
+        target = null;
+        trickster.keepStance();
+    }
+
     //if an enemy enters in range
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -266,10 +273,7 @@ public class characterAttack : MonoBehaviour
 
     void fireCount()
     {
-        if (!this.enabled)
-        {
-            return;
-        }
+
 
         myCollider.radius = trickster.RNG + .5f; // or whatever radius you want.
         if (this.target == null)
