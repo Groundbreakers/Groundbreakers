@@ -28,6 +28,9 @@
         [Range(0.0f, 2.0f)]
         private float speedMultiplier = 1.0f;
 
+        [SerializeField]
+        private bool isFlying;
+
         private Animator animator;
 
         private NavigationMap navigator;
@@ -173,7 +176,11 @@
             if (this.mad)
             {
                 // fucking check if has valid normal path
-                var normalPath = this.navigator.Search(this.transform.position, this.goalGrid, false).ToList();
+                var normalPath = this.navigator.Search(
+                    this.transform.position, 
+                    this.goalGrid, 
+                    false,
+                    this.isFlying).ToList();
 
                 if (normalPath.Count > 0)
                 {
@@ -182,7 +189,11 @@
             }
 
             // TODO: Refactor this shit,
-            var path = this.navigator.Search(this.transform.position, this.goalGrid, this.mad).ToList();
+            var path = this.navigator.Search(
+                this.transform.position, 
+                this.goalGrid, 
+                this.mad,
+                this.isFlying).ToList();
 
             if (path.Count == 0)
             {
