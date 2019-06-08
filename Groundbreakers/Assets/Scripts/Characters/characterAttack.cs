@@ -103,7 +103,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", false);
 
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x + .42f, gameObject.transform.position.y + .26f, gameObject.transform.position.z);
                     }
                     else if ((angle >= 22.5 && angle <= 67.5))//check if it's upper right
                     {
@@ -116,7 +116,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", false);
 
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x + .36f, gameObject.transform.position.y + .425f, gameObject.transform.position.z);
                     }
                     else if ((angle < 337.5 && angle >= 292.5)) //LowerRight
                     {
@@ -129,7 +129,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", false);
 
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x + .325f, gameObject.transform.position.y + .1f, gameObject.transform.position.z);
                     }
                     else if (angle > 67.5 && angle < 112.5) //check if it's pointing up
                     {
@@ -141,7 +141,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingLeft", false);
                         animator.SetBool("FacingUp", true);
                         animator.SetBool("FacingDown", false);
-                        firePoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + .6f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x + .1f, gameObject.transform.position.y + .6f, gameObject.transform.position.z);
                     }
                     else if (angle >= 157.5 && angle < 202.5) //check if it's pointing left
                     {
@@ -153,7 +153,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingLeft", true);
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", false);
-                        firePoint = new Vector3(gameObject.transform.position.x - .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x - .425f, gameObject.transform.position.y + .26f, gameObject.transform.position.z);
                     }
                     else if ((angle >= 112.5 && angle < 157.5))//check if it's upper Left
                     {
@@ -166,7 +166,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", false);
 
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x -.19f, gameObject.transform.position.y + .45f, gameObject.transform.position.z);
                     }
                     else if ((angle >= 202.5 && angle < 247.5)) //LowerLeft
                     {
@@ -179,7 +179,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", false);
 
-                        firePoint = new Vector3(gameObject.transform.position.x + .475f, gameObject.transform.position.y + .5f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x - .3f, gameObject.transform.position.y + .15f, gameObject.transform.position.z);
                     }
                     else if (angle >= 247.5 && angle < 292.5) //check if it's pointing down
                     {
@@ -191,7 +191,7 @@ public class characterAttack : MonoBehaviour
                         animator.SetBool("FacingLeft", false);
                         animator.SetBool("FacingUp", false);
                         animator.SetBool("FacingDown", true);
-                        firePoint = new Vector3(gameObject.transform.position.x - .05f, gameObject.transform.position.y - .05f, gameObject.transform.position.z);
+                        firePoint = new Vector3(gameObject.transform.position.x - 0.1425f, gameObject.transform.position.y + .1f, gameObject.transform.position.z);
                     }
                 
                 
@@ -260,11 +260,13 @@ public class characterAttack : MonoBehaviour
         {
             animator.SetBool("Firing", false);
 
-            //if (this.lineRenderer.enabled)
-            //{
-            //    this.lineRenderer.enabled = false;
-            //}
-
+            if(this.lineRenderer != null)
+            {
+                if (this.lineRenderer.enabled)
+                {
+                   this.lineRenderer.enabled = false;
+                }
+            }
             return;
         }
         else
@@ -304,10 +306,14 @@ public class characterAttack : MonoBehaviour
         }
         else
         {
-            //if (this.lineRenderer.enabled)
-            //{
-            //    this.lineRenderer.enabled = false;
-            //}
+            if(this.lineRenderer != null)
+            {
+                if (this.lineRenderer.enabled)
+                {
+                    this.lineRenderer.enabled = false;
+                }
+            }
+
 
             this.RangedAttack();
         }
@@ -336,9 +342,9 @@ public class characterAttack : MonoBehaviour
 
         GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
 
-        //this.lineRenderer.SetPosition(0, this.gameObject.transform.position);
+        this.lineRenderer.SetPosition(0, firePoint);
 
-        //this.lineRenderer.SetPosition(1, this.target.position);
+        this.lineRenderer.SetPosition(1, this.target.position);
 
         GameObject.Find("RangedWeapon").GetComponent<DamageHandler>().DeliverDamageTo(target.gameObject, false);
 

@@ -169,7 +169,7 @@ MonoBehaviour:
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
   animator: {fileID: 7543013341955019752}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 3698766289088934425}
   stance: Gun
   hitbox: {fileID: 7402512264952329442}
 --- !u!114 &1143237542542456168
@@ -277,7 +277,7 @@ LineRenderer:
   m_SortingOrder: 3
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -286,7 +286,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.125
+        value: 0.05
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -298,7 +298,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.09554561, g: 0.05098037, b: 0.7254902, a: 1}
+      key0: {r: 0.9433962, g: 0.12014952, b: 0.1514212, a: 1}
       key1: {r: 0.7154556, g: 0.6862745, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -315,7 +315,7 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 65535
+      atime1: 13685
       atime2: 0
       atime3: 0
       atime4: 0
@@ -393,7 +393,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.42, y: 0.26}
   serializedVersion: 2
   m_Radius: 0.1
 --- !u!114 &815665039381485828
