@@ -5,8 +5,6 @@
 
     using Characters;
 
-    using DG.Tweening;
-
     using Sirenix.OdinInspector;
 
     using TileMaps;

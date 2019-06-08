@@ -25,7 +25,13 @@ public class FlashScreen : MonoBehaviour
         var value = Mathf.Clamp(power, 0.0f, 1.0f);
 
         var sequence = DOTween.Sequence();
-        sequence.Append(sprite.DOFade(value, 0.3f).SetEase(Ease.OutBounce));
-        sequence.Append(sprite.DOFade(0.0f, 0.3f).SetEase(Ease.OutBounce));
+        sequence.Append(sprite.DOFade(value, 0.3f)
+            .SetEase(Ease.OutBounce)
+            .SetUpdate(true));
+        sequence.Append(sprite.DOFade(0.0f, 0.3f)
+            .SetEase(Ease.OutBounce)
+            .SetUpdate(true));
+
+        sequence.SetUpdate(true);
     }
 }
