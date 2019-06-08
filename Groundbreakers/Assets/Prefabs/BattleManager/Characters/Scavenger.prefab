@@ -229,6 +229,8 @@ MonoBehaviour:
   rangeAttackPrefab: {fileID: 1725126479709373028, guid: 4dd56bdb4b079ca4d80209d3a6febe26,
     type: 3}
   animator: {fileID: 7543013341955019752}
+  lineRenderer: {fileID: 0}
+  ability1: {fileID: 0}
   stance: Gun
   hitbox: {fileID: 1342917279963280383}
 --- !u!114 &1143237542542456168
@@ -559,6 +561,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217686435854685775, guid: 6fd2af10ce4afe744bd7d966362f0484,
+        type: 3}
+      propertyPath: type
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fd2af10ce4afe744bd7d966362f0484, type: 3}

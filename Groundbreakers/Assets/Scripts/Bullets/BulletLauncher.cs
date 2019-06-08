@@ -23,10 +23,10 @@
 
         [SerializeField]
         public Type type;
-
+        
         [SerializeField]
         private Vector3 offSet;
-
+        
         #endregion
 
         #region Internal Fields
@@ -42,7 +42,7 @@
         #endregion
 
         #region Public Properties
-
+        
         public enum Type
         {
             SingleShot,
@@ -57,7 +57,7 @@
         }
 
         #endregion
-
+        
         #region Public Functions    
 
         [Button("Test Launch All")]
@@ -68,13 +68,12 @@
             switch (this.type)
             {
                 case Type.SingleShot:
-                    this.SingleShot(target);
+                    this.gameObject.GetComponentInParent<SingleShot>().singleShot(target);
                     break;
                 case Type.MultiShot:
-                    this.MultiShot(target);
+                    this.gameObject.GetComponentInParent<MultiShot>().multiShot(target);
                     break;
                 case Type.Laser:
-                    this.LaserShot(target);
                     break;
                 case Type.Penetrate:
                     this.PenetrateShot(target);
@@ -90,8 +89,7 @@
         // Warning, this is temporary solution, should use a proper external damage handler
         public void Melee(Transform target)
         {
-            this.SetHandlerAttributeIfNot();
-
+            
             this.damageHandler.DeliverDamageTo(target.gameObject, true);
         }
 
@@ -114,35 +112,41 @@
             //this.laserBeam.SetPositions(points);
         }
 
-        private void Update()
-        {
-            // DEBUG
-            if (Input.GetKeyDown("1"))
-            {
-                this.type = Type.SingleShot;
-            }
+        private void Update() {
 
-            if (Input.GetKeyDown("2"))
-            {
-                this.type = Type.MultiShot;
-            }
+            MonoBehaviour ability = this.gameObject.GetComponentInParent<characterAttack>().ability1;
 
-            if (Input.GetKeyDown("3"))
+            if (ability != null)
             {
-                this.type = Type.Laser;
-            }
+                string ability_name = ability.GetType().ToString();
+                // DEBUG
+                if (ability_name == "SingleShot")
+                {
+                    this.type = Type.SingleShot;
+                   
+                }
 
-            if (Input.GetKeyDown("4"))
-            {
-                this.type = Type.Penetrate;
-            }
+                if (ability_name == "MultiShot")
+                {
+                    this.type = Type.MultiShot;
+                }
 
-            if (Input.GetKeyDown("5"))
-            {
-                this.type = Type.Explosive;
-                Debug.Log(this.type);
-            }
+                if (Input.GetKeyDown("3"))
+                {
+                    this.type = Type.Laser;
+                }
 
+                if (Input.GetKeyDown("4"))
+                {
+                    this.type = Type.Penetrate;
+                }
+
+                if (Input.GetKeyDown("5"))
+                {
+                    this.type = Type.Explosive;
+                    Debug.Log(this.type);
+                }
+            }
             //// For laser effect only
             //if (this.type == Type.Laser)
             //{
@@ -185,7 +189,7 @@
         /// <returns>
         /// The <see cref="IBullet"/>.
         /// </returns>
-        private IBullet InstantiateBullet()
+        public IBullet InstantiateBullet()
         {
             var offset = new Vector3(0.0f, 0.5f, 0.0f);
 
@@ -200,42 +204,11 @@
             return bullet;
         }
 
-        public void SetHandlerAttributeIfNot()
-        {
-            if (this.damageHandler.IsValid())
-            {
-                return;
-            }
-
-            var attributes = this.transform.parent.GetComponent<characterAttributes>();
-
-            if (!attributes)
-            {
-                Debug.LogWarning("characterAttributes does not exist");
-                return;
-            }
-
-            this.damageHandler.SetCharacterAttribute(attributes);
-        }
-
         // Subject to change
-        private void SingleShot(Transform target)
-        {
-
-
-            this.SetHandlerAttributeIfNot();
-
-            var bullet = this.InstantiateBullet();
-
-            bullet.Launch(target, this.damageHandler);
-        }
-
+    
         private void ExplosiveShot(Transform target)
         {
-
-
-            this.SetHandlerAttributeIfNot();
-
+            
             var bullet = this.InstantiateBullet();
 
             bullet.Launch(target, this.damageHandler);
@@ -243,50 +216,12 @@
 
         private void PenetrateShot(Transform target)
         {
-
-
-            this.SetHandlerAttributeIfNot();
-
+            
             var bullet = this.InstantiateBullet();
 
             bullet.Launch(target, this.damageHandler);
         }
-
-        // Subject to change
-        private void MultiShot(Transform target)
-        {
-
-            this.SetHandlerAttributeIfNot();
-
-            var bulletA = this.InstantiateBullet();
-            var bulletB = this.InstantiateBullet();
-            var bulletC = this.InstantiateBullet();
-
-            // Subject to change
-            this.transform.LookAt(target.position);
-            var directionA = this.transform.forward;
-            var directionB = Quaternion.AngleAxis(-45, Vector3.up) * directionA;
-            var directionC = Quaternion.AngleAxis(45, Vector3.up) * directionA;
-
-            bulletA.Launch(target, this.damageHandler);
-            bulletB.Launch(directionB, this.damageHandler);
-            bulletC.Launch(directionC, this.damageHandler);
-        }
-
-        private void LaserShot(Transform target)
-        {
-            /*var offset = new Vector3(0.0f, 0.5f, 0.0f);
-
-            this.SetHandlerAttributeIfNot();
-
-            this.lineRenderer.SetPosition(0, this.transform.position + offset);
-
-            this.lineRenderer.SetPosition(1, target.position);
-
-            this.damageHandler.DeliverDamageTo(target.gameObject, false);
-      */
-        }
-
+        
         #endregion
     }
 }

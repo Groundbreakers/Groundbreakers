@@ -22,6 +22,8 @@ public class characterAttack : MonoBehaviour
 
     public LineRenderer lineRenderer;
 
+    public MonoBehaviour ability1;
+
     public string stance;
     public GameObject hitbox;
     private characterAttributes trickster;
@@ -74,8 +76,7 @@ public class characterAttack : MonoBehaviour
         myCollider.radius = trickster.RNG + .5f;
     }
 
-    void Update()
-    {
+    void Update() {
         
         if (target != null && !isChanging)
         {
@@ -334,7 +335,7 @@ public class characterAttack : MonoBehaviour
     {
         var offset = new Vector3(0.0f, 0.5f, 0.0f);
 
-        GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
+       // GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().SetHandlerAttributeIfNot();
 
         this.lineRenderer.SetPosition(0, this.gameObject.transform.position);
 

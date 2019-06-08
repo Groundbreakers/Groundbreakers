@@ -1,7 +1,7 @@
 ﻿namespace Assets.Scripts
 {
     using Assets.Enemies.Scripts;
-
+    using Characters;
     using UnityEngine;
 
     /// <inheritdoc />
@@ -67,12 +67,7 @@
         /// <param name="characterAttributes">
         ///     The character attributes.
         /// </param>
-        public void SetCharacterAttribute(characterAttributes characterAttributes)
-        {
-            this.attributes = characterAttributes;
-            this.Source = characterAttributes.gameObject;
-        }
-
+       
         public bool IsValid()
         {
             return this.attributes;
@@ -116,9 +111,11 @@
         /// </returns>
         private Damage GetDamage()
         {
+            
+            characterAttributes characterAttributes = this.gameObject.GetComponentInParent<characterAttributes>();
             const float FloatingDamage = 3.0f;
-            var pow = this.attributes.POW;
-            var amp = this.attributes.AMP;
+            var pow = characterAttributes.POW;
+            var amp = characterAttributes.AMP;
 
             var damage = new Damage(
                 Mathf.RoundToInt(pow * GetGaussianRand(50.0f, FloatingDamage)), 

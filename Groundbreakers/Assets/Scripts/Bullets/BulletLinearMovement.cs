@@ -68,12 +68,14 @@
         private void OnTriggerEnter2D(Collider2D other)
         {
             var go = other.gameObject;
-
+         
             if (go.CompareTag("Enemy"))
             {
                 if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type
                     == BulletLauncher.Type.Explosive)
                 {
+                    
+
                     if (explosionRadius >= 0f)
                     {
                         Collider2D[] colliders = Physics2D.OverlapCircleAll(this.transform.position, explosionRadius);
@@ -86,21 +88,20 @@
                             }
                         }
                     }
-                    else
-                    {
-                        this.damageHandler.DeliverDamageTo(go);
-                    }
                 }
                 else
                 {
-                    this.damageHandler.DeliverDamageTo(go);
+                   this.damageHandler.DeliverDamageTo(go);
+                // Debug.Log("hi");
+                   
                 }
 
                 if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type != BulletLauncher.Type.Penetrate)
                 {
                     GameObject.Destroy(this.gameObject);
-                }
-            }
+                    
+                    }
+            
 
             return;
 
@@ -173,4 +174,6 @@
         //    }
         //}
     }
+}
+
 }
