@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Core;
+
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class GameStart : MonoBehaviour
@@ -34,6 +38,13 @@ public class GameStart : MonoBehaviour
         this.InitializeCharacter(explorer3, 2);
         this.InitializeCharacter(explorer4, 3);
         this.InitializeCharacter(explorer5, 4);
+
+        // By Ivan: now the characters are spawned, we should Update Player Party's script here
+        var pm = FindObjectOfType<PartyManager>();
+
+        Assert.IsNotNull(pm);
+
+        pm.LoadCharacters();
     }
 
     private void InitializeCharacter(GameObject explorer, int i)
