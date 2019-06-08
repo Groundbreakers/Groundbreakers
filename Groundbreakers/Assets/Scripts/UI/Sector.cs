@@ -38,6 +38,8 @@ public class Sector : MonoBehaviour
             return;
         }
 
+        this.Button.GetComponent<Button>().interactable = false;
+
         battleField.Setup(Depth, FindObjectOfType<Difficulty>().Risk);
 
         GameObject.Find("SectorMap").GetComponent<SectorGenerator>().ShowPath(this.Row, this.Column);
