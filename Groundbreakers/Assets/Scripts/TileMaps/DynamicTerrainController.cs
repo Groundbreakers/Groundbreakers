@@ -119,7 +119,7 @@
                 return;
             }
 
-            this.IncrementRiskLevel(0.3f);
+            this.IncrementRiskLevel(0.35f);
 
             this.StartCoroutine(this.BeginEarthQuake());
         }

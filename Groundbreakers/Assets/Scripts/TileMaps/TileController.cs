@@ -214,7 +214,7 @@
             {
                 this.tilemap.ChangeTileAt(pos, Tiles.Stone);
 
-                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.05f);
+                FindObjectOfType<DynamicTerrainController>().IncrementRiskLevel(0.1f);
 
                 GameObject.Find("SFX Manager").GetComponent<SFXManager>().PlaySFX("TileDeploy");
             }
