@@ -42,7 +42,7 @@
                 // Mob
                 if (GameObject.Find("RangedWeapon").GetComponent<BulletLauncher>().type == BulletLauncher.Type.Laser)
                 {
-                    enemyGeneric.DamageEnemy(10, damage.Amp, 1.0f, isMelee, false);
+                    enemyGeneric.DamageEnemy(damage.Pow, damage.Amp, 1.0f, isMelee, false);
                 }
                 else
                 {
